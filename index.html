@@ -72,7 +72,102 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#F0F2F5;color:#2D2D2
 .pr{background:#FFEBEE;color:#C62828;display:inline-block;border-radius:10px;padding:2px 6px;font-size:10px;font-weight:700}
 .ftr{background:var(--v5);color:rgba(255,255,255,.6);text-align:center;padding:14px;font-size:10px;margin-top:10px}
 ::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-track{background:var(--g1)}::-webkit-scrollbar-thumb{background:var(--v2);border-radius:3px}
-@media(max-width:900px){.r2,.r3,.rmap,.r75{grid-template-columns:1fr}.con{padding:14px}.hdr{padding:0 14px}.nav{padding:0 14px}}
+
+/* ════════════════════════════════════════════
+   RESPONSIVE MOBILE — 900px
+   ════════════════════════════════════════════ */
+@media(max-width:900px){
+  /* Grids → single column */
+  .r2,.r3,.rmap,.r75{grid-template-columns:1fr}
+  /* Padding */
+  .con{padding:12px}
+  .hdr{padding:0 12px}
+  .nav{padding:0 8px}
+  .fb{padding:8px 12px;gap:8px}
+  .cb{padding:6px 8px}
+  /* KPI cards: 2 columns */
+  .kg{grid-template-columns:repeat(2,1fr);gap:8px}
+  /* Chart heights smaller */
+  .cw{height:120px}.cwsm{height:150px}.cwlg{height:220px}
+  /* Table horizontal scroll */
+  .twrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .dtable{min-width:560px}
+  /* Project detail: stack */
+  .pd-kpis{grid-template-columns:repeat(2,1fr)}
+  .pd-kpi:nth-child(2){border-right:none}
+  .pd-body{grid-template-columns:1fr}
+  .pd-col:first-child{border-right:none;border-bottom:1px solid #F0F0F0}
+  #resumen-right-area{flex-direction:column}
+}
+
+/* ════════════════════════════════════════════
+   MOBILE — 600px (phones)
+   ════════════════════════════════════════════ */
+@media(max-width:600px){
+  /* Body font */
+  body{font-size:13px}
+
+  /* Header compacto */
+  .hdr{height:auto;min-height:52px;padding:8px 12px;flex-wrap:wrap;gap:6px}
+  .logo{width:40px;height:40px;font-size:10px}
+  .ht h1{font-size:13px}
+  .ht p{font-size:10px}
+  .hbadge{display:none}  /* ocultar badge en pantallas muy pequeñas */
+
+  /* Tabs: scrollables con tap targets grandes */
+  .nav{padding:0 4px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .nav::-webkit-scrollbar{display:none}
+  .nb{padding:10px 12px;font-size:12px;white-space:nowrap;min-height:44px}
+
+  /* Filtros: stack vertical */
+  .fb{flex-direction:column;align-items:flex-start;padding:8px 12px;gap:6px}
+  .fs{width:100%;font-size:14px;padding:8px 12px;min-height:40px}
+  .ftag{padding:6px 14px;font-size:12px;min-height:36px}
+
+  /* Container */
+  .con{padding:8px}
+  .row{gap:10px;margin-bottom:10px}
+
+  /* KPI cards: 1 columna en pantallas muy pequeñas */
+  .kg{grid-template-columns:1fr 1fr;gap:8px}
+  .kv{font-size:26px}
+  .kc{padding:8px 12px 6px}
+
+  /* Cards */
+  .ch{padding:8px 10px}
+  .ct{font-size:12px}
+  .cb{padding:6px 8px}
+
+  /* Charts */
+  .cw{height:130px}.cwsm{height:160px}.cwlg{height:200px}
+
+  /* Table: scrollable, fuente legible */
+  .twrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-height:300px}
+  .dtable{min-width:520px;font-size:11px}
+  .dtable th,.dtable td{padding:7px 10px}
+
+  /* Project detail panel */
+  .pd-kpis{grid-template-columns:repeat(2,1fr)}
+  .pd-kpi:nth-child(2){border-right:none}
+  .pd-body{grid-template-columns:1fr}
+  .pd-col:first-child{border-right:none;border-bottom:1px solid #F0F0F0}
+  .pd-kpi-val{font-size:16px}
+  .pd-title{font-size:11px}
+  #resumen-right-area{flex-direction:column}
+
+  /* Footer */
+  .ftr{padding:10px;font-size:10px}
+}
+
+/* ════════════════════════════════════════════
+   MOBILE — 400px (teléfonos pequeños)
+   ════════════════════════════════════════════ */
+@media(max-width:400px){
+  .kg{grid-template-columns:1fr}
+  .kv{font-size:24px}
+  .nb{font-size:11px;padding:8px 10px}
+  .pd-kpis{grid-template-columns:repeat(2,1fr)}
+}
 
 @keyframes deptGlow{0%,100%{filter:drop-shadow(0 0 6px rgba(255,200,0,.7));}50%{filter:drop-shadow(0 0 14px rgba(255,200,0,1));}}
 [data-dept]{transition:opacity .15s,stroke-width .15s;}
