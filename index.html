@@ -200,7 +200,7 @@ body{display:flex;flex-direction:column;height:100vh}
   .row.rmap{flex:none!important;overflow:visible!important;display:flex!important;flex-direction:column!important;gap:8px!important;height:auto!important;margin-bottom:8px!important}
   .row.rmap>.card{width:100%!important;flex-shrink:1!important;overflow:visible!important}
   #mob-charts-hide{display:none!important}
-  #map1{max-height:380px!important;touch-action:manipulation!important}
+  #map1{max-height:380px!important}
   #mtt{pointer-events:auto!important}
   .r2,.r3,.r75{grid-template-columns:1fr!important}
   .kg{grid-template-columns:repeat(2,1fr)!important;flex-shrink:0!important;margin-bottom:6px!important}
@@ -1860,8 +1860,11 @@ function showProjectDetail(cui){
 </body>
 </html>
 <script>
-/* ponytail: debounce 700ms en handleDeptClick — sin listeners extra en SVG paths */
+/* ponytail: captura click en SVG antes que llegue al onclick del path
+   → una sola llamada → KPIs actualizan. Debounce como red de seguridad. */
 (function(){
+
+  /* debounce handleDeptClick — red de seguridad contra dobles llamadas */
   var _h0=window.handleDeptClick, _hl={d:null,t:0};
   window.handleDeptClick=function(el,dept){
     var n=Date.now();
@@ -1869,17 +1872,16 @@ function showProjectDetail(cui){
     _hl={d:dept,t:n};
     _h0.call(this,el,dept);
     if(window.innerWidth>900)return;
-    /* ventana emergente con resumen del dept */
-    if(typeof _showTt==='function'&&el&&typeof el.getBoundingClientRect==='function'){
+    /* ventana emergente */
+    if(typeof _showTt==='function'&&el&&el.getBoundingClientRect){
       var r=el.getBoundingClientRect();
       var ty=r.bottom+10;
       if(ty+135>window.innerHeight)ty=Math.max(8,r.top-145);
       _showTt(dept,Math.max(8,r.left+r.width/2-95),ty);
     }
-    /* scroll suave a KPIs */
+    /* scroll a KPIs */
     setTimeout(function(){
-      var g=document.getElementById('kpi-grid');
-      if(!g)return;
+      var g=document.getElementById('kpi-grid');if(!g)return;
       g.scrollIntoView({behavior:'smooth',block:'start'});
       g.querySelectorAll('.kc').forEach(function(c){
         c.style.transition='background .15s';c.style.background='rgba(16,80,0,.12)';
@@ -1887,6 +1889,20 @@ function showProjectDetail(cui){
       });
     },120);
   };
+
+  /* MÓVIL: interceptar click en FASE CAPTURA en el SVG
+     → stopImmediatePropagation bloquea el onclick del <path>
+     → selectDeptCard se llama UNA SOLA VEZ, idéntico a la lista */
+  var mapSvg=document.getElementById('map1');
+  if(mapSvg&&window.innerWidth<=900){
+    mapSvg.addEventListener('click',function(e){
+      var path=e.target.closest?e.target.closest('[data-dept]'):null;
+      if(!path&&e.target.dataset&&e.target.dataset.dept)path=e.target;
+      if(!path)return;
+      e.stopImmediatePropagation(); /* bloquea onclick del path */
+      if(typeof selectDeptCard==='function')selectDeptCard(path.dataset.dept);
+    },{capture:true});
+  }
 
   /* botón volver en detalle de proyecto */
   var _op=window.showProjectDetail;
