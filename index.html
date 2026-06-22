@@ -1860,11 +1860,12 @@ function showProjectDetail(cui){
 </body>
 </html>
 <script>
-/* MAPA: desinstalar onclick de cada path → instalar listener limpio.
-   Mismo mecanismo que la lista de departamentos (selectDeptCard). */
+/* CLAVE: NO borrar el atributo onclick (iOS lo usa para saber que el path es tappable).
+   Solo sobreescribir la PROPIEDAD p.onclick con JS — el atributo queda en el DOM,
+   el handler que ejecuta es el nuestro → selectDeptCard → renderKPIs. */
 (function(){
 
-  /* Debounce handleDeptClick — red de seguridad */
+  /* Debounce handleDeptClick — evita doble llamada */
   var _h0=window.handleDeptClick, _hl={d:null,t:0};
   window.handleDeptClick=function(el,dept){
     var n=Date.now();
@@ -1890,27 +1891,23 @@ function showProjectDetail(cui){
     },120);
   };
 
-  /* REINSTALAR: quitar onclick de paths, instalar addEventListener limpio */
+  /* Sobreescribir p.onclick (sin tocar el atributo onclick del HTML)
+     → iOS sigue viendo onclick="..." en el DOM → path = elemento tappable
+     → el click dispara p.onclick (nuestra función) → selectDeptCard → KPIs */
   function _wiremapa(){
     var paths=document.querySelectorAll('[data-dept]');
     paths.forEach(function(p){
-      p.removeAttribute('onclick');        /* eliminar handler viejo */
-      p.style.cursor='pointer';
       var dept=p.dataset.dept;
-      p.addEventListener('click',function(e){
+      p.onclick=function(e){
         e.stopPropagation();
         if(typeof selectDeptCard==='function') selectDeptCard(dept);
-      });
+      };
     });
     return paths.length;
   }
 
-  /* Ejecutar ahora (script está al final, DOM ya existe) */
-  var n=_wiremapa();
-  if(n===0){
-    /* fallback: esperar DOMContentLoaded */
-    document.addEventListener('DOMContentLoaded',_wiremapa);
-  }
+  var found=_wiremapa();
+  if(found===0) document.addEventListener('DOMContentLoaded',_wiremapa);
 
   /* botón volver en detalle de proyecto */
   var _op=window.showProjectDetail;
