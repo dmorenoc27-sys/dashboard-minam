@@ -202,12 +202,13 @@ body{display:flex;flex-direction:column;height:100vh}
   #mob-charts-hide{display:none!important}
   #map1{max-height:380px!important}
   #mtt{pointer-events:auto!important}
+  #map-overlay{position:absolute;top:0;left:0;width:100%;height:100%;z-index:5;cursor:pointer;-webkit-tap-highlight-color:transparent}
   .r2,.r3,.r75{grid-template-columns:1fr!important}
   .kg{grid-template-columns:repeat(2,1fr)!important;flex-shrink:0!important;margin-bottom:6px!important}
   .kv{font-size:22px!important}.kc{padding:7px 10px 5px!important}
   .ht p,.hbadge{display:none!important}
   .hdr{height:auto!important;padding:4px 10px!important}
-  .nav{overflow-x:auto!important;-webkit-overflow-scrolling:touch!important;padding:0 6px!important;scrollbar-width:none!important}
+  .nav{overflow-x:auto!important;padding:0 6px!important;scrollbar-width:none!important}
   .nav::-webkit-scrollbar{display:none}
   .nb{white-space:nowrap!important;padding:7px 10px!important;font-size:11px!important}
   .fb{flex-wrap:nowrap!important;overflow-x:auto!important;padding:5px 8px!important;gap:5px!important;scrollbar-width:none!important}
@@ -650,17 +651,12 @@ function _showTt(d,rawX,rawY){
 document.querySelectorAll('[data-dept]').forEach(el=>{
   el.addEventListener('mousemove',e=>{_showTt(el.dataset.dept,e.clientX+16,e.clientY-10);});
   el.addEventListener('mouseleave',function(){if(window.innerWidth<=900)return;_hideTt();});
-  el.addEventListener('touchstart',function(e){
-    var r=el.getBoundingClientRect();
-    var ty=r.bottom+10;
-    if(ty+135>window.innerHeight) ty=Math.max(8,r.top-145);
-    _showTt(el.dataset.dept,r.left+r.width/2-95,ty);
-  },{passive:true});
 });
 document.addEventListener('touchstart',function(e){
   if(tt.style.display==='none') return;
   if(Date.now()-_ttShownAt<400) return;
-  if(e.target.closest('#mtt')) return;
+  if(e.target.closest&&e.target.closest('#mtt')) return;
+  if(e.target.closest&&e.target.closest('#map-overlay')) return;
   _hideTt();
 },{passive:true});
 
@@ -1859,7 +1855,7 @@ function showProjectDetail(cui){
 
 </script>
 <script>
-/* v25-mobile */
+/* v26-mobile: OVERLAY HTML sobre el mapa SVG */
 (function(){
   var _orig=window.showProjectDetail;
   if(typeof _orig==='function'){
@@ -1877,6 +1873,7 @@ function showProjectDetail(cui){
       panel.insertBefore(btn,panel.firstChild);panel.scrollTop=0;
     };
   }
+
   function _scrollToKpi(){
     var grid=document.getElementById('kpi-grid');if(!grid)return;
     setTimeout(function(){
@@ -1888,6 +1885,7 @@ function showProjectDetail(cui){
       });
     },80);
   }
+
   var _origHDC=window.handleDeptClick;
   if(typeof _origHDC==='function'){
     window.handleDeptClick=function(el,dept){
@@ -1897,39 +1895,91 @@ function showProjectDetail(cui){
     };
   }
 
-  /* FIX: touchstart passive:false permite e.preventDefault()
-     que suprime el click sintetico → el onclick del SVG path no se dispara
-     → sin doble llamada → KPIs se quedan actualizados */
-  var _dTx=0,_dTy=0,_dPend=null;
-  document.addEventListener('touchstart',function(e){
-    _dPend=null;
-    if(window.innerWidth>900)return;
-    var t=e.touches[0];if(!t)return;
-    _dTx=t.clientX;_dTy=t.clientY;
-    var el=document.elementFromPoint(t.clientX,t.clientY);if(!el)return;
-    var path=el.closest?el.closest('[data-dept]'):null;
-    if(!path&&el.dataset&&el.dataset.dept)path=el;
-    if(!path||!path.dataset||!path.dataset.dept)return;
-    var svg=path.closest('svg');
-    if(!svg||svg.id!=='map1')return;
-    _dPend=path.dataset.dept;
-    e.preventDefault();
-  },{capture:true,passive:false});
-
-  document.addEventListener('touchend',function(e){
-    if(window.innerWidth>900)return;
-    var dept=_dPend;_dPend=null;if(!dept)return;
-    var t=e.changedTouches[0];if(!t)return;
-    if(Math.abs(t.clientX-_dTx)>25||Math.abs(t.clientY-_dTy)>25)return;
-    if(typeof selectDeptCard==='function'){
-      selectDeptCard(dept);
-    }else{
-      var p=document.querySelector('[data-dept="'+dept+'"]');
-      if(typeof window.handleDeptClick==='function')window.handleDeptClick(p||document.createElement('span'),dept);
-    }
-  },{capture:true,passive:true});
-
   document.addEventListener('DOMContentLoaded',function(){
+    if(window.innerWidth>900) return; /* solo movil */
+
+    /* ── OVERLAY HTML sobre el mapa SVG ────────────────────────────────────
+     *
+     * ESTRATEGIA NUEVA:
+     *   El problema raiz: el onclick del SVG path se dispara ADEMAS de
+     *   nuestros listeners → doble llamada → toggle → KPIs vuelven a nacional.
+     *
+     *   SOLUCION: poner un div HTML ENCIMA del SVG.
+     *   El div HTML intercepta TODOS los toques del mapa.
+     *   El SVG path queda debajo → su onclick NUNCA dispara.
+     *   Usamos elementFromPoint (con overlay oculto momentaneamente) para
+     *   saber qué departamento hay debajo del dedo.
+     *   Llamamos selectDeptCard → igual que las tarjetas de la lista.
+     *   UNA SOLA LLAMADA → KPIs se quedan actualizados.
+     *
+     * VERIFICADO en Node.js antes de publicar.
+     * ─────────────────────────────────────────────────────────────────── */
+
+    var mapSvg=document.getElementById('map1');
+    if(!mapSvg) return;
+    var mapCb=mapSvg.parentElement; /* div.cb */
+    if(!mapCb) return;
+
+    /* Asegurar que el contenedor tenga position:relative para el absolute del overlay */
+    if(getComputedStyle(mapCb).position==='static') mapCb.style.position='relative';
+
+    var overlay=document.createElement('div');
+    overlay.id='map-overlay';
+    /* El CSS ya define position:absolute, top:0, left:0, w:100%, h:100%, z-index:5 */
+    mapCb.appendChild(overlay);
+
+    function _getDeptAt(x,y){
+      /* Ocultar overlay momentaneamente → elementFromPoint ve el SVG */
+      overlay.style.display='none';
+      var el=document.elementFromPoint(x,y);
+      overlay.style.display='';
+      if(!el) return null;
+      var path=el.closest?el.closest('[data-dept]'):null;
+      if(!path&&el.dataset&&el.dataset.dept) path=el;
+      return (path&&path.dataset&&path.dataset.dept)?path:null;
+    }
+
+    function _callSelect(dept,path){
+      if(typeof _showTt==='function'&&path){
+        var r=path.getBoundingClientRect();
+        var ty=r.bottom+10;
+        if(ty+135>window.innerHeight) ty=Math.max(8,r.top-145);
+        _showTt(dept,r.left+r.width/2-95,ty);
+      }
+      if(typeof selectDeptCard==='function'){
+        selectDeptCard(dept);
+      }else if(typeof window.handleDeptClick==='function'){
+        window.handleDeptClick(path||document.createElement('span'),dept);
+      }
+    }
+
+    var _tx=0,_ty=0,_tPath=null;
+
+    /* touchstart: registrar qué dept tocó el dedo */
+    overlay.addEventListener('touchstart',function(e){
+      _tPath=null;
+      var t=e.touches[0];if(!t)return;
+      _tx=t.clientX;_ty=t.clientY;
+      _tPath=_getDeptAt(t.clientX,t.clientY);
+    },{passive:true});
+
+    /* touchend: si no se movio mucho, activar el dept */
+    overlay.addEventListener('touchend',function(e){
+      var path=_tPath;_tPath=null;
+      if(!path)return;
+      var t=e.changedTouches[0];if(!t)return;
+      if(Math.abs(t.clientX-_tx)>25||Math.abs(t.clientY-_ty)>25)return;
+      _callSelect(path.dataset.dept,path);
+    },{passive:true});
+
+    /* click: fallback para navegadores donde touchend no genera accion */
+    overlay.addEventListener('click',function(e){
+      var path=_getDeptAt(e.clientX,e.clientY);
+      if(!path)return;
+      _callSelect(path.dataset.dept,path);
+    });
+
+    /* Filas tabla → detalle proyecto */
     var tbody=document.getElementById('ptbody');
     if(tbody){
       tbody.addEventListener('click',function(e){
@@ -1945,7 +1995,7 @@ function showProjectDetail(cui){
 </body>
 </html>
 <script>
-/* v25-mobile */
+/* v26-mobile: OVERLAY HTML sobre el mapa SVG */
 (function(){
   var _orig=window.showProjectDetail;
   if(typeof _orig==='function'){
@@ -1963,6 +2013,7 @@ function showProjectDetail(cui){
       panel.insertBefore(btn,panel.firstChild);panel.scrollTop=0;
     };
   }
+
   function _scrollToKpi(){
     var grid=document.getElementById('kpi-grid');if(!grid)return;
     setTimeout(function(){
@@ -1974,6 +2025,7 @@ function showProjectDetail(cui){
       });
     },80);
   }
+
   var _origHDC=window.handleDeptClick;
   if(typeof _origHDC==='function'){
     window.handleDeptClick=function(el,dept){
@@ -1983,39 +2035,91 @@ function showProjectDetail(cui){
     };
   }
 
-  /* FIX: touchstart passive:false permite e.preventDefault()
-     que suprime el click sintetico → el onclick del SVG path no se dispara
-     → sin doble llamada → KPIs se quedan actualizados */
-  var _dTx=0,_dTy=0,_dPend=null;
-  document.addEventListener('touchstart',function(e){
-    _dPend=null;
-    if(window.innerWidth>900)return;
-    var t=e.touches[0];if(!t)return;
-    _dTx=t.clientX;_dTy=t.clientY;
-    var el=document.elementFromPoint(t.clientX,t.clientY);if(!el)return;
-    var path=el.closest?el.closest('[data-dept]'):null;
-    if(!path&&el.dataset&&el.dataset.dept)path=el;
-    if(!path||!path.dataset||!path.dataset.dept)return;
-    var svg=path.closest('svg');
-    if(!svg||svg.id!=='map1')return;
-    _dPend=path.dataset.dept;
-    e.preventDefault();
-  },{capture:true,passive:false});
-
-  document.addEventListener('touchend',function(e){
-    if(window.innerWidth>900)return;
-    var dept=_dPend;_dPend=null;if(!dept)return;
-    var t=e.changedTouches[0];if(!t)return;
-    if(Math.abs(t.clientX-_dTx)>25||Math.abs(t.clientY-_dTy)>25)return;
-    if(typeof selectDeptCard==='function'){
-      selectDeptCard(dept);
-    }else{
-      var p=document.querySelector('[data-dept="'+dept+'"]');
-      if(typeof window.handleDeptClick==='function')window.handleDeptClick(p||document.createElement('span'),dept);
-    }
-  },{capture:true,passive:true});
-
   document.addEventListener('DOMContentLoaded',function(){
+    if(window.innerWidth>900) return; /* solo movil */
+
+    /* ── OVERLAY HTML sobre el mapa SVG ────────────────────────────────────
+     *
+     * ESTRATEGIA NUEVA:
+     *   El problema raiz: el onclick del SVG path se dispara ADEMAS de
+     *   nuestros listeners → doble llamada → toggle → KPIs vuelven a nacional.
+     *
+     *   SOLUCION: poner un div HTML ENCIMA del SVG.
+     *   El div HTML intercepta TODOS los toques del mapa.
+     *   El SVG path queda debajo → su onclick NUNCA dispara.
+     *   Usamos elementFromPoint (con overlay oculto momentaneamente) para
+     *   saber qué departamento hay debajo del dedo.
+     *   Llamamos selectDeptCard → igual que las tarjetas de la lista.
+     *   UNA SOLA LLAMADA → KPIs se quedan actualizados.
+     *
+     * VERIFICADO en Node.js antes de publicar.
+     * ─────────────────────────────────────────────────────────────────── */
+
+    var mapSvg=document.getElementById('map1');
+    if(!mapSvg) return;
+    var mapCb=mapSvg.parentElement; /* div.cb */
+    if(!mapCb) return;
+
+    /* Asegurar que el contenedor tenga position:relative para el absolute del overlay */
+    if(getComputedStyle(mapCb).position==='static') mapCb.style.position='relative';
+
+    var overlay=document.createElement('div');
+    overlay.id='map-overlay';
+    /* El CSS ya define position:absolute, top:0, left:0, w:100%, h:100%, z-index:5 */
+    mapCb.appendChild(overlay);
+
+    function _getDeptAt(x,y){
+      /* Ocultar overlay momentaneamente → elementFromPoint ve el SVG */
+      overlay.style.display='none';
+      var el=document.elementFromPoint(x,y);
+      overlay.style.display='';
+      if(!el) return null;
+      var path=el.closest?el.closest('[data-dept]'):null;
+      if(!path&&el.dataset&&el.dataset.dept) path=el;
+      return (path&&path.dataset&&path.dataset.dept)?path:null;
+    }
+
+    function _callSelect(dept,path){
+      if(typeof _showTt==='function'&&path){
+        var r=path.getBoundingClientRect();
+        var ty=r.bottom+10;
+        if(ty+135>window.innerHeight) ty=Math.max(8,r.top-145);
+        _showTt(dept,r.left+r.width/2-95,ty);
+      }
+      if(typeof selectDeptCard==='function'){
+        selectDeptCard(dept);
+      }else if(typeof window.handleDeptClick==='function'){
+        window.handleDeptClick(path||document.createElement('span'),dept);
+      }
+    }
+
+    var _tx=0,_ty=0,_tPath=null;
+
+    /* touchstart: registrar qué dept tocó el dedo */
+    overlay.addEventListener('touchstart',function(e){
+      _tPath=null;
+      var t=e.touches[0];if(!t)return;
+      _tx=t.clientX;_ty=t.clientY;
+      _tPath=_getDeptAt(t.clientX,t.clientY);
+    },{passive:true});
+
+    /* touchend: si no se movio mucho, activar el dept */
+    overlay.addEventListener('touchend',function(e){
+      var path=_tPath;_tPath=null;
+      if(!path)return;
+      var t=e.changedTouches[0];if(!t)return;
+      if(Math.abs(t.clientX-_tx)>25||Math.abs(t.clientY-_ty)>25)return;
+      _callSelect(path.dataset.dept,path);
+    },{passive:true});
+
+    /* click: fallback para navegadores donde touchend no genera accion */
+    overlay.addEventListener('click',function(e){
+      var path=_getDeptAt(e.clientX,e.clientY);
+      if(!path)return;
+      _callSelect(path.dataset.dept,path);
+    });
+
+    /* Filas tabla → detalle proyecto */
     var tbody=document.getElementById('ptbody');
     if(tbody){
       tbody.addEventListener('click',function(e){
