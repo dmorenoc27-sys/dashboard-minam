@@ -221,7 +221,11 @@ body{display:flex;flex-direction:column;height:100vh}
   .twrap{overflow-x:auto!important;-webkit-overflow-scrolling:touch!important;max-height:none!important}
   .dtable td{padding:9px 6px!important;font-size:12px!important}
   .dtable th{padding:7px 6px!important;font-size:11px!important}
-  #pd-data-row,#pd-execbar{display:none!important}
+  /* pd-data-row: ocultar cols 1-5, mostrar solo col 6 (Beneficiarios) a ancho completo */
+  #pd-data-row{display:block!important;border-bottom:1px solid #E8F5E9!important}
+  #pd-data-row>div:not(:last-child){display:none!important}
+  #pd-data-row>div:last-child{width:100%!important;padding:10px 16px!important;box-sizing:border-box!important;border-right:none!important}
+  #pd-execbar{display:none!important}
   #pd-bottom-row{grid-template-columns:1fr!important;display:block!important}
   #proj-detail-panel{overflow-y:scroll!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch!important}
   .pd-hdr{padding:8px 10px!important}.pd-title{font-size:12px!important}
@@ -640,7 +644,7 @@ function _showTt(d,rx,ry){
   const mob=window.innerWidth<=900;
   const x=Math.max(8,Math.min(rx,window.innerWidth-215)),y=Math.max(8,Math.min(ry,window.innerHeight-135));
   const xb=mob?'<button onclick="document.getElementById(\'mtt\').style.display=\'none\'" style="position:absolute;top:4px;right:6px;background:none;border:none;color:#ccc;font-size:20px;cursor:pointer;padding:0 5px;pointer-events:auto">×</button>':'';
-  tt.innerHTML='<div style="position:relative;padding-right:'+(mob?'22px':'0')+'">'+xb+'<strong>'+d+'</strong><div class="mtr"><span class="mk">Proyectos</span><span class="mv">'+n+'</span></div><div class="mtr"><span class="mk">Devengado acum.</span><span class="mv">'+dv+'</span></div><div class="mtr"><span class="mk">% Avance prom.</span><span class="mv">'+av+'</span></div></div>';
+  tt.innerHTML='<div style="position:relative;padding-right:'+(mob?'22px':'0')+'">'+xb+'<strong>'+d+'</strong><div class="mtr"><span class="mk">Proyectos</span><span class="mv">'+n+'</span></div><div class="mtr"><span class="mk">Devengado acum.</span><span class="mv">'+dv+'</span></div><div class="mtr"><span class="mk">% Avance prom.</span><span class="mv">'+at+'</span></div></div>';
   tt.style.cssText='display:block;left:'+x+'px;top:'+y+'px;position:fixed;pointer-events:'+(mob?'auto':'none')+';z-index:9999;';
   _ttAt=Date.now();
 }
@@ -1851,7 +1855,7 @@ function showProjectDetail(cui){
 </html>
 <script>
 (function(){
-  var _h0=window.handleDeptClick, _hl={d:null,t:0};
+  var _h0=window.handleDeptClick,_hl={d:null,t:0};
   window.handleDeptClick=function(el,dept){
     var n=Date.now();
     if(dept===_hl.d&&n-_hl.t<700)return;
@@ -1883,8 +1887,7 @@ function showProjectDetail(cui){
     mapSvg.addEventListener('touchend',function(e){
       var t=e.changedTouches[0];
       if(Math.abs(t.clientX-_tx)>15||Math.abs(t.clientY-_ty)>15)return;
-      var el=document.elementFromPoint(t.clientX,t.clientY);
-      var dept=null,cur=el;
+      var el=document.elementFromPoint(t.clientX,t.clientY),dept=null,cur=el;
       while(cur&&cur!==document.body){
         if(cur.dataset&&cur.dataset.dept){dept=cur.dataset.dept;break;}
         cur=cur.parentElement;
@@ -1902,8 +1905,7 @@ function showProjectDetail(cui){
       _op(cui);
       if(window.innerWidth>900)return;
       var p=document.getElementById('proj-detail-panel');if(!p)return;
-      p.style.overflowY='scroll';
-      p.style.webkitOverflowScrolling='touch';
+      p.style.overflowY='scroll';p.style.webkitOverflowScrolling='touch';
       var old=document.getElementById('mob-back-btn');if(old)old.remove();
       var btn=document.createElement('button');
       btn.id='mob-back-btn';btn.textContent='← Volver a la lista';
