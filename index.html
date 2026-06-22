@@ -203,8 +203,20 @@ body{display:flex;flex-direction:column;height:100vh}
   #map1{max-height:380px!important}
   #mtt{pointer-events:auto!important}
   .r2,.r3,.r75{grid-template-columns:1fr!important}
-  .kg{grid-template-columns:repeat(2,1fr)!important;flex-shrink:0!important;margin-bottom:6px!important}
-  .kv{font-size:22px!important}.kc{padding:7px 10px 5px!important}
+
+  /* 2. KPIs: ocultar Girado (4to panel), mostrar 3 en una fila */
+  .kg{grid-template-columns:repeat(3,1fr)!important;flex-shrink:0!important;margin-bottom:6px!important}
+  .kg .kc:nth-child(4){display:none!important}
+  .kv{font-size:18px!important}.kc{padding:7px 8px 5px!important}
+  .kl{font-size:9px!important}.ks{font-size:9px!important}
+
+  /* 3. Fondo celeste en KPIs cuando hay departamento seleccionado */
+  #kpi-grid.dept-active .kc{
+    background:linear-gradient(135deg,rgba(13,110,253,.07) 0%,rgba(33,150,243,.04) 100%)!important;
+    border-top:2px solid rgba(13,110,253,.18)!important;
+    transition:background .3s,border-color .3s!important;
+  }
+
   .ht p,.hbadge{display:none!important}
   .hdr{height:auto!important;padding:4px 10px!important}
   .nav{overflow-x:auto!important;-webkit-overflow-scrolling:touch!important;padding:0 6px!important;scrollbar-width:none!important}
@@ -221,7 +233,6 @@ body{display:flex;flex-direction:column;height:100vh}
   .twrap{overflow-x:auto!important;-webkit-overflow-scrolling:touch!important;max-height:none!important}
   .dtable td{padding:9px 6px!important;font-size:12px!important}
   .dtable th{padding:7px 6px!important;font-size:11px!important}
-  /* pd-data-row: ocultar cols 1-5, mostrar solo col 6 (Beneficiarios) a ancho completo */
   #pd-data-row{display:block!important;border-bottom:1px solid #E8F5E9!important}
   #pd-data-row>div:not(:last-child){display:none!important}
   #pd-data-row>div:last-child{width:100%!important;padding:10px 16px!important;box-sizing:border-box!important;border-right:none!important}
@@ -237,7 +248,16 @@ body{display:flex;flex-direction:column;height:100vh}
   .pd-col:first-child{border-right:none!important;border-bottom:1px solid #F0F0F0!important}
   .pd-col{padding:8px 10px!important}
   [data-dept]{cursor:pointer!important}
-  [data-dept].dept-sel{fill:#FFB300!important;stroke:#e65100!important;stroke-width:3px!important;filter:drop-shadow(0 0 10px rgba(255,160,0,.9))!important}
+
+  /* 1. Resaltar dept: solo perímetro (sin relleno amarillo), con glow y escala leve */
+  [data-dept].dept-sel{
+    stroke:#1565C0!important;
+    stroke-width:3.5px!important;
+    filter:drop-shadow(0 0 7px rgba(21,101,192,.75))!important;
+    transform-box:fill-box!important;
+    transform-origin:center!important;
+    transform:scale(1.05)!important;
+  }
 }
 </style>
 
@@ -644,7 +664,7 @@ function _showTt(d,rx,ry){
   const mob=window.innerWidth<=900;
   const x=Math.max(8,Math.min(rx,window.innerWidth-215)),y=Math.max(8,Math.min(ry,window.innerHeight-135));
   const xb=mob?'<button onclick="document.getElementById(\'mtt\').style.display=\'none\'" style="position:absolute;top:4px;right:6px;background:none;border:none;color:#ccc;font-size:20px;cursor:pointer;padding:0 5px;pointer-events:auto">×</button>':'';
-  tt.innerHTML='<div style="position:relative;padding-right:'+(mob?'22px':'0')+'">'+xb+'<strong>'+d+'</strong><div class="mtr"><span class="mk">Proyectos</span><span class="mv">'+n+'</span></div><div class="mtr"><span class="mk">Devengado acum.</span><span class="mv">'+dv+'</span></div><div class="mtr"><span class="mk">% Avance prom.</span><span class="mv">'+at+'</span></div></div>';
+  tt.innerHTML='<div style="position:relative;padding-right:'+(mob?'22px':'0')+'">'+xb+'<strong>'+d+'</strong><div class="mtr"><span class="mk">Proyectos</span><span class="mv">'+n+'</span></div><div class="mtr"><span class="mk">Devengado acum.</span><span class="mv">'+dv+'</span></div><div class="mtr"><span class="mk">% Avance prom.</span><span class="mv">'+av+'</span></div></div>';
   tt.style.cssText='display:block;left:'+x+'px;top:'+y+'px;position:fixed;pointer-events:'+(mob?'auto':'none')+';z-index:9999;';
   _ttAt=Date.now();
 }
@@ -1862,22 +1882,27 @@ function showProjectDetail(cui){
     _hl={d:dept,t:n};
     _h0.call(this,el,dept);
     if(window.innerWidth>900)return;
+    /* 3. Fondo celeste en KPIs si hay dept seleccionado */
+    var g=document.getElementById('kpi-grid');
+    if(g){
+      if(window.selectedDept)g.classList.add('dept-active');
+      else g.classList.remove('dept-active');
+    }
+    /* tooltip */
     if(typeof _showTt==='function'&&el&&el.getBoundingClientRect){
       var r=el.getBoundingClientRect();
       var ty=r.bottom+10;
       if(ty+135>window.innerHeight)ty=Math.max(8,r.top-145);
       _showTt(dept,Math.max(8,r.left+r.width/2-95),ty);
     }
+    /* scroll a KPIs */
     setTimeout(function(){
-      var g=document.getElementById('kpi-grid');if(!g)return;
-      g.scrollIntoView({behavior:'smooth',block:'start'});
-      g.querySelectorAll('.kc').forEach(function(c){
-        c.style.transition='background .15s';c.style.background='rgba(16,80,0,.12)';
-        setTimeout(function(){c.style.background='';c.style.transition='';},400);
-      });
+      var g2=document.getElementById('kpi-grid');if(!g2)return;
+      g2.scrollIntoView({behavior:'smooth',block:'start'});
     },120);
   };
 
+  /* mapa touchend → card.click() en la lista */
   var mapSvg=document.getElementById('map1');
   if(mapSvg){
     var _tx=0,_ty=0;
@@ -1899,6 +1924,7 @@ function showProjectDetail(cui){
     },{passive:true});
   }
 
+  /* botón volver en detalle de proyecto */
   var _op=window.showProjectDetail;
   if(typeof _op==='function'){
     window.showProjectDetail=function(cui){
