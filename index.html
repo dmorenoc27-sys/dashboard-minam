@@ -194,7 +194,7 @@ body{display:flex;flex-direction:column;height:100vh}
 .ftr{padding:7px 14px;font-size:9px;flex-shrink:0}
 </style>
 <style>
-/* MOBILE v22 */
+/* MOBILE v23 */
 @media(max-width:900px){
   html,body{height:auto!important;overflow:auto!important;overflow-x:hidden!important;display:block!important}
   .con{flex:none!important;overflow:visible!important;display:block!important;padding:8px 10px!important}
@@ -638,7 +638,7 @@ function updateConvChart(filtered,hasFilter){
 
 const tt=document.getElementById('mtt');
 var _ttShownAt=0;
-function _hideTt(){tt.style.display='none'; _ttShownAt=0;}
+function _hideTt(){tt.style.display='none';_ttShownAt=0;}
 function _showTt(d,rawX,rawY){
   const n=depCounts[d]||0;
   const av=depAv[d]?depAv[d].toFixed(1)+'%':'—';
@@ -654,15 +654,13 @@ function _showTt(d,rawX,rawY){
 }
 document.querySelectorAll('[data-dept]').forEach(el=>{
   el.addEventListener('mousemove',e=>{_showTt(el.dataset.dept,e.clientX+16,e.clientY-10);});
-  el.addEventListener('mouseleave',function(){
-    if(window.innerWidth<=900) return;
-    _hideTt();
-  });
+  el.addEventListener('mouseleave',function(){if(window.innerWidth<=900)return;_hideTt();});
+  /* touchstart: solo muestra tooltip, NO activa dept (eso lo hace touchend) */
   el.addEventListener('touchstart',function(e){
     var r=el.getBoundingClientRect();
     var ty=r.bottom+10;
     if(ty+135>window.innerHeight) ty=Math.max(8,r.top-145);
-    _showTt(el.dataset.dept, r.left+r.width/2-95, ty);
+    _showTt(el.dataset.dept,r.left+r.width/2-95,ty);
   },{passive:true});
 });
 document.addEventListener('touchstart',function(e){
@@ -1867,9 +1865,9 @@ function showProjectDetail(cui){
 
 </script>
 <script>
-/* v22-mobile */
+/* v23-mobile — fix definitivo mapa SVG */
 (function(){
-  /* showProjectDetail: agregar boton volver en movil */
+  /* showProjectDetail: boton volver en movil */
   var _orig=window.showProjectDetail;
   if(typeof _orig==='function'){
     window.showProjectDetail=function(cui){
@@ -1910,7 +1908,6 @@ function showProjectDetail(cui){
     },80);
   }
 
-  /* Envolver handleDeptClick para scroll en movil */
   var _origHDC=window.handleDeptClick;
   if(typeof _origHDC==='function'){
     window.handleDeptClick=function(el,dept){
@@ -1921,28 +1918,41 @@ function showProjectDetail(cui){
   }
 
   document.addEventListener('DOMContentLoaded',function(){
-
-    /* ── MAPA SVG: click en el card HTML contenedor ──────────────────────
-       EXACTAMENTE igual que geo-panel-body (que ya funciona en movil).
-       El evento click burbujea del SVG <path> al <div> HTML padre.
-       En iOS/Android los divs HTML si disparan click desde touch;
-       los onclick en SVG paths no siempre funcionan.
-    ── */
     var mapSvg=document.getElementById('map1');
     var mapCard=mapSvg&&mapSvg.closest('.card');
+
     if(mapCard){
-      mapCard.addEventListener('click',function(e){
-        if(window.innerWidth>900) return; /* desktop: el onclick del path ya maneja */
-        var path=e.target.closest('[data-dept]');
-        if(!path||!path.dataset||!path.dataset.dept) return;
-        /* Evitar doble llamada si onclick del path tambien disparo */
-        e.stopPropagation();
+      var _tx=0,_ty=0,_tPath=null;
+
+      /* FASE DE CAPTURA: se ejecuta ANTES que el touchstart del path.
+         El tooltip aun NO ha aparecido → elementFromPoint devuelve el path SVG correcto.
+         Guardamos la referencia al path para usarla en touchend. */
+      mapCard.addEventListener('touchstart',function(e){
+        _tPath=null;
+        var t=e.touches[0]; if(!t) return;
+        _tx=t.clientX; _ty=t.clientY;
+        var el=document.elementFromPoint(t.clientX,t.clientY);
+        if(!el) return;
+        var path=el.closest?el.closest('[data-dept]'):null;
+        if(!path&&el.dataset&&el.dataset.dept) path=el;
+        if(path&&path.dataset&&path.dataset.dept) _tPath=path;
+      },{capture:true,passive:true});
+
+      /* touchend: usamos el path guardado (no elementFromPoint, que ahora
+         devolveria el tooltip). e.preventDefault() suprime el onclick doble. */
+      mapCard.addEventListener('touchend',function(e){
+        if(window.innerWidth>900) return;
+        var path=_tPath; _tPath=null;
+        if(!path) return;
+        var t=e.changedTouches[0]; if(!t) return;
+        if(Math.abs(t.clientX-_tx)>22||Math.abs(t.clientY-_ty)>22) return;
+        e.preventDefault();
         if(typeof window.handleDeptClick==='function')
           window.handleDeptClick(path,path.dataset.dept);
-      });
+      },{passive:false});
     }
 
-    /* ── TABLA de proyectos: click en fila abre detalle ─────────────────── */
+    /* Filas de tabla → detalle de proyecto */
     var tbody=document.getElementById('ptbody');
     if(tbody){
       tbody.addEventListener('click',function(e){
@@ -1958,9 +1968,9 @@ function showProjectDetail(cui){
 </body>
 </html>
 <script>
-/* v22-mobile */
+/* v23-mobile — fix definitivo mapa SVG */
 (function(){
-  /* showProjectDetail: agregar boton volver en movil */
+  /* showProjectDetail: boton volver en movil */
   var _orig=window.showProjectDetail;
   if(typeof _orig==='function'){
     window.showProjectDetail=function(cui){
@@ -2001,7 +2011,6 @@ function showProjectDetail(cui){
     },80);
   }
 
-  /* Envolver handleDeptClick para scroll en movil */
   var _origHDC=window.handleDeptClick;
   if(typeof _origHDC==='function'){
     window.handleDeptClick=function(el,dept){
@@ -2012,28 +2021,41 @@ function showProjectDetail(cui){
   }
 
   document.addEventListener('DOMContentLoaded',function(){
-
-    /* ── MAPA SVG: click en el card HTML contenedor ──────────────────────
-       EXACTAMENTE igual que geo-panel-body (que ya funciona en movil).
-       El evento click burbujea del SVG <path> al <div> HTML padre.
-       En iOS/Android los divs HTML si disparan click desde touch;
-       los onclick en SVG paths no siempre funcionan.
-    ── */
     var mapSvg=document.getElementById('map1');
     var mapCard=mapSvg&&mapSvg.closest('.card');
+
     if(mapCard){
-      mapCard.addEventListener('click',function(e){
-        if(window.innerWidth>900) return; /* desktop: el onclick del path ya maneja */
-        var path=e.target.closest('[data-dept]');
-        if(!path||!path.dataset||!path.dataset.dept) return;
-        /* Evitar doble llamada si onclick del path tambien disparo */
-        e.stopPropagation();
+      var _tx=0,_ty=0,_tPath=null;
+
+      /* FASE DE CAPTURA: se ejecuta ANTES que el touchstart del path.
+         El tooltip aun NO ha aparecido → elementFromPoint devuelve el path SVG correcto.
+         Guardamos la referencia al path para usarla en touchend. */
+      mapCard.addEventListener('touchstart',function(e){
+        _tPath=null;
+        var t=e.touches[0]; if(!t) return;
+        _tx=t.clientX; _ty=t.clientY;
+        var el=document.elementFromPoint(t.clientX,t.clientY);
+        if(!el) return;
+        var path=el.closest?el.closest('[data-dept]'):null;
+        if(!path&&el.dataset&&el.dataset.dept) path=el;
+        if(path&&path.dataset&&path.dataset.dept) _tPath=path;
+      },{capture:true,passive:true});
+
+      /* touchend: usamos el path guardado (no elementFromPoint, que ahora
+         devolveria el tooltip). e.preventDefault() suprime el onclick doble. */
+      mapCard.addEventListener('touchend',function(e){
+        if(window.innerWidth>900) return;
+        var path=_tPath; _tPath=null;
+        if(!path) return;
+        var t=e.changedTouches[0]; if(!t) return;
+        if(Math.abs(t.clientX-_tx)>22||Math.abs(t.clientY-_ty)>22) return;
+        e.preventDefault();
         if(typeof window.handleDeptClick==='function')
           window.handleDeptClick(path,path.dataset.dept);
-      });
+      },{passive:false});
     }
 
-    /* ── TABLA de proyectos: click en fila abre detalle ─────────────────── */
+    /* Filas de tabla → detalle de proyecto */
     var tbody=document.getElementById('ptbody');
     if(tbody){
       tbody.addEventListener('click',function(e){
