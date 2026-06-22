@@ -234,6 +234,18 @@ body{display:flex;flex-direction:column;height:100vh}
   .pd-col:first-child{border-right:none!important;border-bottom:1px solid #F0F0F0!important}
   .pd-col{padding:8px 10px!important}
   [data-dept]{cursor:pointer!important}
+  /* resalte visible al seleccionar dept en móvil */
+  [data-dept].dept-sel{
+    fill:#FFB300!important;
+    stroke:#e65100!important;
+    stroke-width:3px!important;
+    filter:drop-shadow(0 0 10px rgba(255,160,0,.95))!important;
+    animation:deptGlowMob 1.4s ease-in-out infinite!important;
+  }
+  @keyframes deptGlowMob{
+    0%,100%{filter:drop-shadow(0 0 6px rgba(255,160,0,.8))!important;}
+    50%{filter:drop-shadow(0 0 16px rgba(255,200,0,1))!important;}
+  }
 }
 </style>
 
