@@ -194,7 +194,7 @@ body{display:flex;flex-direction:column;height:100vh}
 .ftr{padding:7px 14px;font-size:9px;flex-shrink:0}
 </style>
 <style>
-/* ═══ MOBILE v9 ═════════════════════════════════════════════════ */
+/* MOBILE v10 */
 @media(max-width:900px){
   html,body{height:auto!important;overflow:auto!important;overflow-x:hidden!important;display:block!important}
   .con{flex:none!important;overflow:visible!important;display:block!important;padding:8px 10px!important}
@@ -652,14 +652,11 @@ function _showTt(d,rawX,rawY){
   _ttShownAt=Date.now();
 }
 document.querySelectorAll('[data-dept]').forEach(el=>{
-  /* Desktop: mostrar al mover, ocultar al salir */
   el.addEventListener('mousemove',e=>{_showTt(el.dataset.dept,e.clientX+16,e.clientY-10);});
   el.addEventListener('mouseleave',function(){
-    /* En movil, mouseleave se dispara al levantar el dedo — ignorarlo */
     if(window.innerWidth<=900) return;
     _hideTt();
   });
-  /* Movil: mostrar al tocar */
   el.addEventListener('touchstart',function(e){
     var r=el.getBoundingClientRect();
     var ty=r.bottom+10;
@@ -667,7 +664,6 @@ document.querySelectorAll('[data-dept]').forEach(el=>{
     _showTt(el.dataset.dept, r.left+r.width/2-95, ty);
   },{passive:true});
 });
-/* Movil: cerrar al tocar fuera (con proteccion 400ms) */
 document.addEventListener('touchstart',function(e){
   if(tt.style.display==='none') return;
   if(Date.now()-_ttShownAt<400) return;
@@ -1667,16 +1663,17 @@ function showProjectDetail(cui){
   <div style="font-size:13.5px;font-weight:800;color:#fff;line-height:1.4;max-width:calc(100% - 130px);margin-bottom:6px">
     ${nombre}
   </div>
-  <div style="display:flex;gap:4px;flex-wrap:wrap;align-items:center">
+  <div style="display:flex;gap:4px;flex-wrap:wrap;align-items:center;padding-right:96px">
     ${s.est?`<span style="padding:2px 8px;border-radius:8px;font-size:9px;font-weight:800;
       background:${s.est==='ACTIVO'?'rgba(102,203,0,.28)':'rgba(210,50,50,.25)'};
       color:${s.est==='ACTIVO'?'#B8FFB8':'#FFAAAA'};border:1px solid ${s.est==='ACTIVO'?'rgba(102,203,0,.4)':'rgba(210,50,50,.4)'}">${s.est==='ACTIVO'?'● ACTIVO':'○ CERRADO'}</span>`:''}
     ${p&&p.Departamento?`<span style="padding:2px 8px;border-radius:8px;font-size:9px;font-weight:700;background:rgba(255,255,255,.09);color:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.15)">📍 ${p.Departamento}</span>`:''}
     ${p&&p.Tipo_Proyecto?`<span style="padding:2px 8px;border-radius:8px;font-size:9px;font-weight:600;background:rgba(255,255,255,.06);color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1)">${p.Tipo_Proyecto}</span>`:''}
+    ${benef>0?`<span style="margin-left:auto;flex-shrink:0;display:inline-flex;align-items:center;gap:7px;padding:4px 13px 4px 10px;border-radius:14px;font-size:10px;font-weight:800;background:rgba(255,255,255,.2);color:#fff;border:1.5px solid rgba(255,255,255,.42);letter-spacing:.15px;white-space:nowrap"><svg viewBox='0 0 26 18' width='20' height='14' fill='none'><circle cx='9' cy='6' r='4' fill='rgba(255,255,255,.9)'/><circle cx='18' cy='6' r='4' fill='rgba(255,255,255,.9)'/><path d='M1 17c0-4.418 3.582-8 8-8h8c4.418 0 8 3.582 8 8' stroke='rgba(255,255,255,.85)' stroke-width='2' stroke-linecap='round'/></svg><span style="font-size:12px;letter-spacing:-.3px">${_fmtN(benef)}</span><span style="opacity:.75;font-size:8.5px;font-weight:600"> benef.</span></span>`:''}    
   </div>
 </div>
 
-<!-- ══ DATA ROW ══ -->
+<!-- DATA ROW -->
 <div id="pd-data-row" style="display:grid;grid-template-columns:28% 13% 13% 18% 18% 10%;background:#fff;
             border-bottom:2px solid #E8F5E9;flex-shrink:0;min-height:0">
 
