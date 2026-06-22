@@ -78,6 +78,8 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#F0F2F5;color:#2D2D2
    ════════════════════════════════════════════ */
 @media(max-width:900px){
   .r2,.r3,.r75{grid-template-columns:1fr}
+  .rmap{flex-direction:column!important;gap:10px!important}
+  .rmap>.card{width:100%!important;flex-shrink:1!important}
   .con{padding:12px}
   .kg{grid-template-columns:repeat(2,1fr)!important;gap:8px}
   .cw{height:120px}.cwsm{height:150px}.cwlg{height:220px}
@@ -87,95 +89,107 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#F0F2F5;color:#2D2D2
   .pd-kpi:nth-child(2){border-right:none}
   .pd-body{grid-template-columns:1fr}
   .pd-col:first-child{border-right:none;border-bottom:1px solid #F0F0F0}
-  /* Fix inline flex on rmap → stack vertical */
-  .rmap{flex-direction:column!important;gap:10px!important}
-  .rmap>.card{width:100%!important;flex-shrink:1!important}
-  #resumen-right-area{flex-direction:column}
+  #resumen-right-area{flex-direction:column!important}
 }
 
 /* ════════════════════════════════════════════
-   MOBILE — phones (≤600px)
+   MOBILE (≤600px) — Layout completo
    ════════════════════════════════════════════ */
 @media(max-width:600px){
-  body{font-size:14px}
+  /* Scroll libre */
+  html,body{overflow-x:hidden;-webkit-overflow-scrolling:touch}
+  body{font-size:14px;touch-action:pan-y}
 
-  /* ── Header ── */
-  .hdr{height:auto!important;min-height:48px;padding:6px 10px;gap:8px}
-  .hdr img{height:36px!important;width:auto!important}
-  .hl{gap:10px}
-  .ht h1{font-size:13px}
-  .ht p{font-size:10px}
-  .hbadge{display:none}
+  /* ── Header compacto ── */
+  .hdr{height:auto!important;min-height:44px;padding:5px 10px;gap:6px}
+  .hdr img{height:32px!important;width:auto!important;max-width:90vw}
+  .ht h1{font-size:12px}.ht p,.hbadge{display:none}
 
-  /* ── Tabs: scrollable, touch-friendly ── */
-  .nav{padding:0 4px;overflow-x:auto;-webkit-overflow-scrolling:touch;
-       scrollbar-width:none;display:flex;gap:0}
+  /* ── Tabs: scroll horizontal ── */
+  .nav{padding:0;overflow-x:auto;-webkit-overflow-scrolling:touch;
+       scrollbar-width:none;display:flex}
   .nav::-webkit-scrollbar{display:none}
-  .nb{padding:11px 14px;font-size:13px;min-height:46px;white-space:nowrap;flex-shrink:0}
-  .nb.active{border-bottom-width:3px}
+  .nb{padding:10px 14px;font-size:12px;min-height:44px;
+      white-space:nowrap;flex-shrink:0}
 
-  /* ── Filtros: columna ── */
-  .fb{flex-direction:column;align-items:stretch;padding:8px 10px;gap:6px}
-  .fl{margin-bottom:2px}
-  .fs{width:100%;font-size:15px;padding:9px 12px;min-height:42px;border-radius:8px}
-  .ftag{padding:8px 16px;font-size:13px;min-height:40px;align-self:flex-start}
+  /* ── Filtros COMPACTOS: una fila con toggle ── */
+  .fb{padding:0!important;gap:0!important;flex-direction:column!important;
+      border-bottom:1px solid var(--g2)}
+  .fb-toggle-row{display:flex!important;align-items:center;
+                 padding:8px 12px;gap:8px;cursor:pointer;
+                 background:#fff;user-select:none}
+  .fb-toggle-row .fl{flex:1;font-size:11px;font-weight:700;
+                     color:var(--g4);text-transform:uppercase;letter-spacing:.5px}
+  .fb-badge{background:var(--v1);color:#fff;border-radius:10px;
+            padding:2px 8px;font-size:10px;font-weight:700;display:none}
+  .fb-badge.visible{display:inline-block}
+  .fb-arrow{font-size:14px;color:var(--g3);transition:transform .2s}
+  .fb-arrow.open{transform:rotate(180deg)}
+  .fb-selects{display:none;flex-direction:column;gap:6px;
+              padding:8px 12px 10px;background:#fafafa;
+              border-top:1px solid var(--g2)}
+  .fb-selects.open{display:flex}
+  .fs{width:100%;font-size:14px;padding:8px 12px;
+      min-height:40px;border-radius:8px}
+  .fb > .ftag{display:none!important}
+  .fb > div[style*="margin-left:auto"]{display:none!important}
 
   /* ── Contenedor ── */
-  .con{padding:8px 8px 20px}
+  .con{padding:6px 6px 24px}
   .row{gap:8px;margin-bottom:8px}
 
-  /* ── KPI cards: 2 columnas, más grandes ── */
-  .kg{grid-template-columns:repeat(2,1fr)!important;gap:8px}
-  .kc{padding:10px 12px 8px}
-  .kv{font-size:24px}
-  .kl{font-size:9px}
-  .ks{font-size:10px}
-  .ki{font-size:18px}
+  /* ── KPI cards: 2 col ── */
+  .kg{grid-template-columns:repeat(2,1fr)!important;gap:6px}
+  .kc{padding:8px 10px 6px}
+  .kv{font-size:22px}
+  .kl{font-size:9px}.ks{font-size:10px}.ki{font-size:16px}
 
-  /* ── Mapa: apilar ── */
+  /* ── MAPA: ancho completo, altura razonable ── */
   .rmap{flex-direction:column!important;gap:8px!important}
-  .rmap>.card{width:100%!important;flex-shrink:1!important;min-width:0!important}
-  #map1{max-height:240px!important}
+  .rmap>.card{width:100%!important;flex-shrink:1!important}
+  #map1{max-height:260px;width:100%;display:block}
+  /* OCULTAR gráficos laterales (Tendencia + Devengado) en móvil */
+  #mob-charts-hide{display:none!important}
 
-  /* ── Charts ── */
-  .cw{height:130px}.cwsm{height:160px}.cwlg{height:190px}
-  .ch{padding:8px 10px}
-  .ct{font-size:13px}
-  .cb{padding:6px 8px}
+  /* ── Panel proyectos por depto: ocupa el resto ── */
+  #resumen-right-area{flex-direction:column!important;gap:8px!important}
+  #resumen-right-area>.card{flex:1!important;width:100%!important}
+  #resumen-panel-body{grid-template-columns:1fr!important}
 
-  /* ── TABLA PROYECTOS — más tappable ── */
+  /* ── Hint de toque mapa ── */
+  #mob-map-hint{display:block!important}
+
+  /* ── Tabla proyectos (Cartera) ── */
   .twrap{overflow-x:auto;-webkit-overflow-scrolling:touch;
-         max-height:calc(100vh - 220px);border-radius:0 0 12px 12px}
-  .dtable{min-width:480px;font-size:13px}
-  .dtable th{padding:11px 12px;font-size:11px;position:sticky;top:0;z-index:2}
-  .dtable td{padding:12px 12px;font-size:12px;line-height:1.4}
-  /* Hace que toda la fila sea el área de tap */
+         max-height:calc(100svh - 200px);border-radius:0 0 10px 10px}
+  .dtable{min-width:460px;font-size:12px}
+  .dtable th{padding:10px 10px;font-size:11px}
+  .dtable td{padding:11px 10px;line-height:1.4}
   .dtable tbody tr{cursor:pointer}
   .dtable tbody tr:active td{background:var(--v4)!important}
 
-  /* ── Detalle proyecto (ya es fixed overlay) ── */
+  /* ── Charts ── */
+  .cw{height:130px}.cwsm{height:150px}.cwlg{height:180px}
+  .ch{padding:7px 10px}.ct{font-size:12px}.cb{padding:5px 8px}
+
+  /* ── Panel detalle proyecto ── */
   .pd-kpis{grid-template-columns:repeat(2,1fr)}
+  .pd-kpi:nth-child(2){border-right:none}
   .pd-kpi{padding:8px 8px 6px}
-  .pd-kpi-val{font-size:17px}
+  .pd-kpi-val{font-size:16px}
   .pd-body{grid-template-columns:1fr}
   .pd-col:first-child{border-right:none;border-bottom:1px solid #F0F0F0}
-  .pd-hdr{padding:12px 14px 10px}
-  .pd-title{font-size:12px}
-  .pd-ytable{font-size:11px}
-  .pd-ytable th,.pd-ytable td{padding:5px 8px}
+  .pd-hdr{padding:10px 12px 8px}
+  .pd-title{font-size:11px}
+  .pd-ytable{font-size:10.5px}
 
-  /* ── Cards genéricas ── */
-  .card{border-radius:10px}
-  .ftr{padding:10px;font-size:10px}
+  .ftr{padding:8px;font-size:10px}
 }
 
-/* ════════════════════════════════════════════
-   MOBILE — pantallas pequeñas (≤400px)
-   ════════════════════════════════════════════ */
 @media(max-width:400px){
-  .nb{font-size:11px;padding:10px 10px}
-  .kv{font-size:20px}
-  .dtable{min-width:420px;font-size:12px}
+  .nb{font-size:11px;padding:9px 10px}
+  .kv{font-size:18px}
+  .dtable{min-width:400px}
 }
 
 @keyframes deptGlow{0%,100%{filter:drop-shadow(0 0 6px rgba(255,200,0,.7));}50%{filter:drop-shadow(0 0 14px rgba(255,200,0,1));}}
@@ -312,11 +326,24 @@ body{display:flex;flex-direction:column;height:100vh}
 </nav>
 
 <div class="fb">
-  <span class="fl">Filtros:</span>
-  <select class="fs" id="fConv" onchange="applyF()"><option value="">Todos los convenios</option><option>BID 1</option><option>BID 2</option><option>JICA 1</option><option>JICA 2</option><option>KFW</option><option>Punche 1</option></select>
+  <!-- MÓVIL: fila de toggle -->
+  <div class="fb-toggle-row" onclick="
+    var sel=this.nextElementSibling;
+    var arrow=this.querySelector('.fb-arrow');
+    sel.classList.toggle('open');
+    arrow.classList.toggle('open');
+  ">
+    <span class="fl">⚙ Filtros</span>
+    <span id="fb-active-badge" class="fb-badge">Activo</span>
+    <span class="fb-arrow">▾</span>
+  </div>
+  <!-- selects dentro del panel colapsable -->
+  <div class="fb-selects">
+  <select class="fs" id="fConv" onchange="applyF();updateFilterBadge()"><option value="">Todos los convenios</option><option>BID 1</option><option>BID 2</option><option>JICA 1</option><option>JICA 2</option><option>KFW</option><option>Punche 1</option></select>
   <select class="fs" <select class="fs" id="fAño" onchange="applyF()"><option value="">Todos los años</option><option>2014</option><option>2015</option><option>2016</option><option>2017</option><option>2018</option><option>2019</option><option>2020</option><option>2021</option><option>2022</option><option>2023</option><option>2024</option><option>2025</option><option>2026</option></select>
   <select class="fs" id="fTipo" onchange="applyF()"><option value="">Todos los tipos</option><option>Gestión integral de residuos sólidos</option><option>Infraestructura de disposición final</option><option>Limpieza pública</option><option>Recuperación de áreas degradadas</option></select>
   <span class="ftag" onclick="resetF()">✕ Limpiar</span>
+  </div><!-- /fb-selects -->
   <!-- Buscador CUI -->
   <div style="display:flex;align-items:center;gap:0;margin-left:auto;border:1.5px solid #3D9A5C;border-radius:8px;overflow:hidden;background:#fff">
     <span style="padding:0 8px;font-size:12px;color:#3D9A5C;font-weight:800;white-space:nowrap;border-right:1px solid #c8e6c9;background:#f4fbf4;height:100%;display:flex;align-items:center">🔍 CUI</span>
@@ -352,6 +379,10 @@ body{display:flex;flex-direction:column;height:100vh}
       <div class="ch">
         <div class="ct"><span class="dot"></span>Distribución Geográfica</div>
         <span class="csub" id="map1-sub">Haz clic en un departamento</span>
+        <span id="mob-map-hint" style="display:none;font-size:11px;color:#105000;font-weight:600;
+          padding:2px 10px;background:#E8F5E9;border-radius:10px;border:1px solid #A5D6A7">
+          👆 Toca el mapa para ver proyectos
+        </span>
       </div>
       <div class="cb" style="display:flex;flex-direction:column;align-items:center;padding:8px 10px;gap:8px">
         <svg id="map1" viewBox="0 0 430 620" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;max-height:340px;">
@@ -401,7 +432,7 @@ body{display:flex;flex-direction:column;height:100vh}
     </div>
 
     <!-- CHARTS: Tendencia + Mensual stacked right -->
-    <div style="flex-shrink:0;width:290px;display:flex;flex-direction:column;gap:8px">
+    <div id="mob-charts-hide" style="flex-shrink:0;width:290px;display:flex;flex-direction:column;gap:8px">
       <div class="card" style="flex:1;min-height:220px"><div class="ch"><div class="ct"><span class="dot"></span>Tendencia Histórica de Ejecución 2013–2025</div><span class="csub">Millones de soles</span></div><div class="cb"><div class="cw"><canvas id="cTend"></canvas></div></div></div>
       <div class="card" style="flex:1;min-height:220px"><div class="ch"><div class="ct"><span class="dot"></span>Devengado Mensual 2025</div><span class="csub">Millones S/</span></div><div class="cb"><div class="cw"><canvas id="cMens"></canvas></div></div></div>
     </div>
@@ -1967,6 +1998,88 @@ function showProjectDetail(cui){
 })();
 </script>
 
+
+<script>
+(function(){
+  var isMob = function(){ return window.innerWidth <= 600; };
+
+  // ── 1. Badge filtros activos ────────────────────────────────────────────────
+  window.updateFilterBadge = function(){
+    var b = document.getElementById('fb-active-badge');
+    if(!b) return;
+    var conv = document.getElementById('fConv');
+    var ano  = document.getElementById('fAño');
+    var tipo = document.getElementById('fTipo');
+    var active = (conv&&conv.value)||(ano&&ano.value)||(tipo&&tipo.value);
+    b.classList.toggle('visible', !!active);
+  };
+
+  // ── 2. Touch-friendly table rows ───────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', function(){
+    var tbody = document.getElementById('ptbody');
+    if(tbody){
+      tbody.addEventListener('click', function(e){
+        var tr = e.target.closest('tr');
+        if(!tr) return;
+        var td = tr.querySelector('td[data-cui]');
+        if(td && typeof showProjectDetail === 'function')
+          showProjectDetail(td.dataset.cui);
+      }, true);
+    }
+
+    // Tabla count text mejor en móvil
+    var hintEl = document.getElementById('mobile-tap-hint');
+    if(hintEl) hintEl.style.display = isMob() ? 'block' : 'none';
+  });
+
+  // ── 3. Botón "Volver" en overlay detalle ───────────────────────────────────
+  var _orig = window.showProjectDetail;
+  if(typeof _orig === 'function'){
+    window.showProjectDetail = function(cui){
+      _orig(cui);
+      if(!isMob()) return;
+      var panel = document.getElementById('proj-detail-panel');
+      if(!panel) return;
+      if(document.getElementById('mob-back-btn')) return;
+      var btn = document.createElement('button');
+      btn.id = 'mob-back-btn';
+      btn.textContent = '← Volver';
+      btn.style.cssText = [
+        'position:sticky','top:0','z-index:10','width:100%',
+        'padding:13px 16px','background:#105000','color:#fff',
+        'border:none','font-size:14px','font-weight:700',
+        'cursor:pointer','text-align:left','letter-spacing:.2px',
+        'display:block'
+      ].join(';');
+      btn.onclick = function(){
+        if(typeof closeProjectDetail==='function') closeProjectDetail();
+      };
+      panel.insertBefore(btn, panel.firstChild);
+    };
+  }
+
+  // ── 4. Asegurar scroll libre en el body ────────────────────────────────────
+  // closeProjectDetail ya restaura overflow, pero nos aseguramos
+  var _origClose = window.closeProjectDetail;
+  if(typeof _origClose === 'function'){
+    window.closeProjectDetail = function(){
+      _origClose();
+      document.body.style.overflow = '';
+      document.body.style.touchAction = 'pan-y';
+    };
+  }
+
+  // ── 5. Hint visual en mapa solo en móvil ───────────────────────────────────
+  function setupMapHint(){
+    var h = document.getElementById('mob-map-hint');
+    if(h) h.style.display = isMob() ? 'inline-block' : 'none';
+  }
+  document.addEventListener('DOMContentLoaded', setupMapHint);
+  window.addEventListener('resize', setupMapHint);
+
+})();
+</script>
+
 </body>
 </html>
 
@@ -2018,6 +2131,88 @@ function showProjectDetail(cui){
       }
     };
   }
+})();
+</script>
+
+
+<script>
+(function(){
+  var isMob = function(){ return window.innerWidth <= 600; };
+
+  // ── 1. Badge filtros activos ────────────────────────────────────────────────
+  window.updateFilterBadge = function(){
+    var b = document.getElementById('fb-active-badge');
+    if(!b) return;
+    var conv = document.getElementById('fConv');
+    var ano  = document.getElementById('fAño');
+    var tipo = document.getElementById('fTipo');
+    var active = (conv&&conv.value)||(ano&&ano.value)||(tipo&&tipo.value);
+    b.classList.toggle('visible', !!active);
+  };
+
+  // ── 2. Touch-friendly table rows ───────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', function(){
+    var tbody = document.getElementById('ptbody');
+    if(tbody){
+      tbody.addEventListener('click', function(e){
+        var tr = e.target.closest('tr');
+        if(!tr) return;
+        var td = tr.querySelector('td[data-cui]');
+        if(td && typeof showProjectDetail === 'function')
+          showProjectDetail(td.dataset.cui);
+      }, true);
+    }
+
+    // Tabla count text mejor en móvil
+    var hintEl = document.getElementById('mobile-tap-hint');
+    if(hintEl) hintEl.style.display = isMob() ? 'block' : 'none';
+  });
+
+  // ── 3. Botón "Volver" en overlay detalle ───────────────────────────────────
+  var _orig = window.showProjectDetail;
+  if(typeof _orig === 'function'){
+    window.showProjectDetail = function(cui){
+      _orig(cui);
+      if(!isMob()) return;
+      var panel = document.getElementById('proj-detail-panel');
+      if(!panel) return;
+      if(document.getElementById('mob-back-btn')) return;
+      var btn = document.createElement('button');
+      btn.id = 'mob-back-btn';
+      btn.textContent = '← Volver';
+      btn.style.cssText = [
+        'position:sticky','top:0','z-index:10','width:100%',
+        'padding:13px 16px','background:#105000','color:#fff',
+        'border:none','font-size:14px','font-weight:700',
+        'cursor:pointer','text-align:left','letter-spacing:.2px',
+        'display:block'
+      ].join(';');
+      btn.onclick = function(){
+        if(typeof closeProjectDetail==='function') closeProjectDetail();
+      };
+      panel.insertBefore(btn, panel.firstChild);
+    };
+  }
+
+  // ── 4. Asegurar scroll libre en el body ────────────────────────────────────
+  // closeProjectDetail ya restaura overflow, pero nos aseguramos
+  var _origClose = window.closeProjectDetail;
+  if(typeof _origClose === 'function'){
+    window.closeProjectDetail = function(){
+      _origClose();
+      document.body.style.overflow = '';
+      document.body.style.touchAction = 'pan-y';
+    };
+  }
+
+  // ── 5. Hint visual en mapa solo en móvil ───────────────────────────────────
+  function setupMapHint(){
+    var h = document.getElementById('mob-map-hint');
+    if(h) h.style.display = isMob() ? 'inline-block' : 'none';
+  }
+  document.addEventListener('DOMContentLoaded', setupMapHint);
+  window.addEventListener('resize', setupMapHint);
+
 })();
 </script>
 
