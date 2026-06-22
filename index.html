@@ -194,7 +194,7 @@ body{display:flex;flex-direction:column;height:100vh}
 .ftr{padding:7px 14px;font-size:9px;flex-shrink:0}
 </style>
 
-<style id="mob-v32">
+<style id="mob-v33">
 @media(max-width:900px){
   html,body{height:auto!important;overflow:auto!important;overflow-x:hidden!important;display:block!important}
   .con{flex:none!important;overflow:visible!important;display:block!important;padding:8px 10px!important}
@@ -207,7 +207,7 @@ body{display:flex;flex-direction:column;height:100vh}
   .r2,.r3,.r75{grid-template-columns:1fr!important}
   .kg{grid-template-columns:repeat(3,1fr)!important;flex-shrink:0!important;margin-bottom:6px!important}
   .kg .kc:nth-child(4){display:none!important}
-  /* Mejora 1: KPI panels grandes y en negrita, sin extras */
+  /* KPI panels: solo titulo + valor, sin extras */
   .kv{font-size:21px!important;font-weight:900!important}.kc{padding:7px 8px 5px!important}
   .kl{font-size:12px!important;font-weight:900!important}.ks{display:none!important}
   .kc .ki{display:none!important}.kc .pb{display:none!important}
@@ -228,18 +228,8 @@ body{display:flex;flex-direction:column;height:100vh}
   .dtable td{padding:9px 6px!important;font-size:12px!important}
   .dtable th{padding:7px 6px!important;font-size:11px!important}
   #proj-detail-panel{overflow-y:scroll!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch!important}
-  .pd-hdr{padding:8px 10px!important}.pd-title{font-size:12px!important}
-  .pd-kpis{grid-template-columns:repeat(2,1fr)!important}
-  .pd-kpi{padding:7px 6px 5px!important}
-  .pd-kpi:nth-child(2),.pd-kpi:nth-child(4){border-right:none!important}
-  .pd-kpi-val{font-size:14px!important}
-  .pd-body{grid-template-columns:1fr!important}
-  .pd-col:first-child{border-right:none!important;border-bottom:1px solid #F0F0F0!important}
-  .pd-col{padding:8px 10px!important}
   [data-dept]{cursor:pointer!important}
   [data-dept].dept-sel{stroke:#1565C0!important;stroke-width:3.5px!important;filter:drop-shadow(0 0 7px rgba(21,101,192,.75))!important;transform-box:fill-box!important;transform-origin:center!important;transform:scale(1.05)!important}
-  /* Componentes y Acciones mejorado */
-  #comp-acc-content{font-size:11px!important;line-height:1.5!important}
 }
 </style>
 
@@ -1859,19 +1849,13 @@ function showProjectDetail(cui){
 </script>
 </body>
 </html>
-<script id="mob-v32">
+<script id="mob-v33">
 (function(){
   /* ── Fondo celeste en KPIs al seleccionar departamento ── */
   function _setKpiCeleste(on){
     document.querySelectorAll('.kc').forEach(function(kc){
-      if(on){
-        kc.style.background='#E3F2FD';
-        kc.style.borderTop='2px solid #90CAF9';
-        kc.style.transition='background .35s,border-color .35s';
-      } else {
-        kc.style.background='';
-        kc.style.borderTop='';
-      }
+      if(on){kc.style.background='#E3F2FD';kc.style.borderTop='2px solid #90CAF9';}
+      else{kc.style.background='';kc.style.borderTop='';}
     });
   }
 
@@ -1883,12 +1867,6 @@ function showProjectDetail(cui){
     _h0.call(this,el,dept);
     if(window.innerWidth>900)return;
     setTimeout(function(){_setKpiCeleste(!!window.selectedDept);},50);
-    if(typeof _showTt==='function'&&el&&el.getBoundingClientRect){
-      var r=el.getBoundingClientRect();
-      var ty=r.bottom+10;
-      if(ty+135>window.innerHeight)ty=Math.max(8,r.top-145);
-      _showTt(dept,Math.max(8,r.left+r.width/2-95),ty);
-    }
     setTimeout(function(){
       var g=document.getElementById('kpi-grid');if(!g)return;
       g.scrollIntoView({behavior:'smooth',block:'start'});
@@ -1912,138 +1890,187 @@ function showProjectDetail(cui){
     },{passive:true});
   }
 
-  /* ── Mejoras al abrir proyecto (solo móvil) ── */
+  /* ── Formateo ── */
+  function _fM(n){
+    if(!n||n===0)return '—';
+    return 'S/ '+(n/1e6).toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2})+' M';
+  }
+  function _fN(n){return (n&&n>0)?Number(n).toLocaleString('es-PE'):'—';}
+  function _fPct(n){return (n!=null&&!isNaN(n))?Number(n).toFixed(1)+'%':'—';}
+  function _avColor(v){
+    if(v>=80)return {bg:'#E8F5E9',br:'#A5D6A7',tx:'#1B5E20'};
+    if(v>=50)return {bg:'#FFF9C4',br:'#F9A825',tx:'#E65100'};
+    return {bg:'#FFEBEE',br:'#EF9A9A',tx:'#B71C1C'};
+  }
+  function _kpanel(lbl,val,bg,br,tx,sub){
+    return '<div style="background:'+bg+';border:1.5px solid '+br+';border-radius:10px;padding:8px 6px;text-align:center;min-height:58px;display:flex;flex-direction:column;justify-content:center;gap:3px">'
+      +'<div style="font-size:7.5px;font-weight:900;color:'+tx+';text-transform:uppercase;letter-spacing:.4px;line-height:1.2">'+lbl+'</div>'
+      +'<div style="font-size:16px;font-weight:900;color:'+tx+';line-height:1.05">'+val+'</div>'
+      +(sub?'<div style="font-size:7px;color:'+tx+';opacity:.7;line-height:1.2">'+sub+'</div>':'')
+      +'</div>';
+  }
+
+  /* ── Aplicar mejoras móvil al abrir proyecto ── */
+  function _applyMobProject(cui){
+    if(window.innerWidth>900)return;
+    var p=document.getElementById('proj-detail-panel');
+    if(!p||!p.children.length)return;
+
+    /* 1. Cerrar tooltip de departamento (AGRESIVO) */
+    var tt=document.getElementById('mtt');
+    if(tt)tt.setAttribute('style','display:none!important');
+
+    /* 2. Scroll en el panel */
+    p.style.overflowY='scroll';
+    p.style.webkitOverflowScrolling='touch';
+
+    /* 3. Botón Volver — sticky arriba */
+    if(document.getElementById('mob-back-btn'))document.getElementById('mob-back-btn').remove();
+    var btn=document.createElement('button');
+    btn.id='mob-back-btn';
+    btn.innerHTML='&#8592; Volver';
+    btn.style.cssText='position:sticky;top:0;z-index:30;width:100%;padding:11px 16px;background:#105000;color:#fff;border:none;font-size:13px;font-weight:700;cursor:pointer;text-align:left;display:block;letter-spacing:.3px;box-shadow:0 2px 6px rgba(0,0,0,.3);';
+    btn.onclick=function(){
+      if(typeof closeProjectDetail==='function')closeProjectDetail();
+      var tt2=document.getElementById('mtt');
+      if(tt2)tt2.removeAttribute('style');
+    };
+    p.insertBefore(btn,p.firstChild);
+
+    /* Encontrar el outer wrapper (primer div en el panel, ahora en children[1]) */
+    /* Buscamos el div con flex-direction:column que contiene todo */
+    var outerDiv=null;
+    for(var ci=0;ci<p.children.length;ci++){
+      if(p.children[ci].tagName==='DIV'){outerDiv=p.children[ci];break;}
+    }
+    if(!outerDiv)return;
+    outerDiv.style.overflow='visible';
+    outerDiv.style.height='auto';
+
+    /* Referencias a secciones por índice de hijos */
+    var hdrEl=outerDiv.children[0];   /* header verde */
+    var dataRow=outerDiv.children[1]; /* fila datos desktop */
+    var botRow=outerDiv.children[2];  /* componentes + ejecucion */
+
+    /* 4. Header verde: sticky + compacto */
+    if(hdrEl){
+      hdrEl.style.position='sticky';
+      hdrEl.style.top='40px';
+      hdrEl.style.zIndex='9';
+      hdrEl.style.padding='7px 12px 6px';
+      /* Título */
+      var titleDiv=hdrEl.querySelector('div[style*="max-width:calc(100%"]');
+      if(titleDiv){
+        titleDiv.style.fontSize='11.5px';
+        titleDiv.style.lineHeight='1.3';
+        titleDiv.style.display='-webkit-box';
+        titleDiv.style.webkitLineClamp='2';
+        titleDiv.style.webkitBoxOrient='vertical';
+        titleDiv.style.overflow='hidden';
+        titleDiv.style.marginBottom='3px';
+      }
+      /* Línea CUI */
+      var cuiDiv=hdrEl.querySelector('div[style*="letter-spacing:.8px"]');
+      if(cuiDiv){cuiDiv.style.fontSize='9px';cuiDiv.style.marginBottom='2px';}
+      /* Badge de estado (círculo) — reducir tamaño */
+      var stWrap=hdrEl.querySelector('div[style*="right:46px"]');
+      if(stWrap){
+        stWrap.style.top='5px';
+        var circ=stWrap.querySelector('div');
+        if(circ){circ.style.width='32px';circ.style.height='32px';}
+        var em=stWrap.querySelector('span');
+        if(em)em.style.fontSize='15px';
+        var lbl=stWrap.querySelectorAll('span')[1];
+        if(lbl)lbl.style.fontSize='6px';
+      }
+    }
+
+    /* 5. Ocultar fila de datos desktop */
+    if(dataRow)dataRow.setAttribute('style','display:none!important');
+
+    /* 6. Franja de 6 KPIs: 2 columnas × 3 filas */
+    if(document.getElementById('mob-pd-kpis'))document.getElementById('mob-pd-kpis').remove();
+    var prj=(typeof proyectos!=='undefined')?proyectos.find(function(x){return String(x.CUI)===String(cui);}):null;
+    var fin=prj?(prj.fin||{}):{};
+    var devT=fin.Dev||0;
+    var pim=fin.PIM||0;
+    var avFin=pim>0?Math.round(devT/pim*1000)/10:0;
+    var avFis=0;
+    try{
+      if(typeof _avFisicoData!=='undefined'){
+        var _af=_avFisicoData[cui]!=null?_avFisicoData[cui]:(_avFisicoData[String(cui)]!=null?_avFisicoData[String(cui)]:0);
+        avFis=_af||0;
+      }
+    }catch(e){}
+    var ciT=0;
+    try{
+      if(typeof costoData!=='undefined'){ciT=costoData[cui]||costoData[String(cui)]||0;}
+    }catch(e){}
+    var bnf=0;
+    try{
+      if(typeof benefiData!=='undefined'){bnf=benefiData[cui]||benefiData[String(cui)]||0;}
+    }catch(e){}
+    var pmiV='NO';
+    try{
+      if(typeof ssiData!=='undefined'){var sd=ssiData[cui]||ssiData[String(cui)];if(sd)pmiV=sd.pmi||'NO';}
+    }catch(e){}
+
+    var cAF=_avColor(avFis),cAFin=_avColor(avFin);
+    var kbx=document.createElement('div');
+    kbx.id='mob-pd-kpis';
+    kbx.style.cssText='display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:8px 10px;background:#F0F7F0;border-bottom:2px solid #C8E6C9;';
+    kbx.innerHTML=
+      _kpanel('Avance Físico',_fPct(avFis),cAF.bg,cAF.br,cAF.tx,'')+
+      _kpanel('Avance Financiero',_fPct(avFin),cAFin.bg,cAFin.br,cAFin.tx,'')+
+      _kpanel('Costo de Inversión',_fM(ciT),'#FFF3E0','#FFCC80','#E65100','Actualizado')+
+      _kpanel('Devengado Total',_fM(devT),'#E8F5E9','#81C784','#105000','')+
+      _kpanel('Beneficiarios',_fN(bnf),'#EDE7F6','#B39DDB','#4527A0','')+
+      _kpanel('PMI',(pmiV==='SI'?'✓ Sí':'✗ No'),
+        (pmiV==='SI'?'#E8F5E9':'#FFEBEE'),
+        (pmiV==='SI'?'#A5D6A7':'#EF9A9A'),
+        (pmiV==='SI'?'#1B5E20':'#B71C1C'),'');
+    /* Insertar después del header verde */
+    if(hdrEl&&hdrEl.parentNode)hdrEl.parentNode.insertBefore(kbx,hdrEl.nextSibling);
+
+    /* 7. Bottom row: ocultar Ejecución, scroll en Componentes */
+    if(botRow){
+      botRow.style.overflow='visible';
+      botRow.style.flex='none';
+      botRow.style.display='block';
+      /* Ocultar col. Ejecución (children[1]) */
+      if(botRow.children[1])botRow.children[1].setAttribute('style','display:none!important');
+      /* Componentes: scroll */
+      var compCol=botRow.children[0];
+      if(compCol){
+        compCol.style.maxHeight='320px';
+        compCol.style.overflowY='auto';
+        compCol.style.webkitOverflowScrolling='touch';
+        compCol.style.borderRight='none';
+        compCol.style.width='100%';
+        compCol.style.boxSizing='border-box';
+      }
+    }
+
+    /* Asegurar que tooltip siga oculto */
+    setTimeout(function(){
+      var tt3=document.getElementById('mtt');
+      if(tt3)tt3.setAttribute('style','display:none');
+    },200);
+
+    p.scrollTop=0;
+  }
+
+  /* ── Wrapper showProjectDetail ── */
   var _op=window.showProjectDetail;
   if(typeof _op==='function'){
     window.showProjectDetail=function(cui){
       _op(cui);
-      if(window.innerWidth>900)return;
-      var p=document.getElementById('proj-detail-panel');if(!p)return;
-      p.style.overflowY='scroll';
-      p.style.webkitOverflowScrolling='touch';
-
-      /* Cerrar tooltip de departamento */
+      /* Cerrar tooltip inmediatamente */
       var tt=document.getElementById('mtt');
-      if(tt){tt.style.opacity='0';tt.style.pointerEvents='none';}
-
-      /* Botón volver (sticky) */
-      var oldB=document.getElementById('mob-back-btn');if(oldB)oldB.remove();
-      var btn=document.createElement('button');
-      btn.id='mob-back-btn';
-      btn.innerHTML='&#8592; Volver a la lista';
-      btn.style.cssText='position:sticky;top:0;z-index:30;width:100%;padding:10px 16px;background:#105000;color:#fff;border:none;font-size:13px;font-weight:700;cursor:pointer;text-align:left;display:block;letter-spacing:.3px;box-shadow:0 2px 6px rgba(0,0,0,.25);';
-      btn.onclick=function(){
-        if(typeof closeProjectDetail==='function')closeProjectDetail();
-        var tt2=document.getElementById('mtt');
-        if(tt2){tt2.style.opacity='';tt2.style.pointerEvents='';}
-      };
-      p.insertBefore(btn,p.firstChild);
-
-      /* Corregir overflow del wrapper externo para sticky */
-      var outerDiv=p.querySelector('div[style*="flex-direction:column"]');
-      if(outerDiv){outerDiv.style.overflow='visible';outerDiv.style.height='auto';}
-
-      /* Mejora 3: encabezado verde sticky + compacto */
-      var hdrEl=p.querySelector('div[style*="3D9A5C"]');
-      if(hdrEl){
-        hdrEl.style.position='sticky';
-        hdrEl.style.top='41px';
-        hdrEl.style.zIndex='9';
-        hdrEl.style.padding='7px 12px 6px';
-        /* Compactar título */
-        var titleDiv=hdrEl.querySelector('div[style*="max-width:calc(100%"]');
-        if(titleDiv){
-          titleDiv.style.fontSize='12px';
-          titleDiv.style.display='-webkit-box';
-          titleDiv.style.webkitLineClamp='2';
-          titleDiv.style.webkitBoxOrient='vertical';
-          titleDiv.style.overflow='hidden';
-          titleDiv.style.marginBottom='4px';
-          titleDiv.style.lineHeight='1.35';
-        }
-        /* Compactar línea CUI */
-        var cuiDiv=hdrEl.querySelector('div[style*="letter-spacing:.8px"]');
-        if(cuiDiv){cuiDiv.style.fontSize='9.5px';cuiDiv.style.marginBottom='2px';}
-        /* Reducir badge de estado */
-        var circleWrap=hdrEl.querySelector('div[style*="right:46px"]');
-        if(circleWrap){
-          circleWrap.style.top='6px';
-          var circle=circleWrap.querySelector('div[style*="width:44px"]');
-          if(circle){circle.style.width='36px';circle.style.height='36px';}
-          var emoji=circleWrap.querySelector('span[style*="font-size:21px"]');
-          if(emoji)emoji.style.fontSize='17px';
-          var label=circleWrap.querySelector('span[style*="font-size:7px"]');
-          if(label)label.style.fontSize='6px';
-        }
-      }
-
-      /* Mejora: ocultar la fila de datos desktop (no tiene id — buscar por grid) */
-      var dataRow=p.querySelector('div[style*="28% 13% 13%"]');
-      if(dataRow)dataRow.style.display='none';
-
-      /* Mejora 4: franja 2×2 con KPIs del proyecto */
-      var oldK=document.getElementById('mob-pd-kpis');if(oldK)oldK.remove();
-      var prj=(typeof proyectos!=='undefined')?proyectos.find(function(x){return String(x.CUI)===String(cui);}):null;
-      var fin=prj?(prj.fin||{}):{};
-      var devT=fin.Dev||0;
-      var ciT=(typeof costoData!=='undefined')?(costoData[cui]||costoData[String(cui)]||0):0;
-      var bnf=(typeof benefiData!=='undefined')?(benefiData[cui]||benefiData[String(cui)]||0):0;
-      var pmiV='NO';
-      if(typeof ssiData!=='undefined'){
-        var sd=ssiData[cui]||ssiData[String(cui)];
-        if(sd)pmiV=sd.pmi||'NO';
-      }
-      var _fs=function(n){
-        if(!n||n===0)return '—';
-        if(n>=1e6)return 'S/ '+(n/1e6).toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2})+' M';
-        return 'S/ '+Number(n).toLocaleString('es-PE');
-      };
-      var _fn=function(n){return (n&&n>0)?Number(n).toLocaleString('es-PE'):'—';};
-      function _mk(lbl,val,bg,brd,clr){
-        return '<div style="background:'+bg+';border:1.5px solid '+brd+';border-radius:10px;padding:9px 10px;text-align:center">'
-          +'<div style="font-size:8px;font-weight:900;color:'+clr+';text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">'+lbl+'</div>'
-          +'<div style="font-size:15px;font-weight:900;color:'+clr+';line-height:1.1">'+val+'</div></div>';
-      }
-      var kbx=document.createElement('div');
-      kbx.id='mob-pd-kpis';
-      kbx.style.cssText='display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:10px 12px;background:#F7FAF7;border-bottom:2px solid #C8E6C9;';
-      kbx.innerHTML=
-        _mk('Devengado Total',_fs(devT),'#E8F5E9','#A5D6A7','#105000')+
-        _mk('Costo Inversion',_fs(ciT),'#FFF3E0','#FFCC80','#E65100')+
-        _mk('Beneficiarios',_fn(bnf),'#F1F8E9','#AED581','#33691E')+
-        _mk('PMI',(pmiV==='SI'?'✓ Si':'✗ No'),
-          (pmiV==='SI'?'#E8F5E9':'#FFEBEE'),
-          (pmiV==='SI'?'#A5D6A7':'#EF9A9A'),
-          (pmiV==='SI'?'#1B5E20':'#B71C1C'));
-      /* Insertar justo después del encabezado verde */
-      var hdrRef=p.querySelector('div[style*="3D9A5C"]');
-      if(hdrRef&&hdrRef.parentNode){
-        hdrRef.parentNode.insertBefore(kbx,hdrRef.nextSibling);
-      }
-
-      /* Mejora 2: scroll Componentes + ocultar Ejecucion */
-      var compContent=document.getElementById('comp-acc-content');
-      if(compContent){
-        var compCol=compContent.parentElement;
-        if(compCol){
-          var botRow=compCol.parentElement;
-          if(botRow){
-            botRow.style.overflow='visible';
-            botRow.style.flex='none';
-            botRow.style.display='block';
-            /* Ocultar columna de Ejecucion por Actividad */
-            if(botRow.children[1])botRow.children[1].style.display='none';
-          }
-          compCol.style.maxHeight='300px';
-          compCol.style.overflowY='auto';
-          compCol.style.webkitOverflowScrolling='touch';
-          compCol.style.borderRight='none';
-          compCol.style.width='100%';
-          compCol.style.boxSizing='border-box';
-        }
-      }
-
-      p.scrollTop=0;
+      if(tt)tt.setAttribute('style','display:none');
+      if(window.innerWidth>900)return;
+      /* Aplicar mejoras con delay para que _op termine de renderizar */
+      setTimeout(function(){_applyMobProject(cui);},60);
     };
   }
 
