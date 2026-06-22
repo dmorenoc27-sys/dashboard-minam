@@ -72,7 +72,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#F0F2F5;color:#2D2D2
 .pr{background:#FFEBEE;color:#C62828;display:inline-block;border-radius:10px;padding:2px 6px;font-size:10px;font-weight:700}
 .ftr{background:var(--v5);color:rgba(255,255,255,.6);text-align:center;padding:14px;font-size:10px;margin-top:10px}
 ::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-track{background:var(--g1)}::-webkit-scrollbar-thumb{background:var(--v2);border-radius:3px}
-/* mobile css below */
+/* mobile css replaced */
 
 @keyframes deptGlow{0%,100%{filter:drop-shadow(0 0 6px rgba(255,200,0,.7));}50%{filter:drop-shadow(0 0 14px rgba(255,200,0,1));}}
 [data-dept]{transition:opacity .15s,stroke-width .15s;}
@@ -202,7 +202,6 @@ body{display:flex;flex-direction:column;height:100vh}
   #mob-charts-hide{display:none!important}
   #map1{max-height:380px!important}
   #mtt{pointer-events:auto!important}
-  #map-overlay{position:absolute;top:0;left:0;width:100%;height:100%;z-index:5;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:none}
   .r2,.r3,.r75{grid-template-columns:1fr!important}
   .kg{grid-template-columns:repeat(2,1fr)!important;flex-shrink:0!important;margin-bottom:6px!important}
   .kv{font-size:22px!important}.kc{padding:7px 10px 5px!important}
@@ -234,18 +233,8 @@ body{display:flex;flex-direction:column;height:100vh}
   .pd-col:first-child{border-right:none!important;border-bottom:1px solid #F0F0F0!important}
   .pd-col{padding:8px 10px!important}
   [data-dept]{cursor:pointer!important}
-  /* resalte visible al seleccionar dept en móvil */
-  [data-dept].dept-sel{
-    fill:#FFB300!important;
-    stroke:#e65100!important;
-    stroke-width:3px!important;
-    filter:drop-shadow(0 0 10px rgba(255,160,0,.95))!important;
-    animation:deptGlowMob 1.4s ease-in-out infinite!important;
-  }
-  @keyframes deptGlowMob{
-    0%,100%{filter:drop-shadow(0 0 6px rgba(255,160,0,.8))!important;}
-    50%{filter:drop-shadow(0 0 16px rgba(255,200,0,1))!important;}
-  }
+  /* resalte dept seleccionado en móvil */
+  [data-dept].dept-sel{fill:#FFB300!important;stroke:#e65100!important;stroke-width:3px!important;filter:drop-shadow(0 0 10px rgba(255,160,0,.9))!important}
 }
 </style>
 
@@ -645,30 +634,28 @@ function updateConvChart(filtered,hasFilter){
 }
 
 const tt=document.getElementById('mtt');
-var _ttShownAt=0;
-function _hideTt(){tt.style.display='none';_ttShownAt=0;}
-function _showTt(d,rawX,rawY){
-  const n=depCounts[d]||0;
-  const av=depAv[d]?depAv[d].toFixed(1)+'%':'—';
-  const dv=depDv[d]?'S/ '+depDv[d].toFixed(1)+'M':'—';
-  const isMob=window.innerWidth<=900;
-  const TW=215,TH=135;
-  const x=Math.max(8,Math.min(rawX,window.innerWidth-TW));
-  const y=Math.max(8,Math.min(rawY,window.innerHeight-TH));
-  const xBtn=isMob?'<button onclick="document.getElementById(\'mtt\').style.display=\'none\'" style="position:absolute;top:4px;right:6px;background:none;border:none;color:#ccc;font-size:20px;cursor:pointer;line-height:1;padding:0 5px;pointer-events:auto">×</button>':'';
-  tt.innerHTML='<div style="position:relative;padding-right:'+(isMob?'22px':'0')+'">'+xBtn+'<strong>'+d+'</strong><div class="mtr"><span class="mk">Proyectos</span><span class="mv">'+n+'</span></div><div class="mtr"><span class="mk">Devengado acum.</span><span class="mv">'+dv+'</span></div><div class="mtr"><span class="mk">% Avance prom.</span><span class="mv">'+av+'</span></div></div>';
-  tt.style.cssText='display:block;left:'+x+'px;top:'+y+'px;position:fixed;pointer-events:'+(isMob?'auto':'none')+';z-index:9999;';
-  _ttShownAt=Date.now();
+var _ttAt=0;
+function _hideTt(){tt.style.display='none';_ttAt=0;}
+function _showTt(d,rx,ry){
+  const n=depCounts[d]||0,av=depAv[d]?depAv[d].toFixed(1)+'%':'—',dv=depDv[d]?'S/ '+depDv[d].toFixed(1)+'M':'—';
+  const mob=window.innerWidth<=900,x=Math.max(8,Math.min(rx,window.innerWidth-215)),y=Math.max(8,Math.min(ry,window.innerHeight-135));
+  const xb=mob?'<button onclick="document.getElementById(\'mtt\').style.display=\'none\'" style="position:absolute;top:4px;right:6px;background:none;border:none;color:#ccc;font-size:20px;cursor:pointer;padding:0 5px">×</button>':'';
+  tt.innerHTML='<div style="position:relative;padding-right:'+(mob?'22px':'0')+'">'+xb+'<strong>'+d+'</strong><div class="mtr"><span class="mk">Proyectos</span><span class="mv">'+n+'</span></div><div class="mtr"><span class="mk">Devengado acum.</span><span class="mv">'+dv+'</span></div><div class="mtr"><span class="mk">% Avance prom.</span><span class="mv">'+av+'</span></div></div>';
+  tt.style.cssText='display:block;left:'+x+'px;top:'+y+'px;position:fixed;pointer-events:'+(mob?'auto':'none')+';z-index:9999;';
+  _ttAt=Date.now();
 }
 document.querySelectorAll('[data-dept]').forEach(el=>{
   el.addEventListener('mousemove',e=>{_showTt(el.dataset.dept,e.clientX+16,e.clientY-10);});
   el.addEventListener('mouseleave',function(){if(window.innerWidth<=900)return;_hideTt();});
+  el.addEventListener('touchstart',function(e){
+    var r=el.getBoundingClientRect(),ty=r.bottom+10;
+    if(ty+135>window.innerHeight)ty=Math.max(8,r.top-145);
+    _showTt(el.dataset.dept,r.left+r.width/2-95,ty);
+  },{passive:true});
 });
 document.addEventListener('touchstart',function(e){
-  if(tt.style.display==='none') return;
-  if(Date.now()-_ttShownAt<400) return;
-  if(e.target.closest&&e.target.closest('#mtt')) return;
-  if(e.target.closest&&e.target.closest('#map-overlay')) return;
+  if(!tt||tt.style.display==='none'||Date.now()-_ttAt<400)return;
+  if(e.target.closest&&e.target.closest('#mtt'))return;
   _hideTt();
 },{passive:true});
 
@@ -1640,7 +1627,17 @@ function showProjectDetail(cui){
 <!-- ══ HEADER ══════════════════════════════════════════════════ -->
 <div style="background:linear-gradient(135deg,#3D9A5C 0%,#4EAD6E 55%,#5BBD7A 100%);
             padding:11px 16px 9px;flex-shrink:0;position:relative">
-  ${benef>0?`<div style='position:absolute;top:42px;right:10px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 8px 4px;border-radius:9px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);min-width:52px;text-align:center;'><svg viewBox='0 0 22 15' width='18' height='12' fill='none'><circle cx='8' cy='5.5' r='3.5' fill='rgba(255,255,255,.92)'/><circle cx='14' cy='5.5' r='3.5' fill='rgba(255,255,255,.92)'/><path d='M1 14c0-3.866 3.134-7 7-7h6c3.866 0 7 3.134 7 7' stroke='rgba(255,255,255,.82)' stroke-width='1.6' stroke-linecap='round'/></svg><span style='font-size:9.5px;font-weight:900;color:#fff;letter-spacing:-.3px;line-height:1.1'>${_fmtN(benef)}</span><span style='font-size:5.5px;font-weight:700;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.7px;line-height:1.2'>beneficiarios</span></div>`:''}    
+  <div style="position:absolute;top:9px;right:46px;display:flex;flex-direction:column;align-items:center;gap:2px">
+    <div style="width:44px;height:44px;border-radius:50%;
+                background:radial-gradient(circle at 38% 38%,${SC.lo},${SC.bg});
+                box-shadow:0 0 0 3px rgba(255,255,255,.1),0 0 22px ${SC.glow}88,0 0 44px ${SC.glow}33;
+                border:2px solid rgba(255,255,255,.2);
+                display:flex;align-items:center;justify-content:center">
+      <span style="font-size:21px">${avF>=80?'🟢':avF>=50?'🟡':avF>=20?'🟠':'🔴'}</span>
+    </div>
+    <span style="font-size:7px;font-weight:900;color:#fff;text-transform:uppercase;letter-spacing:.5px;
+                 background:${SC.bg};padding:1.5px 6px;border-radius:6px;white-space:nowrap">${SC.tx}</span>
+  </div>
   <button onclick="closeProjectDetail()" title="Cerrar"
     style="position:absolute;top:10px;right:10px;width:26px;height:26px;border-radius:50%;
            border:1.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.07);
@@ -1663,9 +1660,7 @@ function showProjectDetail(cui){
   </div>
 </div>
 
-<!-- DATA ROW -->
-<div id="pd-data-row" style="display:grid;grid-template-columns:28% 13% 13% 18% 18% 10%;background:#fff;
-            border-bottom:2px solid #E8F5E9;flex-shrink:0;min-height:0">
+<div id="pd-data-row" style="display:grid;grid-template-columns:28% 13% 13% 18% 18% 10%;background:#fff;border-bottom:2px solid #E8F5E9;flex-shrink:0;min-height:0">
 
   <!-- COL 1: PRESUPUESTO DE INVERSIÓN -->
   <div style="border-right:1px solid #E8F5E9;padding:10px 14px;
@@ -1801,9 +1796,9 @@ function showProjectDetail(cui){
 
   <!-- LEFT: Componentes y Acciones -->
   <div style="border-right:1px solid #E8F5E9;padding:10px 12px;overflow-y:auto">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;padding-bottom:4px;border-bottom:2px solid #E8F5E9">
-      <span style="font-size:13px;font-weight:800;color:#AAAAAA;text-transform:uppercase;letter-spacing:1px">Componentes y Acciones</span>
-      <span style="display:inline-flex;align-items:center;gap:5px;padding:4px 11px 4px 8px;border-radius:20px;background:${SC.bg};color:#fff;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap;flex-shrink:0;box-shadow:0 1px 4px ${SC.glow}55">${avF>=80?'🟢':avF>=50?'🟡':avF>=20?'🟠':'🔴'}&nbsp;${SC.tx}</span>
+    <div style="font-size:15px;font-weight:800;color:#AAAAAA;text-transform:uppercase;
+                letter-spacing:1px;margin-bottom:7px;padding-bottom:4px;border-bottom:2px solid #E8F5E9">
+      Componentes y Acciones
     </div>
     <div id="comp-acc-content" style="font-size:10px;color:#888;line-height:1.8">
       <div style="color:#999;font-style:italic;font-size:9px;text-align:center;padding:12px">⟳ Cargando...</div>
@@ -1867,280 +1862,114 @@ function showProjectDetail(cui){
 
 </script>
 <script>
-/* v27-mobile: OVERLAY HTML — suprime doble-llamada por click sintético iOS */
+/* ponytail: debounce 700ms en handleDeptClick — elimina doble-llamada iOS
+   sin overlay, sin elementFromPoint, sin suppression logic */
 (function(){
-  /* ── back button en detalle de proyecto ─────────────────────────────── */
-  var _orig=window.showProjectDetail;
-  if(typeof _orig==='function'){
+  /* debounce handleDeptClick */
+  var _h0=window.handleDeptClick,_hl={d:null,t:0};
+  window.handleDeptClick=function(el,dept){
+    var n=Date.now();
+    if(dept===_hl.d&&n-_hl.t<700)return; /* ponytail: suprime 2ª llamada */
+    _hl={d:dept,t:n};
+    _h0.call(this,el,dept);
+    /* scroll a KPIs en móvil */
+    if(window.innerWidth<=900){
+      setTimeout(function(){
+        var g=document.getElementById('kpi-grid');
+        if(!g)return;
+        g.scrollIntoView({behavior:'smooth',block:'start'});
+        g.querySelectorAll('.kc').forEach(function(c){
+          c.style.transition='background .15s';c.style.background='rgba(16,80,0,.12)';
+          setTimeout(function(){c.style.background='';c.style.transition='';},400);
+        });
+      },80);
+    }
+  };
+
+  /* botón volver en detalle de proyecto */
+  var _op=window.showProjectDetail;
+  if(typeof _op==='function'){
     window.showProjectDetail=function(cui){
-      _orig(cui);
-      var mtt=document.getElementById('mtt');if(mtt)mtt.style.display='none';
+      _op(cui);
       if(window.innerWidth>900)return;
       var panel=document.getElementById('proj-detail-panel');if(!panel)return;
-      panel.style.overflowY='scroll';panel.style.webkitOverflowScrolling='touch';
+      panel.style.overflowY='scroll';
       var old=document.getElementById('mob-back-btn');if(old)old.remove();
       var btn=document.createElement('button');
-      btn.id='mob-back-btn';btn.textContent='← Volver a la lista';
-      btn.style.cssText='position:sticky;top:0;z-index:20;width:100%;padding:13px 16px;background:#105000;color:#fff;border:none;font-size:14px;font-weight:700;cursor:pointer;text-align:left;display:block;';
-      btn.onclick=function(){if(typeof closeProjectDetail==='function')closeProjectDetail();else{var p=document.getElementById('proj-detail-panel');if(p)p.style.display='none';}};
+      btn.id='mob-back-btn';btn.textContent='← Volver';
+      btn.style.cssText='position:sticky;top:0;z-index:20;width:100%;padding:13px 16px;background:#105000;color:#fff;border:none;font-size:14px;font-weight:700;cursor:pointer;text-align:left;';
+      btn.onclick=function(){if(typeof closeProjectDetail==='function')closeProjectDetail();};
       panel.insertBefore(btn,panel.firstChild);panel.scrollTop=0;
     };
   }
 
-  /* ── scroll a KPIs al seleccionar dept ──────────────────────────────── */
-  function _scrollToKpi(){
-    var grid=document.getElementById('kpi-grid');if(!grid)return;
-    setTimeout(function(){
-      var top=grid.getBoundingClientRect().top+window.pageYOffset-8;
-      window.scrollTo({top:Math.max(0,top),behavior:'smooth'});
-      grid.querySelectorAll('.kc').forEach(function(c){
-        c.style.transition='background .15s';c.style.background='rgba(16,80,0,.12)';
-        setTimeout(function(){c.style.background='';c.style.transition='';},400);
-      });
-    },80);
-  }
-
-  var _origHDC=window.handleDeptClick;
-  if(typeof _origHDC==='function'){
-    window.handleDeptClick=function(el,dept){
-      _origHDC.call(this,el,dept);
-      if(window.innerWidth>900)return;
-      _scrollToKpi();
-    };
-  }
-
+  /* filas tabla → detalle */
   document.addEventListener('DOMContentLoaded',function(){
-    if(window.innerWidth>900) return;
-
-    /* ═══════════════════════════════════════════════════════════════════
-     * OVERLAY HTML sobre el SVG del mapa — v27
-     *
-     * PROBLEMA RAIZ DEL DOBLE-CLICK:
-     *   iOS Safari genera un "click sintético" ~300ms después de touchend
-     *   en el MISMO elemento HTML que recibió el toque (el overlay).
-     *   Resultado sin fix: touchend → selectDeptCard (call 1) → click
-     *   sintético → selectDeptCard (call 2) → toggle → KPIs resetean.
-     *
-     * FIX: variable _tEnd guarda el timestamp del último touchend.
-     *   El handler de click comprueba si han pasado < 600ms → si sí,
-     *   lo ignora (es el click sintético de iOS).
-     *   Desktop real: no hay touchend → _tEnd=0 → el click funciona.
-     * ═══════════════════════════════════════════════════════════════════ */
-
-    var mapSvg=document.getElementById('map1');
-    if(!mapSvg) return;
-    var mapCb=mapSvg.parentElement;
-    if(!mapCb) return;
-    if(getComputedStyle(mapCb).position==='static') mapCb.style.position='relative';
-
-    var overlay=document.createElement('div');
-    overlay.id='map-overlay';
-    /* El CSS @media ya pone: position:absolute;top:0;left:0;w:100%;h:100%;z-index:5 */
-    mapCb.appendChild(overlay);
-
-    /* ── utilidades ──────────────────────────────────────────────────── */
-    function _getDeptPath(x,y){
-      overlay.style.display='none';
-      var el=document.elementFromPoint(x,y);
-      overlay.style.display='';
-      if(!el) return null;
-      var path=el.closest?el.closest('[data-dept]'):null;
-      if(!path&&el.dataset&&el.dataset.dept) path=el;
-      return (path&&path.dataset&&path.dataset.dept)?path:null;
-    }
-
-    function _activate(path){
-      if(!path) return;
-      var dept=path.dataset.dept;
-      /* mostrar tooltip */
-      if(typeof _showTt==='function'){
-        var r=path.getBoundingClientRect();
-        var ty=r.bottom+10;
-        if(ty+135>window.innerHeight) ty=Math.max(8,r.top-145);
-        _showTt(dept,r.left+r.width/2-95,ty);
-      }
-      /* UNA SOLA llamada a selectDeptCard */
-      if(typeof selectDeptCard==='function') selectDeptCard(dept);
-    }
-
-    /* ── estado del toque ────────────────────────────────────────────── */
-    var _tx=0,_ty=0,_tPath=null,_tEnd=0;
-
-    /* touchstart: registrar qué dept hay bajo el dedo */
-    overlay.addEventListener('touchstart',function(e){
-      _tPath=null;
-      var t=e.touches[0];if(!t)return;
-      _tx=t.clientX;_ty=t.clientY;
-      _tPath=_getDeptPath(t.clientX,t.clientY);
-    },{passive:true});
-
-    /* touchend: activar si el dedo no se movió mucho */
-    overlay.addEventListener('touchend',function(e){
-      var path=_tPath;_tPath=null;
-      if(!path)return;
-      var t=e.changedTouches[0];if(!t)return;
-      if(Math.abs(t.clientX-_tx)>25||Math.abs(t.clientY-_ty)>25)return;
-      _tEnd=Date.now(); /* ← marca para suprimir el click sintético */
-      _activate(path);
-    },{passive:true});
-
-    /* click: sólo para desktop; en mobile es el click sintético → ignorar */
-    overlay.addEventListener('click',function(e){
-      if(Date.now()-_tEnd<600) return; /* suprimir sintético de iOS */
-      var path=_getDeptPath(e.clientX,e.clientY);
-      _activate(path);
-    });
-
-    /* ── filas de tabla en pantalla Cartera ──────────────────────────── */
-    var tbody=document.getElementById('ptbody');
-    if(tbody){
-      tbody.addEventListener('click',function(e){
-        if(window.innerWidth>900)return;
-        var tr=e.target.closest('tr');if(!tr)return;
-        var td=tr.querySelector('td[data-cui]');
-        if(td&&typeof showProjectDetail==='function')showProjectDetail(td.dataset.cui);
-      },true);
-    }
+    var tb=document.getElementById('ptbody');
+    if(!tb)return;
+    tb.addEventListener('click',function(e){
+      if(window.innerWidth>900)return;
+      var tr=e.target.closest('tr');if(!tr)return;
+      var td=tr.querySelector('td[data-cui]');
+      if(td&&typeof showProjectDetail==='function')showProjectDetail(td.dataset.cui);
+    },true);
   });
 })();
 </script>
 </body>
 </html>
 <script>
-/* v27-mobile: OVERLAY HTML — suprime doble-llamada por click sintético iOS */
+/* ponytail: debounce 700ms en handleDeptClick — elimina doble-llamada iOS
+   sin overlay, sin elementFromPoint, sin suppression logic */
 (function(){
-  /* ── back button en detalle de proyecto ─────────────────────────────── */
-  var _orig=window.showProjectDetail;
-  if(typeof _orig==='function'){
+  /* debounce handleDeptClick */
+  var _h0=window.handleDeptClick,_hl={d:null,t:0};
+  window.handleDeptClick=function(el,dept){
+    var n=Date.now();
+    if(dept===_hl.d&&n-_hl.t<700)return; /* ponytail: suprime 2ª llamada */
+    _hl={d:dept,t:n};
+    _h0.call(this,el,dept);
+    /* scroll a KPIs en móvil */
+    if(window.innerWidth<=900){
+      setTimeout(function(){
+        var g=document.getElementById('kpi-grid');
+        if(!g)return;
+        g.scrollIntoView({behavior:'smooth',block:'start'});
+        g.querySelectorAll('.kc').forEach(function(c){
+          c.style.transition='background .15s';c.style.background='rgba(16,80,0,.12)';
+          setTimeout(function(){c.style.background='';c.style.transition='';},400);
+        });
+      },80);
+    }
+  };
+
+  /* botón volver en detalle de proyecto */
+  var _op=window.showProjectDetail;
+  if(typeof _op==='function'){
     window.showProjectDetail=function(cui){
-      _orig(cui);
-      var mtt=document.getElementById('mtt');if(mtt)mtt.style.display='none';
+      _op(cui);
       if(window.innerWidth>900)return;
       var panel=document.getElementById('proj-detail-panel');if(!panel)return;
-      panel.style.overflowY='scroll';panel.style.webkitOverflowScrolling='touch';
+      panel.style.overflowY='scroll';
       var old=document.getElementById('mob-back-btn');if(old)old.remove();
       var btn=document.createElement('button');
-      btn.id='mob-back-btn';btn.textContent='← Volver a la lista';
-      btn.style.cssText='position:sticky;top:0;z-index:20;width:100%;padding:13px 16px;background:#105000;color:#fff;border:none;font-size:14px;font-weight:700;cursor:pointer;text-align:left;display:block;';
-      btn.onclick=function(){if(typeof closeProjectDetail==='function')closeProjectDetail();else{var p=document.getElementById('proj-detail-panel');if(p)p.style.display='none';}};
+      btn.id='mob-back-btn';btn.textContent='← Volver';
+      btn.style.cssText='position:sticky;top:0;z-index:20;width:100%;padding:13px 16px;background:#105000;color:#fff;border:none;font-size:14px;font-weight:700;cursor:pointer;text-align:left;';
+      btn.onclick=function(){if(typeof closeProjectDetail==='function')closeProjectDetail();};
       panel.insertBefore(btn,panel.firstChild);panel.scrollTop=0;
     };
   }
 
-  /* ── scroll a KPIs al seleccionar dept ──────────────────────────────── */
-  function _scrollToKpi(){
-    var grid=document.getElementById('kpi-grid');if(!grid)return;
-    setTimeout(function(){
-      var top=grid.getBoundingClientRect().top+window.pageYOffset-8;
-      window.scrollTo({top:Math.max(0,top),behavior:'smooth'});
-      grid.querySelectorAll('.kc').forEach(function(c){
-        c.style.transition='background .15s';c.style.background='rgba(16,80,0,.12)';
-        setTimeout(function(){c.style.background='';c.style.transition='';},400);
-      });
-    },80);
-  }
-
-  var _origHDC=window.handleDeptClick;
-  if(typeof _origHDC==='function'){
-    window.handleDeptClick=function(el,dept){
-      _origHDC.call(this,el,dept);
-      if(window.innerWidth>900)return;
-      _scrollToKpi();
-    };
-  }
-
+  /* filas tabla → detalle */
   document.addEventListener('DOMContentLoaded',function(){
-    if(window.innerWidth>900) return;
-
-    /* ═══════════════════════════════════════════════════════════════════
-     * OVERLAY HTML sobre el SVG del mapa — v27
-     *
-     * PROBLEMA RAIZ DEL DOBLE-CLICK:
-     *   iOS Safari genera un "click sintético" ~300ms después de touchend
-     *   en el MISMO elemento HTML que recibió el toque (el overlay).
-     *   Resultado sin fix: touchend → selectDeptCard (call 1) → click
-     *   sintético → selectDeptCard (call 2) → toggle → KPIs resetean.
-     *
-     * FIX: variable _tEnd guarda el timestamp del último touchend.
-     *   El handler de click comprueba si han pasado < 600ms → si sí,
-     *   lo ignora (es el click sintético de iOS).
-     *   Desktop real: no hay touchend → _tEnd=0 → el click funciona.
-     * ═══════════════════════════════════════════════════════════════════ */
-
-    var mapSvg=document.getElementById('map1');
-    if(!mapSvg) return;
-    var mapCb=mapSvg.parentElement;
-    if(!mapCb) return;
-    if(getComputedStyle(mapCb).position==='static') mapCb.style.position='relative';
-
-    var overlay=document.createElement('div');
-    overlay.id='map-overlay';
-    /* El CSS @media ya pone: position:absolute;top:0;left:0;w:100%;h:100%;z-index:5 */
-    mapCb.appendChild(overlay);
-
-    /* ── utilidades ──────────────────────────────────────────────────── */
-    function _getDeptPath(x,y){
-      overlay.style.display='none';
-      var el=document.elementFromPoint(x,y);
-      overlay.style.display='';
-      if(!el) return null;
-      var path=el.closest?el.closest('[data-dept]'):null;
-      if(!path&&el.dataset&&el.dataset.dept) path=el;
-      return (path&&path.dataset&&path.dataset.dept)?path:null;
-    }
-
-    function _activate(path){
-      if(!path) return;
-      var dept=path.dataset.dept;
-      /* mostrar tooltip */
-      if(typeof _showTt==='function'){
-        var r=path.getBoundingClientRect();
-        var ty=r.bottom+10;
-        if(ty+135>window.innerHeight) ty=Math.max(8,r.top-145);
-        _showTt(dept,r.left+r.width/2-95,ty);
-      }
-      /* UNA SOLA llamada a selectDeptCard */
-      if(typeof selectDeptCard==='function') selectDeptCard(dept);
-    }
-
-    /* ── estado del toque ────────────────────────────────────────────── */
-    var _tx=0,_ty=0,_tPath=null,_tEnd=0;
-
-    /* touchstart: registrar qué dept hay bajo el dedo */
-    overlay.addEventListener('touchstart',function(e){
-      _tPath=null;
-      var t=e.touches[0];if(!t)return;
-      _tx=t.clientX;_ty=t.clientY;
-      _tPath=_getDeptPath(t.clientX,t.clientY);
-    },{passive:true});
-
-    /* touchend: activar si el dedo no se movió mucho */
-    overlay.addEventListener('touchend',function(e){
-      var path=_tPath;_tPath=null;
-      if(!path)return;
-      var t=e.changedTouches[0];if(!t)return;
-      if(Math.abs(t.clientX-_tx)>25||Math.abs(t.clientY-_ty)>25)return;
-      _tEnd=Date.now(); /* ← marca para suprimir el click sintético */
-      _activate(path);
-    },{passive:true});
-
-    /* click: sólo para desktop; en mobile es el click sintético → ignorar */
-    overlay.addEventListener('click',function(e){
-      if(Date.now()-_tEnd<600) return; /* suprimir sintético de iOS */
-      var path=_getDeptPath(e.clientX,e.clientY);
-      _activate(path);
-    });
-
-    /* ── filas de tabla en pantalla Cartera ──────────────────────────── */
-    var tbody=document.getElementById('ptbody');
-    if(tbody){
-      tbody.addEventListener('click',function(e){
-        if(window.innerWidth>900)return;
-        var tr=e.target.closest('tr');if(!tr)return;
-        var td=tr.querySelector('td[data-cui]');
-        if(td&&typeof showProjectDetail==='function')showProjectDetail(td.dataset.cui);
-      },true);
-    }
+    var tb=document.getElementById('ptbody');
+    if(!tb)return;
+    tb.addEventListener('click',function(e){
+      if(window.innerWidth>900)return;
+      var tr=e.target.closest('tr');if(!tr)return;
+      var td=tr.querySelector('td[data-cui]');
+      if(td&&typeof showProjectDetail==='function')showProjectDetail(td.dataset.cui);
+    },true);
   });
 })();
 </script>
