@@ -1860,12 +1860,12 @@ function showProjectDetail(cui){
 </body>
 </html>
 <script>
-/* CLAVE: NO borrar el atributo onclick (iOS lo usa para saber que el path es tappable).
-   Solo sobreescribir la PROPIEDAD p.onclick con JS — el atributo queda en el DOM,
-   el handler que ejecuta es el nuestro → selectDeptCard → renderKPIs. */
+/* Estrategia: touchend en el SVG → detectar departamento tocado →
+   card.click() en la tarjeta de la lista (código que YA funciona).
+   Debounce en handleDeptClick bloquea el onclick del path que llega 300ms después. */
 (function(){
 
-  /* Debounce handleDeptClick — evita doble llamada */
+  /* Debounce handleDeptClick — bloquea el onclick del path que llega post-touchend */
   var _h0=window.handleDeptClick, _hl={d:null,t:0};
   window.handleDeptClick=function(el,dept){
     var n=Date.now();
@@ -1891,23 +1891,36 @@ function showProjectDetail(cui){
     },120);
   };
 
-  /* Sobreescribir p.onclick (sin tocar el atributo onclick del HTML)
-     → iOS sigue viendo onclick="..." en el DOM → path = elemento tappable
-     → el click dispara p.onclick (nuestra función) → selectDeptCard → KPIs */
-  function _wiremapa(){
-    var paths=document.querySelectorAll('[data-dept]');
-    paths.forEach(function(p){
-      var dept=p.dataset.dept;
-      p.onclick=function(e){
-        e.stopPropagation();
-        if(typeof selectDeptCard==='function') selectDeptCard(dept);
-      };
-    });
-    return paths.length;
-  }
+  /* touchend en el SVG del mapa → simular clic en tarjeta de la lista */
+  var mapSvg=document.getElementById('map1');
+  if(mapSvg){
+    var _tx=0,_ty=0;
+    mapSvg.addEventListener('touchstart',function(e){
+      _tx=e.touches[0].clientX; _ty=e.touches[0].clientY;
+    },{passive:true});
 
-  var found=_wiremapa();
-  if(found===0) document.addEventListener('DOMContentLoaded',_wiremapa);
+    mapSvg.addEventListener('touchend',function(e){
+      var t=e.changedTouches[0];
+      /* ignorar si fue un scroll (movimiento >15px) */
+      if(Math.abs(t.clientX-_tx)>15||Math.abs(t.clientY-_ty)>15)return;
+      /* encontrar el path bajo el dedo */
+      var el=document.elementFromPoint(t.clientX,t.clientY);
+      var dept=null;
+      var cur=el;
+      while(cur&&cur!==document.body){
+        if(cur.dataset&&cur.dataset.dept){dept=cur.dataset.dept;break;}
+        cur=cur.parentElement;
+      }
+      if(!dept)return;
+      /* simular clic en la tarjeta de la lista (misma ruta que el usuario) */
+      var card=document.querySelector('div[onclick="selectDeptCard(\''+dept+'\')"]');
+      if(card){
+        card.click();
+      } else if(typeof selectDeptCard==='function'){
+        selectDeptCard(dept);
+      }
+    },{passive:true});
+  }
 
   /* botón volver en detalle de proyecto */
   var _op=window.showProjectDetail;
