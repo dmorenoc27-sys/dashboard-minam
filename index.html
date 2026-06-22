@@ -203,20 +203,10 @@ body{display:flex;flex-direction:column;height:100vh}
   #map1{max-height:380px!important}
   #mtt{pointer-events:auto!important}
   .r2,.r3,.r75{grid-template-columns:1fr!important}
-
-  /* 2. KPIs: ocultar Girado (4to panel), mostrar 3 en una fila */
   .kg{grid-template-columns:repeat(3,1fr)!important;flex-shrink:0!important;margin-bottom:6px!important}
   .kg .kc:nth-child(4){display:none!important}
   .kv{font-size:18px!important}.kc{padding:7px 8px 5px!important}
   .kl{font-size:9px!important}.ks{font-size:9px!important}
-
-  /* 3. Fondo celeste en KPIs cuando hay departamento seleccionado */
-  #kpi-grid.dept-active .kc{
-    background:linear-gradient(135deg,rgba(13,110,253,.07) 0%,rgba(33,150,243,.04) 100%)!important;
-    border-top:2px solid rgba(13,110,253,.18)!important;
-    transition:background .3s,border-color .3s!important;
-  }
-
   .ht p,.hbadge{display:none!important}
   .hdr{height:auto!important;padding:4px 10px!important}
   .nav{overflow-x:auto!important;-webkit-overflow-scrolling:touch!important;padding:0 6px!important;scrollbar-width:none!important}
@@ -248,16 +238,7 @@ body{display:flex;flex-direction:column;height:100vh}
   .pd-col:first-child{border-right:none!important;border-bottom:1px solid #F0F0F0!important}
   .pd-col{padding:8px 10px!important}
   [data-dept]{cursor:pointer!important}
-
-  /* 1. Resaltar dept: solo perímetro (sin relleno amarillo), con glow y escala leve */
-  [data-dept].dept-sel{
-    stroke:#1565C0!important;
-    stroke-width:3.5px!important;
-    filter:drop-shadow(0 0 7px rgba(21,101,192,.75))!important;
-    transform-box:fill-box!important;
-    transform-origin:center!important;
-    transform:scale(1.05)!important;
-  }
+  [data-dept].dept-sel{stroke:#1565C0!important;stroke-width:3.5px!important;filter:drop-shadow(0 0 7px rgba(21,101,192,.75))!important;transform-box:fill-box!important;transform-origin:center!important;transform:scale(1.05)!important}
 }
 </style>
 
@@ -1875,6 +1856,20 @@ function showProjectDetail(cui){
 </html>
 <script>
 (function(){
+  /* Aplicar fondo celeste directamente a cada .kc con style inline (máxima especificidad) */
+  function _setKpiCeleste(on){
+    document.querySelectorAll('.kc').forEach(function(kc){
+      if(on){
+        kc.style.background='#E3F2FD';
+        kc.style.borderTop='2px solid #90CAF9';
+        kc.style.transition='background .35s,border-color .35s';
+      } else {
+        kc.style.background='';
+        kc.style.borderTop='';
+      }
+    });
+  }
+
   var _h0=window.handleDeptClick,_hl={d:null,t:0};
   window.handleDeptClick=function(el,dept){
     var n=Date.now();
@@ -1882,12 +1877,10 @@ function showProjectDetail(cui){
     _hl={d:dept,t:n};
     _h0.call(this,el,dept);
     if(window.innerWidth>900)return;
-    /* 3. Fondo celeste en KPIs si hay dept seleccionado */
-    var g=document.getElementById('kpi-grid');
-    if(g){
-      if(window.selectedDept)g.classList.add('dept-active');
-      else g.classList.remove('dept-active');
-    }
+    /* 3. Fondo celeste: aplicar si hay dept, quitar si volvió a nacional */
+    setTimeout(function(){
+      _setKpiCeleste(!!window.selectedDept);
+    },50);
     /* tooltip */
     if(typeof _showTt==='function'&&el&&el.getBoundingClientRect){
       var r=el.getBoundingClientRect();
@@ -1897,8 +1890,8 @@ function showProjectDetail(cui){
     }
     /* scroll a KPIs */
     setTimeout(function(){
-      var g2=document.getElementById('kpi-grid');if(!g2)return;
-      g2.scrollIntoView({behavior:'smooth',block:'start'});
+      var g=document.getElementById('kpi-grid');if(!g)return;
+      g.scrollIntoView({behavior:'smooth',block:'start'});
     },120);
   };
 
