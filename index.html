@@ -202,7 +202,7 @@ body{display:flex;flex-direction:column;height:100vh}
   #mob-charts-hide{display:none!important}
   #map1{max-height:380px!important}
   #mtt{pointer-events:auto!important}
-  #map-overlay{position:absolute;top:0;left:0;width:100%;height:100%;z-index:5;cursor:pointer;-webkit-tap-highlight-color:transparent}
+  #map-overlay{position:absolute;top:0;left:0;width:100%;height:100%;z-index:5;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:none}
   .r2,.r3,.r75{grid-template-columns:1fr!important}
   .kg{grid-template-columns:repeat(2,1fr)!important;flex-shrink:0!important;margin-bottom:6px!important}
   .kv{font-size:22px!important}.kc{padding:7px 10px 5px!important}
@@ -1855,8 +1855,9 @@ function showProjectDetail(cui){
 
 </script>
 <script>
-/* v26-mobile: OVERLAY HTML sobre el mapa SVG */
+/* v27-mobile: OVERLAY HTML — suprime doble-llamada por click sintético iOS */
 (function(){
+  /* ── back button en detalle de proyecto ─────────────────────────────── */
   var _orig=window.showProjectDetail;
   if(typeof _orig==='function'){
     window.showProjectDetail=function(cui){
@@ -1874,6 +1875,7 @@ function showProjectDetail(cui){
     };
   }
 
+  /* ── scroll a KPIs al seleccionar dept ──────────────────────────────── */
   function _scrollToKpi(){
     var grid=document.getElementById('kpi-grid');if(!grid)return;
     setTimeout(function(){
@@ -1896,40 +1898,36 @@ function showProjectDetail(cui){
   }
 
   document.addEventListener('DOMContentLoaded',function(){
-    if(window.innerWidth>900) return; /* solo movil */
+    if(window.innerWidth>900) return;
 
-    /* ── OVERLAY HTML sobre el mapa SVG ────────────────────────────────────
+    /* ═══════════════════════════════════════════════════════════════════
+     * OVERLAY HTML sobre el SVG del mapa — v27
      *
-     * ESTRATEGIA NUEVA:
-     *   El problema raiz: el onclick del SVG path se dispara ADEMAS de
-     *   nuestros listeners → doble llamada → toggle → KPIs vuelven a nacional.
+     * PROBLEMA RAIZ DEL DOBLE-CLICK:
+     *   iOS Safari genera un "click sintético" ~300ms después de touchend
+     *   en el MISMO elemento HTML que recibió el toque (el overlay).
+     *   Resultado sin fix: touchend → selectDeptCard (call 1) → click
+     *   sintético → selectDeptCard (call 2) → toggle → KPIs resetean.
      *
-     *   SOLUCION: poner un div HTML ENCIMA del SVG.
-     *   El div HTML intercepta TODOS los toques del mapa.
-     *   El SVG path queda debajo → su onclick NUNCA dispara.
-     *   Usamos elementFromPoint (con overlay oculto momentaneamente) para
-     *   saber qué departamento hay debajo del dedo.
-     *   Llamamos selectDeptCard → igual que las tarjetas de la lista.
-     *   UNA SOLA LLAMADA → KPIs se quedan actualizados.
-     *
-     * VERIFICADO en Node.js antes de publicar.
-     * ─────────────────────────────────────────────────────────────────── */
+     * FIX: variable _tEnd guarda el timestamp del último touchend.
+     *   El handler de click comprueba si han pasado < 600ms → si sí,
+     *   lo ignora (es el click sintético de iOS).
+     *   Desktop real: no hay touchend → _tEnd=0 → el click funciona.
+     * ═══════════════════════════════════════════════════════════════════ */
 
     var mapSvg=document.getElementById('map1');
     if(!mapSvg) return;
-    var mapCb=mapSvg.parentElement; /* div.cb */
+    var mapCb=mapSvg.parentElement;
     if(!mapCb) return;
-
-    /* Asegurar que el contenedor tenga position:relative para el absolute del overlay */
     if(getComputedStyle(mapCb).position==='static') mapCb.style.position='relative';
 
     var overlay=document.createElement('div');
     overlay.id='map-overlay';
-    /* El CSS ya define position:absolute, top:0, left:0, w:100%, h:100%, z-index:5 */
+    /* El CSS @media ya pone: position:absolute;top:0;left:0;w:100%;h:100%;z-index:5 */
     mapCb.appendChild(overlay);
 
-    function _getDeptAt(x,y){
-      /* Ocultar overlay momentaneamente → elementFromPoint ve el SVG */
+    /* ── utilidades ──────────────────────────────────────────────────── */
+    function _getDeptPath(x,y){
       overlay.style.display='none';
       var el=document.elementFromPoint(x,y);
       overlay.style.display='';
@@ -1939,47 +1937,49 @@ function showProjectDetail(cui){
       return (path&&path.dataset&&path.dataset.dept)?path:null;
     }
 
-    function _callSelect(dept,path){
-      if(typeof _showTt==='function'&&path){
+    function _activate(path){
+      if(!path) return;
+      var dept=path.dataset.dept;
+      /* mostrar tooltip */
+      if(typeof _showTt==='function'){
         var r=path.getBoundingClientRect();
         var ty=r.bottom+10;
         if(ty+135>window.innerHeight) ty=Math.max(8,r.top-145);
         _showTt(dept,r.left+r.width/2-95,ty);
       }
-      if(typeof selectDeptCard==='function'){
-        selectDeptCard(dept);
-      }else if(typeof window.handleDeptClick==='function'){
-        window.handleDeptClick(path||document.createElement('span'),dept);
-      }
+      /* UNA SOLA llamada a selectDeptCard */
+      if(typeof selectDeptCard==='function') selectDeptCard(dept);
     }
 
-    var _tx=0,_ty=0,_tPath=null;
+    /* ── estado del toque ────────────────────────────────────────────── */
+    var _tx=0,_ty=0,_tPath=null,_tEnd=0;
 
-    /* touchstart: registrar qué dept tocó el dedo */
+    /* touchstart: registrar qué dept hay bajo el dedo */
     overlay.addEventListener('touchstart',function(e){
       _tPath=null;
       var t=e.touches[0];if(!t)return;
       _tx=t.clientX;_ty=t.clientY;
-      _tPath=_getDeptAt(t.clientX,t.clientY);
+      _tPath=_getDeptPath(t.clientX,t.clientY);
     },{passive:true});
 
-    /* touchend: si no se movio mucho, activar el dept */
+    /* touchend: activar si el dedo no se movió mucho */
     overlay.addEventListener('touchend',function(e){
       var path=_tPath;_tPath=null;
       if(!path)return;
       var t=e.changedTouches[0];if(!t)return;
       if(Math.abs(t.clientX-_tx)>25||Math.abs(t.clientY-_ty)>25)return;
-      _callSelect(path.dataset.dept,path);
+      _tEnd=Date.now(); /* ← marca para suprimir el click sintético */
+      _activate(path);
     },{passive:true});
 
-    /* click: fallback para navegadores donde touchend no genera accion */
+    /* click: sólo para desktop; en mobile es el click sintético → ignorar */
     overlay.addEventListener('click',function(e){
-      var path=_getDeptAt(e.clientX,e.clientY);
-      if(!path)return;
-      _callSelect(path.dataset.dept,path);
+      if(Date.now()-_tEnd<600) return; /* suprimir sintético de iOS */
+      var path=_getDeptPath(e.clientX,e.clientY);
+      _activate(path);
     });
 
-    /* Filas tabla → detalle proyecto */
+    /* ── filas de tabla en pantalla Cartera ──────────────────────────── */
     var tbody=document.getElementById('ptbody');
     if(tbody){
       tbody.addEventListener('click',function(e){
@@ -1995,8 +1995,9 @@ function showProjectDetail(cui){
 </body>
 </html>
 <script>
-/* v26-mobile: OVERLAY HTML sobre el mapa SVG */
+/* v27-mobile: OVERLAY HTML — suprime doble-llamada por click sintético iOS */
 (function(){
+  /* ── back button en detalle de proyecto ─────────────────────────────── */
   var _orig=window.showProjectDetail;
   if(typeof _orig==='function'){
     window.showProjectDetail=function(cui){
@@ -2014,6 +2015,7 @@ function showProjectDetail(cui){
     };
   }
 
+  /* ── scroll a KPIs al seleccionar dept ──────────────────────────────── */
   function _scrollToKpi(){
     var grid=document.getElementById('kpi-grid');if(!grid)return;
     setTimeout(function(){
@@ -2036,40 +2038,36 @@ function showProjectDetail(cui){
   }
 
   document.addEventListener('DOMContentLoaded',function(){
-    if(window.innerWidth>900) return; /* solo movil */
+    if(window.innerWidth>900) return;
 
-    /* ── OVERLAY HTML sobre el mapa SVG ────────────────────────────────────
+    /* ═══════════════════════════════════════════════════════════════════
+     * OVERLAY HTML sobre el SVG del mapa — v27
      *
-     * ESTRATEGIA NUEVA:
-     *   El problema raiz: el onclick del SVG path se dispara ADEMAS de
-     *   nuestros listeners → doble llamada → toggle → KPIs vuelven a nacional.
+     * PROBLEMA RAIZ DEL DOBLE-CLICK:
+     *   iOS Safari genera un "click sintético" ~300ms después de touchend
+     *   en el MISMO elemento HTML que recibió el toque (el overlay).
+     *   Resultado sin fix: touchend → selectDeptCard (call 1) → click
+     *   sintético → selectDeptCard (call 2) → toggle → KPIs resetean.
      *
-     *   SOLUCION: poner un div HTML ENCIMA del SVG.
-     *   El div HTML intercepta TODOS los toques del mapa.
-     *   El SVG path queda debajo → su onclick NUNCA dispara.
-     *   Usamos elementFromPoint (con overlay oculto momentaneamente) para
-     *   saber qué departamento hay debajo del dedo.
-     *   Llamamos selectDeptCard → igual que las tarjetas de la lista.
-     *   UNA SOLA LLAMADA → KPIs se quedan actualizados.
-     *
-     * VERIFICADO en Node.js antes de publicar.
-     * ─────────────────────────────────────────────────────────────────── */
+     * FIX: variable _tEnd guarda el timestamp del último touchend.
+     *   El handler de click comprueba si han pasado < 600ms → si sí,
+     *   lo ignora (es el click sintético de iOS).
+     *   Desktop real: no hay touchend → _tEnd=0 → el click funciona.
+     * ═══════════════════════════════════════════════════════════════════ */
 
     var mapSvg=document.getElementById('map1');
     if(!mapSvg) return;
-    var mapCb=mapSvg.parentElement; /* div.cb */
+    var mapCb=mapSvg.parentElement;
     if(!mapCb) return;
-
-    /* Asegurar que el contenedor tenga position:relative para el absolute del overlay */
     if(getComputedStyle(mapCb).position==='static') mapCb.style.position='relative';
 
     var overlay=document.createElement('div');
     overlay.id='map-overlay';
-    /* El CSS ya define position:absolute, top:0, left:0, w:100%, h:100%, z-index:5 */
+    /* El CSS @media ya pone: position:absolute;top:0;left:0;w:100%;h:100%;z-index:5 */
     mapCb.appendChild(overlay);
 
-    function _getDeptAt(x,y){
-      /* Ocultar overlay momentaneamente → elementFromPoint ve el SVG */
+    /* ── utilidades ──────────────────────────────────────────────────── */
+    function _getDeptPath(x,y){
       overlay.style.display='none';
       var el=document.elementFromPoint(x,y);
       overlay.style.display='';
@@ -2079,47 +2077,49 @@ function showProjectDetail(cui){
       return (path&&path.dataset&&path.dataset.dept)?path:null;
     }
 
-    function _callSelect(dept,path){
-      if(typeof _showTt==='function'&&path){
+    function _activate(path){
+      if(!path) return;
+      var dept=path.dataset.dept;
+      /* mostrar tooltip */
+      if(typeof _showTt==='function'){
         var r=path.getBoundingClientRect();
         var ty=r.bottom+10;
         if(ty+135>window.innerHeight) ty=Math.max(8,r.top-145);
         _showTt(dept,r.left+r.width/2-95,ty);
       }
-      if(typeof selectDeptCard==='function'){
-        selectDeptCard(dept);
-      }else if(typeof window.handleDeptClick==='function'){
-        window.handleDeptClick(path||document.createElement('span'),dept);
-      }
+      /* UNA SOLA llamada a selectDeptCard */
+      if(typeof selectDeptCard==='function') selectDeptCard(dept);
     }
 
-    var _tx=0,_ty=0,_tPath=null;
+    /* ── estado del toque ────────────────────────────────────────────── */
+    var _tx=0,_ty=0,_tPath=null,_tEnd=0;
 
-    /* touchstart: registrar qué dept tocó el dedo */
+    /* touchstart: registrar qué dept hay bajo el dedo */
     overlay.addEventListener('touchstart',function(e){
       _tPath=null;
       var t=e.touches[0];if(!t)return;
       _tx=t.clientX;_ty=t.clientY;
-      _tPath=_getDeptAt(t.clientX,t.clientY);
+      _tPath=_getDeptPath(t.clientX,t.clientY);
     },{passive:true});
 
-    /* touchend: si no se movio mucho, activar el dept */
+    /* touchend: activar si el dedo no se movió mucho */
     overlay.addEventListener('touchend',function(e){
       var path=_tPath;_tPath=null;
       if(!path)return;
       var t=e.changedTouches[0];if(!t)return;
       if(Math.abs(t.clientX-_tx)>25||Math.abs(t.clientY-_ty)>25)return;
-      _callSelect(path.dataset.dept,path);
+      _tEnd=Date.now(); /* ← marca para suprimir el click sintético */
+      _activate(path);
     },{passive:true});
 
-    /* click: fallback para navegadores donde touchend no genera accion */
+    /* click: sólo para desktop; en mobile es el click sintético → ignorar */
     overlay.addEventListener('click',function(e){
-      var path=_getDeptAt(e.clientX,e.clientY);
-      if(!path)return;
-      _callSelect(path.dataset.dept,path);
+      if(Date.now()-_tEnd<600) return; /* suprimir sintético de iOS */
+      var path=_getDeptPath(e.clientX,e.clientY);
+      _activate(path);
     });
 
-    /* Filas tabla → detalle proyecto */
+    /* ── filas de tabla en pantalla Cartera ──────────────────────────── */
     var tbody=document.getElementById('ptbody');
     if(tbody){
       tbody.addEventListener('click',function(e){
