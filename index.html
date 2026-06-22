@@ -207,7 +207,6 @@ body{display:flex;flex-direction:column;height:100vh}
   .r2,.r3,.r75{grid-template-columns:1fr!important}
   .kg{grid-template-columns:repeat(3,1fr)!important;flex-shrink:0!important;margin-bottom:6px!important}
   .kg .kc:nth-child(4){display:none!important}
-  /* KPI panels: solo titulo + valor, sin extras */
   .kv{font-size:21px!important;font-weight:900!important}.kc{padding:7px 8px 5px!important}
   .kl{font-size:12px!important;font-weight:900!important}.ks{display:none!important}
   .kc .ki{display:none!important}.kc .pb{display:none!important}
@@ -1847,11 +1846,8 @@ function showProjectDetail(cui){
 })();
 
 </script>
-</body>
-</html>
 <script id="mob-v33">
 (function(){
-  /* ── Fondo celeste en KPIs al seleccionar departamento ── */
   function _setKpiCeleste(on){
     document.querySelectorAll('.kc').forEach(function(kc){
       if(on){kc.style.background='#E3F2FD';kc.style.borderTop='2px solid #90CAF9';}
@@ -1867,13 +1863,9 @@ function showProjectDetail(cui){
     _h0.call(this,el,dept);
     if(window.innerWidth>900)return;
     setTimeout(function(){_setKpiCeleste(!!window.selectedDept);},50);
-    setTimeout(function(){
-      var g=document.getElementById('kpi-grid');if(!g)return;
-      g.scrollIntoView({behavior:'smooth',block:'start'});
-    },120);
+    setTimeout(function(){var g=document.getElementById('kpi-grid');if(g)g.scrollIntoView({behavior:'smooth',block:'start'});},120);
   };
 
-  /* ── Touch en mapa SVG ── */
   var mapSvg=document.getElementById('map1');
   if(mapSvg){
     var _tx=0,_ty=0;
@@ -1890,191 +1882,116 @@ function showProjectDetail(cui){
     },{passive:true});
   }
 
-  /* ── Formateo ── */
-  function _fM(n){
-    if(!n||n===0)return '—';
-    return 'S/ '+(n/1e6).toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2})+' M';
-  }
+  function _fM(n){return (!n||n===0)?'—':'S/ '+(n/1e6).toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2})+' M';}
   function _fN(n){return (n&&n>0)?Number(n).toLocaleString('es-PE'):'—';}
   function _fPct(n){return (n!=null&&!isNaN(n))?Number(n).toFixed(1)+'%':'—';}
-  function _avColor(v){
-    if(v>=80)return {bg:'#E8F5E9',br:'#A5D6A7',tx:'#1B5E20'};
-    if(v>=50)return {bg:'#FFF9C4',br:'#F9A825',tx:'#E65100'};
-    return {bg:'#FFEBEE',br:'#EF9A9A',tx:'#B71C1C'};
-  }
-  function _kpanel(lbl,val,bg,br,tx,sub){
-    return '<div style="background:'+bg+';border:1.5px solid '+br+';border-radius:10px;padding:8px 6px;text-align:center;min-height:58px;display:flex;flex-direction:column;justify-content:center;gap:3px">'
-      +'<div style="font-size:7.5px;font-weight:900;color:'+tx+';text-transform:uppercase;letter-spacing:.4px;line-height:1.2">'+lbl+'</div>'
-      +'<div style="font-size:16px;font-weight:900;color:'+tx+';line-height:1.05">'+val+'</div>'
-      +(sub?'<div style="font-size:7px;color:'+tx+';opacity:.7;line-height:1.2">'+sub+'</div>':'')
-      +'</div>';
+  function _avC(v){return v>=80?{bg:'#E8F5E9',br:'#A5D6A7',tx:'#1B5E20'}:v>=50?{bg:'#FFF9C4',br:'#F9A825',tx:'#E65100'}:{bg:'#FFEBEE',br:'#EF9A9A',tx:'#B71C1C'};}
+  function _kp(lbl,val,bg,br,tx){
+    return '<div style="background:'+bg+';border:1.5px solid '+br+';border-radius:10px;padding:8px 6px;text-align:center;display:flex;flex-direction:column;justify-content:center;gap:2px;min-height:55px">'
+      +'<div style="font-size:7.5px;font-weight:900;color:'+tx+';text-transform:uppercase;letter-spacing:.4px">'+lbl+'</div>'
+      +'<div style="font-size:15px;font-weight:900;color:'+tx+';line-height:1.1">'+val+'</div></div>';
   }
 
-  /* ── Aplicar mejoras móvil al abrir proyecto ── */
-  function _applyMobProject(cui){
+  function _applyMob(cui){
     if(window.innerWidth>900)return;
     var p=document.getElementById('proj-detail-panel');
     if(!p||!p.children.length)return;
 
-    /* 1. Cerrar tooltip de departamento (AGRESIVO) */
+    /* Cerrar tooltip */
     var tt=document.getElementById('mtt');
-    if(tt)tt.setAttribute('style','display:none!important');
+    if(tt)tt.setAttribute('style','display:none');
 
-    /* 2. Scroll en el panel */
+    /* Scroll en panel */
     p.style.overflowY='scroll';
     p.style.webkitOverflowScrolling='touch';
 
-    /* 3. Botón Volver — sticky arriba */
-    if(document.getElementById('mob-back-btn'))document.getElementById('mob-back-btn').remove();
+    /* Botón volver */
+    var ob=document.getElementById('mob-back-btn');if(ob)ob.remove();
     var btn=document.createElement('button');
     btn.id='mob-back-btn';
     btn.innerHTML='&#8592; Volver';
-    btn.style.cssText='position:sticky;top:0;z-index:30;width:100%;padding:11px 16px;background:#105000;color:#fff;border:none;font-size:13px;font-weight:700;cursor:pointer;text-align:left;display:block;letter-spacing:.3px;box-shadow:0 2px 6px rgba(0,0,0,.3);';
+    btn.style.cssText='position:sticky;top:0;z-index:30;width:100%;padding:11px 16px;background:#105000;color:#fff;border:none;font-size:13px;font-weight:700;cursor:pointer;text-align:left;display:block;box-shadow:0 2px 6px rgba(0,0,0,.3);';
     btn.onclick=function(){
       if(typeof closeProjectDetail==='function')closeProjectDetail();
-      var tt2=document.getElementById('mtt');
-      if(tt2)tt2.removeAttribute('style');
+      var tt2=document.getElementById('mtt');if(tt2)tt2.removeAttribute('style');
     };
     p.insertBefore(btn,p.firstChild);
 
-    /* Encontrar el outer wrapper (primer div en el panel, ahora en children[1]) */
-    /* Buscamos el div con flex-direction:column que contiene todo */
-    var outerDiv=null;
-    for(var ci=0;ci<p.children.length;ci++){
-      if(p.children[ci].tagName==='DIV'){outerDiv=p.children[ci];break;}
-    }
-    if(!outerDiv)return;
-    outerDiv.style.overflow='visible';
-    outerDiv.style.height='auto';
+    /* Outer wrapper = primer DIV del panel */
+    var outer=null;
+    for(var i=0;i<p.children.length;i++){if(p.children[i].tagName==='DIV'){outer=p.children[i];break;}}
+    if(!outer)return;
+    outer.style.overflow='visible';
+    outer.style.height='auto';
 
-    /* Referencias a secciones por índice de hijos */
-    var hdrEl=outerDiv.children[0];   /* header verde */
-    var dataRow=outerDiv.children[1]; /* fila datos desktop */
-    var botRow=outerDiv.children[2];  /* componentes + ejecucion */
+    var hdr=outer.children[0];   /* header verde */
+    var drow=outer.children[1];  /* fila datos desktop */
+    var brow=outer.children[2];  /* bottom: componentes + ejecucion */
 
-    /* 4. Header verde: sticky + compacto */
-    if(hdrEl){
-      hdrEl.style.position='sticky';
-      hdrEl.style.top='40px';
-      hdrEl.style.zIndex='9';
-      hdrEl.style.padding='7px 12px 6px';
-      /* Título */
-      var titleDiv=hdrEl.querySelector('div[style*="max-width:calc(100%"]');
-      if(titleDiv){
-        titleDiv.style.fontSize='11.5px';
-        titleDiv.style.lineHeight='1.3';
-        titleDiv.style.display='-webkit-box';
-        titleDiv.style.webkitLineClamp='2';
-        titleDiv.style.webkitBoxOrient='vertical';
-        titleDiv.style.overflow='hidden';
-        titleDiv.style.marginBottom='3px';
-      }
-      /* Línea CUI */
-      var cuiDiv=hdrEl.querySelector('div[style*="letter-spacing:.8px"]');
-      if(cuiDiv){cuiDiv.style.fontSize='9px';cuiDiv.style.marginBottom='2px';}
-      /* Badge de estado (círculo) — reducir tamaño */
-      var stWrap=hdrEl.querySelector('div[style*="right:46px"]');
-      if(stWrap){
-        stWrap.style.top='5px';
-        var circ=stWrap.querySelector('div');
-        if(circ){circ.style.width='32px';circ.style.height='32px';}
-        var em=stWrap.querySelector('span');
-        if(em)em.style.fontSize='15px';
-        var lbl=stWrap.querySelectorAll('span')[1];
-        if(lbl)lbl.style.fontSize='6px';
-      }
+    /* Header sticky + compacto */
+    if(hdr){
+      hdr.style.position='sticky';hdr.style.top='40px';hdr.style.zIndex='9';hdr.style.padding='7px 12px 6px';
+      var td=hdr.querySelector('div[style*="max-width:calc(100%"]');
+      if(td){td.style.fontSize='11.5px';td.style.display='-webkit-box';td.style.webkitLineClamp='2';td.style.webkitBoxOrient='vertical';td.style.overflow='hidden';td.style.marginBottom='3px';}
+      var cd=hdr.querySelector('div[style*="letter-spacing:.8px"]');
+      if(cd){cd.style.fontSize='9px';cd.style.marginBottom='2px';}
+      var sw=hdr.querySelector('div[style*="right:46px"]');
+      if(sw){sw.style.top='5px';var ci=sw.querySelector('div');if(ci){ci.style.width='32px';ci.style.height='32px';}var es=sw.querySelector('span');if(es)es.style.fontSize='15px';}
     }
 
-    /* 5. Ocultar fila de datos desktop */
-    if(dataRow)dataRow.setAttribute('style','display:none!important');
+    /* Ocultar fila datos desktop */
+    if(drow)drow.setAttribute('style','display:none');
 
-    /* 6. Franja de 6 KPIs: 2 columnas × 3 filas */
-    if(document.getElementById('mob-pd-kpis'))document.getElementById('mob-pd-kpis').remove();
+    /* Franja 6 KPIs: 3 filas x 2 col */
+    var ok=document.getElementById('mob-pd-kpis');if(ok)ok.remove();
     var prj=(typeof proyectos!=='undefined')?proyectos.find(function(x){return String(x.CUI)===String(cui);}):null;
     var fin=prj?(prj.fin||{}):{};
-    var devT=fin.Dev||0;
-    var pim=fin.PIM||0;
+    var devT=fin.Dev||0,pim=fin.PIM||0;
     var avFin=pim>0?Math.round(devT/pim*1000)/10:0;
     var avFis=0;
-    try{
-      if(typeof _avFisicoData!=='undefined'){
-        var _af=_avFisicoData[cui]!=null?_avFisicoData[cui]:(_avFisicoData[String(cui)]!=null?_avFisicoData[String(cui)]:0);
-        avFis=_af||0;
-      }
-    }catch(e){}
+    try{if(typeof _avFisicoData!=='undefined'){avFis=_avFisicoData[cui]!=null?_avFisicoData[cui]:(_avFisicoData[String(cui)]||0);}}catch(e){}
     var ciT=0;
-    try{
-      if(typeof costoData!=='undefined'){ciT=costoData[cui]||costoData[String(cui)]||0;}
-    }catch(e){}
+    try{if(typeof costoData!=='undefined'){ciT=costoData[cui]||costoData[String(cui)]||0;}}catch(e){}
     var bnf=0;
-    try{
-      if(typeof benefiData!=='undefined'){bnf=benefiData[cui]||benefiData[String(cui)]||0;}
-    }catch(e){}
+    try{if(typeof benefiData!=='undefined'){bnf=benefiData[cui]||benefiData[String(cui)]||0;}}catch(e){}
     var pmiV='NO';
-    try{
-      if(typeof ssiData!=='undefined'){var sd=ssiData[cui]||ssiData[String(cui)];if(sd)pmiV=sd.pmi||'NO';}
-    }catch(e){}
-
-    var cAF=_avColor(avFis),cAFin=_avColor(avFin);
+    try{if(typeof ssiData!=='undefined'){var sd=ssiData[cui]||ssiData[String(cui)];if(sd)pmiV=sd.pmi||'NO';}}catch(e){}
+    var cF=_avC(avFis),cFin=_avC(avFin);
     var kbx=document.createElement('div');
     kbx.id='mob-pd-kpis';
     kbx.style.cssText='display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:8px 10px;background:#F0F7F0;border-bottom:2px solid #C8E6C9;';
     kbx.innerHTML=
-      _kpanel('Avance Físico',_fPct(avFis),cAF.bg,cAF.br,cAF.tx,'')+
-      _kpanel('Avance Financiero',_fPct(avFin),cAFin.bg,cAFin.br,cAFin.tx,'')+
-      _kpanel('Costo de Inversión',_fM(ciT),'#FFF3E0','#FFCC80','#E65100','Actualizado')+
-      _kpanel('Devengado Total',_fM(devT),'#E8F5E9','#81C784','#105000','')+
-      _kpanel('Beneficiarios',_fN(bnf),'#EDE7F6','#B39DDB','#4527A0','')+
-      _kpanel('PMI',(pmiV==='SI'?'✓ Sí':'✗ No'),
-        (pmiV==='SI'?'#E8F5E9':'#FFEBEE'),
-        (pmiV==='SI'?'#A5D6A7':'#EF9A9A'),
-        (pmiV==='SI'?'#1B5E20':'#B71C1C'),'');
-    /* Insertar después del header verde */
-    if(hdrEl&&hdrEl.parentNode)hdrEl.parentNode.insertBefore(kbx,hdrEl.nextSibling);
+      _kp('Avance Fisico',_fPct(avFis),cF.bg,cF.br,cF.tx)+
+      _kp('Avance Financiero',_fPct(avFin),cFin.bg,cFin.br,cFin.tx)+
+      _kp('Costo Inversion',_fM(ciT),'#FFF3E0','#FFCC80','#E65100')+
+      _kp('Devengado Total',_fM(devT),'#E8F5E9','#81C784','#105000')+
+      _kp('Beneficiarios',_fN(bnf),'#EDE7F6','#B39DDB','#4527A0')+
+      _kp('PMI',(pmiV==='SI'?'Si':'No'),(pmiV==='SI'?'#E8F5E9':'#FFEBEE'),(pmiV==='SI'?'#A5D6A7':'#EF9A9A'),(pmiV==='SI'?'#1B5E20':'#B71C1C'));
+    if(hdr&&hdr.parentNode)hdr.parentNode.insertBefore(kbx,hdr.nextSibling);
 
-    /* 7. Bottom row: ocultar Ejecución, scroll en Componentes */
-    if(botRow){
-      botRow.style.overflow='visible';
-      botRow.style.flex='none';
-      botRow.style.display='block';
-      /* Ocultar col. Ejecución (children[1]) */
-      if(botRow.children[1])botRow.children[1].setAttribute('style','display:none!important');
-      /* Componentes: scroll */
-      var compCol=botRow.children[0];
-      if(compCol){
-        compCol.style.maxHeight='320px';
-        compCol.style.overflowY='auto';
-        compCol.style.webkitOverflowScrolling='touch';
-        compCol.style.borderRight='none';
-        compCol.style.width='100%';
-        compCol.style.boxSizing='border-box';
-      }
+    /* Bottom row: ocultar Ejecución, scroll Componentes */
+    if(brow){
+      brow.style.overflow='visible';brow.style.flex='none';brow.style.display='block';
+      if(brow.children[1])brow.children[1].setAttribute('style','display:none');
+      var cc=brow.children[0];
+      if(cc){cc.style.maxHeight='320px';cc.style.overflowY='auto';cc.style.webkitOverflowScrolling='touch';cc.style.borderRight='none';}
     }
 
-    /* Asegurar que tooltip siga oculto */
-    setTimeout(function(){
-      var tt3=document.getElementById('mtt');
-      if(tt3)tt3.setAttribute('style','display:none');
-    },200);
-
+    setTimeout(function(){var tt3=document.getElementById('mtt');if(tt3)tt3.setAttribute('style','display:none');},250);
     p.scrollTop=0;
   }
 
-  /* ── Wrapper showProjectDetail ── */
+  /* ponytail: wrappear showProjectDetail */
   var _op=window.showProjectDetail;
   if(typeof _op==='function'){
     window.showProjectDetail=function(cui){
       _op(cui);
-      /* Cerrar tooltip inmediatamente */
-      var tt=document.getElementById('mtt');
-      if(tt)tt.setAttribute('style','display:none');
-      if(window.innerWidth>900)return;
-      /* Aplicar mejoras con delay para que _op termine de renderizar */
-      setTimeout(function(){_applyMobProject(cui);},60);
+      var tt=document.getElementById('mtt');if(tt)tt.setAttribute('style','display:none');
+      setTimeout(function(){_applyMob(cui);},60);
     };
   }
 
-  /* ── Click en fila de tabla → abrir proyecto (móvil) ── */
+  /* Click fila tabla en móvil */
   document.addEventListener('DOMContentLoaded',function(){
     var tb=document.getElementById('ptbody');if(!tb)return;
     tb.addEventListener('click',function(e){
@@ -2087,6 +2004,8 @@ function showProjectDetail(cui){
 })();
 </script>
 
+</body>
+</html>
 </body>
 <script>
 /* COMPONENTES Y ACCIONES — datos embebidos */
