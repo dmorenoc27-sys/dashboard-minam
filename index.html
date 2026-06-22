@@ -194,7 +194,7 @@ body{display:flex;flex-direction:column;height:100vh}
 .ftr{padding:7px 14px;font-size:9px;flex-shrink:0}
 </style>
 <style>
-/* ═══ MOBILE v8 ═════════════════════════════════════════════════ */
+/* ═══ MOBILE v9 ═════════════════════════════════════════════════ */
 @media(max-width:900px){
   html,body{height:auto!important;overflow:auto!important;overflow-x:hidden!important;display:block!important}
   .con{flex:none!important;overflow:visible!important;display:block!important;padding:8px 10px!important}
@@ -229,7 +229,7 @@ body{display:flex;flex-direction:column;height:100vh}
   #pd-bottom-row{grid-template-columns:1fr!important;display:block!important}
   #proj-detail-panel{overflow-y:scroll!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch!important}
   .pd-hdr{padding:8px 10px!important}
-  .pd-title{font-size:12px!important;margin-bottom:4px!important}
+  .pd-title{font-size:12px!important}
   .pd-kpis{grid-template-columns:repeat(2,1fr)!important}
   .pd-kpi{padding:7px 6px 5px!important}
   .pd-kpi:nth-child(2){border-right:none!important}
@@ -636,24 +636,30 @@ function updateConvChart(filtered,hasFilter){
 }
 
 const tt=document.getElementById('mtt');
-var _ttShownAt=0; /* timestamp del ultimo show — evita cierre inmediato */
+var _ttShownAt=0;
 function _hideTt(){tt.style.display='none'; _ttShownAt=0;}
 function _showTt(d,rawX,rawY){
   const n=depCounts[d]||0;
   const av=depAv[d]?depAv[d].toFixed(1)+'%':'—';
   const dv=depDv[d]?'S/ '+depDv[d].toFixed(1)+'M':'—';
   const isMob=window.innerWidth<=900;
-  const TW=215, TH=135;
+  const TW=215,TH=135;
   const x=Math.max(8,Math.min(rawX,window.innerWidth-TW));
   const y=Math.max(8,Math.min(rawY,window.innerHeight-TH));
   const xBtn=isMob?'<button onclick="document.getElementById(\'mtt\').style.display=\'none\'" style="position:absolute;top:4px;right:6px;background:none;border:none;color:#ccc;font-size:20px;cursor:pointer;line-height:1;padding:0 5px;pointer-events:auto">×</button>':'';
   tt.innerHTML='<div style="position:relative;padding-right:'+(isMob?'22px':'0')+'">'+xBtn+'<strong>'+d+'</strong><div class="mtr"><span class="mk">Proyectos</span><span class="mv">'+n+'</span></div><div class="mtr"><span class="mk">Devengado acum.</span><span class="mv">'+dv+'</span></div><div class="mtr"><span class="mk">% Avance prom.</span><span class="mv">'+av+'</span></div></div>';
   tt.style.cssText='display:block;left:'+x+'px;top:'+y+'px;position:fixed;pointer-events:'+(isMob?'auto':'none')+';z-index:9999;';
-  _ttShownAt=Date.now(); /* registrar cuando se mostro */
+  _ttShownAt=Date.now();
 }
 document.querySelectorAll('[data-dept]').forEach(el=>{
+  /* Desktop: mostrar al mover, ocultar al salir */
   el.addEventListener('mousemove',e=>{_showTt(el.dataset.dept,e.clientX+16,e.clientY-10);});
-  el.addEventListener('mouseleave',_hideTt);
+  el.addEventListener('mouseleave',function(){
+    /* En movil, mouseleave se dispara al levantar el dedo — ignorarlo */
+    if(window.innerWidth<=900) return;
+    _hideTt();
+  });
+  /* Movil: mostrar al tocar */
   el.addEventListener('touchstart',function(e){
     var r=el.getBoundingClientRect();
     var ty=r.bottom+10;
@@ -661,10 +667,10 @@ document.querySelectorAll('[data-dept]').forEach(el=>{
     _showTt(el.dataset.dept, r.left+r.width/2-95, ty);
   },{passive:true});
 });
-/* Cerrar al tocar FUERA — solo si pasaron mas de 400ms desde que se mostro */
+/* Movil: cerrar al tocar fuera (con proteccion 400ms) */
 document.addEventListener('touchstart',function(e){
   if(tt.style.display==='none') return;
-  if(Date.now()-_ttShownAt < 400) return; /* proteger contra cierre inmediato */
+  if(Date.now()-_ttShownAt<400) return;
   if(e.target.closest('#mtt')) return;
   _hideTt();
 },{passive:true});
