@@ -194,7 +194,7 @@ body{display:flex;flex-direction:column;height:100vh}
 .ftr{padding:7px 14px;font-size:9px;flex-shrink:0}
 </style>
 <style>
-/* MOBILE v10 */
+/* MOBILE v11 */
 @media(max-width:900px){
   html,body{height:auto!important;overflow:auto!important;overflow-x:hidden!important;display:block!important}
   .con{flex:none!important;overflow:visible!important;display:block!important;padding:8px 10px!important}
@@ -1649,6 +1649,7 @@ function showProjectDetail(cui){
     </div>
     <span style="font-size:7px;font-weight:900;color:#fff;text-transform:uppercase;letter-spacing:.5px;
                  background:${SC.bg};padding:1.5px 6px;border-radius:6px;white-space:nowrap">${SC.tx}</span>
+    ${benef>0?`<div style="display:flex;align-items:center;gap:3px;padding:2px 7px;border-radius:7px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.32);white-space:nowrap"><svg viewBox='0 0 20 14' width='13' height='9' fill='none'><circle cx='7' cy='5' r='3' fill='rgba(255,255,255,.92)'/><circle cx='13' cy='5' r='3' fill='rgba(255,255,255,.92)'/><path d='M1 13c0-3.3 2.7-6 6-6h6c3.3 0 6 2.7 6 6' stroke='rgba(255,255,255,.82)' stroke-width='1.5' stroke-linecap='round'/></svg><span style="font-size:7.5px;font-weight:800;color:#fff;letter-spacing:-.2px">${_fmtN(benef)}</span></div>`:''}
   </div>
   <button onclick="closeProjectDetail()" title="Cerrar"
     style="position:absolute;top:10px;right:10px;width:26px;height:26px;border-radius:50%;
@@ -1663,13 +1664,12 @@ function showProjectDetail(cui){
   <div style="font-size:13.5px;font-weight:800;color:#fff;line-height:1.4;max-width:calc(100% - 130px);margin-bottom:6px">
     ${nombre}
   </div>
-  <div style="display:flex;gap:4px;flex-wrap:wrap;align-items:center;padding-right:96px">
+  <div style="display:flex;gap:4px;flex-wrap:wrap;align-items:center">
     ${s.est?`<span style="padding:2px 8px;border-radius:8px;font-size:9px;font-weight:800;
       background:${s.est==='ACTIVO'?'rgba(102,203,0,.28)':'rgba(210,50,50,.25)'};
       color:${s.est==='ACTIVO'?'#B8FFB8':'#FFAAAA'};border:1px solid ${s.est==='ACTIVO'?'rgba(102,203,0,.4)':'rgba(210,50,50,.4)'}">${s.est==='ACTIVO'?'● ACTIVO':'○ CERRADO'}</span>`:''}
     ${p&&p.Departamento?`<span style="padding:2px 8px;border-radius:8px;font-size:9px;font-weight:700;background:rgba(255,255,255,.09);color:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.15)">📍 ${p.Departamento}</span>`:''}
     ${p&&p.Tipo_Proyecto?`<span style="padding:2px 8px;border-radius:8px;font-size:9px;font-weight:600;background:rgba(255,255,255,.06);color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1)">${p.Tipo_Proyecto}</span>`:''}
-    ${benef>0?`<span style="margin-left:auto;flex-shrink:0;display:inline-flex;align-items:center;gap:7px;padding:4px 13px 4px 10px;border-radius:14px;font-size:10px;font-weight:800;background:rgba(255,255,255,.2);color:#fff;border:1.5px solid rgba(255,255,255,.42);letter-spacing:.15px;white-space:nowrap"><svg viewBox='0 0 26 18' width='20' height='14' fill='none'><circle cx='9' cy='6' r='4' fill='rgba(255,255,255,.9)'/><circle cx='18' cy='6' r='4' fill='rgba(255,255,255,.9)'/><path d='M1 17c0-4.418 3.582-8 8-8h8c4.418 0 8 3.582 8 8' stroke='rgba(255,255,255,.85)' stroke-width='2' stroke-linecap='round'/></svg><span style="font-size:12px;letter-spacing:-.3px">${_fmtN(benef)}</span><span style="opacity:.75;font-size:8.5px;font-weight:600"> benef.</span></span>`:''}    
   </div>
 </div>
 
