@@ -207,10 +207,10 @@ body{display:flex;flex-direction:column;height:100vh}
   .kv{font-size:22px!important}.kc{padding:7px 10px 5px!important}
   .ht p,.hbadge{display:none!important}
   .hdr{height:auto!important;padding:4px 10px!important}
-  .nav{overflow-x:auto!important;padding:0 6px!important;scrollbar-width:none!important}
+  .nav{overflow-x:auto!important;-webkit-overflow-scrolling:touch!important;padding:0 6px!important;scrollbar-width:none!important}
   .nav::-webkit-scrollbar{display:none}
   .nb{white-space:nowrap!important;padding:7px 10px!important;font-size:11px!important}
-  .fb{flex-wrap:nowrap!important;overflow-x:auto!important;padding:5px 8px!important;gap:5px!important;scrollbar-width:none!important}
+  .fb{flex-wrap:nowrap!important;overflow-x:auto!important;-webkit-overflow-scrolling:touch!important;padding:5px 8px!important;gap:5px!important;scrollbar-width:none!important}
   .fb::-webkit-scrollbar{display:none}
   .fl{flex-shrink:0!important;font-size:10px!important}
   .fs{flex-shrink:0!important;width:135px!important;font-size:12px!important;padding:4px 6px!important}
@@ -218,12 +218,12 @@ body{display:flex;flex-direction:column;height:100vh}
   #resumen-right-area{flex-direction:column!important;overflow:visible!important;height:auto!important}
   #resumen-right-area>.card{width:100%!important;overflow:visible!important;display:block!important}
   #resumen-panel-body{overflow-y:visible!important;max-height:none!important;flex:none!important}
-  .twrap{overflow-x:auto!important;max-height:none!important}
+  .twrap{overflow-x:auto!important;-webkit-overflow-scrolling:touch!important;max-height:none!important}
   .dtable td{padding:9px 6px!important;font-size:12px!important}
   .dtable th{padding:7px 6px!important;font-size:11px!important}
   #pd-data-row,#pd-execbar{display:none!important}
   #pd-bottom-row{grid-template-columns:1fr!important;display:block!important}
-  #proj-detail-panel{overflow-y:scroll!important;-webkit-overflow-scrolling:touch!important}
+  #proj-detail-panel{overflow-y:scroll!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch!important}
   .pd-hdr{padding:8px 10px!important}.pd-title{font-size:12px!important}
   .pd-kpis{grid-template-columns:repeat(2,1fr)!important}
   .pd-kpi{padding:7px 6px 5px!important}
@@ -1623,17 +1623,7 @@ function showProjectDetail(cui){
 <!-- ══ HEADER ══════════════════════════════════════════════════ -->
 <div style="background:linear-gradient(135deg,#3D9A5C 0%,#4EAD6E 55%,#5BBD7A 100%);
             padding:11px 16px 9px;flex-shrink:0;position:relative">
-  <div style="position:absolute;top:9px;right:46px;display:flex;flex-direction:column;align-items:center;gap:2px">
-    <div style="width:44px;height:44px;border-radius:50%;
-                background:radial-gradient(circle at 38% 38%,${SC.lo},${SC.bg});
-                box-shadow:0 0 0 3px rgba(255,255,255,.1),0 0 22px ${SC.glow}88,0 0 44px ${SC.glow}33;
-                border:2px solid rgba(255,255,255,.2);
-                display:flex;align-items:center;justify-content:center">
-      <span style="font-size:21px">${avF>=80?'🟢':avF>=50?'🟡':avF>=20?'🟠':'🔴'}</span>
-    </div>
-    <span style="font-size:7px;font-weight:900;color:#fff;text-transform:uppercase;letter-spacing:.5px;
-                 background:${SC.bg};padding:1.5px 6px;border-radius:6px;white-space:nowrap">${SC.tx}</span>
-  </div>
+  ${benef>0?`<div style='position:absolute;top:42px;right:10px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 8px 4px;border-radius:9px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);min-width:52px;text-align:center;'><svg viewBox='0 0 22 15' width='18' height='12' fill='none'><circle cx='8' cy='5.5' r='3.5' fill='rgba(255,255,255,.92)'/><circle cx='14' cy='5.5' r='3.5' fill='rgba(255,255,255,.92)'/><path d='M1 14c0-3.866 3.134-7 7-7h6c3.866 0 7 3.134 7 7' stroke='rgba(255,255,255,.82)' stroke-width='1.6' stroke-linecap='round'/></svg><span style='font-size:9.5px;font-weight:900;color:#fff;letter-spacing:-.3px;line-height:1.1'>${_fmtN(benef)}</span><span style='font-size:5.5px;font-weight:700;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.7px;line-height:1.2'>beneficiarios</span></div>`:''}    
   <button onclick="closeProjectDetail()" title="Cerrar"
     style="position:absolute;top:10px;right:10px;width:26px;height:26px;border-radius:50%;
            border:1.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.07);
@@ -1792,9 +1782,9 @@ function showProjectDetail(cui){
 
   <!-- LEFT: Componentes y Acciones -->
   <div style="border-right:1px solid #E8F5E9;padding:10px 12px;overflow-y:auto">
-    <div style="font-size:15px;font-weight:800;color:#AAAAAA;text-transform:uppercase;
-                letter-spacing:1px;margin-bottom:7px;padding-bottom:4px;border-bottom:2px solid #E8F5E9">
-      Componentes y Acciones
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;padding-bottom:4px;border-bottom:2px solid #E8F5E9">
+      <span style="font-size:13px;font-weight:800;color:#AAAAAA;text-transform:uppercase;letter-spacing:1px">Componentes y Acciones</span>
+      <span style="display:inline-flex;align-items:center;gap:5px;padding:4px 11px 4px 8px;border-radius:20px;background:${SC.bg};color:#fff;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap;flex-shrink:0;box-shadow:0 1px 4px ${SC.glow}55">${avF>=80?'🟢':avF>=50?'🟡':avF>=20?'🟠':'🔴'}&nbsp;${SC.tx}</span>
     </div>
     <div id="comp-acc-content" style="font-size:10px;color:#888;line-height:1.8">
       <div style="color:#999;font-style:italic;font-size:9px;text-align:center;padding:12px">⟳ Cargando...</div>
@@ -1860,12 +1850,7 @@ function showProjectDetail(cui){
 </body>
 </html>
 <script>
-/* Estrategia: touchend en el SVG → detectar departamento tocado →
-   card.click() en la tarjeta de la lista (código que YA funciona).
-   Debounce en handleDeptClick bloquea el onclick del path que llega 300ms después. */
 (function(){
-
-  /* Debounce handleDeptClick — bloquea el onclick del path que llega post-touchend */
   var _h0=window.handleDeptClick, _hl={d:null,t:0};
   window.handleDeptClick=function(el,dept){
     var n=Date.now();
@@ -1873,14 +1858,12 @@ function showProjectDetail(cui){
     _hl={d:dept,t:n};
     _h0.call(this,el,dept);
     if(window.innerWidth>900)return;
-    /* tooltip */
     if(typeof _showTt==='function'&&el&&el.getBoundingClientRect){
       var r=el.getBoundingClientRect();
       var ty=r.bottom+10;
       if(ty+135>window.innerHeight)ty=Math.max(8,r.top-145);
       _showTt(dept,Math.max(8,r.left+r.width/2-95),ty);
     }
-    /* scroll a KPIs */
     setTimeout(function(){
       var g=document.getElementById('kpi-grid');if(!g)return;
       g.scrollIntoView({behavior:'smooth',block:'start'});
@@ -1891,38 +1874,28 @@ function showProjectDetail(cui){
     },120);
   };
 
-  /* touchend en el SVG del mapa → simular clic en tarjeta de la lista */
   var mapSvg=document.getElementById('map1');
   if(mapSvg){
     var _tx=0,_ty=0;
     mapSvg.addEventListener('touchstart',function(e){
-      _tx=e.touches[0].clientX; _ty=e.touches[0].clientY;
+      _tx=e.touches[0].clientX;_ty=e.touches[0].clientY;
     },{passive:true});
-
     mapSvg.addEventListener('touchend',function(e){
       var t=e.changedTouches[0];
-      /* ignorar si fue un scroll (movimiento >15px) */
       if(Math.abs(t.clientX-_tx)>15||Math.abs(t.clientY-_ty)>15)return;
-      /* encontrar el path bajo el dedo */
       var el=document.elementFromPoint(t.clientX,t.clientY);
-      var dept=null;
-      var cur=el;
+      var dept=null,cur=el;
       while(cur&&cur!==document.body){
         if(cur.dataset&&cur.dataset.dept){dept=cur.dataset.dept;break;}
         cur=cur.parentElement;
       }
       if(!dept)return;
-      /* simular clic en la tarjeta de la lista (misma ruta que el usuario) */
       var card=document.querySelector('div[onclick="selectDeptCard(\''+dept+'\')"]');
-      if(card){
-        card.click();
-      } else if(typeof selectDeptCard==='function'){
-        selectDeptCard(dept);
-      }
+      if(card)card.click();
+      else if(typeof selectDeptCard==='function')selectDeptCard(dept);
     },{passive:true});
   }
 
-  /* botón volver en detalle de proyecto */
   var _op=window.showProjectDetail;
   if(typeof _op==='function'){
     window.showProjectDetail=function(cui){
@@ -1930,10 +1903,11 @@ function showProjectDetail(cui){
       if(window.innerWidth>900)return;
       var p=document.getElementById('proj-detail-panel');if(!p)return;
       p.style.overflowY='scroll';
+      p.style.webkitOverflowScrolling='touch';
       var old=document.getElementById('mob-back-btn');if(old)old.remove();
       var btn=document.createElement('button');
-      btn.id='mob-back-btn';btn.textContent='← Volver';
-      btn.style.cssText='position:sticky;top:0;z-index:20;width:100%;padding:13px 16px;background:#105000;color:#fff;border:none;font-size:14px;font-weight:700;cursor:pointer;text-align:left;';
+      btn.id='mob-back-btn';btn.textContent='← Volver a la lista';
+      btn.style.cssText='position:sticky;top:0;z-index:20;width:100%;padding:13px 16px;background:#105000;color:#fff;border:none;font-size:14px;font-weight:700;cursor:pointer;text-align:left;display:block;';
       btn.onclick=function(){if(typeof closeProjectDetail==='function')closeProjectDetail();};
       p.insertBefore(btn,p.firstChild);p.scrollTop=0;
     };
@@ -1948,7 +1922,6 @@ function showProjectDetail(cui){
       if(td&&typeof showProjectDetail==='function')showProjectDetail(td.dataset.cui);
     },true);
   });
-
 })();
 </script>
 </body>
