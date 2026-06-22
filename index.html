@@ -194,7 +194,7 @@ body{display:flex;flex-direction:column;height:100vh}
 .ftr{padding:7px 14px;font-size:9px;flex-shrink:0}
 </style>
 
-<style id="mob-v31">
+<style id="mob-v32">
 @media(max-width:900px){
   html,body{height:auto!important;overflow:auto!important;overflow-x:hidden!important;display:block!important}
   .con{flex:none!important;overflow:visible!important;display:block!important;padding:8px 10px!important}
@@ -207,6 +207,7 @@ body{display:flex;flex-direction:column;height:100vh}
   .r2,.r3,.r75{grid-template-columns:1fr!important}
   .kg{grid-template-columns:repeat(3,1fr)!important;flex-shrink:0!important;margin-bottom:6px!important}
   .kg .kc:nth-child(4){display:none!important}
+  /* Mejora 1: KPI panels grandes y en negrita, sin extras */
   .kv{font-size:21px!important;font-weight:900!important}.kc{padding:7px 8px 5px!important}
   .kl{font-size:12px!important;font-weight:900!important}.ks{display:none!important}
   .kc .ki{display:none!important}.kc .pb{display:none!important}
@@ -226,8 +227,6 @@ body{display:flex;flex-direction:column;height:100vh}
   .twrap{overflow-x:auto!important;-webkit-overflow-scrolling:touch!important;max-height:none!important}
   .dtable td{padding:9px 6px!important;font-size:12px!important}
   .dtable th{padding:7px 6px!important;font-size:11px!important}
-  #pd-data-row{display:none!important}
-  #pd-execbar{display:none!important}
   #proj-detail-panel{overflow-y:scroll!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch!important}
   .pd-hdr{padding:8px 10px!important}.pd-title{font-size:12px!important}
   .pd-kpis{grid-template-columns:repeat(2,1fr)!important}
@@ -239,6 +238,8 @@ body{display:flex;flex-direction:column;height:100vh}
   .pd-col{padding:8px 10px!important}
   [data-dept]{cursor:pointer!important}
   [data-dept].dept-sel{stroke:#1565C0!important;stroke-width:3.5px!important;filter:drop-shadow(0 0 7px rgba(21,101,192,.75))!important;transform-box:fill-box!important;transform-origin:center!important;transform:scale(1.05)!important}
+  /* Componentes y Acciones mejorado */
+  #comp-acc-content{font-size:11px!important;line-height:1.5!important}
 }
 </style>
 
@@ -1858,7 +1859,7 @@ function showProjectDetail(cui){
 </script>
 </body>
 </html>
-<script id="mob-v31">
+<script id="mob-v32">
 (function(){
   /* ── Fondo celeste en KPIs al seleccionar departamento ── */
   function _setKpiCeleste(on){
@@ -1921,36 +1922,76 @@ function showProjectDetail(cui){
       p.style.overflowY='scroll';
       p.style.webkitOverflowScrolling='touch';
 
-      /* Botón volver (sticky arriba) */
-      var old=document.getElementById('mob-back-btn');if(old)old.remove();
+      /* Cerrar tooltip de departamento */
+      var tt=document.getElementById('mtt');
+      if(tt){tt.style.opacity='0';tt.style.pointerEvents='none';}
+
+      /* Botón volver (sticky) */
+      var oldB=document.getElementById('mob-back-btn');if(oldB)oldB.remove();
       var btn=document.createElement('button');
       btn.id='mob-back-btn';
-      btn.textContent='← Volver a la lista';
-      btn.style.cssText='position:sticky;top:0;z-index:20;width:100%;padding:13px 16px;background:#105000;color:#fff;border:none;font-size:14px;font-weight:700;cursor:pointer;text-align:left;display:block;';
-      btn.onclick=function(){if(typeof closeProjectDetail==='function')closeProjectDetail();};
+      btn.innerHTML='&#8592; Volver a la lista';
+      btn.style.cssText='position:sticky;top:0;z-index:30;width:100%;padding:10px 16px;background:#105000;color:#fff;border:none;font-size:13px;font-weight:700;cursor:pointer;text-align:left;display:block;letter-spacing:.3px;box-shadow:0 2px 6px rgba(0,0,0,.25);';
+      btn.onclick=function(){
+        if(typeof closeProjectDetail==='function')closeProjectDetail();
+        var tt2=document.getElementById('mtt');
+        if(tt2){tt2.style.opacity='';tt2.style.pointerEvents='';}
+      };
       p.insertBefore(btn,p.firstChild);
 
-      /* Mejora 3: encabezado verde sticky */
+      /* Corregir overflow del wrapper externo para sticky */
       var outerDiv=p.querySelector('div[style*="flex-direction:column"]');
       if(outerDiv){outerDiv.style.overflow='visible';outerDiv.style.height='auto';}
+
+      /* Mejora 3: encabezado verde sticky + compacto */
       var hdrEl=p.querySelector('div[style*="3D9A5C"]');
       if(hdrEl){
         hdrEl.style.position='sticky';
-        hdrEl.style.top='44px';
+        hdrEl.style.top='41px';
         hdrEl.style.zIndex='9';
+        hdrEl.style.padding='7px 12px 6px';
+        /* Compactar título */
+        var titleDiv=hdrEl.querySelector('div[style*="max-width:calc(100%"]');
+        if(titleDiv){
+          titleDiv.style.fontSize='12px';
+          titleDiv.style.display='-webkit-box';
+          titleDiv.style.webkitLineClamp='2';
+          titleDiv.style.webkitBoxOrient='vertical';
+          titleDiv.style.overflow='hidden';
+          titleDiv.style.marginBottom='4px';
+          titleDiv.style.lineHeight='1.35';
+        }
+        /* Compactar línea CUI */
+        var cuiDiv=hdrEl.querySelector('div[style*="letter-spacing:.8px"]');
+        if(cuiDiv){cuiDiv.style.fontSize='9.5px';cuiDiv.style.marginBottom='2px';}
+        /* Reducir badge de estado */
+        var circleWrap=hdrEl.querySelector('div[style*="right:46px"]');
+        if(circleWrap){
+          circleWrap.style.top='6px';
+          var circle=circleWrap.querySelector('div[style*="width:44px"]');
+          if(circle){circle.style.width='36px';circle.style.height='36px';}
+          var emoji=circleWrap.querySelector('span[style*="font-size:21px"]');
+          if(emoji)emoji.style.fontSize='17px';
+          var label=circleWrap.querySelector('span[style*="font-size:7px"]');
+          if(label)label.style.fontSize='6px';
+        }
       }
 
-      /* Mejora 4: franja 2x2 con 4 KPIs del proyecto */
-      var old2=document.getElementById('mob-pd-kpis');if(old2)old2.remove();
+      /* Mejora: ocultar la fila de datos desktop (no tiene id — buscar por grid) */
+      var dataRow=p.querySelector('div[style*="28% 13% 13%"]');
+      if(dataRow)dataRow.style.display='none';
+
+      /* Mejora 4: franja 2×2 con KPIs del proyecto */
+      var oldK=document.getElementById('mob-pd-kpis');if(oldK)oldK.remove();
       var prj=(typeof proyectos!=='undefined')?proyectos.find(function(x){return String(x.CUI)===String(cui);}):null;
       var fin=prj?(prj.fin||{}):{};
       var devT=fin.Dev||0;
       var ciT=(typeof costoData!=='undefined')?(costoData[cui]||costoData[String(cui)]||0):0;
       var bnf=(typeof benefiData!=='undefined')?(benefiData[cui]||benefiData[String(cui)]||0):0;
       var pmiV='NO';
-      if(typeof ssiData!=='undefined'&&(ssiData[cui]||ssiData[String(cui)])){
+      if(typeof ssiData!=='undefined'){
         var sd=ssiData[cui]||ssiData[String(cui)];
-        pmiV=sd.pmi||'NO';
+        if(sd)pmiV=sd.pmi||'NO';
       }
       var _fs=function(n){
         if(!n||n===0)return '—';
@@ -1968,9 +2009,9 @@ function showProjectDetail(cui){
       kbx.style.cssText='display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:10px 12px;background:#F7FAF7;border-bottom:2px solid #C8E6C9;';
       kbx.innerHTML=
         _mk('Devengado Total',_fs(devT),'#E8F5E9','#A5D6A7','#105000')+
-        _mk('Costo Inversión',_fs(ciT),'#FFF3E0','#FFCC80','#E65100')+
+        _mk('Costo Inversion',_fs(ciT),'#FFF3E0','#FFCC80','#E65100')+
         _mk('Beneficiarios',_fn(bnf),'#F1F8E9','#AED581','#33691E')+
-        _mk('PMI',(pmiV==='SI'?'✓ Sí':'✗ No'),
+        _mk('PMI',(pmiV==='SI'?'✓ Si':'✗ No'),
           (pmiV==='SI'?'#E8F5E9':'#FFEBEE'),
           (pmiV==='SI'?'#A5D6A7':'#EF9A9A'),
           (pmiV==='SI'?'#1B5E20':'#B71C1C'));
@@ -1980,7 +2021,7 @@ function showProjectDetail(cui){
         hdrRef.parentNode.insertBefore(kbx,hdrRef.nextSibling);
       }
 
-      /* Mejora 2: scroll en columna Componentes y Acciones */
+      /* Mejora 2: scroll Componentes + ocultar Ejecucion */
       var compContent=document.getElementById('comp-acc-content');
       if(compContent){
         var compCol=compContent.parentElement;
@@ -1989,10 +2030,16 @@ function showProjectDetail(cui){
           if(botRow){
             botRow.style.overflow='visible';
             botRow.style.flex='none';
+            botRow.style.display='block';
+            /* Ocultar columna de Ejecucion por Actividad */
+            if(botRow.children[1])botRow.children[1].style.display='none';
           }
-          compCol.style.maxHeight='260px';
+          compCol.style.maxHeight='300px';
           compCol.style.overflowY='auto';
           compCol.style.webkitOverflowScrolling='touch';
+          compCol.style.borderRight='none';
+          compCol.style.width='100%';
+          compCol.style.boxSizing='border-box';
         }
       }
 
