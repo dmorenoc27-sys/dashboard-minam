@@ -1860,11 +1860,11 @@ function showProjectDetail(cui){
 </body>
 </html>
 <script>
-/* ponytail: captura click en SVG antes que llegue al onclick del path
-   → una sola llamada → KPIs actualizan. Debounce como red de seguridad. */
+/* MAPA: desinstalar onclick de cada path → instalar listener limpio.
+   Mismo mecanismo que la lista de departamentos (selectDeptCard). */
 (function(){
 
-  /* debounce handleDeptClick — red de seguridad contra dobles llamadas */
+  /* Debounce handleDeptClick — red de seguridad */
   var _h0=window.handleDeptClick, _hl={d:null,t:0};
   window.handleDeptClick=function(el,dept){
     var n=Date.now();
@@ -1872,7 +1872,7 @@ function showProjectDetail(cui){
     _hl={d:dept,t:n};
     _h0.call(this,el,dept);
     if(window.innerWidth>900)return;
-    /* ventana emergente */
+    /* tooltip */
     if(typeof _showTt==='function'&&el&&el.getBoundingClientRect){
       var r=el.getBoundingClientRect();
       var ty=r.bottom+10;
@@ -1890,18 +1890,26 @@ function showProjectDetail(cui){
     },120);
   };
 
-  /* MÓVIL: interceptar click en FASE CAPTURA en el SVG
-     → stopImmediatePropagation bloquea el onclick del <path>
-     → selectDeptCard se llama UNA SOLA VEZ, idéntico a la lista */
-  var mapSvg=document.getElementById('map1');
-  if(mapSvg&&window.innerWidth<=900){
-    mapSvg.addEventListener('click',function(e){
-      var path=e.target.closest?e.target.closest('[data-dept]'):null;
-      if(!path&&e.target.dataset&&e.target.dataset.dept)path=e.target;
-      if(!path)return;
-      e.stopImmediatePropagation(); /* bloquea onclick del path */
-      if(typeof selectDeptCard==='function')selectDeptCard(path.dataset.dept);
-    },{capture:true});
+  /* REINSTALAR: quitar onclick de paths, instalar addEventListener limpio */
+  function _wiremapa(){
+    var paths=document.querySelectorAll('[data-dept]');
+    paths.forEach(function(p){
+      p.removeAttribute('onclick');        /* eliminar handler viejo */
+      p.style.cursor='pointer';
+      var dept=p.dataset.dept;
+      p.addEventListener('click',function(e){
+        e.stopPropagation();
+        if(typeof selectDeptCard==='function') selectDeptCard(dept);
+      });
+    });
+    return paths.length;
+  }
+
+  /* Ejecutar ahora (script está al final, DOM ya existe) */
+  var n=_wiremapa();
+  if(n===0){
+    /* fallback: esperar DOMContentLoaded */
+    document.addEventListener('DOMContentLoaded',_wiremapa);
   }
 
   /* botón volver en detalle de proyecto */
@@ -1930,6 +1938,7 @@ function showProjectDetail(cui){
       if(td&&typeof showProjectDetail==='function')showProjectDetail(td.dataset.cui);
     },true);
   });
+
 })();
 </script>
 </body>
