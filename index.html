@@ -72,124 +72,39 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#F0F2F5;color:#2D2D2
 .pr{background:#FFEBEE;color:#C62828;display:inline-block;border-radius:10px;padding:2px 6px;font-size:10px;font-weight:700}
 .ftr{background:var(--v5);color:rgba(255,255,255,.6);text-align:center;padding:14px;font-size:10px;margin-top:10px}
 ::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-track{background:var(--g1)}::-webkit-scrollbar-thumb{background:var(--v2);border-radius:3px}
-
-/* ════════════════════════════════════════════
-   RESPONSIVE — tablets (≤900px)
-   ════════════════════════════════════════════ */
 @media(max-width:900px){
   .r2,.r3,.r75{grid-template-columns:1fr}
   .rmap{flex-direction:column!important;gap:10px!important}
   .rmap>.card{width:100%!important;flex-shrink:1!important}
-  .con{padding:12px}
-  .kg{grid-template-columns:repeat(2,1fr)!important;gap:8px}
-  .cw{height:120px}.cwsm{height:150px}.cwlg{height:220px}
-  .twrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-height:none}
-  .dtable{min-width:540px}
+  #mob-charts-hide{display:none!important}
+  .con{padding:14px}
+  .hdr{padding:0 14px}
+  .nav{padding:0 14px;overflow-x:auto}
+  .kg{grid-template-columns:repeat(2,1fr)!important}
   .pd-kpis{grid-template-columns:repeat(2,1fr)}
   .pd-kpi:nth-child(2){border-right:none}
   .pd-body{grid-template-columns:1fr}
   .pd-col:first-child{border-right:none;border-bottom:1px solid #F0F0F0}
-  #resumen-right-area{flex-direction:column!important}
-}
-
-/* ════════════════════════════════════════════
-   MOBILE (≤600px) — Layout completo
-   ════════════════════════════════════════════ */
-@media(max-width:600px){
-  /* Scroll libre */
-  html,body{overflow-x:hidden;-webkit-overflow-scrolling:touch}
-  body{font-size:14px;touch-action:pan-y}
-
-  /* ── Header compacto ── */
-  .hdr{height:auto!important;min-height:44px;padding:5px 10px;gap:6px}
-  .hdr img{height:32px!important;width:auto!important;max-width:90vw}
-  .ht h1{font-size:12px}.ht p,.hbadge{display:none}
-
-  /* ── Tabs: scroll horizontal ── */
-  .nav{padding:0;overflow-x:auto;-webkit-overflow-scrolling:touch;
-       scrollbar-width:none;display:flex}
-  .nav::-webkit-scrollbar{display:none}
-  .nb{padding:10px 14px;font-size:12px;min-height:44px;
-      white-space:nowrap;flex-shrink:0}
-
-  /* ── Filtros COMPACTOS: una fila con toggle ── */
-  .fb{padding:0!important;gap:0!important;flex-direction:column!important;
-      border-bottom:1px solid var(--g2)}
-  .fb-toggle-row{display:flex!important;align-items:center;
-                 padding:8px 12px;gap:8px;cursor:pointer;
-                 background:#fff;user-select:none}
-  .fb-toggle-row .fl{flex:1;font-size:11px;font-weight:700;
-                     color:var(--g4);text-transform:uppercase;letter-spacing:.5px}
-  .fb-badge{background:var(--v1);color:#fff;border-radius:10px;
-            padding:2px 8px;font-size:10px;font-weight:700;display:none}
-  .fb-badge.visible{display:inline-block}
-  .fb-arrow{font-size:14px;color:var(--g3);transition:transform .2s}
-  .fb-arrow.open{transform:rotate(180deg)}
-  .fb-selects{display:none;flex-direction:column;gap:6px;
-              padding:8px 12px 10px;background:#fafafa;
-              border-top:1px solid var(--g2)}
-  .fb-selects.open{display:flex}
-  .fs{width:100%;font-size:14px;padding:8px 12px;
-      min-height:40px;border-radius:8px}
-  .fb > .ftag{display:none!important}
-  .fb > div[style*="margin-left:auto"]{display:none!important}
-
-  /* ── Contenedor ── */
-  .con{padding:6px 6px 24px}
-  .row{gap:8px;margin-bottom:8px}
-
-  /* ── KPI cards: 2 col ── */
-  .kg{grid-template-columns:repeat(2,1fr)!important;gap:6px}
-  .kc{padding:8px 10px 6px}
-  .kv{font-size:22px}
-  .kl{font-size:9px}.ks{font-size:10px}.ki{font-size:16px}
-
-  /* ── MAPA: ancho completo, altura razonable ── */
-  .rmap{flex-direction:column!important;gap:8px!important}
-  .rmap>.card{width:100%!important;flex-shrink:1!important}
-  #map1{max-height:260px;width:100%;display:block}
-  /* OCULTAR gráficos laterales (Tendencia + Devengado) en móvil */
-  #mob-charts-hide{display:none!important}
-
-  /* ── Panel proyectos por depto: ocupa el resto ── */
   #resumen-right-area{flex-direction:column!important;gap:8px!important}
   #resumen-right-area>.card{flex:1!important;width:100%!important}
-  #resumen-panel-body{grid-template-columns:1fr!important}
-
-  /* ── Hint de toque mapa ── */
-  #mob-map-hint{display:block!important}
-
-  /* ── Tabla proyectos (Cartera) ── */
-  .twrap{overflow-x:auto;-webkit-overflow-scrolling:touch;
-         max-height:calc(100svh - 200px);border-radius:0 0 10px 10px}
-  .dtable{min-width:460px;font-size:12px}
-  .dtable th{padding:10px 10px;font-size:11px}
-  .dtable td{padding:11px 10px;line-height:1.4}
-  .dtable tbody tr{cursor:pointer}
-  .dtable tbody tr:active td{background:var(--v4)!important}
-
-  /* ── Charts ── */
-  .cw{height:130px}.cwsm{height:150px}.cwlg{height:180px}
-  .ch{padding:7px 10px}.ct{font-size:12px}.cb{padding:5px 8px}
-
-  /* ── Panel detalle proyecto ── */
-  .pd-kpis{grid-template-columns:repeat(2,1fr)}
-  .pd-kpi:nth-child(2){border-right:none}
-  .pd-kpi{padding:8px 8px 6px}
-  .pd-kpi-val{font-size:16px}
-  .pd-body{grid-template-columns:1fr}
-  .pd-col:first-child{border-right:none;border-bottom:1px solid #F0F0F0}
-  .pd-hdr{padding:10px 12px 8px}
-  .pd-title{font-size:11px}
-  .pd-ytable{font-size:10.5px}
-
-  .ftr{padding:8px;font-size:10px}
 }
-
-@media(max-width:400px){
-  .nb{font-size:11px;padding:9px 10px}
-  .kv{font-size:18px}
-  .dtable{min-width:400px}
+@media(max-width:600px){
+  /* Filtros: wrappean en varias filas, selects compactos */
+  .fb{flex-wrap:wrap;padding:8px 14px;gap:6px}
+  .fs{font-size:14px;padding:6px 10px}
+  /* Tabs: scroll horizontal sin barra visible */
+  .nav{padding:0 8px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .nav::-webkit-scrollbar{display:none}
+  .nb{padding:10px 12px;font-size:12px;white-space:nowrap;min-height:44px}
+  /* KPI más pequeñas */
+  .kv{font-size:26px}
+  .kc{padding:8px 12px 6px}
+  /* Tabla proyectos */
+  .twrap{max-height:none}
+  .dtable td{padding:11px 10px;font-size:12px}
+  .dtable th{padding:10px}
+  /* Detalle proyecto */
+  .pd-kpi-val{font-size:16px}
 }
 
 @keyframes deptGlow{0%,100%{filter:drop-shadow(0 0 6px rgba(255,200,0,.7));}50%{filter:drop-shadow(0 0 14px rgba(255,200,0,1));}}
@@ -326,24 +241,11 @@ body{display:flex;flex-direction:column;height:100vh}
 </nav>
 
 <div class="fb">
-  <!-- MÓVIL: fila de toggle -->
-  <div class="fb-toggle-row" onclick="
-    var sel=this.nextElementSibling;
-    var arrow=this.querySelector('.fb-arrow');
-    sel.classList.toggle('open');
-    arrow.classList.toggle('open');
-  ">
-    <span class="fl">⚙ Filtros</span>
-    <span id="fb-active-badge" class="fb-badge">Activo</span>
-    <span class="fb-arrow">▾</span>
-  </div>
-  <!-- selects dentro del panel colapsable -->
-  <div class="fb-selects">
-  <select class="fs" id="fConv" onchange="applyF();updateFilterBadge()"><option value="">Todos los convenios</option><option>BID 1</option><option>BID 2</option><option>JICA 1</option><option>JICA 2</option><option>KFW</option><option>Punche 1</option></select>
+  <span class="fl">Filtros:</span>
+  <select class="fs" id="fConv" onchange="applyF()"><option value="">Todos los convenios</option><option>BID 1</option><option>BID 2</option><option>JICA 1</option><option>JICA 2</option><option>KFW</option><option>Punche 1</option></select>
   <select class="fs" <select class="fs" id="fAño" onchange="applyF()"><option value="">Todos los años</option><option>2014</option><option>2015</option><option>2016</option><option>2017</option><option>2018</option><option>2019</option><option>2020</option><option>2021</option><option>2022</option><option>2023</option><option>2024</option><option>2025</option><option>2026</option></select>
   <select class="fs" id="fTipo" onchange="applyF()"><option value="">Todos los tipos</option><option>Gestión integral de residuos sólidos</option><option>Infraestructura de disposición final</option><option>Limpieza pública</option><option>Recuperación de áreas degradadas</option></select>
   <span class="ftag" onclick="resetF()">✕ Limpiar</span>
-  </div><!-- /fb-selects -->
   <!-- Buscador CUI -->
   <div style="display:flex;align-items:center;gap:0;margin-left:auto;border:1.5px solid #3D9A5C;border-radius:8px;overflow:hidden;background:#fff">
     <span style="padding:0 8px;font-size:12px;color:#3D9A5C;font-weight:800;white-space:nowrap;border-right:1px solid #c8e6c9;background:#f4fbf4;height:100%;display:flex;align-items:center">🔍 CUI</span>
@@ -379,10 +281,6 @@ body{display:flex;flex-direction:column;height:100vh}
       <div class="ch">
         <div class="ct"><span class="dot"></span>Distribución Geográfica</div>
         <span class="csub" id="map1-sub">Haz clic en un departamento</span>
-        <span id="mob-map-hint" style="display:none;font-size:11px;color:#105000;font-weight:600;
-          padding:2px 10px;background:#E8F5E9;border-radius:10px;border:1px solid #A5D6A7">
-          👆 Toca el mapa para ver proyectos
-        </span>
       </div>
       <div class="cb" style="display:flex;flex-direction:column;align-items:center;padding:8px 10px;gap:8px">
         <svg id="map1" viewBox="0 0 430 620" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;max-height:340px;">
@@ -468,11 +366,7 @@ body{display:flex;flex-direction:column;height:100vh}
   </div>
   <div class="card">
     <div class="ch"><div class="ct"><span class="dot"></span>Listado Completo — Cartera UE003</div><span class="csub">27 proyectos registrados</span></div>
-    <div class="twrap">
-<div id="mobile-tap-hint" style="display:none;padding:6px 12px;background:#E8F5E9;color:#1B5E20;font-size:12px;font-weight:600;border-bottom:1px solid #C8E6C9;">
-  👆 Toca cualquier proyecto para ver su detalle completo
-</div>
-<table class="dtable"><thead><tr><th>CUI</th><th>Proyecto</th><th>Departamento</th><th>Convenio</th><th>Tipo</th><th>Año</th></tr></thead><tbody id="ptbody" onclick="(function(e){const td=e.target.closest('td[data-cui]');if(td)showProjectDetail(td.dataset.cui)})(event)"><tr data-conv="BID 1" data-anio="2014" data-tipo="Gestión integral de residuos sólidos"><td data-cui="2058430" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2058430</td><td title="MEJORAMIENTO DEL SISTEMA DE RECUPERACION, TRATAMIENTO Y DISPOSICION FINAL DE RESIDUOS SOLIDOS EN VILLA SAN JUAN">MEJORAMIENTO DEL SISTEMA DE RECUPERACION, TRATAMIENTO Y DISPOSICI...</td><td>Loreto</td><td>BID 1</td><td><span class="btipo t1">GIRS</span></td><td style="font-size:10px;color:#9E9E9E;">2014</td></tr><tr data-conv="JICA 1" data-anio="2014" data-tipo="Gestión integral de residuos sólidos"><td data-cui="2069525" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2069525</td><td title="MEJORAMIENTO DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS EN LA CIUDAD DE PUNO">MEJORAMIENTO DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS EN LA CIU...</td><td>Puno</td><td>JICA 1</td><td><span class="btipo t1">GIRS</span></td><td style="font-size:10px;color:#9E9E9E;">2014</td></tr><tr data-conv="JICA 1" data-anio="2015" data-tipo="Gestión integral de residuos sólidos"><td data-cui="2071893" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2071893</td><td title="MEJORAMIENTO Y AMPLIACION DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS MUNICIPALES EN NUEVO CHIMBOTE">MEJORAMIENTO Y AMPLIACION DE LA GESTION INTEGRAL DE RESIDUOS SOLI...</td><td>Ancash</td><td>JICA 1</td><td><span class="btipo t1">GIRS</span></td><td style="font-size:10px;color:#9E9E9E;">2015</td></tr><tr data-conv="BID 1" data-anio="2015" data-tipo="Gestión integral de residuos sólidos"><td data-cui="2081431" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2081431</td><td title="MEJORAMIENTO Y AMPLIACION DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS DE OXAPAMPA">MEJORAMIENTO Y AMPLIACION DE LA GESTION INTEGRAL DE RESIDUOS SOLI...</td><td>Pasco</td><td>BID 1</td><td><span class="btipo t1">GIRS</span></td><td style="font-size:10px;color:#9E9E9E;">2015</td></tr><tr data-conv="JICA 1" data-anio="2016" data-tipo="Gestión integral de residuos sólidos"><td data-cui="2083297" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2083297</td><td title="MEJORAMIENTO DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS MUNICIPALES EN PAITA">MEJORAMIENTO DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS MUNICIPAL...</td><td>Piura</td><td>JICA 1</td><td><span class="btipo t1">GIRS</span></td><td style="font-size:10px;color:#9E9E9E;">2016</td></tr><tr data-conv="JICA 1" data-anio="2016" data-tipo="Limpieza pública"><td data-cui="2085611" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2085611</td><td title="MEJORAMIENTO DEL SERVICIO DE LIMPIEZA PUBLICA EN EL DISTRITO DE JUANJUI - SAN MARTIN">MEJORAMIENTO DEL SERVICIO DE LIMPIEZA PUBLICA EN EL DISTRITO DE J...</td><td>San Martín</td><td>JICA 1</td><td><span class="btipo t3">Limp. Pública</span></td><td style="font-size:10px;color:#9E9E9E;">2016</td></tr><tr data-conv="BID 1" data-anio="2017" data-tipo="Infraestructura de disposición final"><td data-cui="2087234" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2087234</td><td title="INSTALACION DEL SERVICIO DE DISPOSICION FINAL DE RESIDUOS SOLIDOS EN BAGUA - AMAZONAS">INSTALACION DEL SERVICIO DE DISPOSICION FINAL DE RESIDUOS SOLIDOS...</td><td>Amazonas</td><td>BID 1</td><td><span class="btipo t4">Infraest. DF</span></td><td style="font-size:10px;color:#9E9E9E;">2017</td></tr><tr data-conv="JICA 1" data-anio="2017" data-tipo="Infraestructura de disposición final"><td data-cui="2089145" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2089145</td><td title="MEJORAMIENTO DEL SERVICIO DE TRATAMIENTO Y DISPOSICION FINAL DE RESIDUOS SOLIDOS EN MOYOBAMBA">MEJORAMIENTO DEL SERVICIO DE TRATAMIENTO Y DISPOSICION FINAL DE R...</td><td>San Martín</td><td>JICA 1</td><td><span class="btipo t4">Infraest. DF</span></td><td style="font-size:10px;color:#9E9E9E;">2017</td></tr><tr data-conv="BID 2" data-anio="2017" data-tipo="Recuperación de áreas degradadas"><td data-cui="2091023" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2091023</td><td title="RECUPERACION DE AREAS DEGRADADAS POR RESIDUOS SOLIDOS EN LIMA NORTE">RECUPERACION DE AREAS DEGRADADAS POR RESIDUOS SOLIDOS EN LIMA NOR...</td><td>Lima</td><td>BID 2</td><td><span class="btipo t2">Rec. Áreas</span></td><td style="font-size:10px;color:#9E9E9E;">2017</td></tr><tr data-conv="BID 2" data-anio="2018" data-tipo="Recuperación de áreas degradadas"><td data-cui="2093456" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2093456</td><td title="RECUPERACION DE AREAS DEGRADADAS POR RESIDUOS SOLIDOS EN CALLAO">RECUPERACION DE AREAS DEGRADADAS POR RESIDUOS SOLIDOS EN CALLAO</td><td>Lima</td><td>BID 2</td><td><span class="btipo t2">Rec. Áreas</span></td><td style="font-size:10px;color:#9E9E9E;">2018</td></tr><tr data-conv="JICA 2" data-anio="2018" data-tipo="Gestión integral de residuos sólidos"><td data-cui="2095678" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2095678</td><td title="MEJORAMIENTO DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS EN TARAPOTO - SAN MARTIN">MEJORAMIENTO DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS EN TARAPO...</td><td>San Martín</td><td>JICA 2</td><td><span class="btipo t1">GIRS</span></td><td style="font-size:10px;color:#9E9E9E;">2018</td></tr><tr data-conv="BID 2" data-anio="2018" data-tipo="Limpieza pública"><td data-cui="2097890" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2097890</td><td title="MEJORAMIENTO DEL SERVICIO DE LIMPIEZA PUBLICA EN HUANCAYO - JUNIN">MEJORAMIENTO DEL SERVICIO DE LIMPIEZA PUBLICA EN HUANCAYO - JUNIN</td><td>Junin</td><td>BID 2</td><td><span class="btipo t3">Limp. Pública</span></td><td style="font-size:10px;color:#9E9E9E;">2018</td></tr><tr data-conv="JICA 1" data-anio="2019" data-tipo="Infraestructura de disposición final"><td data-cui="2099012" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2099012</td><td title="INSTALACION DEL RELLENO SANITARIO EN ABANCAY - APURIMAC">INSTALACION DEL RELLENO SANITARIO EN ABANCAY - APURIMAC</td><td>Apurimac</td><td>JICA 1</td><td><span class="btipo t4">Infraest. DF</span></td><td style="font-size:10px;color:#9E9E9E;">2019</td></tr><tr data-conv="BID 2" data-anio="2019" data-tipo="Gestión integral de residuos sólidos"><td data-cui="2101234" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2101234</td><td title="MEJORAMIENTO DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS EN PIURA">MEJORAMIENTO DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS EN PIURA</td><td>Piura</td><td>BID 2</td><td><span class="btipo t1">GIRS</span></td><td style="font-size:10px;color:#9E9E9E;">2019</td></tr><tr data-conv="BID 2" data-anio="2019" data-tipo="Recuperación de áreas degradadas"><td data-cui="2103456" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2103456</td><td title="RECUPERACION DE AREAS DEGRADADAS EN AREQUIPA">RECUPERACION DE AREAS DEGRADADAS EN AREQUIPA</td><td>Arequipa</td><td>BID 2</td><td><span class="btipo t2">Rec. Áreas</span></td><td style="font-size:10px;color:#9E9E9E;">2019</td></tr><tr data-conv="JICA 2" data-anio="2020" data-tipo="Gestión integral de residuos sólidos"><td data-cui="2105678" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2105678</td><td title="MEJORAMIENTO DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS EN IQUITOS - LORETO">MEJORAMIENTO DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS EN IQUITO...</td><td>Loreto</td><td>JICA 2</td><td><span class="btipo t1">GIRS</span></td><td style="font-size:10px;color:#9E9E9E;">2020</td></tr><tr data-conv="JICA 1" data-anio="2020" data-tipo="Infraestructura de disposición final"><td data-cui="2107890" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2107890</td><td title="INSTALACION DEL SERVICIO DE DISPOSICION FINAL EN CHICLAYO - LAMBAYEQUE">INSTALACION DEL SERVICIO DE DISPOSICION FINAL EN CHICLAYO - LAMBA...</td><td>Lambayeque</td><td>JICA 1</td><td><span class="btipo t4">Infraest. DF</span></td><td style="font-size:10px;color:#9E9E9E;">2020</td></tr><tr data-conv="BID 2" data-anio="2020" data-tipo="Limpieza pública"><td data-cui="2109012" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2109012</td><td title="MEJORAMIENTO DEL SERVICIO DE LIMPIEZA PUBLICA EN TRUJILLO - LA LIBERTAD">MEJORAMIENTO DEL SERVICIO DE LIMPIEZA PUBLICA EN TRUJILLO - LA LI...</td><td>La Libertad</td><td>BID 2</td><td><span class="btipo t3">Limp. Pública</span></td><td style="font-size:10px;color:#9E9E9E;">2020</td></tr><tr data-conv="KFW" data-anio="2021" data-tipo="Recuperación de áreas degradadas"><td data-cui="2111234" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2111234</td><td title="RECUPERACION DE AREAS DEGRADADAS POR RESIDUOS SOLIDOS EN TACNA">RECUPERACION DE AREAS DEGRADADAS POR RESIDUOS SOLIDOS EN TACNA</td><td>Tacna</td><td>KFW</td><td><span class="btipo t2">Rec. Áreas</span></td><td style="font-size:10px;color:#9E9E9E;">2021</td></tr><tr data-conv="JICA 2" data-anio="2021" data-tipo="Gestión integral de residuos sólidos"><td data-cui="2113456" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2113456</td><td title="MEJORAMIENTO DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS EN HUANUCO">MEJORAMIENTO DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS EN HUANUC...</td><td>Huánuco</td><td>JICA 2</td><td><span class="btipo t1">GIRS</span></td><td style="font-size:10px;color:#9E9E9E;">2021</td></tr><tr data-conv="Punche 1" data-anio="2021" data-tipo="Infraestructura de disposición final"><td data-cui="2115678" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2115678</td><td title="INSTALACION DEL SERVICIO DE DISPOSICION FINAL EN MADRE DE DIOS">INSTALACION DEL SERVICIO DE DISPOSICION FINAL EN MADRE DE DIOS</td><td>Madre De Dios</td><td>Punche 1</td><td><span class="btipo t4">Infraest. DF</span></td><td style="font-size:10px;color:#9E9E9E;">2021</td></tr><tr data-conv="JICA 2" data-anio="2022" data-tipo="Limpieza pública"><td data-cui="2117890" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2117890</td><td title="MEJORAMIENTO DEL SERVICIO DE LIMPIEZA PUBLICA EN UCAYALI">MEJORAMIENTO DEL SERVICIO DE LIMPIEZA PUBLICA EN UCAYALI</td><td>Ucayali</td><td>JICA 2</td><td><span class="btipo t3">Limp. Pública</span></td><td style="font-size:10px;color:#9E9E9E;">2022</td></tr><tr data-conv="Punche 1" data-anio="2022" data-tipo="Recuperación de áreas degradadas"><td data-cui="2119012" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2119012</td><td title="RECUPERACION DE AREAS DEGRADADAS EN AYACUCHO">RECUPERACION DE AREAS DEGRADADAS EN AYACUCHO</td><td>Ayacucho</td><td>Punche 1</td><td><span class="btipo t2">Rec. Áreas</span></td><td style="font-size:10px;color:#9E9E9E;">2022</td></tr><tr data-conv="KFW" data-anio="2023" data-tipo="Gestión integral de residuos sólidos"><td data-cui="2121234" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2121234</td><td title="MEJORAMIENTO DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS EN HUANCAVELICA">MEJORAMIENTO DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS EN HUANCA...</td><td>Huancavelica</td><td>KFW</td><td><span class="btipo t1">GIRS</span></td><td style="font-size:10px;color:#9E9E9E;">2023</td></tr><tr data-conv="Punche 1" data-anio="2023" data-tipo="Infraestructura de disposición final"><td data-cui="2123456" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2123456</td><td title="INSTALACION DEL RELLENO SANITARIO EN CAJAMARCA">INSTALACION DEL RELLENO SANITARIO EN CAJAMARCA</td><td>Cajamarca</td><td>Punche 1</td><td><span class="btipo t4">Infraest. DF</span></td><td style="font-size:10px;color:#9E9E9E;">2023</td></tr><tr data-conv="BID 2" data-anio="2024" data-tipo="Gestión integral de residuos sólidos"><td data-cui="2125678" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2125678</td><td title="MEJORAMIENTO DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS EN TUMBES">MEJORAMIENTO DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS EN TUMBES</td><td>Tumbes</td><td>BID 2</td><td><span class="btipo t1">GIRS</span></td><td style="font-size:10px;color:#9E9E9E;">2024</td></tr><tr data-conv="KFW" data-anio="2025" data-tipo="Recuperación de áreas degradadas"><td data-cui="2127890" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2127890</td><td title="RECUPERACION DE AREAS DEGRADADAS EN ICA">RECUPERACION DE AREAS DEGRADADAS EN ICA</td><td>Ica</td><td>KFW</td><td><span class="btipo t2">Rec. Áreas</span></td><td style="font-size:10px;color:#9E9E9E;">2025</td></tr></tbody></table></div>
+    <div class="twrap"><table class="dtable"><thead><tr><th>CUI</th><th>Proyecto</th><th>Departamento</th><th>Convenio</th><th>Tipo</th><th>Año</th></tr></thead><tbody id="ptbody" onclick="(function(e){const td=e.target.closest('td[data-cui]');if(td)showProjectDetail(td.dataset.cui)})(event)"><tr data-conv="BID 1" data-anio="2014" data-tipo="Gestión integral de residuos sólidos"><td data-cui="2058430" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2058430</td><td title="MEJORAMIENTO DEL SISTEMA DE RECUPERACION, TRATAMIENTO Y DISPOSICION FINAL DE RESIDUOS SOLIDOS EN VILLA SAN JUAN">MEJORAMIENTO DEL SISTEMA DE RECUPERACION, TRATAMIENTO Y DISPOSICI...</td><td>Loreto</td><td>BID 1</td><td><span class="btipo t1">GIRS</span></td><td style="font-size:10px;color:#9E9E9E;">2014</td></tr><tr data-conv="JICA 1" data-anio="2014" data-tipo="Gestión integral de residuos sólidos"><td data-cui="2069525" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2069525</td><td title="MEJORAMIENTO DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS EN LA CIUDAD DE PUNO">MEJORAMIENTO DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS EN LA CIU...</td><td>Puno</td><td>JICA 1</td><td><span class="btipo t1">GIRS</span></td><td style="font-size:10px;color:#9E9E9E;">2014</td></tr><tr data-conv="JICA 1" data-anio="2015" data-tipo="Gestión integral de residuos sólidos"><td data-cui="2071893" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2071893</td><td title="MEJORAMIENTO Y AMPLIACION DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS MUNICIPALES EN NUEVO CHIMBOTE">MEJORAMIENTO Y AMPLIACION DE LA GESTION INTEGRAL DE RESIDUOS SOLI...</td><td>Ancash</td><td>JICA 1</td><td><span class="btipo t1">GIRS</span></td><td style="font-size:10px;color:#9E9E9E;">2015</td></tr><tr data-conv="BID 1" data-anio="2015" data-tipo="Gestión integral de residuos sólidos"><td data-cui="2081431" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2081431</td><td title="MEJORAMIENTO Y AMPLIACION DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS DE OXAPAMPA">MEJORAMIENTO Y AMPLIACION DE LA GESTION INTEGRAL DE RESIDUOS SOLI...</td><td>Pasco</td><td>BID 1</td><td><span class="btipo t1">GIRS</span></td><td style="font-size:10px;color:#9E9E9E;">2015</td></tr><tr data-conv="JICA 1" data-anio="2016" data-tipo="Gestión integral de residuos sólidos"><td data-cui="2083297" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2083297</td><td title="MEJORAMIENTO DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS MUNICIPALES EN PAITA">MEJORAMIENTO DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS MUNICIPAL...</td><td>Piura</td><td>JICA 1</td><td><span class="btipo t1">GIRS</span></td><td style="font-size:10px;color:#9E9E9E;">2016</td></tr><tr data-conv="JICA 1" data-anio="2016" data-tipo="Limpieza pública"><td data-cui="2085611" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2085611</td><td title="MEJORAMIENTO DEL SERVICIO DE LIMPIEZA PUBLICA EN EL DISTRITO DE JUANJUI - SAN MARTIN">MEJORAMIENTO DEL SERVICIO DE LIMPIEZA PUBLICA EN EL DISTRITO DE J...</td><td>San Martín</td><td>JICA 1</td><td><span class="btipo t3">Limp. Pública</span></td><td style="font-size:10px;color:#9E9E9E;">2016</td></tr><tr data-conv="BID 1" data-anio="2017" data-tipo="Infraestructura de disposición final"><td data-cui="2087234" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2087234</td><td title="INSTALACION DEL SERVICIO DE DISPOSICION FINAL DE RESIDUOS SOLIDOS EN BAGUA - AMAZONAS">INSTALACION DEL SERVICIO DE DISPOSICION FINAL DE RESIDUOS SOLIDOS...</td><td>Amazonas</td><td>BID 1</td><td><span class="btipo t4">Infraest. DF</span></td><td style="font-size:10px;color:#9E9E9E;">2017</td></tr><tr data-conv="JICA 1" data-anio="2017" data-tipo="Infraestructura de disposición final"><td data-cui="2089145" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2089145</td><td title="MEJORAMIENTO DEL SERVICIO DE TRATAMIENTO Y DISPOSICION FINAL DE RESIDUOS SOLIDOS EN MOYOBAMBA">MEJORAMIENTO DEL SERVICIO DE TRATAMIENTO Y DISPOSICION FINAL DE R...</td><td>San Martín</td><td>JICA 1</td><td><span class="btipo t4">Infraest. DF</span></td><td style="font-size:10px;color:#9E9E9E;">2017</td></tr><tr data-conv="BID 2" data-anio="2017" data-tipo="Recuperación de áreas degradadas"><td data-cui="2091023" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2091023</td><td title="RECUPERACION DE AREAS DEGRADADAS POR RESIDUOS SOLIDOS EN LIMA NORTE">RECUPERACION DE AREAS DEGRADADAS POR RESIDUOS SOLIDOS EN LIMA NOR...</td><td>Lima</td><td>BID 2</td><td><span class="btipo t2">Rec. Áreas</span></td><td style="font-size:10px;color:#9E9E9E;">2017</td></tr><tr data-conv="BID 2" data-anio="2018" data-tipo="Recuperación de áreas degradadas"><td data-cui="2093456" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2093456</td><td title="RECUPERACION DE AREAS DEGRADADAS POR RESIDUOS SOLIDOS EN CALLAO">RECUPERACION DE AREAS DEGRADADAS POR RESIDUOS SOLIDOS EN CALLAO</td><td>Lima</td><td>BID 2</td><td><span class="btipo t2">Rec. Áreas</span></td><td style="font-size:10px;color:#9E9E9E;">2018</td></tr><tr data-conv="JICA 2" data-anio="2018" data-tipo="Gestión integral de residuos sólidos"><td data-cui="2095678" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2095678</td><td title="MEJORAMIENTO DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS EN TARAPOTO - SAN MARTIN">MEJORAMIENTO DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS EN TARAPO...</td><td>San Martín</td><td>JICA 2</td><td><span class="btipo t1">GIRS</span></td><td style="font-size:10px;color:#9E9E9E;">2018</td></tr><tr data-conv="BID 2" data-anio="2018" data-tipo="Limpieza pública"><td data-cui="2097890" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2097890</td><td title="MEJORAMIENTO DEL SERVICIO DE LIMPIEZA PUBLICA EN HUANCAYO - JUNIN">MEJORAMIENTO DEL SERVICIO DE LIMPIEZA PUBLICA EN HUANCAYO - JUNIN</td><td>Junin</td><td>BID 2</td><td><span class="btipo t3">Limp. Pública</span></td><td style="font-size:10px;color:#9E9E9E;">2018</td></tr><tr data-conv="JICA 1" data-anio="2019" data-tipo="Infraestructura de disposición final"><td data-cui="2099012" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2099012</td><td title="INSTALACION DEL RELLENO SANITARIO EN ABANCAY - APURIMAC">INSTALACION DEL RELLENO SANITARIO EN ABANCAY - APURIMAC</td><td>Apurimac</td><td>JICA 1</td><td><span class="btipo t4">Infraest. DF</span></td><td style="font-size:10px;color:#9E9E9E;">2019</td></tr><tr data-conv="BID 2" data-anio="2019" data-tipo="Gestión integral de residuos sólidos"><td data-cui="2101234" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2101234</td><td title="MEJORAMIENTO DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS EN PIURA">MEJORAMIENTO DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS EN PIURA</td><td>Piura</td><td>BID 2</td><td><span class="btipo t1">GIRS</span></td><td style="font-size:10px;color:#9E9E9E;">2019</td></tr><tr data-conv="BID 2" data-anio="2019" data-tipo="Recuperación de áreas degradadas"><td data-cui="2103456" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2103456</td><td title="RECUPERACION DE AREAS DEGRADADAS EN AREQUIPA">RECUPERACION DE AREAS DEGRADADAS EN AREQUIPA</td><td>Arequipa</td><td>BID 2</td><td><span class="btipo t2">Rec. Áreas</span></td><td style="font-size:10px;color:#9E9E9E;">2019</td></tr><tr data-conv="JICA 2" data-anio="2020" data-tipo="Gestión integral de residuos sólidos"><td data-cui="2105678" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2105678</td><td title="MEJORAMIENTO DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS EN IQUITOS - LORETO">MEJORAMIENTO DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS EN IQUITO...</td><td>Loreto</td><td>JICA 2</td><td><span class="btipo t1">GIRS</span></td><td style="font-size:10px;color:#9E9E9E;">2020</td></tr><tr data-conv="JICA 1" data-anio="2020" data-tipo="Infraestructura de disposición final"><td data-cui="2107890" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2107890</td><td title="INSTALACION DEL SERVICIO DE DISPOSICION FINAL EN CHICLAYO - LAMBAYEQUE">INSTALACION DEL SERVICIO DE DISPOSICION FINAL EN CHICLAYO - LAMBA...</td><td>Lambayeque</td><td>JICA 1</td><td><span class="btipo t4">Infraest. DF</span></td><td style="font-size:10px;color:#9E9E9E;">2020</td></tr><tr data-conv="BID 2" data-anio="2020" data-tipo="Limpieza pública"><td data-cui="2109012" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2109012</td><td title="MEJORAMIENTO DEL SERVICIO DE LIMPIEZA PUBLICA EN TRUJILLO - LA LIBERTAD">MEJORAMIENTO DEL SERVICIO DE LIMPIEZA PUBLICA EN TRUJILLO - LA LI...</td><td>La Libertad</td><td>BID 2</td><td><span class="btipo t3">Limp. Pública</span></td><td style="font-size:10px;color:#9E9E9E;">2020</td></tr><tr data-conv="KFW" data-anio="2021" data-tipo="Recuperación de áreas degradadas"><td data-cui="2111234" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2111234</td><td title="RECUPERACION DE AREAS DEGRADADAS POR RESIDUOS SOLIDOS EN TACNA">RECUPERACION DE AREAS DEGRADADAS POR RESIDUOS SOLIDOS EN TACNA</td><td>Tacna</td><td>KFW</td><td><span class="btipo t2">Rec. Áreas</span></td><td style="font-size:10px;color:#9E9E9E;">2021</td></tr><tr data-conv="JICA 2" data-anio="2021" data-tipo="Gestión integral de residuos sólidos"><td data-cui="2113456" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2113456</td><td title="MEJORAMIENTO DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS EN HUANUCO">MEJORAMIENTO DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS EN HUANUC...</td><td>Huánuco</td><td>JICA 2</td><td><span class="btipo t1">GIRS</span></td><td style="font-size:10px;color:#9E9E9E;">2021</td></tr><tr data-conv="Punche 1" data-anio="2021" data-tipo="Infraestructura de disposición final"><td data-cui="2115678" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2115678</td><td title="INSTALACION DEL SERVICIO DE DISPOSICION FINAL EN MADRE DE DIOS">INSTALACION DEL SERVICIO DE DISPOSICION FINAL EN MADRE DE DIOS</td><td>Madre De Dios</td><td>Punche 1</td><td><span class="btipo t4">Infraest. DF</span></td><td style="font-size:10px;color:#9E9E9E;">2021</td></tr><tr data-conv="JICA 2" data-anio="2022" data-tipo="Limpieza pública"><td data-cui="2117890" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2117890</td><td title="MEJORAMIENTO DEL SERVICIO DE LIMPIEZA PUBLICA EN UCAYALI">MEJORAMIENTO DEL SERVICIO DE LIMPIEZA PUBLICA EN UCAYALI</td><td>Ucayali</td><td>JICA 2</td><td><span class="btipo t3">Limp. Pública</span></td><td style="font-size:10px;color:#9E9E9E;">2022</td></tr><tr data-conv="Punche 1" data-anio="2022" data-tipo="Recuperación de áreas degradadas"><td data-cui="2119012" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2119012</td><td title="RECUPERACION DE AREAS DEGRADADAS EN AYACUCHO">RECUPERACION DE AREAS DEGRADADAS EN AYACUCHO</td><td>Ayacucho</td><td>Punche 1</td><td><span class="btipo t2">Rec. Áreas</span></td><td style="font-size:10px;color:#9E9E9E;">2022</td></tr><tr data-conv="KFW" data-anio="2023" data-tipo="Gestión integral de residuos sólidos"><td data-cui="2121234" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2121234</td><td title="MEJORAMIENTO DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS EN HUANCAVELICA">MEJORAMIENTO DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS EN HUANCA...</td><td>Huancavelica</td><td>KFW</td><td><span class="btipo t1">GIRS</span></td><td style="font-size:10px;color:#9E9E9E;">2023</td></tr><tr data-conv="Punche 1" data-anio="2023" data-tipo="Infraestructura de disposición final"><td data-cui="2123456" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2123456</td><td title="INSTALACION DEL RELLENO SANITARIO EN CAJAMARCA">INSTALACION DEL RELLENO SANITARIO EN CAJAMARCA</td><td>Cajamarca</td><td>Punche 1</td><td><span class="btipo t4">Infraest. DF</span></td><td style="font-size:10px;color:#9E9E9E;">2023</td></tr><tr data-conv="BID 2" data-anio="2024" data-tipo="Gestión integral de residuos sólidos"><td data-cui="2125678" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2125678</td><td title="MEJORAMIENTO DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS EN TUMBES">MEJORAMIENTO DE LA GESTION INTEGRAL DE RESIDUOS SOLIDOS EN TUMBES</td><td>Tumbes</td><td>BID 2</td><td><span class="btipo t1">GIRS</span></td><td style="font-size:10px;color:#9E9E9E;">2024</td></tr><tr data-conv="KFW" data-anio="2025" data-tipo="Recuperación de áreas degradadas"><td data-cui="2127890" style="font-weight:700;color:#105000;font-size:10.5px;cursor:pointer">2127890</td><td title="RECUPERACION DE AREAS DEGRADADAS EN ICA">RECUPERACION DE AREAS DEGRADADAS EN ICA</td><td>Ica</td><td>KFW</td><td><span class="btipo t2">Rec. Áreas</span></td><td style="font-size:10px;color:#9E9E9E;">2025</td></tr></tbody></table></div>
   </div>
 </div>
 
@@ -1946,75 +1840,27 @@ function showProjectDetail(cui){
 })();
 
 </script>
-
 <script>
-// ── Mobile enhancements ──────────────────────────────────────────────────────
 (function(){
-  function isMobile(){ return window.innerWidth <= 600; }
-
-  // Mostrar hint "toca un proyecto" solo en móvil
-  function setupMobileHint(){
-    const hint = document.getElementById('mobile-tap-hint');
-    if(hint) hint.style.display = isMobile() ? 'block' : 'none';
-  }
-  document.addEventListener('DOMContentLoaded', setupMobileHint);
-  window.addEventListener('resize', setupMobileHint);
-
-  // En móvil, hacer toda la fila tappable (no solo td[data-cui])
-  document.addEventListener('DOMContentLoaded', function(){
-    const tbody = document.getElementById('ptbody');
-    if(!tbody) return;
-    // Delegate on rows too
-    tbody.addEventListener('click', function(e){
-      const tr = e.target.closest('tr');
-      if(!tr) return;
-      const cuiTd = tr.querySelector('td[data-cui]');
-      if(cuiTd && typeof showProjectDetail === 'function'){
-        showProjectDetail(cuiTd.dataset.cui);
-      }
-    }, true);
-  });
-
-  // Botón "volver" en overlay de detalle en móvil
-  const origShow = window.showProjectDetail;
-  if(typeof origShow === 'function'){
+  // Botón "← Volver" en overlay detalle proyecto (solo móvil)
+  var _orig = window.showProjectDetail;
+  if(typeof _orig === 'function'){
     window.showProjectDetail = function(cui){
-      origShow(cui);
-      if(isMobile()){
-        const panel = document.getElementById('proj-detail-panel');
-        if(panel && !document.getElementById('mob-back-btn')){
-          const btn = document.createElement('button');
-          btn.id = 'mob-back-btn';
-          btn.innerHTML = '← Volver a la lista';
-          btn.style.cssText = 'position:sticky;top:0;z-index:10;width:100%;padding:12px 16px;'
-            +'background:#105000;color:#fff;border:none;font-size:14px;font-weight:700;'
-            +'cursor:pointer;text-align:left;letter-spacing:.2px;';
-          btn.onclick = function(){ if(typeof closeProjectDetail==='function') closeProjectDetail(); };
-          panel.insertBefore(btn, panel.firstChild);
-        }
-      }
+      _orig(cui);
+      if(window.innerWidth > 700) return;
+      var panel = document.getElementById('proj-detail-panel');
+      if(!panel || document.getElementById('mob-back-btn')) return;
+      var btn = document.createElement('button');
+      btn.id = 'mob-back-btn';
+      btn.textContent = '← Volver a la lista';
+      btn.style.cssText = 'position:sticky;top:0;z-index:10;width:100%;padding:13px 16px;' +
+        'background:#105000;color:#fff;border:none;font-size:14px;font-weight:700;' +
+        'cursor:pointer;text-align:left;display:block';
+      btn.onclick = function(){ if(typeof closeProjectDetail==='function') closeProjectDetail(); };
+      panel.insertBefore(btn, panel.firstChild);
     };
   }
-})();
-</script>
-
-
-<script>
-(function(){
-  var isMob = function(){ return window.innerWidth <= 600; };
-
-  // ── 1. Badge filtros activos ────────────────────────────────────────────────
-  window.updateFilterBadge = function(){
-    var b = document.getElementById('fb-active-badge');
-    if(!b) return;
-    var conv = document.getElementById('fConv');
-    var ano  = document.getElementById('fAño');
-    var tipo = document.getElementById('fTipo');
-    var active = (conv&&conv.value)||(ano&&ano.value)||(tipo&&tipo.value);
-    b.classList.toggle('visible', !!active);
-  };
-
-  // ── 2. Touch-friendly table rows ───────────────────────────────────────────
+  // Filas de tabla tappable completas
   document.addEventListener('DOMContentLoaded', function(){
     var tbody = document.getElementById('ptbody');
     if(tbody){
@@ -2026,131 +1872,32 @@ function showProjectDetail(cui){
           showProjectDetail(td.dataset.cui);
       }, true);
     }
-
-    // Tabla count text mejor en móvil
-    var hintEl = document.getElementById('mobile-tap-hint');
-    if(hintEl) hintEl.style.display = isMob() ? 'block' : 'none';
   });
-
-  // ── 3. Botón "Volver" en overlay detalle ───────────────────────────────────
-  var _orig = window.showProjectDetail;
-  if(typeof _orig === 'function'){
-    window.showProjectDetail = function(cui){
-      _orig(cui);
-      if(!isMob()) return;
-      var panel = document.getElementById('proj-detail-panel');
-      if(!panel) return;
-      if(document.getElementById('mob-back-btn')) return;
-      var btn = document.createElement('button');
-      btn.id = 'mob-back-btn';
-      btn.textContent = '← Volver';
-      btn.style.cssText = [
-        'position:sticky','top:0','z-index:10','width:100%',
-        'padding:13px 16px','background:#105000','color:#fff',
-        'border:none','font-size:14px','font-weight:700',
-        'cursor:pointer','text-align:left','letter-spacing:.2px',
-        'display:block'
-      ].join(';');
-      btn.onclick = function(){
-        if(typeof closeProjectDetail==='function') closeProjectDetail();
-      };
-      panel.insertBefore(btn, panel.firstChild);
-    };
-  }
-
-  // ── 4. Asegurar scroll libre en el body ────────────────────────────────────
-  // closeProjectDetail ya restaura overflow, pero nos aseguramos
-  var _origClose = window.closeProjectDetail;
-  if(typeof _origClose === 'function'){
-    window.closeProjectDetail = function(){
-      _origClose();
-      document.body.style.overflow = '';
-      document.body.style.touchAction = 'pan-y';
-    };
-  }
-
-  // ── 5. Hint visual en mapa solo en móvil ───────────────────────────────────
-  function setupMapHint(){
-    var h = document.getElementById('mob-map-hint');
-    if(h) h.style.display = isMob() ? 'inline-block' : 'none';
-  }
-  document.addEventListener('DOMContentLoaded', setupMapHint);
-  window.addEventListener('resize', setupMapHint);
-
 })();
 </script>
-
 </body>
 </html>
-
 <script>
-// ── Mobile enhancements ──────────────────────────────────────────────────────
 (function(){
-  function isMobile(){ return window.innerWidth <= 600; }
-
-  // Mostrar hint "toca un proyecto" solo en móvil
-  function setupMobileHint(){
-    const hint = document.getElementById('mobile-tap-hint');
-    if(hint) hint.style.display = isMobile() ? 'block' : 'none';
-  }
-  document.addEventListener('DOMContentLoaded', setupMobileHint);
-  window.addEventListener('resize', setupMobileHint);
-
-  // En móvil, hacer toda la fila tappable (no solo td[data-cui])
-  document.addEventListener('DOMContentLoaded', function(){
-    const tbody = document.getElementById('ptbody');
-    if(!tbody) return;
-    // Delegate on rows too
-    tbody.addEventListener('click', function(e){
-      const tr = e.target.closest('tr');
-      if(!tr) return;
-      const cuiTd = tr.querySelector('td[data-cui]');
-      if(cuiTd && typeof showProjectDetail === 'function'){
-        showProjectDetail(cuiTd.dataset.cui);
-      }
-    }, true);
-  });
-
-  // Botón "volver" en overlay de detalle en móvil
-  const origShow = window.showProjectDetail;
-  if(typeof origShow === 'function'){
+  // Botón "← Volver" en overlay detalle proyecto (solo móvil)
+  var _orig = window.showProjectDetail;
+  if(typeof _orig === 'function'){
     window.showProjectDetail = function(cui){
-      origShow(cui);
-      if(isMobile()){
-        const panel = document.getElementById('proj-detail-panel');
-        if(panel && !document.getElementById('mob-back-btn')){
-          const btn = document.createElement('button');
-          btn.id = 'mob-back-btn';
-          btn.innerHTML = '← Volver a la lista';
-          btn.style.cssText = 'position:sticky;top:0;z-index:10;width:100%;padding:12px 16px;'
-            +'background:#105000;color:#fff;border:none;font-size:14px;font-weight:700;'
-            +'cursor:pointer;text-align:left;letter-spacing:.2px;';
-          btn.onclick = function(){ if(typeof closeProjectDetail==='function') closeProjectDetail(); };
-          panel.insertBefore(btn, panel.firstChild);
-        }
-      }
+      _orig(cui);
+      if(window.innerWidth > 700) return;
+      var panel = document.getElementById('proj-detail-panel');
+      if(!panel || document.getElementById('mob-back-btn')) return;
+      var btn = document.createElement('button');
+      btn.id = 'mob-back-btn';
+      btn.textContent = '← Volver a la lista';
+      btn.style.cssText = 'position:sticky;top:0;z-index:10;width:100%;padding:13px 16px;' +
+        'background:#105000;color:#fff;border:none;font-size:14px;font-weight:700;' +
+        'cursor:pointer;text-align:left;display:block';
+      btn.onclick = function(){ if(typeof closeProjectDetail==='function') closeProjectDetail(); };
+      panel.insertBefore(btn, panel.firstChild);
     };
   }
-})();
-</script>
-
-
-<script>
-(function(){
-  var isMob = function(){ return window.innerWidth <= 600; };
-
-  // ── 1. Badge filtros activos ────────────────────────────────────────────────
-  window.updateFilterBadge = function(){
-    var b = document.getElementById('fb-active-badge');
-    if(!b) return;
-    var conv = document.getElementById('fConv');
-    var ano  = document.getElementById('fAño');
-    var tipo = document.getElementById('fTipo');
-    var active = (conv&&conv.value)||(ano&&ano.value)||(tipo&&tipo.value);
-    b.classList.toggle('visible', !!active);
-  };
-
-  // ── 2. Touch-friendly table rows ───────────────────────────────────────────
+  // Filas de tabla tappable completas
   document.addEventListener('DOMContentLoaded', function(){
     var tbody = document.getElementById('ptbody');
     if(tbody){
@@ -2162,60 +1909,9 @@ function showProjectDetail(cui){
           showProjectDetail(td.dataset.cui);
       }, true);
     }
-
-    // Tabla count text mejor en móvil
-    var hintEl = document.getElementById('mobile-tap-hint');
-    if(hintEl) hintEl.style.display = isMob() ? 'block' : 'none';
   });
-
-  // ── 3. Botón "Volver" en overlay detalle ───────────────────────────────────
-  var _orig = window.showProjectDetail;
-  if(typeof _orig === 'function'){
-    window.showProjectDetail = function(cui){
-      _orig(cui);
-      if(!isMob()) return;
-      var panel = document.getElementById('proj-detail-panel');
-      if(!panel) return;
-      if(document.getElementById('mob-back-btn')) return;
-      var btn = document.createElement('button');
-      btn.id = 'mob-back-btn';
-      btn.textContent = '← Volver';
-      btn.style.cssText = [
-        'position:sticky','top:0','z-index:10','width:100%',
-        'padding:13px 16px','background:#105000','color:#fff',
-        'border:none','font-size:14px','font-weight:700',
-        'cursor:pointer','text-align:left','letter-spacing:.2px',
-        'display:block'
-      ].join(';');
-      btn.onclick = function(){
-        if(typeof closeProjectDetail==='function') closeProjectDetail();
-      };
-      panel.insertBefore(btn, panel.firstChild);
-    };
-  }
-
-  // ── 4. Asegurar scroll libre en el body ────────────────────────────────────
-  // closeProjectDetail ya restaura overflow, pero nos aseguramos
-  var _origClose = window.closeProjectDetail;
-  if(typeof _origClose === 'function'){
-    window.closeProjectDetail = function(){
-      _origClose();
-      document.body.style.overflow = '';
-      document.body.style.touchAction = 'pan-y';
-    };
-  }
-
-  // ── 5. Hint visual en mapa solo en móvil ───────────────────────────────────
-  function setupMapHint(){
-    var h = document.getElementById('mob-map-hint');
-    if(h) h.style.display = isMob() ? 'inline-block' : 'none';
-  }
-  document.addEventListener('DOMContentLoaded', setupMapHint);
-  window.addEventListener('resize', setupMapHint);
-
 })();
 </script>
-
 </body>
 <script>
 /* COMPONENTES Y ACCIONES — datos embebidos */
