@@ -194,132 +194,70 @@ body{display:flex;flex-direction:column;height:100vh}
 .ftr{padding:7px 14px;font-size:9px;flex-shrink:0}
 </style>
 <style>
-/* ═══ MOBILE OVERRIDES — max-width:900px ═══════════════════════ */
-/* Estos estilos anulan el layout "viewport unico" del desktop    */
+/* ═══ MOBILE OVERRIDES ══════════════════════════════════════════ */
 @media(max-width:900px){
-  /* 1. Restaurar scroll normal — el 2do style hace html,body{overflow:hidden} */
+  /* Restaurar scroll (2do style tiene html,body{overflow:hidden}) */
   html,body{
     height:auto!important;
     overflow:auto!important;
     overflow-x:hidden!important;
     display:block!important;
   }
+  .con{flex:none!important;overflow:visible!important;display:block!important;padding:10px!important}
+  .page.active{display:block!important;flex:none!important;overflow:visible!important}
 
-  /* 2. Contenedor principal: flujo normal, sin flex */
-  .con{
-    flex:none!important;
-    overflow:visible!important;
-    display:block!important;
-    padding:10px!important;
-  }
-
-  /* 3. Paginas: flujo normal */
-  .page.active{
-    display:block!important;
-    flex:none!important;
-    overflow:visible!important;
-  }
-
-  /* 4. RMAP: apilar verticalmente (override inline display:flex) */
+  /* Mapa en columna */
   .row.rmap{
-    flex:none!important;
-    overflow:visible!important;
-    display:flex!important;
-    flex-direction:column!important;
-    gap:10px!important;
-    height:auto!important;
-    margin-bottom:10px!important;
+    flex:none!important;overflow:visible!important;
+    display:flex!important;flex-direction:column!important;
+    gap:10px!important;height:auto!important;margin-bottom:10px!important;
   }
-  .row.rmap>.card{
-    width:100%!important;
-    flex-shrink:1!important;
-    min-width:0!important;
-    overflow:visible!important;
-  }
-
-  /* 5. Ocultar graficos laterales en movil */
+  .row.rmap>.card{width:100%!important;flex-shrink:1!important;overflow:visible!important}
   #mob-charts-hide{display:none!important}
+  #map1{max-height:400px!important}
 
-  /* 6. Mapa SVG: altura natural */
-  #map1{max-height:380px!important}
-
-  /* 7. Otros grids a una columna */
+  /* Grids y KPIs */
   .r2,.r3,.r75{grid-template-columns:1fr!important}
-
-  /* 8. KPIs: 2 columnas */
-  .kg{
-    grid-template-columns:repeat(2,1fr)!important;
-    flex-shrink:0!important;
-    margin-bottom:8px!important;
-  }
-  .kv{font-size:26px!important}
+  .kg{grid-template-columns:repeat(2,1fr)!important;flex-shrink:0!important;margin-bottom:8px!important}
+  .kv{font-size:24px!important}
   .kc{padding:8px 12px 6px!important}
 
-  /* 9. Header y Nav */
+  /* Header, nav, filtros */
   .hdr{height:auto!important;padding:0 10px!important}
-  .nav{
-    overflow-x:auto!important;
-    -webkit-overflow-scrolling:touch!important;
-    padding:0 8px!important;
-  }
+  .nav{overflow-x:auto!important;-webkit-overflow-scrolling:touch!important;padding:0 8px!important}
   .nav::-webkit-scrollbar{display:none}
   .nb{white-space:nowrap!important;padding:8px 12px!important;font-size:12px!important}
-
-  /* 10. Filtros: una fila horizontal con scroll */
-  .fb{
-    flex-wrap:nowrap!important;
-    overflow-x:auto!important;
-    -webkit-overflow-scrolling:touch!important;
-    padding:6px 10px!important;
-    gap:6px!important;
-    scrollbar-width:none!important;
-  }
+  .fb{flex-wrap:nowrap!important;overflow-x:auto!important;-webkit-overflow-scrolling:touch!important;
+      padding:6px 10px!important;gap:6px!important;scrollbar-width:none!important}
   .fb::-webkit-scrollbar{display:none}
   .fl{flex-shrink:0!important;font-size:10px!important}
   .fs{flex-shrink:0!important;width:140px!important;font-size:13px!important;padding:5px 8px!important}
   .ftag{flex-shrink:0!important;padding:5px 10px!important;font-size:11px!important}
 
-  /* 11. Panel resumen proyectos */
-  #resumen-right-area{
-    flex-direction:column!important;
-    overflow:visible!important;
-    height:auto!important;
-  }
-  #resumen-right-area>.card{
-    width:100%!important;
-    min-height:0!important;
-    overflow:visible!important;
-  }
-  #resumen-right-area .card:first-child{
-    overflow:visible!important;
-    display:block!important;
-  }
-  #resumen-panel-body{
-    overflow-y:visible!important;
-    max-height:none!important;
-    flex:none!important;
-  }
-
-  /* 12. Tabla de proyectos */
-  .twrap{
-    overflow-x:auto!important;
-    -webkit-overflow-scrolling:touch!important;
-    max-height:none!important;
-    overflow-y:visible!important;
-  }
+  /* Panel proyectos */
+  #resumen-right-area{flex-direction:column!important;overflow:visible!important;height:auto!important}
+  #resumen-right-area>.card{width:100%!important;min-height:0!important;overflow:visible!important}
+  #resumen-right-area .card:first-child{overflow:visible!important;display:block!important}
+  #resumen-panel-body{overflow-y:visible!important;max-height:none!important;flex:none!important}
+  .twrap{overflow-x:auto!important;-webkit-overflow-scrolling:touch!important;max-height:none!important}
   .dtable td{padding:10px 8px!important;font-size:12px!important}
   .dtable th{padding:8px!important;font-size:11px!important}
   .dtable tbody tr{cursor:pointer!important}
 
-  /* 13. Detalle proyecto */
+  /* DETALLE PROYECTO: scroll interno */
+  #proj-detail-panel{
+    overflow-y:scroll!important;
+    overflow-x:hidden!important;
+    -webkit-overflow-scrolling:touch!important;
+  }
   .pd-kpis{grid-template-columns:repeat(2,1fr)!important}
   .pd-kpi:nth-child(2){border-right:none!important}
+  .pd-kpi:nth-child(4){border-right:none!important}
+  .pd-kpi-val{font-size:16px!important}
   .pd-body{grid-template-columns:1fr!important}
   .pd-col:first-child{border-right:none!important;border-bottom:1px solid #F0F0F0!important}
-  #proj-detail-panel{overflow-y:auto!important}
-
-  /* 14. Rows en general */
-  .r2,.r3{gap:8px!important}
+  .pd-title{font-size:11px!important}
+  .pd-hdr{padding:10px 12px 8px!important}
 }
 </style>
 </head>
@@ -718,17 +656,37 @@ function updateConvChart(filtered,hasFilter){
 }
 
 const tt=document.getElementById('mtt');
+var _ttTimer=null;
+function showTt(d,x,y){
+  const n=depCounts[d]||0;
+  const av=depAv[d]?depAv[d].toFixed(1)+'%':'—';
+  const dv=depDv[d]?'S/ '+depDv[d].toFixed(1)+'M':'—';
+  tt.innerHTML='<strong>'+d+'</strong><div class="mtr"><span class="mk">Proyectos</span><span class="mv">'+n+'</span></div><div class="mtr"><span class="mk">Devengado acum.</span><span class="mv">'+dv+'</span></div><div class="mtr"><span class="mk">% Avance prom.</span><span class="mv">'+av+'</span></div>';
+  tt.style.cssText='display:block;left:'+x+'px;top:'+y+'px;position:fixed;';
+  if(_ttTimer)clearTimeout(_ttTimer);
+  _ttTimer=setTimeout(function(){tt.style.display='none';},3000);
+}
 document.querySelectorAll('[data-dept]').forEach(el=>{
   el.addEventListener('mousemove',e=>{
-    const d=el.dataset.dept;
-    const n=depCounts[d]||0;
-    const av=depAv[d]?depAv[d].toFixed(1)+'%':'—';
-    const dv=depDv[d]?'S/ '+depDv[d].toFixed(1)+'M':'—';
-    tt.innerHTML=`<strong>${d}</strong><div class="mtr"><span class="mk">Proyectos</span><span class="mv">${n}</span></div><div class="mtr"><span class="mk">Devengado acum.</span><span class="mv">${dv}</span></div><div class="mtr"><span class="mk">% Avance prom.</span><span class="mv">${av}</span></div>`;
-    tt.style.cssText=`display:block;left:${e.clientX+16}px;top:${e.clientY-10}px;position:fixed;`;
+    showTt(el.dataset.dept,e.clientX+16,e.clientY-10);
+    if(_ttTimer)clearTimeout(_ttTimer);
   });
-  el.addEventListener('mouseleave',()=>tt.style.display='none');
+  el.addEventListener('mouseleave',()=>{tt.style.display='none';if(_ttTimer)clearTimeout(_ttTimer);});
+  el.addEventListener('touchstart',function(e){
+    e.preventDefault();
+    var r=el.getBoundingClientRect();
+    var cx=r.left+r.width/2;
+    var cy=r.top+r.height/2;
+    showTt(el.dataset.dept,Math.min(cx,window.innerWidth-200),Math.min(cy,window.innerHeight-120));
+  },{passive:false});
 });
+/* Toca fuera del mapa: esconder tooltip */
+document.addEventListener('touchstart',function(e){
+  if(!e.target.closest('[data-dept]')&&!e.target.closest('#mtt')){
+    tt.style.display='none';
+    if(_ttTimer)clearTimeout(_ttTimer);
+  }
+},{passive:true});
 
 Chart.defaults.font.family="'Segoe UI',system-ui,sans-serif";
 Chart.defaults.font.size=11;
@@ -1938,27 +1896,37 @@ function showProjectDetail(cui){
 </script>
 <script>
 (function(){
-  /* En movil: boton volver en el overlay de detalle proyecto */
-  var _orig = window.showProjectDetail;
-  if(typeof _orig==='function'){
+  var _origDetail=window.showProjectDetail;
+  if(typeof _origDetail==='function'){
     window.showProjectDetail=function(cui){
-      _orig(cui);
+      _origDetail(cui);
+      /* Esconder tooltip del mapa si esta visible */
+      var mtt=document.getElementById('mtt');
+      if(mtt) mtt.style.display='none';
       if(window.innerWidth>900) return;
       var panel=document.getElementById('proj-detail-panel');
-      if(!panel||document.getElementById('mob-back-btn')) return;
-      /* Hacer el panel scrollable */
-      panel.style.overflowY='auto';
+      if(!panel) return;
+      /* Forzar scroll en el panel */
+      panel.style.overflowY='scroll';
+      panel.style.webkitOverflowScrolling='touch';
+      /* Quitar boton anterior si existe */
+      var old=document.getElementById('mob-back-btn');
+      if(old) old.remove();
       var btn=document.createElement('button');
       btn.id='mob-back-btn';
       btn.textContent='← Volver a la lista';
       btn.style.cssText='position:sticky;top:0;z-index:10;width:100%;padding:14px 16px;'+
         'background:#105000;color:#fff;border:none;font-size:14px;font-weight:700;'+
-        'cursor:pointer;text-align:left;display:block;';
-      btn.onclick=function(){ if(typeof closeProjectDetail==='function') closeProjectDetail(); };
-      panel.insertBefore(btn,panel.firstChild);
+        'cursor:pointer;text-align:left;display:block;flex-shrink:0;';
+      btn.onclick=function(){
+        if(typeof closeProjectDetail==='function') closeProjectDetail();
+        else if(panel) panel.style.display='none';
+      };
+      panel.insertBefore(btn, panel.firstChild);
+      panel.scrollTop=0;
     };
   }
-  /* Filas de tabla tappables */
+  /* Filas de tabla tappables en movil */
   document.addEventListener('DOMContentLoaded',function(){
     var tbody=document.getElementById('ptbody');
     if(tbody){
@@ -1977,27 +1945,37 @@ function showProjectDetail(cui){
 </html>
 <script>
 (function(){
-  /* En movil: boton volver en el overlay de detalle proyecto */
-  var _orig = window.showProjectDetail;
-  if(typeof _orig==='function'){
+  var _origDetail=window.showProjectDetail;
+  if(typeof _origDetail==='function'){
     window.showProjectDetail=function(cui){
-      _orig(cui);
+      _origDetail(cui);
+      /* Esconder tooltip del mapa si esta visible */
+      var mtt=document.getElementById('mtt');
+      if(mtt) mtt.style.display='none';
       if(window.innerWidth>900) return;
       var panel=document.getElementById('proj-detail-panel');
-      if(!panel||document.getElementById('mob-back-btn')) return;
-      /* Hacer el panel scrollable */
-      panel.style.overflowY='auto';
+      if(!panel) return;
+      /* Forzar scroll en el panel */
+      panel.style.overflowY='scroll';
+      panel.style.webkitOverflowScrolling='touch';
+      /* Quitar boton anterior si existe */
+      var old=document.getElementById('mob-back-btn');
+      if(old) old.remove();
       var btn=document.createElement('button');
       btn.id='mob-back-btn';
       btn.textContent='← Volver a la lista';
       btn.style.cssText='position:sticky;top:0;z-index:10;width:100%;padding:14px 16px;'+
         'background:#105000;color:#fff;border:none;font-size:14px;font-weight:700;'+
-        'cursor:pointer;text-align:left;display:block;';
-      btn.onclick=function(){ if(typeof closeProjectDetail==='function') closeProjectDetail(); };
-      panel.insertBefore(btn,panel.firstChild);
+        'cursor:pointer;text-align:left;display:block;flex-shrink:0;';
+      btn.onclick=function(){
+        if(typeof closeProjectDetail==='function') closeProjectDetail();
+        else if(panel) panel.style.display='none';
+      };
+      panel.insertBefore(btn, panel.firstChild);
+      panel.scrollTop=0;
     };
   }
-  /* Filas de tabla tappables */
+  /* Filas de tabla tappables en movil */
   document.addEventListener('DOMContentLoaded',function(){
     var tbody=document.getElementById('ptbody');
     if(tbody){
