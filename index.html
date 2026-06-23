@@ -2129,6 +2129,12 @@ else{_setup();}
         }
       });
     }
+    // Devengado Acumulado por CUI (DEV_ACUMULADO del F12B MEF)
+    if(d.devAcumUpdate && typeof devAcumData !== 'undefined')
+      Object.assign(devAcumData, d.devAcumUpdate);
+    // Costo de Inversión Actualizado por CUI
+    if(d.costoUpdate && typeof costoData !== 'undefined')
+      Object.assign(costoData, d.costoUpdate);
     console.log('[MINAM] Datos actualizados al ' + (d._generado||'?'));
   } catch(e) {
     console.warn('[MINAM] datos_update.js no disponible, usando datos embebidos:', e.message);
