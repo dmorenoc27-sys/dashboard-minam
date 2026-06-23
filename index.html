@@ -1961,7 +1961,7 @@ function _apply(panel){
     var cuiMatch=cuiD?(/\b(\d{5,8})\b/.exec(cuiD.textContent)):null;
     var cui=cuiMatch?cuiMatch[1]:'';
     var prj=(typeof proyectos!=='undefined'&&cui)?proyectos.find(function(x){return String(x.CUI)===cui;}):null;
-    var nomC=prj?_nomCorto(prj.Proyecto):'';
+    var nomC=(typeof cuiShortName!=='undefined'&&cui&&cuiShortName[Number(cui)])||(prj?_nomCorto(prj.Proyecto):'');
 
     if(nomC&&cuiD&&!document.getElementById('mob-nom-corto')){
       var nc=document.createElement('div');
@@ -1980,7 +1980,7 @@ function _apply(panel){
     var prj2=(typeof proyectos!=='undefined'&&cui2)?proyectos.find(function(x){return String(x.CUI)===cui2;}):null;
     var fin=prj2?(prj2.fin||{}):{};
     var devT=fin.Dev||0,pim=fin.PIM||0,avFin=pim>0?Math.round(devT/pim*1000)/10:0,ciT=fin.PIM||0;
-    var avFis=0;try{var sd2=ssiData[cui2]||ssiData[String(cui2)];if(sd2)avFis=parseFloat(sd2.avFis||0);}catch(e){}
+    var avFis=0;try{avFis=parseFloat((_avFisicoData&&(_avFisicoData[cui2]||_avFisicoData[String(cui2)]))||0);}catch(e){}
     var bnf=0;try{bnf=benefiData[cui2]||benefiData[String(cui2)]||0;}catch(e){}
     var pmiV='NO';try{var sd=ssiData[cui2]||ssiData[String(cui2)];if(sd)pmiV=sd.pmi||'NO';}catch(e){}
     var cF=_aC(avFis),cFi=_aC(avFin);
@@ -2116,6 +2116,33 @@ else{_setup();}
     // Avance físico
     if(d.avFisico && typeof _avFisicoData !== 'undefined')
       Object.assign(_avFisicoData, d.avFisico);
+
+/* ── v46: X button on #mtt dept tooltip (mobile close) ──────────────── */
+(function(){
+  var tt=document.getElementById('mtt');
+  if(!tt)return;
+  /* Add position:relative so absolute X is contained inside */
+  tt.style.position='fixed'; /* already fixed, just ensure */
+  /* Clone [data-dept] paths to replace mousemove handler with one that includes X */
+  document.querySelectorAll('[data-dept]').forEach(function(el){
+    var d=el.dataset.dept;
+    var clone=el.cloneNode(true);
+    el.parentNode.replaceChild(clone,el);
+    clone.addEventListener('mousemove',function(e){
+      var n=depCounts[d]||0;
+      var av=depAv[d]?depAv[d].toFixed(1)+'%':'—';
+      var dv=depDv[d]?'S/ '+depDv[d].toFixed(1)+'M':'—';
+      tt.innerHTML='<span onclick="document.getElementById('mtt').style.display='none'" style="position:absolute;top:4px;right:8px;cursor:pointer;font-size:20px;line-height:1;color:rgba(255,255,255,.65);padding:0 3px" title="Cerrar">×</span>'
+        +'<strong>'+d+'</strong>'
+        +'<div class="mtr"><span class="mk">Proyectos</span><span class="mv">'+n+'</span></div>'
+        +'<div class="mtr"><span class="mk">Devengado acum.</span><span class="mv">'+dv+'</span></div>'
+        +'<div class="mtr"><span class="mk">Av. Ejecución</span><span class="mv">'+av+'</span></div>';
+      tt.style.cssText='display:block;left:'+(e.clientX+16)+'px;top:'+(e.clientY-10)+'px;position:fixed;padding-right:28px;';
+    });
+    clone.addEventListener('mouseleave',function(){tt.style.display='none';});
+  });
+})();
+/* ── end v46 ────────────────────────────────────────────────────────── */
     // Devengado último año (COL5)
     if(d.finAnoUpdate && typeof finAno !== 'undefined')
       Object.assign(finAno, d.finAnoUpdate);
