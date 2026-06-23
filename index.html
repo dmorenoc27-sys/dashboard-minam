@@ -2119,46 +2119,59 @@ else{_setup();}
     if(d.avFisico && typeof _avFisicoData !== 'undefined')
       Object.assign(_avFisicoData, d.avFisico);
 
-/* ── v47: tooltip fix (X btn + position clamp + click map bg to close) ─ */
+/* ── v47b: tooltip X + position clamp + SVG bg close (MutationObserver) ── */
 (function(){
   var tt=document.getElementById('mtt');
   if(!tt)return;
-  function _ttHtml(d){
-    var n=depCounts[d]||0;
-    var av=depAv[d]?depAv[d].toFixed(2)+'%':'—';
-    var dv=depDv[d]?'S/ '+depDv[d].toFixed(1)+'M':'—';
-    return '<span onclick="document.getElementById(\'mtt\').style.display=\'none\'" style="position:absolute;top:4px;right:8px;cursor:pointer;font-size:22px;line-height:1;color:rgba(255,255,255,.6);padding:0 2px">×</span>'
-      +'<strong style="padding-right:20px">'+d+'</strong>'
-      +'<div class="mtr"><span class="mk">Proyectos</span><span class="mv">'+n+'</span></div>'
-      +'<div class="mtr"><span class="mk">Dev. acumulado</span><span class="mv">'+dv+'</span></div>'
-      +'<div class="mtr"><span class="mk">Av. Ejecución</span><span class="mv">'+av+'</span></div>';
-  }
-  function _ttPos(cx,cy){
-    var tw=220,th=130,vw=window.innerWidth,vh=window.innerHeight;
-    var lft=Math.max(8,Math.min(cx+14,vw-tw-8));
-    var top=Math.max(8,Math.min(cy-8,vh-th-8));
-    return 'display:block;position:fixed;left:'+lft+'px;top:'+top+'px;padding-right:26px;';
-  }
-  /* Replace [data-dept] listeners so X button + clamped position work */
-  document.querySelectorAll('[data-dept]').forEach(function(el){
-    var d=el.dataset.dept;
-    var clone=el.cloneNode(true);
-    el.parentNode.replaceChild(clone,el);
-    clone.addEventListener('mousemove',function(e){
-      tt.innerHTML=_ttHtml(d);
-      tt.style.cssText=_ttPos(e.clientX,e.clientY);
+
+  /* 1. Add X button whenever tooltip innerHTML is updated */
+  new MutationObserver(function(){
+    if(tt.style.display==='none')return;
+    if(tt.querySelector('.mtt-x'))return;
+    var x=document.createElement('span');
+    x.className='mtt-x';
+    x.textContent='\u00d7';
+    x.setAttribute('style','position:absolute;top:3px;right:7px;cursor:pointer;font-size:24px;line-height:1;color:rgba(255,255,255,.7);padding:0 3px;z-index:2');
+    x.addEventListener('click',function(e){
+      e.stopPropagation();
+      tt.style.display='none';
     });
-    clone.addEventListener('mouseleave',function(){tt.style.display='none';});
-  });
-  /* Click on SVG map background (white area) closes tooltip */
-  var svgEl=document.querySelector('svg[viewBox]');
-  if(svgEl){
-    svgEl.addEventListener('click',function(e){
-      if(!e.target.dataset||!e.target.dataset.dept){tt.style.display='none';}
+    tt.insertBefore(x,tt.firstChild);
+    /* Add padding to strong so text doesn't overlap X */
+    var s=tt.querySelector('strong');
+    if(s)s.style.paddingRight='28px';
+  }).observe(tt,{childList:true,subtree:false});
+
+  /* 2. Clamp position so tooltip never goes off-screen */
+  var _clamping=false;
+  new MutationObserver(function(){
+    if(_clamping||tt.style.display!=='block')return;
+    var vw=window.innerWidth,vh=window.innerHeight;
+    var r=tt.getBoundingClientRect();
+    var nx=null,ny=null;
+    if(r.right>vw-6)nx=Math.max(6,vw-r.width-6);
+    if(r.left<6)nx=6;
+    if(r.bottom>vh-6)ny=Math.max(6,vh-r.height-6);
+    if(r.top<6)ny=6;
+    if(nx!==null||ny!==null){
+      _clamping=true;
+      if(nx!==null)tt.style.left=nx+'px';
+      if(ny!==null)tt.style.top=ny+'px';
+      _clamping=false;
+    }
+  }).observe(tt,{attributes:true,attributeFilter:['style']});
+
+  /* 3. Click on SVG white background closes tooltip */
+  var svg=document.querySelector('svg[viewBox]');
+  if(svg){
+    svg.addEventListener('click',function(e){
+      if(!e.target||!e.target.dataset||!e.target.dataset.dept){
+        tt.style.display='none';
+      }
     });
   }
 })();
-/* ── end v47 tooltip ──────────────────────────────────────────────────── */
+/* ── end v47b ────────────────────────────────────────────────────────────── */
     // Devengado último año (COL5)
     if(d.finAnoUpdate && typeof finAno !== 'undefined')
       Object.assign(finAno, d.finAnoUpdate);
