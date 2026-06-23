@@ -52,7 +52,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#F0F2F5;color:#2D2D2
 .cw{position:relative;height:150px}.cwsm{position:relative;height:185px}.cwlg{position:relative;height:310px}
 .mleg{display:flex;align-items:center;justify-content:center;gap:8px;padding:6px 16px 10px;font-size:10px;color:var(--g3)}
 .mlbar{height:8px;width:110px;border-radius:4px;background:linear-gradient(90deg,#A5D6A7,#004D20)}
-#mtt{position:fixed;background:rgba(18,18,18,.94);color:#fff;border-radius:10px;padding:10px 14px;font-size:11.5px;pointer-events:none;z-index:9999;display:none;min-width:185px;box-shadow:0 8px 24px rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.08)}
+#mtt{position:fixed;background:rgba(18,18,18,.94);color:#fff;border-radius:10px;padding:10px 14px;font-size:11.5px;pointer-events:auto;z-index:9999;display:none;min-width:185px;box-shadow:0 8px 24px rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.08)}
 #mtt strong{font-size:13px;color:#66EE88;display:block;margin-bottom:5px}
 .mtr{display:flex;justify-content:space-between;gap:16px;margin-top:3px}
 .mk{color:#aaa}.mv{font-weight:700}
@@ -2117,62 +2117,7 @@ else{_setup();}
     if(!d) return; // archivo no existe aún — usar datos embebidos
     // Avance físico
     if(d.avFisico && typeof _avFisicoData !== 'undefined')
-      Object.assign(_avFisicoData, d.avFisico);
-
-/* ── v47b: tooltip X + position clamp + SVG bg close (MutationObserver) ── */
-(function(){
-  var tt=document.getElementById('mtt');
-  if(!tt)return;
-
-  /* 1. Add X button whenever tooltip innerHTML is updated */
-  new MutationObserver(function(){
-    if(tt.style.display==='none')return;
-    if(tt.querySelector('.mtt-x'))return;
-    var x=document.createElement('span');
-    x.className='mtt-x';
-    x.textContent='\u00d7';
-    x.setAttribute('style','position:absolute;top:3px;right:7px;cursor:pointer;font-size:24px;line-height:1;color:rgba(255,255,255,.7);padding:0 3px;z-index:2');
-    x.addEventListener('click',function(e){
-      e.stopPropagation();
-      tt.style.display='none';
-    });
-    tt.insertBefore(x,tt.firstChild);
-    /* Add padding to strong so text doesn't overlap X */
-    var s=tt.querySelector('strong');
-    if(s)s.style.paddingRight='28px';
-  }).observe(tt,{childList:true,subtree:false});
-
-  /* 2. Clamp position so tooltip never goes off-screen */
-  var _clamping=false;
-  new MutationObserver(function(){
-    if(_clamping||tt.style.display!=='block')return;
-    var vw=window.innerWidth,vh=window.innerHeight;
-    var r=tt.getBoundingClientRect();
-    var nx=null,ny=null;
-    if(r.right>vw-6)nx=Math.max(6,vw-r.width-6);
-    if(r.left<6)nx=6;
-    if(r.bottom>vh-6)ny=Math.max(6,vh-r.height-6);
-    if(r.top<6)ny=6;
-    if(nx!==null||ny!==null){
-      _clamping=true;
-      if(nx!==null)tt.style.left=nx+'px';
-      if(ny!==null)tt.style.top=ny+'px';
-      _clamping=false;
-    }
-  }).observe(tt,{attributes:true,attributeFilter:['style']});
-
-  /* 3. Click on SVG white background closes tooltip */
-  var svg=document.querySelector('svg[viewBox]');
-  if(svg){
-    svg.addEventListener('click',function(e){
-      if(!e.target||!e.target.dataset||!e.target.dataset.dept){
-        tt.style.display='none';
-      }
-    });
-  }
-})();
-/* ── end v47b ────────────────────────────────────────────────────────────── */
-    // Devengado último año (COL5)
+      Object.assign(_avFisicoData, d.avFisico);    // Devengado último año (COL5)
     if(d.finAnoUpdate && typeof finAno !== 'undefined')
       Object.assign(finAno, d.finAnoUpdate);
     // Histórico anual por CUI
@@ -2200,5 +2145,65 @@ else{_setup();}
     console.warn('[MINAM] datos_update.js no disponible, usando datos embebidos:', e.message);
   }
 })();
+
+/* ── v47b: tooltip X + posición + cerrar zona blanca (siempre corre) ── */
+(function(){
+  var tt=document.getElementById('mtt');
+  if(!tt)return;
+
+  /* 1. Botón X — se agrega cada vez que el innerHTML cambia */
+  new MutationObserver(function(){
+    if(tt.style.display==='none')return;
+    if(tt.querySelector('.mtt-x'))return;
+    var x=document.createElement('span');
+    x.className='mtt-x';
+    x.textContent='\u00d7';
+    x.setAttribute('style','position:absolute;top:3px;right:7px;cursor:pointer;font-size:24px;line-height:1;color:rgba(255,255,255,.7);padding:0 3px;z-index:2;pointer-events:auto');
+    x.addEventListener('click',function(e){
+      e.stopPropagation();
+      tt.style.display='none';
+    });
+    x.addEventListener('touchend',function(e){
+      e.stopPropagation();
+      e.preventDefault();
+      tt.style.display='none';
+    });
+    tt.insertBefore(x,tt.firstChild);
+    var s=tt.querySelector('strong');
+    if(s)s.style.paddingRight='28px';
+  }).observe(tt,{childList:true,subtree:false});
+
+  /* 2. Clamp de posición — evita que se salga de pantalla */
+  var _cl=false;
+  new MutationObserver(function(){
+    if(_cl||tt.style.display!=='block')return;
+    var vw=window.innerWidth,vh=window.innerHeight;
+    var r=tt.getBoundingClientRect();
+    var nx=null,ny=null;
+    if(r.right>vw-6)nx=Math.max(6,vw-r.width-6);
+    if(r.left<6)nx=6;
+    if(r.bottom>vh-6)ny=Math.max(6,vh-r.height-6);
+    if(r.top<6)ny=6;
+    if(nx!==null||ny!==null){
+      _cl=true;
+      if(nx!==null)tt.style.left=nx+'px';
+      if(ny!==null)tt.style.top=ny+'px';
+      _cl=false;
+    }
+  }).observe(tt,{attributes:true,attributeFilter:['style']});
+
+  /* 3. Clic/tap en zona blanca del SVG cierra el tooltip */
+  var svg=document.querySelector('svg[viewBox]');
+  if(svg){
+    ['click','touchend'].forEach(function(ev){
+      svg.addEventListener(ev,function(e){
+        if(!e.target||!e.target.dataset||!e.target.dataset.dept){
+          tt.style.display='none';
+        }
+      });
+    });
+  }
+})();
+/* ── end v47b ────────────────────────────────────────────────────── */
 </script>
 </html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
