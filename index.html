@@ -52,10 +52,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#F0F2F5;color:#2D2D2
 .cw{position:relative;height:150px}.cwsm{position:relative;height:185px}.cwlg{position:relative;height:310px}
 .mleg{display:flex;align-items:center;justify-content:center;gap:8px;padding:6px 16px 10px;font-size:10px;color:var(--g3)}
 .mlbar{height:8px;width:110px;border-radius:4px;background:linear-gradient(90deg,#A5D6A7,#004D20)}
-#mtt{position:fixed;background:rgba(18,18,18,.94);color:#fff;border-radius:10px;padding:10px 14px;font-size:11.5px;pointer-events:auto;z-index:9999;display:none;min-width:185px;box-shadow:0 8px 24px rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.08)}
-#mtt strong{font-size:13px;color:#66EE88;display:block;margin-bottom:5px}
-.mtr{display:flex;justify-content:space-between;gap:16px;margin-top:3px}
-.mk{color:#aaa}.mv{font-weight:700}
+
 .dtable{width:100%;border-collapse:collapse;font-size:11.5px}
 .dtable th{background:var(--v5);color:#fff;padding:9px 12px;text-align:left;font-weight:600;font-size:10.5px;text-transform:uppercase;letter-spacing:.4px;position:sticky;top:0}
 .dtable td{padding:8px 12px;border-bottom:1px solid var(--g2);color:var(--g4)}
@@ -204,7 +201,6 @@ body{display:flex;flex-direction:column;height:100vh}
   #resumen-right-area{flex-direction:column!important;overflow:visible!important;height:auto!important}
   #resumen-right-area>.card{width:100%!important;overflow:visible!important;display:block!important}
   #map1{max-height:380px!important}
-  #mtt{pointer-events:auto!important}
   .r2,.r3,.r75{grid-template-columns:1fr!important}
   .kg{grid-template-columns:repeat(3,1fr)!important;flex-shrink:0!important;margin-bottom:6px!important}
   .kg .kc:nth-child(4){display:none!important}
@@ -264,7 +260,7 @@ body{display:flex;flex-direction:column;height:100vh}
   <span id="cuiSearchMsg" style="font-size:10px;color:#c62828;font-weight:700"></span>
 </div>
 
-<div id="mtt"></div>
+
 
 <div class="con">
 
@@ -625,18 +621,7 @@ function updateConvChart(filtered,hasFilter){
   CH['cConvB'].update();
 }
 
-const tt=document.getElementById('mtt');
-document.querySelectorAll('[data-dept]').forEach(el=>{
-  el.addEventListener('mousemove',e=>{
-    const d=el.dataset.dept;
-    const n=depCounts[d]||0;
-    const av=depAv[d]?depAv[d].toFixed(1)+'%':'—';
-    const dv=depDv[d]?'S/ '+depDv[d].toFixed(1)+'M':'—';
-    tt.innerHTML=`<strong>${d}</strong><div class="mtr"><span class="mk">Proyectos</span><span class="mv">${n}</span></div><div class="mtr"><span class="mk">Devengado acum.</span><span class="mv">${dv}</span></div><div class="mtr"><span class="mk">% Avance prom.</span><span class="mv">${av}</span></div>`;
-    tt.style.cssText=`display:block;left:${e.clientX+16}px;top:${e.clientY-10}px;position:fixed;`;
-  });
-  el.addEventListener('mouseleave',()=>tt.style.display='none');
-});
+
 
 Chart.defaults.font.family="'Segoe UI',system-ui,sans-serif";
 Chart.defaults.font.size=11;
@@ -1933,12 +1918,12 @@ function _icoPMI(c){return '<svg width="24" height="24" viewBox="0 0 24 24" fill
 function _apply(panel){
   if(window.innerWidth>900||!panel||!panel.children.length)return;
   if(document.getElementById('mob-back-btn'))return;
-  var tooltip=document.getElementById('mtt');if(tooltip)tooltip.setAttribute('style','display:none');
+  
   panel.style.overflowY='scroll';panel.style.webkitOverflowScrolling='touch';
 
   var btn=document.createElement('button');btn.id='mob-back-btn';btn.innerHTML='&#8592; Volver';
   btn.style.cssText='position:sticky;top:0;z-index:30;width:100%;padding:11px 16px;background:#105000;color:#fff;border:none;font-size:13px;font-weight:700;cursor:pointer;text-align:left;display:block;box-shadow:0 2px 6px rgba(0,0,0,.3);';
-  btn.onclick=function(){if(typeof closeProjectDetail==='function')closeProjectDetail();var t2=document.getElementById('mtt');if(t2)t2.removeAttribute('style');_hideCharts();};
+  btn.onclick=function(){if(typeof closeProjectDetail==='function')closeProjectDetail();_hideCharts();};
   panel.insertBefore(btn,panel.firstChild);
 
   var outer=null;
@@ -2005,7 +1990,7 @@ function _apply(panel){
     var cc=brow.children[0];
     if(cc){cc.style.overflow='visible';cc.style.flex='none';cc.style.height='auto';}
   }
-  setTimeout(function(){var t3=document.getElementById('mtt');if(t3)t3.setAttribute('style','display:none');},200);
+  setTimeout(function(){},200);
 }
 
 function _setup(){
@@ -2023,7 +2008,7 @@ function _setup(){
     window.showProjectDetail=function(cui){
       orig(cui);
       if(window.innerWidth>900)return;
-      var tt=document.getElementById('mtt');if(tt)tt.setAttribute('style','display:none');
+      
       setTimeout(function(){_apply(document.getElementById('proj-detail-panel'));},80);
     };
     window.showProjectDetail._mb=true;
@@ -2145,65 +2130,5 @@ else{_setup();}
     console.warn('[MINAM] datos_update.js no disponible, usando datos embebidos:', e.message);
   }
 })();
-
-/* ── v47b: tooltip X + posición + cerrar zona blanca (siempre corre) ── */
-(function(){
-  var tt=document.getElementById('mtt');
-  if(!tt)return;
-
-  /* 1. Botón X — se agrega cada vez que el innerHTML cambia */
-  new MutationObserver(function(){
-    if(tt.style.display==='none')return;
-    if(tt.querySelector('.mtt-x'))return;
-    var x=document.createElement('span');
-    x.className='mtt-x';
-    x.textContent='\u00d7';
-    x.setAttribute('style','position:absolute;top:3px;right:7px;cursor:pointer;font-size:24px;line-height:1;color:rgba(255,255,255,.7);padding:0 3px;z-index:2;pointer-events:auto');
-    x.addEventListener('click',function(e){
-      e.stopPropagation();
-      tt.style.display='none';
-    });
-    x.addEventListener('touchend',function(e){
-      e.stopPropagation();
-      e.preventDefault();
-      tt.style.display='none';
-    });
-    tt.insertBefore(x,tt.firstChild);
-    var s=tt.querySelector('strong');
-    if(s)s.style.paddingRight='28px';
-  }).observe(tt,{childList:true,subtree:false});
-
-  /* 2. Clamp de posición — evita que se salga de pantalla */
-  var _cl=false;
-  new MutationObserver(function(){
-    if(_cl||tt.style.display!=='block')return;
-    var vw=window.innerWidth,vh=window.innerHeight;
-    var r=tt.getBoundingClientRect();
-    var nx=null,ny=null;
-    if(r.right>vw-6)nx=Math.max(6,vw-r.width-6);
-    if(r.left<6)nx=6;
-    if(r.bottom>vh-6)ny=Math.max(6,vh-r.height-6);
-    if(r.top<6)ny=6;
-    if(nx!==null||ny!==null){
-      _cl=true;
-      if(nx!==null)tt.style.left=nx+'px';
-      if(ny!==null)tt.style.top=ny+'px';
-      _cl=false;
-    }
-  }).observe(tt,{attributes:true,attributeFilter:['style']});
-
-  /* 3. Clic/tap en zona blanca del SVG cierra el tooltip */
-  var svg=document.querySelector('svg[viewBox]');
-  if(svg){
-    ['click','touchend'].forEach(function(ev){
-      svg.addEventListener(ev,function(e){
-        if(!e.target||!e.target.dataset||!e.target.dataset.dept){
-          tt.style.display='none';
-        }
-      });
-    });
-  }
-})();
-/* ── end v47b ────────────────────────────────────────────────────── */
 </script>
 </html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
