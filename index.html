@@ -2138,6 +2138,11 @@ else{_setup();}
         }
       });
     }
+    // Avance Financiero SSI (% devengado acumulado / costo total — Formato 12B)
+    if(d.avFinUpdate){
+      if(typeof _avFinData !== 'undefined') Object.assign(_avFinData, d.avFinUpdate);
+      if(typeof _avEjecData !== 'undefined') Object.assign(_avEjecData, d.avFinUpdate);
+    }
     // Devengado Acumulado por CUI (DEV_ACUMULADO del F12B MEF)
     if(d.devAcumUpdate && typeof devAcumData !== 'undefined')
       Object.assign(devAcumData, d.devAcumUpdate);
