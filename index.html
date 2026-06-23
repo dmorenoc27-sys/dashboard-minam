@@ -2099,7 +2099,15 @@ else{_setup();}
      Este archivo se recarga cada vez que se abre el dashboard.
      El HTML nunca necesita ser modificado para actualizar datos.
      ════════════════════════════════════════════════════════════════════════ -->
-<script src="Dashboard_UE003_MINAM/Datos/datos_update.js"></script>
+<script>
+// Anti-cache: el navegador siempre pide la version mas reciente de GitHub
+(function(){
+  var s = document.createElement("script");
+  s.src = "Dashboard_UE003_MINAM/Datos/datos_update.js?v=" + Date.now();
+  s.async = false;
+  document.head.appendChild(s);
+})();
+</script>
 <script>
 (function(){
   try {
