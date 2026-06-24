@@ -1485,6 +1485,9 @@ if(window._datosActualizados){
   Object.keys(_upd).forEach(function(k){if(_upd[k]!=null){_avFinData[k]=_upd[k];_avEjecData[k]=_upd[k];}});
   var _updFis=window._datosActualizados.avFisico||{};
   Object.keys(_updFis).forEach(function(k){if(_updFis[k]!=null){_avFisicoData[k]=_updFis[k];}});
+  // finUpdate: desglose por actividad -> proyectos[i].fin
+  var _fu=window._datosActualizados.finUpdate||{};
+  if(Object.keys(_fu).length>0){proyectos.forEach(function(p){if(_fu[p.CUI])Object.assign(p.fin,_fu[p.CUI]);});}
 }
 /* ── END Auto-override ───────────────────────────────────────────────── */
 
