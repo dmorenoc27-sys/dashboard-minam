@@ -832,11 +832,30 @@ tCert=yrs.map(function(yr){var d=src[yr];return d?+(d.Cert/1e6).toFixed(2):0;});
 tDev=yrs.map(function(yr){var d=src[yr];return d?+(d.Dev/1e6).toFixed(2):0;});
 tGir=yrs.map(function(yr){var d=src[yr];return d?+(d.Gir/1e6).toFixed(2):0;});
 }
+if(anio){
+var tMsrc=null;
+if(dept&&deptMonthly[dept]&&deptMonthly[dept][anio])tMsrc=deptMonthly[dept][anio];
+else if(cv&&convMonthly[cv]&&convMonthly[cv][anio])tMsrc=convMonthly[cv][anio];
+else if(yearMonthly[anio])tMsrc=yearMonthly[anio];
+if(tMsrc){
+var tMnums=Object.keys(tMsrc).map(Number).sort(function(a,b){return a-b;});
+var tLabs=tMnums.map(function(m){return MN[m-1];});
+tCert=tMnums.map(function(m){var x=tMsrc[String(m)];return x?+(x.c).toFixed(2):0;});
+tDev=tMnums.map(function(m){var x=tMsrc[String(m)];return x?+(x.d).toFixed(2):0;});
+tGir=tMnums.map(function(m){var x=tMsrc[String(m)];return x?+(x.g).toFixed(2):0;});
+tTitle='Ejecución Mensual '+anio+(dept?' · '+dept:cv?' · '+cv:tp?' · '+sT(tp):'');
+if(CH['cTend']){CH['cTend'].data.labels=tLabs;CH['cTend'].data.datasets[0].data=tCert;CH['cTend'].data.datasets[1].data=tDev;CH['cTend'].data.datasets[2].data=tGir;CH['cTend'].update('none');}
+}else{
+tCert=pimExt.slice();tDev=devExt.slice();tGir=girExt.slice();tTitle='Tendencia Histórica de Ejecución 2013–2026';
+if(CH['cTend']){CH['cTend'].data.labels=yrs;CH['cTend'].data.datasets[0].data=tCert;CH['cTend'].data.datasets[1].data=tDev;CH['cTend'].data.datasets[2].data=tGir;CH['cTend'].update('none');}
+}
+}else{
 if(dept&&!cv&&!tp){_byYr(deptYear[dept]||{});tTitle='Ejecución Histórica · '+dept;}
 else if(cv&&!dept&&!tp){_byYr(convYear[cv]||{});tTitle='Ejecución Histórica · '+cv;}
 else if(tp&&!dept&&!cv){_byYr(tipoYear[tp]||{});tTitle='Ejecución Histórica · '+sT(tp);}
 else{tCert=pimExt.slice();tDev=devExt.slice();tGir=girExt.slice();tTitle='Tendencia Histórica de Ejecución 2013–2026';}
 if(CH['cTend']){CH['cTend'].data.labels=yrs;CH['cTend'].data.datasets[0].data=tCert;CH['cTend'].data.datasets[1].data=tDev;CH['cTend'].data.datasets[2].data=tGir;CH['cTend'].update('none');}
+}
 var tEl=document.getElementById('cTend');
 if(tEl){var th=tEl.closest('.card').querySelector('.ct');if(th)th.innerHTML='<span class="dot"></span>'+tTitle;}
 var curYear=anio||'2026';
