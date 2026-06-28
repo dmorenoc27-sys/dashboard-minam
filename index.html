@@ -2007,46 +2007,81 @@ Object.assign(_avFisicoData, d.avFisico);
 if(d.finAnoUpdate && typeof finAno !== 'undefined')
 Object.assign(finAno, d.finAnoUpdate);
 if(d.cuiYearFinUpdate && typeof cuiYearFin !== 'undefined') {
+// Merge: solo sobreescribir campos no-null (preservar Cert/Gir existentes si vienen null)
 Object.keys(d.cuiYearFinUpdate).forEach(function(cui){
-if(!cuiYearFin[cui]) cuiYearFin[cui] = {};
-Object.assign(cuiYearFin[cui], d.cuiYearFinUpdate[cui]);
+if(!cuiYearFin[cui]) cuiYearFin[cui]={};
+Object.keys(d.cuiYearFinUpdate[cui]).forEach(function(yr){
+var u=d.cuiYearFinUpdate[cui][yr];if(!cuiYearFin[cui][yr])cuiYearFin[cui][yr]={};
+if(u.Dev!=null)cuiYearFin[cui][yr].Dev=u.Dev;
+if(u.Cert!=null)cuiYearFin[cui][yr].Cert=u.Cert;
+if(u.Gir!=null)cuiYearFin[cui][yr].Gir=u.Gir;
+if(u.PIM!=null)cuiYearFin[cui][yr].PIM=u.PIM;
+});
+});
+// Recomputar deptYear, convYear, devExt, girExt, pimExt para los años actualizados
+if(typeof deptYear!=='undefined'&&typeof proyectos!=='undefined'&&typeof yearsExt!=='undefined'){
+var _cD={},_cC={};
+proyectos.forEach(function(p){_cD[String(p.CUI)]=p.Departamento;if(p.Convenio)_cC[String(p.CUI)]=p.Convenio;});
+var _yU={};Object.values(d.cuiYearFinUpdate).forEach(function(b){Object.keys(b).forEach(function(y){_yU[y]=1;});});
+Object.keys(_yU).forEach(function(yr){
+Object.keys(deptYear).forEach(function(dp){if(deptYear[dp][yr])deptYear[dp][yr]={Dev:0,Gir:0,Cert:0,N:0};});
+if(typeof convYear!=='undefined')Object.keys(convYear).forEach(function(cv){if(convYear[cv][yr])convYear[cv][yr]={Dev:0,Gir:0,Cert:0,N:0};});
+Object.keys(cuiYearFin).forEach(function(cui){
+var dp=_cD[cui],cv2=_cC[cui],yd=(cuiYearFin[cui]||{})[yr];if(!yd)return;
+var d2=yd.Dev||0,g2=yd.Gir||0,c2=yd.Cert||0;
+if(dp){if(!deptYear[dp])deptYear[dp]={};if(!deptYear[dp][yr])deptYear[dp][yr]={Dev:0,Gir:0,Cert:0,N:0};var dd=deptYear[dp][yr];dd.Dev+=d2;dd.Gir+=g2;dd.Cert+=c2;dd.N++;}
+if(cv2&&typeof convYear!=='undefined'){if(!convYear[cv2])convYear[cv2]={};if(!convYear[cv2][yr])convYear[cv2][yr]={Dev:0,Gir:0,Cert:0,N:0};var cd=convYear[cv2][yr];cd.Dev+=d2;cd.Gir+=g2;cd.Cert+=c2;cd.N++;}
+});
+var yi=yearsExt.indexOf(String(yr));
+if(yi>=0&&typeof devExt!=='undefined'){
+var tD=0,tG=0,tC=0;
+Object.values(deptYear).forEach(function(b){var z=b[yr];if(z){tD+=z.Dev||0;tG+=z.Gir||0;tC+=z.Cert||0;}});
+devExt[yi]=+(tD/1e6).toFixed(2);girExt[yi]=+(tG/1e6).toFixed(2);pimExt[yi]=+(tC/1e6).toFixed(2);
+}
 });
 }
+}
+// Actividades por Consulta Amigable (Obra/Supervision/Gestion/Expediente)
 if(d.actividadesUpdate && typeof proyectos !== 'undefined') {
-var _au = d.actividadesUpdate;
-proyectos.forEach(function(p){
-var _a = _au[p.CUI];
-if(_a) {
-if(_a.Obra!==undefined) p.fin.Obra = _a.Obra;
-if(_a.Supervision!==undefined) p.fin.Supervision = _a.Supervision;
-if(_a.Expediente!==undefined) p.fin.Expediente = _a.Expediente;
-if(_a.Gestion!==undefined) p.fin.Gestion = _a.Gestion;
+  var _au = d.actividadesUpdate;
+  proyectos.forEach(function(p){
+    var _a = _au[p.CUI];
+    if(_a) {
+      if(_a.Obra!==undefined)        p.fin.Obra        = _a.Obra;
+      if(_a.Supervision!==undefined) p.fin.Supervision = _a.Supervision;
+      if(_a.Expediente!==undefined)  p.fin.Expediente  = _a.Expediente;
+      if(_a.Gestion!==undefined)     p.fin.Gestion     = _a.Gestion;
+    }
+  });
 }
-});
-}
+// Avance Financiero SSI (% devengado acumulado / costo total — Formato 12B)
 if(d.avFinUpdate){
-if(typeof _avFinData !== 'undefined') Object.assign(_avFinData, d.avFinUpdate);
-if(typeof _avEjecData !== 'undefined') Object.assign(_avEjecData, d.avFinUpdate);
+  if(typeof _avFinData !== 'undefined') Object.assign(_avFinData, d.avFinUpdate);
+  if(typeof _avEjecData !== 'undefined') Object.assign(_avEjecData, d.avFinUpdate);
 }
+// Devengado Acumulado por CUI (DEV_ACUMULADO del F12B MEF)
 if(d.devAcumUpdate && typeof devAcumData !== 'undefined')
-Object.assign(devAcumData, d.devAcumUpdate);
+  Object.assign(devAcumData, d.devAcumUpdate);
+// Costo de Inversión Actualizado por CUI
 if(d.costoUpdate && typeof costoData !== 'undefined')
-Object.assign(costoData, d.costoUpdate);
+  Object.assign(costoData, d.costoUpdate);
+// Componentes y Acciones
 if(d.compDataUpdate && typeof window._compDataUpdate !== 'undefined')
-window._compDataUpdate(d.compDataUpdate);
+  window._compDataUpdate(d.compDataUpdate);
+// Desglose por actividad / acción (Transparencia Económica)
 if(d.finUpdate && typeof proyectos !== 'undefined'){
-var _fu=d.finUpdate;
-proyectos.forEach(function(p){
-var _a=_fu[String(p.CUI)];
-if(_a){
-if(_a.Obra!==undefined) p.fin.Obra =_a.Obra;
-if(_a.Supervision!==undefined) p.fin.Supervision =_a.Supervision;
-if(_a.Expediente!==undefined) p.fin.Expediente =_a.Expediente;
-if(_a.Gestion!==undefined) p.fin.Gestion =_a.Gestion;
-if(_a.Adquisicion!==undefined) p.fin.Adquisicion =_a.Adquisicion;
+  var _fu=d.finUpdate;
+  proyectos.forEach(function(p){
+    var _a=_fu[String(p.CUI)];
+    if(_a){
+      if(_a.Obra!==undefined)        p.fin.Obra        =_a.Obra;
+      if(_a.Supervision!==undefined) p.fin.Supervision =_a.Supervision;
+      if(_a.Expediente!==undefined)  p.fin.Expediente  =_a.Expediente;
+      if(_a.Gestion!==undefined)     p.fin.Gestion     =_a.Gestion;
+      if(_a.Adquisicion!==undefined) p.fin.Adquisicion =_a.Adquisicion;
+    }
+  });
 }
-});
-}
-} catch(e){ console.warn('Override error:',e); }
+  } catch(e){ console.warn('Override error:',e); }
 })();
 </script>
