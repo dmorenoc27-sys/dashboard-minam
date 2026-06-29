@@ -1994,6 +1994,23 @@ panel.innerHTML='<div style="color:#666;font-style:italic;font-size:10px;text-al
 var s = document.createElement("script");
 s.src = "Dashboard_UE003_MINAM/Datos/datos_update.js?v=" + Date.now();
 s.async = false;
+// onload: re-ejecutar merges con datos frescos del servidor.
+// El <script src> estático en el head puede usar versión cacheada;
+// este load dinámico trae siempre la versión más reciente.
+s.onload = function() {
+  var d = window._datosActualizados;
+  if (!d) return;
+  if (d.compDataUpdate && typeof window._compDataUpdate === 'function')
+    window._compDataUpdate(d.compDataUpdate);
+  if (d.avFinUpdate) {
+    if (typeof _avFinData !== 'undefined') Object.assign(_avFinData, d.avFinUpdate);
+    if (typeof _avEjecData !== 'undefined') Object.assign(_avEjecData, d.avFinUpdate);
+  }
+  if (d.devAcumUpdate && typeof devAcumData !== 'undefined')
+    Object.assign(devAcumData, d.devAcumUpdate);
+  if (d.costoUpdate && typeof costoData !== 'undefined')
+    Object.assign(costoData, d.costoUpdate);
+};
 document.head.appendChild(s);
 })();
 </script>
