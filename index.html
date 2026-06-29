@@ -2010,6 +2010,27 @@ s.onload = function() {
     Object.assign(devAcumData, d.devAcumUpdate);
   if (d.costoUpdate && typeof costoData !== 'undefined')
     Object.assign(costoData, d.costoUpdate);
+  if (d.cuiYearFinUpdate && typeof cuiYearFin !== 'undefined') {
+    Object.keys(d.cuiYearFinUpdate).forEach(function(cui){
+      if(!cuiYearFin[cui])cuiYearFin[cui]={};
+      Object.keys(d.cuiYearFinUpdate[cui]).forEach(function(yr){
+        var u=d.cuiYearFinUpdate[cui][yr];if(!cuiYearFin[cui][yr])cuiYearFin[cui][yr]={};
+        if(u.Dev!=null)cuiYearFin[cui][yr].Dev=u.Dev;
+        if(u.Cert!=null)cuiYearFin[cui][yr].Cert=u.Cert;
+        if(u.Gir!=null)cuiYearFin[cui][yr].Gir=u.Gir;
+        if(u.PIM!=null)cuiYearFin[cui][yr].PIM=u.PIM;
+      });
+    });
+    if(typeof proyectos!=='undefined'){
+      proyectos.forEach(function(p){
+        var cui=String(p.CUI);if(!cuiYearFin[cui])return;
+        var tD=0,tG=0,tC=0;
+        Object.values(cuiYearFin[cui]).forEach(function(y){tD+=y.Dev||0;tG+=y.Gir||0;tC+=y.Cert||0;});
+        if(tD>0)p.fin.Dev=tD;if(tG>0)p.fin.Gir=tG;if(tC>0){p.fin.Cert=tC;p.fin.PIM=tC;}
+      });
+      if(typeof renderKPIs==='function')renderKPIs(typeof selectedDept!=='undefined'?selectedDept:null);
+    }
+  }
 };
 document.head.appendChild(s);
 })();
