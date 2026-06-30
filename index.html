@@ -7,6 +7,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
 <style>
 :root{--v1:#105000;--v2:#66CB00;--v3:#66CB00;--v4:#EEF4EC;--v5:#44546A;--gold:#F9A825;--azul:#2191F1;--g1:#F5F5F5;--g2:#E0E0E0;--g3:#9E9E9E;--g4:#1C1917;--sh:0 2px 12px rgba(0,0,0,.10);--sh2:0 6px 30px rgba(0,0,0,.14);--rad:12px}
+@media(max-width:900px){.pd-bot4{grid-template-columns:1fr!important}.pd-bot4>div{border-right:none!important;border-bottom:1px solid #E8F5E9}.pd-foto{min-height:180px}}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:#F0F2F5;color:#2D2D2D;font-size:13px}
 .hdr{background:#ffffff;padding:0 12px;display:flex;align-items:center;height:52px;box-shadow:0 2px 8px rgba(0,0,0,.10);position:sticky;top:0;z-index:100}
@@ -1741,7 +1742,7 @@ ${s.pmi==='SI'?'PROGRAMADO EN EL PMI':'NO PROGRAMADO EN EL PMI'}
 </div>
 </div>
 <!-- ══ BOTTOM ROW: COMPONENTS | ESTADO | PHOTO ════════════════ -->
-<div style="display:grid;grid-template-columns:1.5fr 0.65fr 0.35fr;flex:1;overflow:hidden;background:#fff">
+<div class="pd-bot4" style="display:grid;grid-template-columns:1.35fr 0.72fr 0.72fr 0.55fr;flex:1;overflow:hidden;background:#fff">
 <!-- LEFT: Componentes y Acciones -->
 <div style="border-right:1px solid #E8F5E9;padding:10px 12px;overflow-y:auto">
 <div style="font-size:15px;font-weight:800;color:#AAAAAA;text-transform:uppercase;
@@ -1757,6 +1758,37 @@ Componentes y Acciones
 <div style="font-size:9px;font-weight:800;color:#1B6B3A;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;padding-bottom:5px;border-bottom:2px solid #C8E6C9">📊 Ejecución por Actividad${isMultiUEI?' · UE003/GICA (parcial)':' / Acción de Inv.'}</div>
 ${compBarsTopHTML}
 ${compFooterHTML}
+</div>
+<!-- ══ NEW: EJECUCIÓN DE CAJA (mismo tamaño que Ejecución por Actividad) ══ -->
+<div style="border-right:1px solid #E8F5E9;padding:14px 16px;display:flex;flex-direction:column;justify-content:flex-start;overflow-y:auto">
+<div style="font-size:9px;font-weight:800;color:#1B6B3A;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;padding-bottom:5px;border-bottom:2px solid #C8E6C9">💰 Ejecución de Caja${(typeof finAno!=='undefined'&&finAno[cui]&&finAno[cui].ano)?' · '+finAno[cui].ano:''}</div>
+${(function(){
+var saldo=Math.max(pim-dev,0);
+var pDev=pim>0?Math.round(dev/pim*1000)/10:0;
+var pGir=pim>0?Math.round(gir/pim*1000)/10:0;
+var pSal=pim>0?Math.round(saldo/pim*1000)/10:0;
+var row=function(lbl,val,col,bg,br,sub){return '<div style="background:'+bg+';border:1.5px solid '+br+';border-radius:9px;padding:7px 10px;margin-bottom:7px">'
++'<div style="font-size:8px;font-weight:800;color:'+col+';text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px">'+lbl+'</div>'
++'<div style="font-size:15px;font-weight:900;color:'+col+';letter-spacing:-.4px;line-height:1.05">'+val+'</div>'
++(sub?'<div style="font-size:7px;color:#90A4AE;margin-top:2px">'+sub+'</div>':'')+'</div>';};
+return row('PIM',_fmtSol(pim),'#37474F','#F8FFFE','#CFD8DC','Presupuesto Inst. Modificado')
++row('Devengado',_fmtSol(dev),'#2E7D32','#F0FBF0','#A5D6A7',pDev+'% del PIM ejecutado')
++row('Girado',_fmtSol(gir),'#1565C0','#EEF4FF','#90CAF9',pGir+'% girado')
++row('Saldo por Ejecutar',_fmtSol(saldo),'#E65100','#FFF8F0','#FFCC80',pSal+'% del PIM pendiente');
+})()}
+</div>
+<!-- ══ NEW: FOTO DE LA INVERSIÓN PÚBLICA (foto/<cui>.jpg con fallback) ══ -->
+<div class="pd-foto" style="padding:12px 12px 14px;display:flex;flex-direction:column;overflow:hidden;background:linear-gradient(180deg,#FAFFFE 0%,#F4FBF4 100%)">
+<div style="font-size:9px;font-weight:800;color:#1B6B3A;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;padding-bottom:5px;border-bottom:2px solid #C8E6C9">📷 Vista de la Inversión</div>
+<div style="flex:1;position:relative;border-radius:12px;overflow:hidden;border:1.5px solid #C8E6C9;box-shadow:0 2px 10px rgba(16,80,0,.08);background:#EEF4EC;min-height:0">
+<img src="foto/${cui}.jpg" alt="Inversión CUI ${cui}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.style.display='none';var ph=this.parentNode.querySelector('.foto-ph');if(ph)ph.style.display='flex'">
+<div class="foto-ph" style="display:none;position:absolute;inset:0;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:14px">
+<svg viewBox="0 0 24 24" width="42" height="42" fill="none" stroke="#A5C8A5" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.6"/><path d="M3 16l5-5 4 4 3-3 6 6"/></svg>
+<div style="font-size:9px;font-weight:700;color:#8AA98A;text-transform:uppercase;letter-spacing:.5px">Sin fotografía</div>
+<div style="font-size:7.5px;color:#B0BEC5;line-height:1.5">Cargar imagen en<br><b style="color:#90A4AE">foto/${cui}.jpg</b></div>
+</div>
+</div>
+<div style="font-size:7px;color:#90A4AE;text-align:center;margin-top:6px;font-style:italic">CUI ${cui}${p&&p.Departamento?' · '+p.Departamento:''}</div>
 </div>
 </div>
 </div>`;
