@@ -1459,7 +1459,7 @@ const s=ssiData[cui]||{};
 const f=(p&&p.fin)||{};
 const pim=(f.PIM||0), dev=(f.Dev||0), cert=(f.Cert||0), gir=(f.Gir||0);
 const avF=(typeof _avFinData!=="undefined"&&_avFinData[cui]!=null)?_avFinData[cui]:(pim>0?Math.round(dev/pim*1000)/10:0);
-const avFis=(_avFisicoData&&_avFisicoData[cui]!=null&&_avFisicoData[cui]>0)?_avFisicoData[cui]:avF;
+const _rawFis=(_avFisicoData&&_avFisicoData[cui]!=null)?_avFisicoData[cui]:null;const avFisSD=(_rawFis===null||_rawFis<0);const avFis=avFisSD?null:_rawFis;
 const avC=pim>0?Math.round(cert/pim*1000)/10:0;
 const SC=avF>=80?{bg:'#2E7D32',lo:'#1B5E20',glow:'#2E7D32',tx:'En Meta'}:
 avF>=50?{bg:'#F57F17',lo:'#E65100',glow:'#F57F17',tx:'En Proceso'}:
@@ -1498,7 +1498,7 @@ letter-spacing:.7px;text-align:center;line-height:1.2">${label}</div>
 <circle cx="40" cy="40" r="33" fill="none" stroke="#E8E8E8" stroke-width="10"/>
 ${arcCircle}
 <text x="40" y="38" text-anchor="middle" font-size="19" font-weight="900"
-fill="${color}" font-family="system-ui,sans-serif">${(pct||pct===0)?pct:'—'}</text>
+fill="${color}" font-family="system-ui,sans-serif">${(pct||pct===0)?pct:'s/d'}</text>
 ${pctText}
 </svg>
 </div>`;
