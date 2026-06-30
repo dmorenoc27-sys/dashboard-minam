@@ -1880,13 +1880,14 @@ return(last>15?s.substring(0,last):s)+'...';
 }
 function _circKP(lbl,pct,bg,br,tx){
 var r=30,sz=74,cx=37,cy=37;
+var _sd=(pct==null||isNaN(pct)||pct<0);if(_sd){tx='#9E9E9E';bg='#F5F5F5';br='#E0E0E0';}
 var circ=2*Math.PI*r,dash=Math.min(Math.max(pct,0),100)/100*circ;
 var svg='<svg width="'+sz+'" height="'+sz+'" viewBox="0 0 '+sz+' '+sz+'" style="display:block;margin:0 auto">'
 +'<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="rgba(0,0,0,.08)" stroke-width="6"/>'
 +'<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="'+tx+'" stroke-width="6"'
 +' stroke-dasharray="'+dash.toFixed(2)+' '+circ.toFixed(2)+'" stroke-linecap="round"'
 +' transform="rotate(-90 '+cx+' '+cy+')"/>'
-+'<text x="'+cx+'" y="'+(cy+6)+'" text-anchor="middle" font-size="13" font-weight="900" fill="'+tx+'">'+(pct%1===0?pct:(+pct.toFixed(2)))+'%</text>'
++'<text x="'+cx+'" y="'+(cy+6)+'" text-anchor="middle" font-size="13" font-weight="900" fill="'+tx+'">'+(_sd?'s/d':((pct%1===0?pct:(+pct.toFixed(2)))+'%'))+'</text>'
 +'</svg>';
 return '<div style="background:'+bg+';border:1.5px solid '+br+';border-radius:10px;padding:8px 4px 6px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:106px">'+svg
 +'<div style="font-size:11px;font-weight:900;color:'+tx+';text-transform:uppercase;letter-spacing:.5px;line-height:1.2">'+lbl+'</div></div>';
