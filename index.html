@@ -1552,35 +1552,35 @@ const ssiDevAcum=(typeof devAcumData!=='undefined'&&devAcumData[cui]!=null)?devA
 const excelDevTot=ACT_DEFS.reduce((s,x)=>s+(f[x.k]||0),0);
 const diffMU=ssiDevAcum-excelDevTot;
 const fmtSolFt=n=>n>=1e6?'S/ '+(n/1e6).toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2})+' M':'S/ '+Math.round(n).toLocaleString('es-PE');
+const _muTot=isMultiUEI?ssiDevAcum:excelDevTot;
 const compFooterHTML=`
 <div style="margin-top:6px;padding:8px 11px;background:rgba(27,94,32,.09);border:2px solid #2E7D32;border-radius:10px">
 <div style="display:flex;justify-content:space-between;align-items:center">
-<span style="font-size:10px;font-weight:900;color:#1B5E20;text-transform:uppercase;letter-spacing:.4px">Total Dev. Acumulado UE003${isMultiUEI?'*':''}</span>
-<span style="font-size:${excelDevTot>=1e7?'13px':excelDevTot>=1e6?'15px':'17px'};font-weight:900;color:#105000">${fmtSolFt(excelDevTot)}${isMultiUEI?'&nbsp;<sup style="color:#E65100;font-size:9px">*</sup>':''}</span>
+<span style="font-size:10px;font-weight:900;color:#1B5E20;text-transform:uppercase;letter-spacing:.4px">${isMultiUEI?'Total Dev. Acumulado (Proyecto)':'Total Dev. Acumulado UE003'}</span>
+<span style="font-size:${_muTot>=1e7?'13px':_muTot>=1e6?'15px':'17px'};font-weight:900;color:#105000">${fmtSolFt(_muTot)}</span>
 </div>
+${isMultiUEI?'<div style="font-size:8px;color:#1B5E20;margin-top:2px;opacity:.75">Fuente: SSI-SOSEM · Todas las Unidades Ejecutoras</div>':''}
 </div>
-${isMultiUEI?`<div style="margin-top:8px;padding:10px 12px;background:#FFF8E1;border:1.5px solid #FFB300;border-radius:10px">
-<div style="font-size:10px;font-weight:900;color:#E65100;margin-bottom:5px;display:flex;align-items:center;gap:5px">
-<span style="font-size:13px">⚠️</span> (*) Proyecto con múltiples Unidades Ejecutoras (Multi-UEI)
-</div>
-<div style="font-size:9px;color:#4E342E;line-height:1.7">
-Los montos por actividad corresponden <b>únicamente a la ejecución registrada por UE003/GICA</b> en el Sistema de Transparencia Económica del MEF. Este proyecto es ejecutado por más de una Unidad Ejecutora; la diferencia refleja la ejecución de las demás UEIs participantes.
-</div>
-<div style="margin-top:7px;font-size:9px;color:#37474F;border-top:1px solid #FFE082;padding-top:6px">
+${isMultiUEI?`<div style="margin-top:5px">
+<button onclick="(function(b){var d=document.getElementById('mu-detail-${cui}');var op=d.style.display!=='none';d.style.display=op?'none':'block';b.querySelector('span').style.transform=op?'rotate(0deg)':'rotate(90deg)'})(this)" style="width:100%;background:#FFF8E1;border:1.5px solid #FFB300;border-radius:8px;padding:6px 10px;cursor:pointer;font-size:9px;font-weight:800;color:#E65100;text-align:left;display:flex;align-items:center;gap:6px"><span style="font-size:10px;display:inline-block;transition:transform .2s;transform:rotate(0deg)">▶</span>⚠️ Proyecto Multi-UEI · ver desglose por unidades ejecutoras</button>
+<div id="mu-detail-${cui}" style="display:none;margin-top:4px;padding:10px 12px;background:#FFF8E1;border:1.5px solid #FFB300;border-radius:10px">
+<div style="font-size:9px;color:#4E342E;line-height:1.7;margin-bottom:7px">Este proyecto es ejecutado por <b>múltiples Unidades Ejecutoras</b>. El <b>Total Dev. Acumulado del Proyecto</b> y el <b>Dev. Acumulado</b> mostrados provienen del <b>SSI-SOSEM</b> y consolidan la ejecución de todas las UEIs. Las barras de actividad muestran únicamente la ejecución de <b>UE003/GICA</b> registrada en MEF Transparencia Económica.</div>
+<div style="font-size:9px;color:#37474F;border-top:1px solid #FFE082;padding-top:6px">
 <div style="display:flex;justify-content:space-between;margin-bottom:3px">
-<span>Dev. acumulado UE003/GICA (Transparencia MEF):</span>
+<span>Dev. acum. UE003/GICA (MEF Transparencia):</span>
 <b style="color:#105000">${fmtSolFt(excelDevTot)}</b>
 </div>
 <div style="display:flex;justify-content:space-between;margin-bottom:3px">
-<span>Dev. total consolidado SSI-SOSEM (todas las UEIs):</span>
+<span>Dev. total del proyecto (SSI-SOSEM, todas las UEIs):</span>
 <b style="color:#0D47A1">${fmtSolFt(ssiDevAcum)}</b>
 </div>
 <div style="display:flex;justify-content:space-between">
-<span>Ejecutado por otras Unidades Ejecutoras:</span>
+<span>Ejecutado por otras UEIs:</span>
 <b style="color:#B71C1C">${fmtSolFt(diffMU)}</b>
 </div>
 </div>
-<div style="margin-top:6px;font-size:8px;color:#8D6E63;font-style:italic">El % de Avance Financiero proviene del SSI y refleja el avance consolidado de todas las UEIs del proyecto.</div>
+<div style="margin-top:6px;font-size:8px;color:#8D6E63;font-style:italic">El % de Avance Financiero proviene del SSI y refleja el avance consolidado de todas las UEIs.</div>
+</div>
 </div>`:''}
 `;
 const html=`<div style="height:100%;display:flex;flex-direction:column;font-family:inherit;background:#F7FAF7;overflow:hidden">
@@ -1680,6 +1680,7 @@ ${(function(){
 const fa=(typeof finAno!=='undefined'&&finAno[cui])||null;
 const faDev=fa?fa.Dev:dev; const faCert=fa?fa.Cert:cert; const faGir=fa?fa.Gir:gir;
 const faAno=fa?fa.ano:'';
+const devAcumDisp=isMultiUEI&&typeof devAcumData!=='undefined'&&devAcumData[cui]!=null?devAcumData[cui]:dev;
 return `
 <div style="background:#FFF8F0;border:1.5px solid #FFCC80;border-radius:10px;padding:7px 10px">
 <div style="display:flex;align-items:center;gap:4px;margin-bottom:4px">
@@ -1694,11 +1695,12 @@ ${faCert>0?`<div style="font-size:7px;color:#E65100;margin-top:3px">Certif.: ${_
 <div style="background:#EEF4FF;border:1.5px solid #90CAF9;border-radius:10px;padding:7px 10px">
 <div style="display:flex;align-items:center;gap:4px;margin-bottom:4px">
 <svg viewBox="0 0 12 12" width="10" height="10"><circle cx="6" cy="6" r="6" fill="#1565C0" opacity=".18"/><circle cx="6" cy="6" r="3.5" fill="#1565C0"/></svg>
-<div style="font-size:14px;color:#1565C0;font-weight:800;text-transform:uppercase;letter-spacing:.7px">Dev. Acumulado</div>
+<div style="font-size:14px;color:#1565C0;font-weight:800;text-transform:uppercase;letter-spacing:.7px">${isMultiUEI?'Dev. Acumulado (Proyecto)':'Dev. Acumulado'}</div>
 </div>
-<div style="font-size:${dev>=1e7?'14px':dev>=1e6?'16px':'19px'};font-weight:900;color:#0D47A1;letter-spacing:-0.5px;line-height:1.1">
-${_fmtSol(dev)}
+<div style="font-size:${devAcumDisp>=1e7?'14px':devAcumDisp>=1e6?'16px':'19px'};font-weight:900;color:#0D47A1;letter-spacing:-0.5px;line-height:1.1">
+${_fmtSol(devAcumDisp)}
 </div>
+${isMultiUEI?'<div style="font-size:7px;color:#1565C0;margin-top:3px;opacity:.7">Todas las UEIs · SSI-SOSEM</div>':''}
 </div>`;
 })()}
 </div>
@@ -1752,7 +1754,7 @@ Componentes y Acciones
 </div>
 <!-- MIDDLE: Act./Acción de Inversión / Obra — Transparencia Económica MEF -->
 <div style="border-right:1px solid #E8F5E9;padding:14px 16px;display:flex;flex-direction:column;justify-content:flex-start;overflow-y:auto">
-<div style="font-size:9px;font-weight:800;color:#1B6B3A;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;padding-bottom:5px;border-bottom:2px solid #C8E6C9">📊 Ejecución por Actividad / Acción de Inv.</div>
+<div style="font-size:9px;font-weight:800;color:#1B6B3A;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;padding-bottom:5px;border-bottom:2px solid #C8E6C9">📊 Ejecución por Actividad${isMultiUEI?' · UE003/GICA (parcial)':' / Acción de Inv.'}</div>
 ${compBarsTopHTML}
 ${compFooterHTML}
 </div>
