@@ -1532,25 +1532,24 @@ const ACT_DEFS = [
 const devTotal = ACT_DEFS.reduce((s,x)=>s+(f[x.k]||0),0)||1;
 const maxAct = Math.max(...ACT_DEFS.map(x=>f[x.k]||0),1);
 const _actsOrd = ACT_DEFS.slice().sort(function(a,b){return (f[b.k]||0)-(f[a.k]||0);});
-const compBarsTopHTML = _actsOrd.length > 0 ? (function(){
-var R=50, SW=21, CX=64, CY=64, C=2*Math.PI*R, off=0, segs='';
-_actsOrd.forEach(function(x){var val=f[x.k]||0; var len=(val/devTotal)*C; segs+='<circle cx="'+CX+'" cy="'+CY+'" r="'+R+'" fill="none" stroke="'+x.c+'" stroke-width="'+SW+'" stroke-dasharray="'+len.toFixed(2)+' '+(C-len).toFixed(2)+'" stroke-dashoffset="'+(-off).toFixed(2)+'" transform="rotate(-90 '+CX+' '+CY+')"/>'; off+=len;});
-var totTxt=devTotal>=1e6?'S/ '+(devTotal/1e6).toFixed(1)+' M':_fmtSol(devTotal);
-var donut='<svg viewBox="0 0 128 128" width="152" height="152" style="display:block;margin:2px auto 12px;filter:drop-shadow(0 3px 6px rgba(0,0,0,.12))">'
-+'<circle cx="'+CX+'" cy="'+CY+'" r="'+R+'" fill="none" stroke="#EEF1F2" stroke-width="'+SW+'"/>'+segs
-+'<circle cx="'+CX+'" cy="'+CY+'" r="'+(R-SW/2-3)+'" fill="#fff"/>'
-+'<text x="'+CX+'" y="'+(CY-5)+'" text-anchor="middle" font-size="8" fill="#90A4AE" font-weight="700" letter-spacing="1">DEVENGADO</text>'
-+'<text x="'+CX+'" y="'+(CY+12)+'" text-anchor="middle" font-size="16" fill="#105000" font-weight="900">'+totTxt+'</text>'
-+'</svg>';
-var legend=_actsOrd.map(function(x){var val=f[x.k]||0; var pct=(val/devTotal*100).toFixed(1);
-return '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">'
-+'<span style="width:12px;height:12px;border-radius:3px;background:'+x.c+';flex-shrink:0;box-shadow:0 1px 2px rgba(0,0,0,.15)"></span>'
-+'<span style="flex:1;font-size:9.5px;font-weight:700;color:#37474F;line-height:1.2;min-width:0">'+x.l+'</span>'
-+'<span style="font-size:11px;font-weight:900;color:#263238;white-space:nowrap">'+_fmtSol(val)+'</span>'
-+'<span style="font-size:8.5px;font-weight:800;color:'+x.c+';background:'+x.bg+';border-radius:9px;padding:1px 7px;white-space:nowrap">'+pct+'%</span>'
-+'</div>';}).join('');
-return donut+legend;
-})() : '<div style="font-size:11px;color:#AAA;font-style:italic;text-align:center;padding:16px">Sin datos de ejecución por actividad</div>';
+const compBarsTopHTML = _actsOrd.length > 0 ? (
+'<div style="position:relative;padding:8px 4px 4px">'
++'<div style="position:absolute;top:8px;bottom:6px;left:4px;right:4px;pointer-events:none">'+[0,25,50,75,100].map(function(g){return '<div style="position:absolute;top:0;bottom:0;left:'+g+'%;width:1px;background:rgba(0,0,0,'+(g===0?'.13':'.05')+')"></div>';}).join('')+'</div>'
++_actsOrd.map(function(x){
+var val=f[x.k]||0; var pct=(val/devTotal*100).toFixed(1); var w=Math.max(val/maxAct*100,3).toFixed(1);
+return '<div style="position:relative;margin-bottom:11px">'
++'<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px">'
++'<span style="font-size:10.5px;font-weight:700;color:#455A64;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:72%">'+x.l+'</span>'
++'<span style="font-size:9.5px;font-weight:900;color:'+x.c+';white-space:nowrap">'+pct+'%</span>'
++'</div>'
++'<div style="position:relative;height:27px;background:#EDF0F1;border-radius:6px;overflow:hidden">'
++'<div style="position:absolute;top:0;left:0;height:100%;width:'+w+'%;background:linear-gradient(90deg,'+x.c+' 0%,'+x.c+'CC 100%);border-radius:6px;box-shadow:0 1px 4px '+x.c+'55"></div>'
++'<span style="position:absolute;top:0;height:100%;display:flex;align-items:center;font-size:12px;font-weight:900;white-space:nowrap;'+(parseFloat(w)>52?'right:11px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.3)':'left:calc('+w+'% + 9px);color:#1A2327')+'">'+_fmtSol(val)+'</span>'
++'</div>'
++'</div>';
+}).join('')
++'</div>'
+) : '<div style="font-size:11px;color:#AAA;font-style:italic;text-align:center;padding:16px">Sin datos de ejecución por actividad</div>';
 const MULTI_UEI_CUIS=new Set(["2338187","2225760","2343091","2071893","2308546","2167493","2167531","2104602","2509786","2453667","2165139","2093153","2445163"]);
 const isMultiUEI=MULTI_UEI_CUIS.has(cui);
 const ssiDevAcum=(typeof devAcumData!=='undefined'&&devAcumData[cui]!=null)?devAcumData[cui]:0;
