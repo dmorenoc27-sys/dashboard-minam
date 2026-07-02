@@ -1531,22 +1531,25 @@ const ACT_DEFS = [
 ].filter(x=>(f[x.k]||0)>0);
 const devTotal = ACT_DEFS.reduce((s,x)=>s+(f[x.k]||0),0)||1;
 const maxAct = Math.max(...ACT_DEFS.map(x=>f[x.k]||0),1);
-const compBarsTopHTML = ACT_DEFS.length > 0 ? ACT_DEFS.map(x=>{
-const val = f[x.k]||0;
-const pct = (val/devTotal*100).toFixed(1);
-const w = (val/maxAct*100).toFixed(0);
-return `
-<div style="margin-bottom:11px;background:${x.bg};border-radius:10px;padding:9px 12px;border-left:4px solid ${x.c}">
-<div style="font-size:11px;font-weight:800;color:${x.c};line-height:1.35;margin-bottom:5px">${x.l}</div>
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
-<span style="font-size:17px;font-weight:900;color:#111">${_fmtSol(val)}</span>
-<span style="font-size:12px;font-weight:700;color:${x.c};background:rgba(0,0,0,.07);border-radius:20px;padding:2px 8px">${pct}%</span>
-</div>
-<div style="height:7px;background:rgba(0,0,0,.1);border-radius:4px;overflow:hidden">
-<div style="width:${w}%;height:100%;background:${x.c};border-radius:4px"></div>
-</div>
-</div>`;
-}).join('') : '<div style="font-size:11px;color:#AAA;font-style:italic;text-align:center;padding:16px">Sin datos de ejecución por actividad</div>';
+const _actsOrd = ACT_DEFS.slice().sort(function(a,b){return (f[b.k]||0)-(f[a.k]||0);});
+const compBarsTopHTML = _actsOrd.length > 0 ? (
+'<div style="position:relative;padding:6px 2px 2px">'
++'<div style="position:absolute;top:2px;bottom:8px;left:0;right:0;pointer-events:none">'+[25,50,75,100].map(function(g){return '<div style="position:absolute;top:0;bottom:0;left:'+g+'%;width:1px;background:rgba(0,0,0,.05)"></div>';}).join('')+'</div>'
++_actsOrd.map(function(x){
+var val=f[x.k]||0; var pct=(val/devTotal*100).toFixed(1); var w=Math.max(val/maxAct*100,2.5).toFixed(1);
+return '<div style="position:relative;margin-bottom:13px">'
++'<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px">'
++'<span style="font-size:10px;font-weight:700;color:#37474F;line-height:1.25">'+x.l+'</span>'
++'<span style="font-size:9px;font-weight:800;color:'+x.c+';margin-left:8px;white-space:nowrap;background:'+x.bg+';border-radius:10px;padding:1px 7px">'+pct+'%</span>'
++'</div>'
++'<div style="position:relative;height:23px;background:#EEF1F2;border-radius:7px;overflow:hidden;box-shadow:inset 0 1px 2px rgba(0,0,0,.06)">'
++'<div style="position:absolute;top:0;left:0;height:100%;width:'+w+'%;background:linear-gradient(90deg,'+x.c+' 0%,'+x.c+'D9 100%);border-radius:7px"></div>'
++'<span style="position:absolute;top:0;height:100%;display:flex;align-items:center;font-size:11.5px;font-weight:900;white-space:nowrap;'+(parseFloat(w)>58?'right:10px;color:#fff':'left:calc('+w+'% + 8px);color:#263238')+'">'+_fmtSol(val)+'</span>'
++'</div>'
++'</div>';
+}).join('')
++'</div>'
+) : '<div style="font-size:11px;color:#AAA;font-style:italic;text-align:center;padding:16px">Sin datos de ejecución por actividad</div>';
 const MULTI_UEI_CUIS=new Set(["2338187","2225760","2343091","2071893","2308546","2167493","2167531","2104602","2509786","2453667","2165139","2093153","2445163"]);
 const isMultiUEI=MULTI_UEI_CUIS.has(cui);
 const ssiDevAcum=(typeof devAcumData!=='undefined'&&devAcumData[cui]!=null)?devAcumData[cui]:0;
@@ -1742,7 +1745,7 @@ ${s.pmi==='SI'?'PROGRAMADO EN EL PMI':'NO PROGRAMADO EN EL PMI'}
 </div>
 </div>
 <!-- ══ BOTTOM ROW: COMPONENTS | ESTADO | PHOTO ════════════════ -->
-<div class="pd-bot4" style="display:grid;grid-template-columns:1.35fr 0.72fr 0.72fr 0.55fr;flex:1;overflow:hidden;background:#fff">
+<div class="pd-bot4" style="display:grid;grid-template-columns:1.05fr 1.25fr 0.62fr 0.52fr;flex:1;overflow:hidden;background:#fff">
 <!-- LEFT: Componentes y Acciones -->
 <div style="border-right:1px solid #E8F5E9;padding:10px 12px;overflow-y:auto">
 <div style="font-size:15px;font-weight:800;color:#AAAAAA;text-transform:uppercase;
@@ -1767,9 +1770,9 @@ var saldo=Math.max(pim-dev,0);
 var pDev=pim>0?Math.round(dev/pim*1000)/10:0;
 var pGir=pim>0?Math.round(gir/pim*1000)/10:0;
 var pSal=pim>0?Math.round(saldo/pim*1000)/10:0;
-var row=function(lbl,val,col,bg,br,sub){return '<div style="background:'+bg+';border:1.5px solid '+br+';border-radius:9px;padding:7px 10px;margin-bottom:7px">'
-+'<div style="font-size:8px;font-weight:800;color:'+col+';text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px">'+lbl+'</div>'
-+'<div style="font-size:15px;font-weight:900;color:'+col+';letter-spacing:-.4px;line-height:1.05">'+val+'</div>'
+var row=function(lbl,val,col,bg,br,sub){return '<div style="background:'+bg+';border:1.5px solid '+br+';border-radius:8px;padding:5px 8px;margin-bottom:5px">'
++'<div style="font-size:7.5px;font-weight:800;color:'+col+';text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">'+lbl+'</div>'
++'<div style="font-size:13px;font-weight:900;color:'+col+';letter-spacing:-.3px;line-height:1.05">'+val+'</div>'
 +(sub?'<div style="font-size:7px;color:#90A4AE;margin-top:2px">'+sub+'</div>':'')+'</div>';};
 return row('PIM',_fmtSol(pim),'#37474F','#F8FFFE','#CFD8DC','Presupuesto Inst. Modificado')
 +row('Devengado',_fmtSol(dev),'#2E7D32','#F0FBF0','#A5D6A7',pDev+'% del PIM ejecutado')
