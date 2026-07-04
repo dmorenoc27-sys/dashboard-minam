@@ -5,11 +5,12 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{--v1:#105000;--v2:#66CB00;--v3:#66CB00;--v4:#EEF4EC;--v5:#44546A;--gold:#F9A825;--azul:#2191F1;--g1:#F5F5F5;--g2:#E0E0E0;--g3:#9E9E9E;--g4:#1C1917;--sh:0 2px 12px rgba(0,0,0,.10);--sh2:0 6px 30px rgba(0,0,0,.14);--rad:12px}
 @media(max-width:900px){.pd-bot4{grid-template-columns:1fr!important}.pd-bot4>div{border-right:none!important;border-bottom:1px solid #E8F5E9}.pd-foto{min-height:180px}}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',system-ui,sans-serif;background:#F0F2F5;color:#2D2D2D;font-size:13px}
+body{font-family:'Inter','Segoe UI',system-ui,sans-serif;background:#F0F2F5;color:#2D2D2D;font-size:13px;-webkit-font-smoothing:antialiased}
 .hdr{background:#ffffff;padding:0 12px;display:flex;align-items:center;height:52px;box-shadow:0 2px 8px rgba(0,0,0,.10);position:sticky;top:0;z-index:100}
 .logo{background:#fff;border-radius:10px;width:50px;height:50px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;color:var(--v1);box-shadow:0 2px 8px rgba(0,0,0,.2);flex-shrink:0;line-height:1.1;text-align:center}
 .hl{display:flex;align-items:center;gap:16px}
@@ -1640,7 +1641,7 @@ background:linear-gradient(180deg,#F4FBF4 0%,#FAFFFE 100%)">
 <circle cx="8" cy="9" r="1.5" fill="#4CAF50"/>
 <path d="M8 10.5v1.5" stroke="#4CAF50" stroke-width="1.5" stroke-linecap="round"/>
 </svg>
-<span style="font-size:15px;font-weight:800;color:#4CAF50;text-transform:uppercase;letter-spacing:1.2px">Presupuesto de Inversión</span>
+<span style="font-size:11px;font-weight:800;color:#1B6B3A;text-transform:uppercase;letter-spacing:.8px">Presupuesto de Inversión</span>
 </div>
 ${(function(){
 const fmtS = n => n>0 ? 'S/ '+Number(n).toLocaleString('es-PE',{minimumFractionDigits:0,maximumFractionDigits:0}) : '—';
@@ -1755,8 +1756,8 @@ ${s.pmi==='SI'?'PROGRAMADO EN EL PMI':'NO PROGRAMADO EN EL PMI'}
 <div class="pd-bot4" style="display:grid;grid-template-columns:1.55fr 1.05fr 0.52fr;flex:1;overflow:hidden;background:#fff">
 <!-- LEFT: Componentes y Acciones -->
 <div style="border-right:1px solid #E8F5E9;padding:10px 12px;overflow-y:auto">
-<div style="font-size:12px;font-weight:800;color:#AAAAAA;text-transform:uppercase;
-letter-spacing:1px;margin-bottom:7px;padding-bottom:4px;border-bottom:2px solid #E8F5E9">
+<div style="font-size:11px;font-weight:800;color:#1B6B3A;text-transform:uppercase;text-transform:uppercase;
+letter-spacing:.8px;margin-bottom:7px;padding-bottom:4px;border-bottom:2px solid #C8E6C9">
 Componentes y Acciones
 </div>
 <div id="comp-acc-content" style="font-size:10px;color:#888;line-height:1.8">
@@ -1765,13 +1766,13 @@ Componentes y Acciones
 </div>
 <!-- MIDDLE: Act./Acción de Inversión / Obra — Transparencia Económica MEF -->
 <div style="border-right:1px solid #E8F5E9;padding:14px 16px;display:flex;flex-direction:column;justify-content:flex-start;overflow-y:auto">
-<div style="font-size:9px;font-weight:800;color:#1B6B3A;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;padding-bottom:5px;border-bottom:2px solid #C8E6C9">📊 Ejecución por Actividad${isMultiUEI?' · UE003/GICA (parcial)':' / Acción de Inv.'}</div>
+<div style="font-size:11px;font-weight:800;color:#1B6B3A;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;padding-bottom:5px;border-bottom:2px solid #C8E6C9">📊 Ejecución por Actividad${isMultiUEI?' · UE003/GICA (parcial)':' / Acción de Inv.'}</div>
 ${compBarsTopHTML}
 ${compFooterHTML}
 </div>
 <!-- ══ NEW: EJECUCIÓN DE CAJA (mismo tamaño que Ejecución por Actividad) ══ -->
 <div style="border-right:1px solid #E8F5E9;padding:14px 16px;display:flex;flex-direction:column;justify-content:flex-start;overflow-y:auto">
-<div style="font-size:9px;font-weight:800;color:#1B6B3A;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;padding-bottom:5px;border-bottom:2px solid #C8E6C9">💰 Ejecución de Caja${(typeof finAno!=='undefined'&&finAno[cui]&&finAno[cui].ano)?' · '+finAno[cui].ano:''}</div>
+<div style="font-size:11px;font-weight:800;color:#1B6B3A;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;padding-bottom:5px;border-bottom:2px solid #C8E6C9">💰 Ejecución de Caja${(typeof finAno!=='undefined'&&finAno[cui]&&finAno[cui].ano)?' · '+finAno[cui].ano:''}</div>
 ${(function(){
 var saldo=Math.max(pim-dev,0);
 var pDev=pim>0?Math.round(dev/pim*1000)/10:0;
