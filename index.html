@@ -1588,7 +1588,7 @@ ${isMultiUEI?`<div style="margin-top:5px">
 </div>
 </div>`:''}
 `;
-const html=`<div style="height:100%;display:flex;flex-direction:column;font-family:inherit;background:#F7FAF7;overflow:hidden">
+const html=`<div style="height:100%;display:flex;flex-direction:column;font-family:inherit;background:#EEF1F4;overflow:hidden">
 <!-- ══ HEADER ══════════════════════════════════════════════════ -->
 <div style="background:linear-gradient(135deg,#3D9A5C 0%,#4EAD6E 55%,#5BBD7A 100%);
 padding:11px 16px 9px;flex-shrink:0;position:relative">
@@ -1627,21 +1627,23 @@ ${p&&p.Tipo_Proyecto?`<span style="padding:2px 8px;border-radius:8px;font-size:9
 <!-- ══ DATA ROW: 6 COLUMNS ══════════════════════════════════════
 [Balance | Av.Fis | Av.Fin | Componentes | PIM+Dev | Beneficiarios]
 -->
-<div style="display:grid;grid-template-columns:26% 19% 18% 11% 9% 17%;background:#fff;
-border-bottom:2px solid #E8F5E9;flex-shrink:0;min-height:0">
+<div style="margin:14px 16px 0;display:grid;grid-template-columns:26% 19% 18% 11% 9% 17%;background:#fff;
+border:1px solid #E5E9EF;border-radius:16px;box-shadow:0 1px 2px rgba(16,24,40,.05),0 4px 14px rgba(16,24,40,.05);overflow:hidden;flex-shrink:0;min-height:0">
 <!-- COL 1: PRESUPUESTO DE INVERSIÓN -->
 <div style="border-right:1px solid #E8F5E9;padding:10px 14px;
 display:flex;flex-direction:column;gap:8px;
 background:linear-gradient(180deg,#F4FBF4 0%,#FAFFFE 100%)">
 <!-- Título sección -->
-<div style="display:flex;align-items:center;gap:6px;padding-bottom:6px;border-bottom:2px solid #E8F5E9">
-<svg viewBox="0 0 16 16" width="13" height="13" fill="none">
-<rect x="1" y="4" width="14" height="10" rx="2" stroke="#4CAF50" stroke-width="1.5"/>
-<path d="M5 4V3a3 3 0 016 0v1" stroke="#4CAF50" stroke-width="1.5"/>
-<circle cx="8" cy="9" r="1.5" fill="#4CAF50"/>
-<path d="M8 10.5v1.5" stroke="#4CAF50" stroke-width="1.5" stroke-linecap="round"/>
+<div style="display:flex;align-items:center;gap:8px;padding-bottom:9px;border-bottom:1px solid #EEF1F4">
+<div style="width:26px;height:26px;border-radius:8px;background:#E8F5EC;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+<svg viewBox="0 0 16 16" width="15" height="15" fill="none">
+<rect x="1" y="4" width="14" height="10" rx="2" stroke="#1B6B3A" stroke-width="1.5"/>
+<path d="M5 4V3a3 3 0 016 0v1" stroke="#1B6B3A" stroke-width="1.5"/>
+<circle cx="8" cy="9" r="1.5" fill="#1B6B3A"/>
+<path d="M8 10.5v1.5" stroke="#1B6B3A" stroke-width="1.5" stroke-linecap="round"/>
 </svg>
-<span style="font-size:11px;font-weight:800;color:#1B6B3A;text-transform:uppercase;letter-spacing:.8px">Presupuesto de Inversión</span>
+</div>
+<span style="font-size:12px;font-weight:800;color:#1E293B;text-transform:uppercase;letter-spacing:.4px;line-height:1.15">Presupuesto de Inversión</span>
 </div>
 ${(function(){
 const fmtS = n => n>0 ? 'S/ '+Number(n).toLocaleString('es-PE',{minimumFractionDigits:0,maximumFractionDigits:0}) : '—';
@@ -1753,26 +1755,38 @@ ${s.pmi==='SI'?'PROGRAMADO EN EL PMI':'NO PROGRAMADO EN EL PMI'}
 </div>
 </div>
 <!-- ══ BOTTOM ROW: COMPONENTES | ACTIVIDAD | CAJA ════════════════ -->
-<div class="pd-bot4" style="display:grid;grid-template-columns:1.55fr 1.05fr 0.52fr;flex:1;overflow:hidden;background:#fff">
+<div class="pd-bot4" style="display:grid;grid-template-columns:1.55fr 1.05fr 0.52fr;gap:12px;padding:14px 16px 16px;flex:1;overflow:hidden;background:transparent">
 <!-- LEFT: Componentes y Acciones -->
-<div style="border-right:1px solid #E8F5E9;padding:10px 12px;overflow-y:auto">
-<div style="font-size:11px;font-weight:800;color:#1B6B3A;text-transform:uppercase;text-transform:uppercase;
-letter-spacing:.8px;margin-bottom:7px;padding-bottom:4px;border-bottom:2px solid #C8E6C9">
-🧩 Componentes y Acciones
+<div style="background:#fff;border:1px solid #E5E9EF;border-radius:14px;box-shadow:0 1px 2px rgba(16,24,40,.04),0 2px 6px rgba(16,24,40,.04);padding:14px 16px;overflow-y:auto">
+<div style="display:flex;align-items:center;gap:9px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid #EEF1F4">
+<div style="width:26px;height:26px;border-radius:8px;background:#E0F2F1;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">🧩</div>
+<span style="font-size:12px;font-weight:800;color:#1E293B;text-transform:uppercase;letter-spacing:.5px;line-height:1.15">Componentes y Acciones</span>
 </div>
 <div id="comp-acc-content" style="font-size:10px;color:#888;line-height:1.8">
 <div style="color:#999;font-style:italic;font-size:9px;text-align:center;padding:12px">⟳ Cargando...</div>
 </div>
 </div>
 <!-- MIDDLE: Act./Acción de Inversión / Obra — Transparencia Económica MEF -->
-<div style="border-right:1px solid #E8F5E9;padding:14px 16px;display:flex;flex-direction:column;justify-content:flex-start;overflow-y:auto">
-<div style="font-size:11px;font-weight:800;color:#1B6B3A;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;padding-bottom:5px;border-bottom:2px solid #C8E6C9">📊 Ejecución por Actividad${isMultiUEI?' · UE003/GICA (parcial)':' / Acción de Inv.'}</div>
+<div style="background:#fff;border:1px solid #E5E9EF;border-radius:14px;box-shadow:0 1px 2px rgba(16,24,40,.04),0 2px 6px rgba(16,24,40,.04);padding:14px 16px;display:flex;flex-direction:column;justify-content:flex-start;overflow-y:auto">
+<div style="display:flex;align-items:center;gap:9px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid #EEF1F4">
+<div style="width:26px;height:26px;border-radius:8px;background:#E8F5EC;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">📊</div>
+<div style="display:flex;flex-direction:column;gap:1px;min-width:0">
+<span style="font-size:12px;font-weight:800;color:#1E293B;text-transform:uppercase;letter-spacing:.5px;line-height:1.15">Ejecución por Actividad</span>
+<span style="font-size:9px;font-weight:600;color:#94A3B8;letter-spacing:.2px">${isMultiUEI?'UE003/GICA · ejecución parcial':'Por acción de inversión'}</span>
+</div>
+</div>
 ${compBarsTopHTML}
 ${compFooterHTML}
 </div>
 <!-- ══ NEW: EJECUCIÓN DE CAJA (mismo tamaño que Ejecución por Actividad) ══ -->
-<div style="border-right:1px solid #E8F5E9;padding:14px 16px;display:flex;flex-direction:column;justify-content:flex-start;overflow-y:auto">
-<div style="font-size:11px;font-weight:800;color:#1B6B3A;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;padding-bottom:5px;border-bottom:2px solid #C8E6C9">💰 Ejecución de Caja${(typeof finAno!=='undefined'&&finAno[cui]&&finAno[cui].ano)?' · '+finAno[cui].ano:''}</div>
+<div style="background:#fff;border:1px solid #E5E9EF;border-radius:14px;box-shadow:0 1px 2px rgba(16,24,40,.04),0 2px 6px rgba(16,24,40,.04);padding:14px 16px;display:flex;flex-direction:column;justify-content:flex-start;overflow-y:auto">
+<div style="display:flex;align-items:center;gap:9px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid #EEF1F4">
+<div style="width:26px;height:26px;border-radius:8px;background:#FEF3E0;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">💰</div>
+<div style="display:flex;flex-direction:column;gap:1px;min-width:0">
+<span style="font-size:12px;font-weight:800;color:#1E293B;text-transform:uppercase;letter-spacing:.5px;line-height:1.15">Ejecución de Caja</span>
+<span style="font-size:9px;font-weight:600;color:#94A3B8;letter-spacing:.2px">${(typeof finAno!=='undefined'&&finAno[cui]&&finAno[cui].ano)?'Ejercicio '+finAno[cui].ano:'Ejercicio fiscal'}</span>
+</div>
+</div>
 ${(function(){
 var saldo=Math.max(pim-dev,0);
 var pDev=pim>0?Math.round(dev/pim*1000)/10:0;
@@ -1803,7 +1817,7 @@ if(navResumen)navResumen.classList.add('active');
 if(panel){
 const hdrH=document.querySelector('.hdr')?.offsetHeight||52;
 panel.innerHTML=html;
-panel.style.cssText=`display:block;position:fixed;top:${hdrH}px;left:0;right:0;bottom:0;z-index:999;border-radius:0;box-shadow:none;overflow-y:auto;background:#F7FAF7`;
+panel.style.cssText=`display:block;position:fixed;top:${hdrH}px;left:0;right:0;bottom:0;z-index:999;border-radius:0;box-shadow:none;overflow-y:auto;background:#EEF1F4`;
 document.body.style.overflow='hidden';
 if(ra)ra.style.display='none';
 if(typeof window.loadComponentes==='function')window.loadComponentes(cui);
