@@ -2114,9 +2114,9 @@ if(!lb){lb=document.createElement('div');lb.id='foto-lightbox';
 lb.style.cssText='display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,10,0,.9);flex-direction:column;align-items:center;justify-content:center;cursor:zoom-out;padding:24px;box-sizing:border-box;gap:14px';
 lb.onclick=function(){lb.style.display='none';};
 document.body.appendChild(lb);}
-lb.innerHTML='<img src="'+img.src+'" style="max-width:94%;max-height:76vh;border-radius:12px;box-shadow:0 8px 40px rgba(0,0,0,.6)">'
+lb.innerHTML='<div style="max-width:1150px;text-align:center;color:#fff;font-size:15px;font-weight:700;line-height:1.45;text-shadow:0 1px 3px rgba(0,0,0,.4)">'+nombre+'</div>'
++'<img src="'+img.src+'" style="max-width:94%;max-height:68vh;border-radius:12px;box-shadow:0 8px 40px rgba(0,0,0,.6)">'
 +'<div style="max-width:900px;text-align:center;color:#fff">'
-+'<div style="font-size:14.5px;font-weight:700;line-height:1.45;margin-bottom:9px">'+nombre+'</div>'
 +'<div style="font-size:12px;font-weight:800;letter-spacing:.6px">'
 +'<span style="background:rgba(255,255,255,.16);padding:3px 10px;border-radius:10px">CUI '+cui+'</span>'
 +(tipo?' <span style="background:#fff;color:'+tc+';padding:3px 10px;border-radius:10px">'+tipo+'</span>':'')
