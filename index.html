@@ -2047,6 +2047,10 @@ var html='<style>'
 +'.ca-acc{display:flex;justify-content:space-between;align-items:flex-start;gap:6px;padding:6px 10px;border-radius:6px;background:#fff;border-left:3px solid #3D9EA0;box-shadow:0 1px 3px rgba(61,158,160,.1)}'
 +'.ca-aname{color:#1a6a6c;font-size:12px;line-height:1.35;flex:1}'
 +'.ca-cost{color:#3D9EA0;font-size:11px;font-weight:700;white-space:nowrap;flex-shrink:0}'
++'.ca-meta{display:block;margin-top:3px}'
++'.ca-tag{display:inline-block;font-size:9.5px;font-weight:700;padding:1.5px 8px;border-radius:8px;margin-right:4px;margin-top:2px;letter-spacing:.2px}'
++'.ca-tagf{background:#E8F5E9;color:#2E7D32}'
++'.ca-tagu{background:#E3F2FD;color:#1565C0}'
 +'</style>';
 for(var i=0;i<data.length;i++){
 var comp=data[i];
@@ -2065,7 +2069,14 @@ var acc=comp.a[j];
 var aName=typeof acc==='string'?acc:acc.n;
 var aCost=typeof acc==='object'&&acc.c?acc.c:null;
 html+='<div class="ca-acc">';
-html+='<span class="ca-aname">'+_esc(aName)+'</span>';
+var aF=(typeof acc==='object'&&acc.f)?acc.f:null;
+var aU=(typeof acc==='object'&&acc.u)?acc.u:null;
+html+='<span class="ca-aname">'+_esc(aName);
+if(aF||aU){html+='<span class="ca-meta">'
++(aF?'<span class="ca-tag ca-tagf">'+_esc(aF)+'</span>':'')
++(aU?'<span class="ca-tag ca-tagu">'+_esc(aU)+'</span>':'')
++'</span>';}
+html+='</span>';
 var _isNum=aCost&&/^[\d,\.]+$/.test(String(aCost).trim());if(_isNum)html+='<span class="ca-cost">'+fmtS(aCost)+'</span>';
 html+='</div>';
 }
