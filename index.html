@@ -2104,7 +2104,6 @@ var mesTxt=mm?_fotoMesLabel(mm):'';
 var tipo=p.Tipo_Inversion||'';
 var tc={PROYECTO:'#5E35B1',IOARR:'#E65100',PROGRAMA:'#00838F'}[tipo]||'#546E7A';
 var nombre=(p.Proyecto||('CUI '+cui));
-if(nombre.length>110)nombre=nombre.slice(0,110)+'…';
 var est=(typeof ssiData!=='undefined'&&ssiData[cui]&&ssiData[cui].est)||'';
 var avfV=(typeof _avFisicoData!=='undefined'&&_avFisicoData[cui]!=null&&_avFisicoData[cui]>=0)?_avFisicoData[cui]:null;
 var avf=avfV!=null?('Avance físico '+(+avfV.toFixed?avfV.toFixed(1):avfV)+'%'):'';
@@ -2117,14 +2116,14 @@ lb.onclick=function(){lb.style.display='none';};
 document.body.appendChild(lb);}
 lb.innerHTML='<img src="'+img.src+'" style="max-width:94%;max-height:76vh;border-radius:12px;box-shadow:0 8px 40px rgba(0,0,0,.6)">'
 +'<div style="max-width:900px;text-align:center;color:#fff">'
-+'<div style="font-size:12px;font-weight:800;letter-spacing:.6px;margin-bottom:7px">'
++'<div style="font-size:14.5px;font-weight:700;line-height:1.45;margin-bottom:9px">'+nombre+'</div>'
++'<div style="font-size:12px;font-weight:800;letter-spacing:.6px">'
 +'<span style="background:rgba(255,255,255,.16);padding:3px 10px;border-radius:10px">CUI '+cui+'</span>'
 +(tipo?' <span style="background:#fff;color:'+tc+';padding:3px 10px;border-radius:10px">'+tipo+'</span>':'')
 +(p.Departamento?' <span style="background:rgba(255,255,255,.16);padding:3px 10px;border-radius:10px">\uD83D\uDCCD '+p.Departamento+'</span>':'')
 +(mesTxt?' <span style="background:rgba(102,203,0,.28);color:#CFFFB0;padding:3px 10px;border-radius:10px">\uD83D\uDCF7 '+mesTxt+'</span>':'')
 +'</div>'
-+'<div style="font-size:14.5px;font-weight:700;line-height:1.4">'+nombre+'</div>'
-+(extra?'<div style="font-size:11px;font-weight:600;color:rgba(255,255,255,.75);margin-top:6px">'+extra+'</div>':'')
++(extra?'<div style="font-size:11px;font-weight:600;color:rgba(255,255,255,.75);margin-top:7px">'+extra+'</div>':'')
 +'</div>';
 lb.style.display='flex';
 };
