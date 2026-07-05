@@ -1713,18 +1713,18 @@ ${isMultiUEI?'<div style="font-size:9px;color:#1565C0;margin-top:3px;opacity:.7"
 </div>`;
 })()}
 </div>
-<!-- COL 6: BENEFICIARIOS -->
+<!-- COL 6: PIM 2026 -->
 <div style="display:flex;align-items:center;justify-content:center;padding:8px 3px;background:linear-gradient(180deg,#F4FBF4 0%,#FAFFFE 100%);border-right:1px solid #E8F5E9">
-<div style="background:#F0FBF0;border:1.5px solid #A5D6A7;border-radius:12px;padding:10px 5px;
-display:flex;flex-direction:column;align-items:center;gap:4px;width:100%;box-sizing:border-box">
-<div style="font-size:11px;font-weight:800;color:#2E7D32;text-transform:uppercase;
-letter-spacing:.8px;text-align:center;line-height:1.2">Beneficiarios</div>
-${humanSVG}
-<div style="font-size:${benef>999999?'13px':benef>0?'17px':'22px'};font-weight:900;
-color:#105000;letter-spacing:-1px;line-height:1;text-align:center">
-${benef>0?_fmtN(benef):'—'}
+<div style="background:#F0FBF0;border:1.5px solid #A5D6A7;border-radius:12px;padding:10px 6px;
+display:flex;flex-direction:column;align-items:center;gap:5px;width:100%;box-sizing:border-box">
+<div style="display:flex;align-items:center;gap:4px">
+<svg viewBox="0 0 12 12" width="10" height="10"><circle cx="6" cy="6" r="6" fill="#2E7D32" opacity=".18"/><circle cx="6" cy="6" r="3.5" fill="#2E7D32"/></svg>
+<div style="font-size:11px;font-weight:800;color:#2E7D32;text-transform:uppercase;letter-spacing:.8px;text-align:center;line-height:1.2">PIM 2026</div>
 </div>
-${!benef?'<div style="font-size:9px;color:#BBB;font-style:italic;text-align:center">No registra (IOARR)</div>':''}
+<div style="font-size:${pim>=1e7?'14px':pim>=1e6?'16px':'18px'};font-weight:900;color:#105000;letter-spacing:-0.5px;line-height:1.1;text-align:center">
+${_fmtSol(pim||0)}
+</div>
+<div style="font-size:9px;color:#66BB6A;text-align:center;line-height:1.2">Presupuesto Inst. Modificado</div>
 </div>
 </div>
 <!-- COL 7: PMI -->
@@ -1784,13 +1784,13 @@ ${s.pmi==='SI'?'PROGRAMADO EN EL PMI':'NO PROGRAMADO EN EL PMI'}
 ${compBarsTopHTML}
 ${compFooterHTML}
 </div>
-<!-- ══ NEW: EJECUCIÓN DE CAJA (mismo tamaño que Ejecución por Actividad) ══ -->
+<!-- ══ NEW: IMPACTO DE LA INVERSIÓN (mismo tamaño que Ejecución por Actividad) ══ -->
 <div style="background:#fff;border:1px solid #E5E9EF;border-radius:14px;box-shadow:0 1px 2px rgba(16,24,40,.04),0 2px 6px rgba(16,24,40,.04);padding:14px 16px;display:flex;flex-direction:column;justify-content:flex-start;overflow-y:auto">
 <div style="display:flex;align-items:center;gap:9px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid #EEF1F4">
 <div style="width:26px;height:26px;border-radius:8px;background:#FEF3E0;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">💰</div>
 <div style="display:flex;flex-direction:column;gap:1px;min-width:0">
-<span style="font-size:12px;font-weight:800;color:#1E293B;text-transform:uppercase;letter-spacing:.5px;line-height:1.15">Ejecución de Caja</span>
-<span style="font-size:9px;font-weight:600;color:#94A3B8;letter-spacing:.2px">${(typeof finAno!=='undefined'&&finAno[cui]&&finAno[cui].ano)?'Ejercicio '+finAno[cui].ano:'Ejercicio fiscal'}</span>
+<span style="font-size:12px;font-weight:800;color:#1E293B;text-transform:uppercase;letter-spacing:.5px;line-height:1.15">Impacto de la Inversión</span>
+<span style="font-size:9px;font-weight:600;color:#94A3B8;letter-spacing:.2px">Entregables y población beneficiada</span>
 </div>
 </div>
 ${(function(){
@@ -1802,7 +1802,13 @@ var row=function(lbl,val,col,bg,br,sub){return '<div style="background:'+bg+';bo
 +'<div style="font-size:7.5px;font-weight:800;color:'+col+';text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">'+lbl+'</div>'
 +'<div style="font-size:13px;font-weight:900;color:'+col+';letter-spacing:-.3px;line-height:1.05">'+val+'</div>'
 +(sub?'<div style="font-size:9px;color:#90A4AE;margin-top:2px">'+sub+'</div>':'')+'</div>';};
-return row('PIM',_fmtSol(pim),'#37474F','#F8FFFE','#CFD8DC','Presupuesto Inst. Modificado')
+return ((benef>0)?
+'<div style="background:#F0FBF0;border:1.5px solid #A5D6A7;border-radius:14px;padding:10px 12px;display:flex;align-items:center;gap:10px">'
++humanSVG
++'<div style="flex:1;text-align:center">'
++'<div style="font-size:23px;font-weight:900;color:#105000;line-height:1;letter-spacing:-.5px">'+_fmtN(benef)+'</div>'
++'<div style="font-size:10px;font-weight:800;color:#2E7D32;margin-top:3px">Beneficiarios</div>'
++'</div></div>':'')
 +((window._brechaHA&&_brechaHA[cui]>0)?
 '<div style="margin-top:8px;background:#F1F8E9;border:1.5px solid #A5D6A7;border-radius:14px;padding:10px 12px;display:flex;align-items:center;gap:10px">'
 +'<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f3de.svg" width="44" height="44" style="flex-shrink:0" alt="" onerror="this.style.display=\'none\'">'
