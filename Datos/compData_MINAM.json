@@ -5,23 +5,31 @@
    "a": [
     {
      "n": "1.1 Adquisición de Equipamiento :",
-     "c": "163242"
+     "c": "163242.0",
+     "f": "EQUIPAMIENTO",
+     "u": "159 NÚMERO DE EQUIPOS"
     },
     {
      "n": "1.2 Adquisición de Herramientas :",
-     "c": "32291.63"
+     "c": "32291.63",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "1.3 Adquisición de Equipos de Protección de Personal :",
-     "c": "62012"
+     "c": "62012.0",
+     "f": "EQUIPAMIENTO",
+     "u": "7.80 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -30,23 +38,31 @@
    "a": [
     {
      "n": "2.1 Adquisición de Vehículos :",
-     "c": "3292337.7"
+     "c": "3292337.7",
+     "f": "VEHICULOS",
+     "u": "13 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "2.2 Adquisición de Herramientas :",
-     "c": "2689.19"
+     "c": "2689.19",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "2.3 Adquisición de Equipos de Protección de Personal (EPP) :",
-     "c": "64202"
+     "c": "64202.0",
+     "f": "EQUIPAMIENTO",
+     "u": "93.90 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -55,27 +71,37 @@
    "a": [
     {
      "n": "3.1 Adquisición de Equipos de Protección de Personal :",
-     "c": "12633"
+     "c": "12633.0",
+     "f": "EQUIPAMIENTO",
+     "u": "1.72 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "3.2 Adquisición de Equipamiento :",
-     "c": "176647.64"
+     "c": "176647.64",
+     "f": "EQUIPAMIENTO",
+     "u": "1.72 NÚMERO DE EQUIPOS"
     },
     {
      "n": "3.3 Adquisición de Herramientas :",
-     "c": "24368.99"
+     "c": "24368.99",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "3.2 Construcción de Infraestructura de Reaprovechamiento :",
-     "c": "865982.45"
+     "c": "865982.45",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -84,43 +110,61 @@
    "a": [
     {
      "n": "4.1 Adquisisción de Maquinaria y Vehículos :",
-     "c": "1759497.45"
+     "c": "1759497.45",
+     "f": "VEHICULOS",
+     "u": "3 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "4.2 Adquisición de Equipos de Protección de Personal :",
-     "c": "12720"
+     "c": "12720.0",
+     "f": "EQUIPAMIENTO",
+     "u": "93.90 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "4.3 Construcción de infraestructura para disposición final de RRSS :",
-     "c": "5640449.02"
+     "c": "5640449.02",
+     "f": "INFRAESTRUCTURA",
+     "u": "93.90 ESPACIOS FISICOS"
     },
     {
      "n": "4.4 Elaboración del Expediente Técnico :",
-     "c": "277280.24"
+     "c": "277280.24",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "4.5 Supervisión :",
-     "c": "1015227.72"
+     "c": "1015227.72",
+     "f": "INTANGIBLES",
+     "u": "5 N° DE INFORMES"
     },
     {
      "n": "IMPLEMENTACION DE EQUIPAMIENTO DE INGENIERIA : 4.7. Acciones complementarias para la puesta en marcha del relleno sanitarios",
-     "c": "330972.04"
+     "c": "330972.04",
+     "f": "INTANGIBLES",
+     "u": "4 N° DE INFORMES"
     },
     {
      "n": "IMPLEMENTACION DE VIAS DE ACCESO : Servisio de acondicionamiento de la via de acceso para la puesta en marcha del relleno sanitario",
-     "c": "132351.5"
+     "c": "132351.5",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE INFORMES"
     },
     {
      "n": "OTRAS ACCIONES DE INFRAESTRUCTURA : CONSTRUCCIÓN DE SALDOS DE OBRA DE LA INFRAESTRUCTURA PARA LA DISPOSICIÓN FINAL DE LOS RRSS",
-     "c": "1661089.14"
+     "c": "1661089.14",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "44665.55"
+     "c": "44665.55",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -129,27 +173,37 @@
    "a": [
     {
      "n": "5.1 Adquisición de Vehículos :",
-     "c": "90574.33"
+     "c": "90574.33",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "5.2 Adquisición de Equipamiento :",
-     "c": "6826.3"
+     "c": "6826.3",
+     "f": "EQUIPAMIENTO",
+     "u": "2 NÚMERO DE EQUIPOS"
     },
     {
      "n": "5.3 Adquisición de Mobiliario :",
-     "c": "1259"
+     "c": "1259.0",
+     "f": "MOBILIARIO",
+     "u": "2 NÚMERO DE MOBILIARIO"
     },
     {
      "n": "5.4 Adquisición de Equipos de Protección de Personal :",
-     "c": "1932.58"
+     "c": "1932.58",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -158,15 +212,19 @@
    "a": [
     {
      "n": "6.1 Contratación del servicio de consultoría para eleborar planes, fortalecimiento de capacidades y practicas a la población :",
-     "c": "555651.68"
+     "c": "555651.68",
+     "f": "INTANGIBLES",
+     "u": "5 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -175,15 +233,19 @@
    "a": [
     {
      "n": "CAPACITACIÓN DE SISTEMA DE MANEJO DE LIXIVIADOS :",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   }
@@ -194,23 +256,31 @@
    "a": [
     {
      "n": "1.1 Adquisición de Equipamiento (papeleras, coches de barrido, contenedores, etc.) :",
-     "c": "461624.44"
+     "c": "461624.44",
+     "f": "EQUIPAMIENTO",
+     "u": "476 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "1.2. Adquisición de Herramientas :",
-     "c": "82473.29"
+     "c": "82473.29",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "1.3 Adquisición de Equipos de Protección de Personal :",
-     "c": "99130"
+     "c": "99130.0",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -219,27 +289,37 @@
    "a": [
     {
      "n": "2.1 Adquisición de camiones compactadoras y camiones baranda para recolección de residuos sólidos :",
-     "c": "3087300.66"
+     "c": "3087300.66",
+     "f": "VEHICULOS",
+     "u": "9 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "2.2 Adquisición de Trimoviles para recolección de residuos sólidos :",
-     "c": "53999.47"
+     "c": "53999.47",
+     "f": "VEHICULOS",
+     "u": "4 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "2.3. Adquisición de Equipos de Protección de Personal (EPP) :",
-     "c": "78518"
+     "c": "78518.0",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "2.4 Elaboración e implementación del Plan de Barrido y Recoelcción :",
-     "c": "123172.92"
+     "c": "123172.92",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -248,19 +328,25 @@
    "a": [
     {
      "n": "3.1 Construcción de la Planta de Reaprovechamiento (Incluye equipamiento) :",
-     "c": "430692.04"
+     "c": "430692.04",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 AMBIENTES"
     },
     {
      "n": "CAPACITACION DE PLANTA DE VALORIZACIÓN : 3.2 Diseño plan reinserción y formalización de recicladores y recolección selectiva de la fuente",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -269,39 +355,55 @@
    "a": [
     {
      "n": "4.1 Adquisisción de Minicargador para el relleno sanitario :",
-     "c": "163981.37"
+     "c": "163981.37",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "4.2 Adquisición de Compactador de residuos sólidos en relleno sanitario :",
-     "c": "851298.57"
+     "c": "851298.57",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "4.3 Adquisisción de Volquete para Relleno Sanitario :",
-     "c": "280852.46"
+     "c": "280852.46",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "4.4 Construcción del Relleno Sanitario 1era Etapa (Incluye equipamiento) :",
-     "c": "10551429.87"
+     "c": "10551429.87",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 AMBIENTES"
     },
     {
      "n": "4.5 Administración del Contrato para la ejecución de la Obra :",
-     "c": "108375.41"
+     "c": "108375.41",
+     "f": "INTANGIBLES",
+     "u": "7 N° DE INFORMES"
     },
     {
      "n": "IMPLEMENTACION DE RELLENO SANITARIO : 4.6 Acciones preoperativas para la puesta en marcha del relleno sanitario",
-     "c": "25172.71"
+     "c": "25172.71",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE INFORMES"
     },
     {
      "n": "IMPLEMENTACION DE SISTEMA DE MANEJO DE LIXIVIADOS : 4.7 Implementación de un sistema adecuado para tratamiento de lixiviados",
-     "c": "174304.99"
+     "c": "174304.99",
+     "f": "INTANGIBLES",
+     "u": "3 N° DE INFORMES"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -310,27 +412,37 @@
    "a": [
     {
      "n": "5.1 Adquisición de camioneta para gestión de Unidad de Residuos Sólidos :",
-     "c": "125291.32"
+     "c": "125291.32",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "5.2 Adquisición de Computadoras para la Unidad de Residuos Sólidos :",
-     "c": "5665.12"
+     "c": "5665.12",
+     "f": "EQUIPAMIENTO",
+     "u": "2 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE MOBILIARIO : 5.3 Adquisición de mobiliario para la unidad de residuos sólidos",
-     "c": "0"
+     "c": "0",
+     "f": "MOBILIARIO",
+     "u": "2 NÚMERO DE MOBILIARIO"
     },
     {
      "n": "5.4 Elaboración e implementación del Plan de Gestión de la URS :",
-     "c": "128306.36"
+     "c": "128306.36",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -339,15 +451,19 @@
    "a": [
     {
      "n": "6.1 Elaboración e implementación del Plan de buenas prácticas a la población :",
-     "c": "91323.18"
+     "c": "91323.18",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -356,15 +472,19 @@
    "a": [
     {
      "n": "IMPLEMENTACION DE INFORMACION : 7.1 Elaboración de la evaluación Ex Post",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   }
@@ -375,23 +495,31 @@
    "a": [
     {
      "n": "1.1 Adquisición de Equipamiento :",
-     "c": "42438.5"
+     "c": "42438.5",
+     "f": "EQUIPAMIENTO",
+     "u": "97 NÚMERO DE EQUIPOS"
     },
     {
      "n": "1.2 Adquisición de Herramientas :",
-     "c": "23966.37"
+     "c": "23966.37",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "1.3 Adquisición de Equipos de Protección de Personal :",
-     "c": "42702.4"
+     "c": "42702.4",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -400,27 +528,37 @@
    "a": [
     {
      "n": "2.1 Adquisición dE CAMIONES COMPACTADORES Y CAMIONES BARANDA PARA RECOLECCIÓN DE RESIDUOS SOLIDOS :",
-     "c": "2128529.1"
+     "c": "2128529.1",
+     "f": "VEHICULOS",
+     "u": "7 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "2.2 Adquisición de TRIMOVILES PARA RECOLECCIÓN DE RESIDUOS SOLIDOS :",
-     "c": "67499.33"
+     "c": "67499.33",
+     "f": "VEHICULOS",
+     "u": "5 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "2.3 Adquisición de Equipos de Protección de Personal :",
-     "c": "28942.22"
+     "c": "28942.22",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "2.4 ELABORACIÓN E IMPLEMENTACION DEL PLAN DE BARRIDO Y RECOLECCIÓN :",
-     "c": "7815.36"
+     "c": "7815.36",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -429,19 +567,25 @@
    "a": [
     {
      "n": "CONSTRUCCION DE PLANTA DE VALORIZACION : Planta de valorización y centro de acopio",
-     "c": "2299075.18"
+     "c": "2299075.18",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "CAPACITACION DE PLANTA DE VALORIZACION : Diseño de plan de reinserción y formalización de recicladores y recolección selectiva de fuente",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -450,31 +594,43 @@
    "a": [
     {
      "n": "4.1 Adquisición de MINICARGADOR PARA RELLENO SANITARIO :",
-     "c": "163981.37"
+     "c": "163981.37",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "4.2 Adquisición de COMPACTADOR DE RESIDUOS SOLIDOS EN RELLENO SANITARIO :",
-     "c": "845680.75"
+     "c": "845680.75",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "4.3 Adquisición de VOLQUETE PARA RELLENO SANITARIO :",
-     "c": "282572.5"
+     "c": "282572.5",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "CONSTRUCCION DE RELLENO SANITARIO :",
-     "c": "11992035.64"
+     "c": "11992035.64",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "IMPLEMENTACION DE RELLENO SANITARIO : Administrador de contrato de obra",
-     "c": "84969.67"
+     "c": "84969.67",
+     "f": "INTANGIBLES",
+     "u": "7 N° DE INFORMES"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -483,27 +639,37 @@
    "a": [
     {
      "n": "5.1 Adquisición de CAMIONETA PARA GESTION DE UNIDAD DE RESIDUOS SOLIDOS :",
-     "c": "124541.97"
+     "c": "124541.97",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "5.2 Adquisición de COMPUTADORAS PARA LA UNIDAD DE RESIDUOS SOLIDOS :",
-     "c": "5665.12"
+     "c": "5665.12",
+     "f": "EQUIPAMIENTO",
+     "u": "2 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE MOBILIARIO :",
-     "c": "0"
+     "c": "0",
+     "f": "MOBILIARIO",
+     "u": "2 NÚMERO DE MOBILIARIO"
     },
     {
      "n": "5.4 ELABORACIÓN E IMPLEMENTACION DEL PLAN DE GESTIÓN DE LA URS :",
-     "c": "129944.63"
+     "c": "129944.63",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -512,15 +678,19 @@
    "a": [
     {
      "n": "6.1 ELABORACIÓN E IMPLEMENTACION DEL PLAN DE BUENAS practicas a la población :",
-     "c": "126958.23"
+     "c": "126958.23",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -529,15 +699,19 @@
    "a": [
     {
      "n": "CAPACITACION DE INFORMACION : Evaluación ex- post",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   }
@@ -787,23 +961,31 @@
    "a": [
     {
      "n": "1.1 Adquisición de Equipamiento (papeleras, coches de barrido, contenedores, etc.) :",
-     "c": "212494.32"
+     "c": "212494.32",
+     "f": "EQUIPAMIENTO",
+     "u": "293 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "1.2 Adquisición de Herramientas :",
-     "c": "24720.82"
+     "c": "24720.82",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "1.3 Adquisición de Equipos de Protección de Personal :",
-     "c": "22445"
+     "c": "22445.0",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -812,27 +994,37 @@
    "a": [
     {
      "n": "2.1 Adquisición de camiones compactadoras y camiones baranda para recolección de residuos sólidos :",
-     "c": "1682073.55"
+     "c": "1682073.55",
+     "f": "VEHICULOS",
+     "u": "5 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "2.2 Adquisición de Trimoviles para recolección de residuos sólidos :",
-     "c": "26999.73"
+     "c": "26999.73",
+     "f": "VEHICULOS",
+     "u": "4 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "2.3 Adquisición de Equipos de Protección de Personal :",
-     "c": "36326.13"
+     "c": "36326.13",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "2.4 Elaboración e implementación del Plan de Barrido y Recoelcción :",
-     "c": "310883.16"
+     "c": "310883.16",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -841,19 +1033,25 @@
    "a": [
     {
      "n": "CONSTRUCCION DE PLANTA DE VALORIZACION :",
-     "c": "1720827.2"
+     "c": "1720827.2",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "IMPLEMENTACION DE TALLER :",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -862,31 +1060,43 @@
    "a": [
     {
      "n": "4.1 Adquisisción de Minicargador para el relleno sanitario :",
-     "c": "163981.37"
+     "c": "163981.37",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "4.2 Adquisición de Compactador de residuos sólidos en relleno sanitario :",
-     "c": "851298.57"
+     "c": "851298.57",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "4.3 Adquisisción de Volquete para relleno sanitario :",
-     "c": "278688.11"
+     "c": "278688.11",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "CONSTRUCCION DE RELLENO SANITARIO :",
-     "c": "8807701.14"
+     "c": "8807701.14",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "IMPLEMENTACION DE INFORMACION : Administración del Contrato para la ejecución de la Obra",
-     "c": "247174.33"
+     "c": "247174.33",
+     "f": "INTANGIBLES",
+     "u": "7 N° DE INFORMES"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "131842.18"
+     "c": "131842.18",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -895,27 +1105,37 @@
    "a": [
     {
      "n": "5.1 Adquisición de camioneta para gestión de Unidad de Residuos Sólidos :",
-     "c": "124971.95"
+     "c": "124971.95",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "5.2 Adquisición de Computadoras para la Unidad de Residuos Sólidos :",
-     "c": "5665.12"
+     "c": "5665.12",
+     "f": "EQUIPAMIENTO",
+     "u": "2 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE MOBILIARIO : Adquisición de Mobiliario para la Unidad de Residuos Sólidos",
-     "c": "0"
+     "c": "0",
+     "f": "MOBILIARIO",
+     "u": "2 NÚMERO DE MOBILIARIO"
     },
     {
      "n": "5.4 Elaboración e implementación del Plan de Gestión de la URS :",
-     "c": "129629.58"
+     "c": "129629.58",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -924,15 +1144,19 @@
    "a": [
     {
      "n": "6.1 Elaboración e implementación del Plan de buenas prácticas a la población :",
-     "c": "108909.8"
+     "c": "108909.8",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -941,15 +1165,19 @@
    "a": [
     {
      "n": "IMPLEMENTACION DE INFORMACION : Elaboración de la Evaluación Ex-Post",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   }
@@ -1859,23 +2087,31 @@
    "a": [
     {
      "n": "1.1 ADQUISICIOON DE EQUIPAMIENDO :",
-     "c": "132263.71"
+     "c": "132263.71",
+     "f": "EQUIPAMIENTO",
+     "u": "144 NÚMERO DE EQUIPOS"
     },
     {
      "n": "1.2 ADQUISICION DE HERRAMIENTAS :",
-     "c": "29053.7"
+     "c": "29053.7",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "1.3 ADQUISICION DE EQUIPOS DE PROTECTOS DE PERSONAL :",
-     "c": "27496.52"
+     "c": "27496.52",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -1884,27 +2120,37 @@
    "a": [
     {
      "n": "2.1 Adquisición de camiones compactadoras y camiones baranda para recolección de residuos sólidos :",
-     "c": "1682073.55"
+     "c": "1682073.55",
+     "f": "VEHICULOS",
+     "u": "5 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "2.2 Adquisición de Trimoviles para recolección de residuos sólidos :",
-     "c": "13499.87"
+     "c": "13499.87",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "2.3 Adquisición de Equipos de Protección de Personal :",
-     "c": "34707.01"
+     "c": "34707.01",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "2.4 Elaboración e implementación del Plan de Barrido y Recoelcción :",
-     "c": "335576.1"
+     "c": "335576.1",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -1913,19 +2159,25 @@
    "a": [
     {
      "n": "3.1 Construcción de la Planta de Reaprovechamiento (Incluye equipamiento) :",
-     "c": "1117058.11"
+     "c": "1117058.11",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "CAPACITACION DE PLANTA DE VALORIZACIÓN : 3.2 Diseño plan de reinserción y formalización de recicladores y recolección selectiva de la fuente",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -1934,35 +2186,49 @@
    "a": [
     {
      "n": "ADQUISICION DE MINICARGADOR :",
-     "c": "246692.49"
+     "c": "246692.49",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "4.2 Adquisición de Compactador de residuos sólidos en relleno sanitario :",
-     "c": "851298.57"
+     "c": "851298.57",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "4.3 Adquisisción de Volquete para relleno sanitario :",
-     "c": "278688.11"
+     "c": "278688.11",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "4.4 Construcción del Relleno Sanitario 1era Etapa (Incluye equipamiento) :",
-     "c": "10135513.24"
+     "c": "10135513.24",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "CAPACITACION DE INFORMACION : ADMINISTRADOR DE CONTRATO DE OBRA",
-     "c": "399713.53"
+     "c": "399713.53",
+     "f": "INTANGIBLES",
+     "u": "7 N° DE INFORMES"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "327915.49"
+     "c": "327915.49",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "OTRAS ACCIONES DE INTANGIBLES : Acción complementaria para el manejo y control de aguas de lluvia y lixiviados del relleno sanitario",
-     "c": "64458.68"
+     "c": "64458.68",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE INFORMES"
     }
    ]
   },
@@ -1971,27 +2237,37 @@
    "a": [
     {
      "n": "5.1 Adquisición de camioneta para gestión de Unidad de Residuos Sólidos :",
-     "c": "124840.55"
+     "c": "124840.55",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "5.2 Adquisición de Computadoras para la Unidad de Residuos Sólidos :",
-     "c": "5665.12"
+     "c": "5665.12",
+     "f": "EQUIPAMIENTO",
+     "u": "2 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE MOBILIARIO :",
-     "c": "0"
+     "c": "0",
+     "f": "MOBILIARIO",
+     "u": "2 NÚMERO DE MOBILIARIO"
     },
     {
      "n": "5.4 Elaboración e implementación del Plan de Gestión de la URS :",
-     "c": "170219.29"
+     "c": "170219.29",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -2000,15 +2276,19 @@
    "a": [
     {
      "n": "6.1 Elaboración e implementación del Plan de buenas prácticas a la población :",
-     "c": "114009.99"
+     "c": "114009.99",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -2017,15 +2297,19 @@
    "a": [
     {
      "n": "CAPACITACION DE INFORMACION : EVALUACION EX-POST",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   }
@@ -2036,23 +2320,31 @@
    "a": [
     {
      "n": "1.1 Adquisición de Equipamiento (papeleras, coches de barrido, contenedores, etc.) :",
-     "c": "240826.27"
+     "c": "240826.27",
+     "f": "EQUIPAMIENTO",
+     "u": "246 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "1.2 Adquisición de Herramientas :",
-     "c": "34437.99"
+     "c": "34437.99",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "1.3 Adquisición de Equipos de Protección de Personal :",
-     "c": "28813.72"
+     "c": "28813.72",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -2061,27 +2353,37 @@
    "a": [
     {
      "n": "2.1 Adquisición de Camiones Compactadoras y Camiones Baranda Para Recolección de Residuos Sólidos :",
-     "c": "3197883.64"
+     "c": "3197883.64",
+     "f": "VEHICULOS",
+     "u": "9 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "2.2 Adquisición de Trimóviles Para Recolección de Residuos Sólidos :",
-     "c": "26979.73"
+     "c": "26979.73",
+     "f": "VEHICULOS",
+     "u": "2 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "2.3 Adquisición de Equipos de Protección de Personal :",
-     "c": "70113.42"
+     "c": "70113.42",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "2.4 Elaboración e Implementación del Plan de Barrido y Recolección :",
-     "c": "204042"
+     "c": "204042.0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -2090,19 +2392,25 @@
    "a": [
     {
      "n": "3.1 Construcción de la Planta de Reaprovechamiento (Incluye equipamiento) :",
-     "c": "399381.45"
+     "c": "399381.45",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "CAPACITACION DE RELLENO SANITARIO :",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -2111,35 +2419,49 @@
    "a": [
     {
      "n": "4.1 Adquisición de Minicargador Para el Relleno Sanitario :",
-     "c": "246692.5"
+     "c": "246692.5",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "4.2 Adquisición de Compactador de Residuos Sólidos en Relleno Sanitario :",
-     "c": "851298.57"
+     "c": "851298.57",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "4.3 Adquisición de Volquete Para Relleno Sanitario :",
-     "c": "280852.46"
+     "c": "280852.46",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "4.4 Construcción del Relleno Sanitario Primera Etapa (incluye equipamiento) :",
-     "c": "8105230.46"
+     "c": "8105230.46",
+     "f": "INFRAESTRUCTURA",
+     "u": "2 ESPACIOS FISICOS"
     },
     {
      "n": "CAPACITACION DE RELLENO SANITARIO :",
-     "c": "76569.93"
+     "c": "76569.93",
+     "f": "INTANGIBLES",
+     "u": "7 N° DE INFORMES"
     },
     {
      "n": "CONSTRUCCION DE SISTEMA DE MANEJO DE LIXIVIADOS : 4.6 POZA DE LIXIVIADOS",
-     "c": "143976.65"
+     "c": "143976.65",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 NÚMERO DE ESTRUCTURAS FÍSICAS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -2148,27 +2470,37 @@
    "a": [
     {
      "n": "5.1 Adquisición de Camioneta Para Gestión de la Unidad de Residuos Sólidos :",
-     "c": "125291.32"
+     "c": "125291.32",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "5.2 Adquisición de Computadoras Para la Unidad de Residuos Sólidos :",
-     "c": "5665.13"
+     "c": "5665.13",
+     "f": "EQUIPAMIENTO",
+     "u": "2 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE MOBILIARIO DE AMBIENTES COMPLEMENTARIOS :",
-     "c": "0"
+     "c": "0",
+     "f": "MOBILIARIO",
+     "u": "4 NÚMERO DE MOBILIARIO"
     },
     {
      "n": "5.4 Elaboración e Implementación del Plan de Gestión de la Unidad de Residuos Sólidos :",
-     "c": "151817.62"
+     "c": "151817.62",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -2177,15 +2509,19 @@
    "a": [
     {
      "n": "6.1 Elaboración e Implementación del Plan de Buenas Prácticas a la Población :",
-     "c": "111886.57"
+     "c": "111886.57",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -2194,15 +2530,19 @@
    "a": [
     {
      "n": "CAPACITACION DE RELLENO SANITARIO :",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   }
@@ -2233,23 +2573,31 @@
    "a": [
     {
      "n": "1.1 Adquisición de Equipamiento (papeleras, coches de barrido, contenedores, etc.) :",
-     "c": "278019.84"
+     "c": "278019.84",
+     "f": "EQUIPAMIENTO",
+     "u": "373 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "1.2 Adquisición de Herramientas :",
-     "c": "36245.54"
+     "c": "36245.54",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "1.3 Adquisición de Equipos de Protección de Personal :",
-     "c": "38090.12"
+     "c": "38090.12",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -2258,27 +2606,37 @@
    "a": [
     {
      "n": "2.1 Adquisición de camiones compactadoras y camiones baranda para recolección de residuos sólidos :",
-     "c": "2315045.58"
+     "c": "2315045.58",
+     "f": "VEHICULOS",
+     "u": "7 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "2.2 Adquisición de Trimoviles para recolección de residuos sólidos :",
-     "c": "40498"
+     "c": "40498.0",
+     "f": "VEHICULOS",
+     "u": "3 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "2.3 Adquisición de Equipos de Protección de Personal :",
-     "c": "50067.82"
+     "c": "50067.82",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "2.4 Elaboración e implementación del Plan de Barrido y Recoelcción :",
-     "c": "152425.4"
+     "c": "152425.4",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -2287,19 +2645,25 @@
    "a": [
     {
      "n": "CONSTRUCCION DE PLANTA DE VALORIZACION : 3.1 Construcción de la Planta de Residuos Solidos",
-     "c": "2711486.01"
+     "c": "2711486.01",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "IMPLEMENTACION DE CAPACIDAD ORGANIZACIONAL : 3.2 Diseño plan de reinserción y formalización de recicladores y recolección selectiva de la fuente",
-     "c": "30000"
+     "c": "30000.0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -2308,31 +2672,43 @@
    "a": [
     {
      "n": "4.1 Adquisisción de Minicargador para el relleno sanitario :",
-     "c": "163981.37"
+     "c": "163981.37",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "4.2 Adquisición de Compactador de residuos sólidos en relleno sanitario :",
-     "c": "851298.57"
+     "c": "851298.57",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "4.3 Adquisisción de Volquete para relleno sanitario :",
-     "c": "280769.7"
+     "c": "280769.7",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "CONSTRUCCION DE RELLENO SANITARIO : 4.4 Construcción del Relleno Sanitario 1era Etapa (Incluye equipamiento)",
-     "c": "38167007.5"
+     "c": "38167007.5",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "CAPACITACION DE CAPACIDAD HUMANA : 4.5 Administración del Contrato para la ejecución de la Obra",
-     "c": "130000"
+     "c": "130000.0",
+     "f": "INTANGIBLES",
+     "u": "7 N° DE INFORMES"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -2341,27 +2717,37 @@
    "a": [
     {
      "n": "5.1 Adquisición de camioneta para gestión de Unidad de Residuos Sólidos :",
-     "c": "124971.95"
+     "c": "124971.95",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "5.2 Adquisición de Computadoras para la Unidad de Residuos Sólidos :",
-     "c": "9286.6"
+     "c": "9286.6",
+     "f": "EQUIPAMIENTO",
+     "u": "2 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE PLANTA DE VALORIZACION : 5.3 Adquisición de Mobiliario para la Unidad de Residuos Sólidos",
-     "c": "1750"
+     "c": "1750.0",
+     "f": "MOBILIARIO",
+     "u": "2 NÚMERO DE MOBILIARIO"
     },
     {
      "n": "5.4 Elaboración e implementación del Plan de Gestión de la URS :",
-     "c": "117000"
+     "c": "117000.0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -2370,15 +2756,19 @@
    "a": [
     {
      "n": "6.1 Elaboración e implementación del Plan de buenas prácticas a la población :",
-     "c": "110000"
+     "c": "110000.0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   }
@@ -2448,23 +2838,31 @@
    "a": [
     {
      "n": "1.1 Adquisición de Equipamiento :",
-     "c": "54131.4"
+     "c": "54131.4",
+     "f": "EQUIPAMIENTO",
+     "u": "63 NÚMERO DE EQUIPOS"
     },
     {
      "n": "1.2 Adquisición de Herramientas :",
-     "c": "52245.43"
+     "c": "52245.43",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO : EQUIPO DE PROTECCION DE PERSONAL-EPP",
-     "c": "25673"
+     "c": "25673.0",
+     "f": "EQUIPAMIENTO",
+     "u": "2.97 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -2473,23 +2871,31 @@
    "a": [
     {
      "n": "2.1 Adquisición de Vehículos :",
-     "c": "1387143.35"
+     "c": "1387143.35",
+     "f": "VEHICULOS",
+     "u": "4 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "2.2 Adquisición de Herramientas :",
-     "c": "1328.17"
+     "c": "1328.17",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO : EQUIPO DE PROTECCION DE PERSONAL - EPP",
-     "c": "19397"
+     "c": "19397.0",
+     "f": "EQUIPAMIENTO",
+     "u": "19.92 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -2498,27 +2904,37 @@
    "a": [
     {
      "n": "3.1 Adquisición de Equipamiento :",
-     "c": "98685.17"
+     "c": "98685.17",
+     "f": "EQUIPAMIENTO",
+     "u": "1.31 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "3.2 Adquisición de Herramientas :",
-     "c": "19091.08"
+     "c": "19091.08",
+     "f": "EQUIPAMIENTO",
+     "u": "1.31 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO : EQUIPO DE PROTECCION DE PERSONAL - EPP",
-     "c": "9785"
+     "c": "9785.0",
+     "f": "EQUIPAMIENTO",
+     "u": "1.31 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "3.4 Construcción de Infraestructura de Reaprovechamiento :",
-     "c": "484846"
+     "c": "484846.0",
+     "f": "INFRAESTRUCTURA",
+     "u": "469.52 ESPACIOS FISICOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -2527,31 +2943,43 @@
    "a": [
     {
      "n": "4.1 Adquisisción de Maquinaria y Vehículos :",
-     "c": "587175.73"
+     "c": "587175.73",
+     "f": "VEHICULOS",
+     "u": "2 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "ADQUISICION DE EQUIPO : EQUIPO DE PROTECCION DE PERSONAL - EPP",
-     "c": "8385"
+     "c": "8385.0",
+     "f": "EQUIPAMIENTO",
+     "u": "26.06 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "4.3 Construcción de infraestructura para disposición final de RRSS :",
-     "c": "3560140.1"
+     "c": "3560140.1",
+     "f": "INFRAESTRUCTURA",
+     "u": "47.40 ESPACIOS FISICOS"
     },
     {
      "n": "4.4 Elaboración del Expediente Técnico :",
-     "c": "77227.5"
+     "c": "77227.5",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "4.5 Supervisión :",
-     "c": "277545.28"
+     "c": "277545.28",
+     "f": "INTANGIBLES",
+     "u": "4 N° DE INFORMES"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -2560,27 +2988,37 @@
    "a": [
     {
      "n": "5.1 Adquisición de Vehículos :",
-     "c": "92744.05"
+     "c": "92744.05",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "5.2 Adquisición de Equipamiento :",
-     "c": "4410.25"
+     "c": "4410.25",
+     "f": "EQUIPAMIENTO",
+     "u": "1 NÚMERO DE EQUIPOS"
     },
     {
      "n": "5.3 Adquisición de Mobiliario :",
-     "c": "1259"
+     "c": "1259.0",
+     "f": "EQUIPAMIENTO",
+     "u": "2 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO : RQUIPO DE PROTECCION DE PERSONAL - EPP",
-     "c": "1934"
+     "c": "1934.0",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -2589,15 +3027,19 @@
    "a": [
     {
      "n": "6.1 Contratación del servicio de consultoría para eleborar planes, fortalecimiento de capacidades y practicas a la población :",
-     "c": "414967.1"
+     "c": "414967.1",
+     "f": "INTANGIBLES",
+     "u": "4 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -2606,15 +3048,19 @@
    "a": [
     {
      "n": "IMPLEMENTACION DE TALLER :",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   }
@@ -2625,23 +3071,31 @@
    "a": [
     {
      "n": "1.1 Adquisición de Equipamiento (papeleras, coches de barrido, contenedores, etc.) :",
-     "c": "286243.76"
+     "c": "286243.76",
+     "f": "EQUIPAMIENTO",
+     "u": "278 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "1.2 Adquisición de Herramientas :",
-     "c": "80052.82"
+     "c": "80052.82",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "1.3 Adquisición de Equipos de Protección de Personal :",
-     "c": "76163.25"
+     "c": "76163.25",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -2650,27 +3104,37 @@
    "a": [
     {
      "n": "2.1 Adquisición de CAMIONES COMPACTADORAS Y CAMIONES BARANDA PARA RECOLECCION DE RESIDUOS SOLIDOS :",
-     "c": "2750158.13"
+     "c": "2750158.13",
+     "f": "VEHICULOS",
+     "u": "8 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "2.2 Adquisición de TRIMOVILES PARA RECOLECCION DE RESIDUOS SÓLIDOS :",
-     "c": "40499.6"
+     "c": "40499.6",
+     "f": "VEHICULOS",
+     "u": "3 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "2.3 Adquisición de Equipos de Protección de Personal :",
-     "c": "58178.22"
+     "c": "58178.22",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "2.4. ELABORACION E IMPLEMENTACION DEL PLAN DE BARRIDO Y RECOLECCIÓN :",
-     "c": "305397"
+     "c": "305397.0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -2679,19 +3143,25 @@
    "a": [
     {
      "n": "CONSTRUCCION DE PLANTA DE VALORIZACION :",
-     "c": "1425592.41"
+     "c": "1425592.41",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "IMPLEMENTACION DE TALLER :",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -2700,31 +3170,43 @@
    "a": [
     {
      "n": "4.1 Adquisición de MINICARGADOR PARA EL RELLENO SANITARIO :",
-     "c": "163981.38"
+     "c": "163981.38",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "4.2 Adquisición de COMPACTADOR DE RESIDUOS SÓLIDOS EN EL RELLENO SANITARIO :",
-     "c": "851298.57"
+     "c": "851298.57",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "4.3 Adquisición de VOLQUETE PARA RELLENO SANITARIO :",
-     "c": "278688.11"
+     "c": "278688.11",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "CONSTRUCCION DE RELLENO SANITARIO :",
-     "c": "11482235.48"
+     "c": "11482235.48",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "IMPLEMENTACION DE INFORMACION :",
-     "c": "171883.25"
+     "c": "171883.25",
+     "f": "INTANGIBLES",
+     "u": "7 N° DE INFORMES"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "198868.41"
+     "c": "198868.41",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -2733,27 +3215,37 @@
    "a": [
     {
      "n": "5.1 Adquisición de CAMIONETA PARA LA GESTIÓN DE UNIDAD DE RESIDUOS SOLIDOS :",
-     "c": "124840.55"
+     "c": "124840.55",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "5.2 Adquisición de COMPUTADORAS PARA LA UNIDAD DE RESIDUOS SÓLIDOS :",
-     "c": "5665.13"
+     "c": "5665.13",
+     "f": "EQUIPAMIENTO",
+     "u": "2 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE MOBILIARIO :",
-     "c": "0"
+     "c": "0",
+     "f": "MOBILIARIO",
+     "u": "2 NÚMERO DE MOBILIARIO"
     },
     {
      "n": "eLABORACIÓN E IMPLEMENTACIÓN DEL PLAN DE GESTIÓN DE LA URS :",
-     "c": "114986.66"
+     "c": "114986.66",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -2762,15 +3254,19 @@
    "a": [
     {
      "n": "6.1 Contratación del servicio de consultoría para eleborar planes, fortalecimiento de capacidades y practicas a la población :",
-     "c": "109009.81"
+     "c": "109009.81",
+     "f": "INTANGIBLES",
+     "u": "5 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -2779,15 +3275,19 @@
    "a": [
     {
      "n": "IMPLEMENTACION DE INFORMACION :",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   }
@@ -3013,23 +3513,31 @@
    "a": [
     {
      "n": "1.1 Adquisición de Equipamiento (papeleras, coches de barrido, contenedores, etc.) :",
-     "c": "91915.6"
+     "c": "91915.6",
+     "f": "EQUIPAMIENTO",
+     "u": "102 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "1.2 Adquisición de Herramientas :",
-     "c": "26715.14"
+     "c": "26715.14",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "1.3 Adquisición de Equipos de Protección de Personal :",
-     "c": "36181.72"
+     "c": "36181.72",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -3038,27 +3546,37 @@
    "a": [
     {
      "n": "2.1 Adquisición de camiones compactadoras y camiones baranda para recolección de residuos sólidos :",
-     "c": "563901.94"
+     "c": "563901.94",
+     "f": "VEHICULOS",
+     "u": "2 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "2.2 Adquisición de Trimoviles para recolección de residuos sólidos :",
-     "c": "26999.73"
+     "c": "26999.73",
+     "f": "VEHICULOS",
+     "u": "2 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "2.3 Adquisición de Equipos de Protección de Personal :",
-     "c": "16515.61"
+     "c": "16515.61",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "2.4 Elaboración e implementación del Plan de Barrido y Recoelcción :",
-     "c": "142673.23"
+     "c": "142673.23",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -3067,19 +3585,25 @@
    "a": [
     {
      "n": "CONSTRUCCION DE PLANTA DE VALORIZACION :",
-     "c": "3053380.17"
+     "c": "3053380.17",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "IMPLEMENTACION DE CAPACIDAD ORGANIZACIONAL : DISEÑO E IMPLEMENTACION DEL PLAN DE REICERSIÓN Y FORMALIZACION DE RECICLADORES",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -3088,27 +3612,37 @@
    "a": [
     {
      "n": "4.1 Adquisisción de Minicargador para el relleno sanitario :",
-     "c": "260447.25"
+     "c": "260447.25",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "CONSTRUCCION DE RELLENO SANITARIO :",
-     "c": "7257308.4"
+     "c": "7257308.4",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "IMPLEMENTACION DE INFORMACION : ADMINISTRADOR DE CONTRATO DE OBRAS",
-     "c": "66954.19"
+     "c": "66954.19",
+     "f": "INTANGIBLES",
+     "u": "7 N° DE INFORMES"
     },
     {
      "n": "CONSTRUCCION DE SISTEMA DE MANEJO DE LIXIVIADOS : Sistema de tratamiento de lixiviados",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 NÚMERO DE ESTRUCTURAS FÍSICAS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -3117,27 +3651,37 @@
    "a": [
     {
      "n": "5.1 Adquisición de camioneta para gestión de Unidad de Residuos Sólidos :",
-     "c": "124971.95"
+     "c": "124971.95",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "5.2 Adquisición de Computadoras para la Unidad de Residuos Sólidos :",
-     "c": "5665.13"
+     "c": "5665.13",
+     "f": "EQUIPAMIENTO",
+     "u": "2 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE MOBILIARIO :",
-     "c": "0"
+     "c": "0",
+     "f": "MOBILIARIO",
+     "u": "2 NÚMERO DE MOBILIARIO"
     },
     {
      "n": "5.4 Elaboración e implementación del Plan de Gestión de la URS :",
-     "c": "108623.12"
+     "c": "108623.12",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -3146,15 +3690,19 @@
    "a": [
     {
      "n": "6.1 Elaboración e implementación del Plan de buenas prácticas a la población :",
-     "c": "94790.71"
+     "c": "94790.71",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -3163,15 +3711,19 @@
    "a": [
     {
      "n": "IMPLEMENTACION DE INFORMACION : EVALUACION EXPOST",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   }
@@ -3636,23 +4188,31 @@
    "a": [
     {
      "n": "ADQUISICION DE EQUIPAMIENTO DE AMBIENTES DE BIENESTAR Y SERVICIOS GENERALES :",
-     "c": "183881.51"
+     "c": "183881.51",
+     "f": "EQUIPAMIENTO",
+     "u": "167 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPAMIENTO DE AMBIENTES DE BIENESTAR Y SERVICIOS GENERALES : (Herramientas)",
-     "c": "38002.03"
+     "c": "38002.03",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPAMIENTO DE AMBIENTES DE BIENESTAR Y SERVICIOS GENERALES : Adquisición de equipos del personal",
-     "c": "48518.03"
+     "c": "48518.03",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -3661,27 +4221,37 @@
    "a": [
     {
      "n": "ADQUISICION DE CAMION COMPACTADOR : CAMIONES COMPACTADORAS Y CAMIONES BARANDA PARA RECOLECCIÓN DE RESIDUOS SÓLIDOS",
-     "c": "957534.43"
+     "c": "957534.43",
+     "f": "VEHICULOS",
+     "u": "3 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "ADQUISICION DE EQUIPAMIENTO DE AMBIENTES DE BIENESTAR Y SERVICIOS GENERALES : TRIMOVILES PARA RECOLECCIÓN DE RESIDUOS SÓLIDOS",
-     "c": "40499.6"
+     "c": "40499.6",
+     "f": "VEHICULOS",
+     "u": "3 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "ADQUISICION DE EQUIPAMIENTO DE AMBIENTES DE BIENESTAR Y SERVICIOS GENERALES : EQUIPOS DE PROTECCIÓN DE PERSONAL",
-     "c": "18972.51"
+     "c": "18972.51",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "IMPLEMENTACION DE CAPACIDAD ORGANIZACIONAL : PLAN DE BARRIDO Y RECOELCCIÓN",
-     "c": "165362.11"
+     "c": "165362.11",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -3690,19 +4260,25 @@
    "a": [
     {
      "n": "CONSTRUCCION DE PLANTA DE VALORIZACION : Planta de valorización y centro de acopio",
-     "c": "2926574.22"
+     "c": "2926574.22",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "CAPACITACION DE PLANTA DE VALORIZACION : Diseño de plan de reinserción y formalización de recicladores y recolección selectiva de fuente",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -3711,23 +4287,31 @@
    "a": [
     {
      "n": "ADQUISICION DE MINICARGADOR SOBRE ORUGAS :",
-     "c": "260447.25"
+     "c": "260447.25",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "CONSTRUCCION DE RELLENO SANITARIO :",
-     "c": "10862225.78"
+     "c": "10862225.78",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "IMPLEMENTACION DE RELLENO SANITARIO : Administrador de contrato de obra",
-     "c": "17024.66"
+     "c": "17024.66",
+     "f": "INTANGIBLES",
+     "u": "7 N° DE INFORMES"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -3736,27 +4320,37 @@
    "a": [
     {
      "n": "ADQUISICION DE CAMIONETA : camioneta para gestión de Residuos solidos",
-     "c": "124971.95"
+     "c": "124971.95",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "ADQUISICION DE EQUIPAMIENTO DE AMBIENTES DE BIENESTAR Y SERVICIOS GENERALES : COMPUTADORAS PARA LA UNIDAD DE RESIDUOS SÓLIDOS",
-     "c": "5665.15"
+     "c": "5665.15",
+     "f": "EQUIPAMIENTO",
+     "u": "2 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE MOBILIARIO :",
-     "c": "0"
+     "c": "0",
+     "f": "MOBILIARIO",
+     "u": "2 NÚMERO DE MOBILIARIO"
     },
     {
      "n": "ADQUISICION DE CAPACIDAD ORGANIZACIONAL : LABORACIÓN E IMPLEMENTACIÓN DEL PLAN DE GESTIÓN DE LA URS",
-     "c": "105971.98"
+     "c": "105971.98",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -3765,15 +4359,19 @@
    "a": [
     {
      "n": "IMPLEMENTACION DE CAPACIDAD ORGANIZACIONAL : implementación del Plan de buenas prácticas a la población",
-     "c": "94135.99"
+     "c": "94135.99",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -3782,15 +4380,19 @@
    "a": [
     {
      "n": "CAPACITACION DE INFORMACION : Evaluación ex- post",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   }
@@ -3801,23 +4403,31 @@
    "a": [
     {
      "n": "Adquisición de Equipamiento :",
-     "c": "154604.8"
+     "c": "154604.8",
+     "f": "EQUIPAMIENTO",
+     "u": "3.47 NÚMERO DE EQUIPOS"
     },
     {
      "n": "Adquisición de Herramientas :",
-     "c": "46738"
+     "c": "46738.0",
+     "f": "EQUIPAMIENTO",
+     "u": "3.47 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Adquisición de Equipos de Protección de Personal :",
-     "c": "33676"
+     "c": "33676.0",
+     "f": "EQUIPAMIENTO",
+     "u": "3.47 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -3826,23 +4436,31 @@
    "a": [
     {
      "n": "Adquisición de Vehículos :",
-     "c": "1387108"
+     "c": "1387108.0",
+     "f": "VEHICULOS",
+     "u": "40 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "Adquisición de Herramientas :",
-     "c": "41549.6"
+     "c": "41549.6",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Adquisición de Equipos de Protección de Personal (EPP) :",
-     "c": "18443"
+     "c": "18443.0",
+     "f": "EQUIPAMIENTO",
+     "u": "40 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -3851,27 +4469,37 @@
    "a": [
     {
      "n": "Adquisición de Equipamiento :",
-     "c": "101948"
+     "c": "101948.0",
+     "f": "EQUIPAMIENTO",
+     "u": "40 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Adquisición de Equipos de Protección de Personal :",
-     "c": "10029"
+     "c": "10029.0",
+     "f": "EQUIPAMIENTO",
+     "u": "2.19 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Construcción de Infraestructura de Reaprovechamiento :",
-     "c": "404257.4"
+     "c": "404257.4",
+     "f": "INFRAESTRUCTURA",
+     "u": "740 ESPACIOS FISICOS"
     },
     {
      "n": "Adquisición de Herramientas :",
-     "c": "23216.36"
+     "c": "23216.36",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -3880,39 +4508,55 @@
    "a": [
     {
      "n": "Adquisisción de Maquinaria y Vehículos :",
-     "c": "217872.42"
+     "c": "217872.42",
+     "f": "VEHICULOS",
+     "u": "40 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "Adquisición de Equipamiento :",
-     "c": "0"
+     "c": "0",
+     "f": "EQUIPAMIENTO",
+     "u": "40 NÚMERO DE EQUIPOS"
     },
     {
      "n": "Adquisición de Herramientas :",
-     "c": "0"
+     "c": "0",
+     "f": "EQUIPAMIENTO",
+     "u": "40 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Adquisición de Equipos de Protección de Personal :",
-     "c": "8075"
+     "c": "8075.0",
+     "f": "EQUIPAMIENTO",
+     "u": "40 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Construcción de infraestructura para disposición final de RRSS :",
-     "c": "4609266.07"
+     "c": "4609266.07",
+     "f": "INFRAESTRUCTURA",
+     "u": "73 ESPACIOS FISICOS"
     },
     {
      "n": "Elaboración del Expediente Técnico :",
-     "c": "152737.82"
+     "c": "152737.82",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Supervisión :",
-     "c": "395122.78"
+     "c": "395122.78",
+     "f": "INTANGIBLES",
+     "u": "5 N° DE INFORMES"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -3921,27 +4565,37 @@
    "a": [
     {
      "n": "Adquisición de Vehículos :",
-     "c": "95223.72"
+     "c": "95223.72",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "Adquisición de Equipamiento :",
-     "c": "14074.45"
+     "c": "14074.45",
+     "f": "EQUIPAMIENTO",
+     "u": "5 NÚMERO DE EQUIPOS"
     },
     {
      "n": "Adquisición de Mobiliario :",
-     "c": "1259"
+     "c": "1259.0",
+     "f": "EQUIPAMIENTO",
+     "u": "2 NÚMERO DE EQUIPOS"
     },
     {
      "n": "Adquisición de Equipos de Protección de Personal :",
-     "c": "2046"
+     "c": "2046.0",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -3950,15 +4604,19 @@
    "a": [
     {
      "n": "Contratación del servicio de consultoría para eleborar planes, fortalecimiento de capacidades y practicas a la población :",
-     "c": "407545.06"
+     "c": "407545.06",
+     "f": "INTANGIBLES",
+     "u": "4 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -3967,15 +4625,19 @@
    "a": [
     {
      "n": "IMPLEMENTACION DE TALLER : Evoluciona Ex Post",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   }
@@ -3986,23 +4648,31 @@
    "a": [
     {
      "n": "1.1 Adquisición de Equipamiento (papeleras, coches de barrido, contenedores, etc.) :",
-     "c": "135655.47"
+     "c": "135655.47",
+     "f": "EQUIPAMIENTO",
+     "u": "141 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "1.2 Adquisición de Herramientas :",
-     "c": "26637.53"
+     "c": "26637.53",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "1.3 Adquisición de Equipos de Protección de Personal :",
-     "c": "24127.72"
+     "c": "24127.72",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -4011,27 +4681,37 @@
    "a": [
     {
      "n": "2.1 Adquisición de camiones compactadoras y camiones baranda para recolección de residuos sólidos :",
-     "c": "956197.24"
+     "c": "956197.24",
+     "f": "VEHICULOS",
+     "u": "3 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "2.2 Adquisición de Trimoviles para recolección de residuos sólidos :",
-     "c": "13499.87"
+     "c": "13499.87",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "2.3 Adquisición de Equipos de Protección de Personal :",
-     "c": "31747.41"
+     "c": "31747.41",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "2.4 Elaboración e implementación del Plan de Barrido y Recoelcción :",
-     "c": "307524.84"
+     "c": "307524.84",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -4040,31 +4720,43 @@
    "a": [
     {
      "n": "4.1 Adquisisción de Minicargador para el relleno sanitario :",
-     "c": "246692.5"
+     "c": "246692.5",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "4.2 Adquisisción de Volquete para relleno sanitario :",
-     "c": "279473"
+     "c": "279473.0",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "CONSTRUCCION DE OBRAS EXTERIORES : 4.3 Construcción del Relleno Sanitario 1era Etapa (Incluye equipamiento)",
-     "c": "14116389.68"
+     "c": "14116389.68",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "IMPLEMENTACION DE ORGANIZACION : 4.4 Plan de Vigilancia, Prevención y Control de COVID-19 en el trabajo",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE INFORMES"
     },
     {
      "n": "IMPLEMENTACION DE ORGANIZACION : 4.5 Administración del Contrato para la ejecución de la Obra",
-     "c": "130000"
+     "c": "130000.0",
+     "f": "INTANGIBLES",
+     "u": "5 N° DE INFORMES"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -4073,27 +4765,37 @@
    "a": [
     {
      "n": "5.1 Adquisición de camioneta para gestión de Unidad de Residuos Sólidos :",
-     "c": "125519"
+     "c": "125519.0",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "5.2 Adquisición de Computadoras para la Unidad de Residuos Sólidos :",
-     "c": "5665.15"
+     "c": "5665.15",
+     "f": "EQUIPAMIENTO",
+     "u": "2 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "5.4 Elaboración e implementación del Plan de Gestión de la URS :",
-     "c": "121481.36"
+     "c": "121481.36",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "IMPLEMENTACION DE EQUIPO : 5.3 Adquisición de Mobiliario para la Unidad de Residuos Sólidos",
-     "c": "0"
+     "c": "0",
+     "f": "MOBILIARIO",
+     "u": "2 NÚMERO DE MOBILIARIO"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -4102,15 +4804,19 @@
    "a": [
     {
      "n": "6.1 Elaboración e implementación del Plan de buenas prácticas a la población :",
-     "c": "163470.64"
+     "c": "163470.64",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -4119,19 +4825,25 @@
    "a": [
     {
      "n": "CONSTRUCCION DE OBRAS EXTERIORES : 3.1 Construcción de la Planta de Reaprovechamiento (Incluye equipamiento)",
-     "c": "3532935.04"
+     "c": "3532935.04",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "IMPLEMENTACION DE ORGANIZACION : 3.2 Diseño plan de reinserción y formalización de recicladores y recolección selectiva de la fuente",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -4140,15 +4852,19 @@
    "a": [
     {
      "n": "IMPLEMENTACION DE ORGANIZACION : 7.1 Elaboración de la Evaluación Ex-Post",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   }
@@ -4607,23 +5323,31 @@
    "a": [
     {
      "n": "1.1 Adquisición de Equipamiento :",
-     "c": "35171"
+     "c": "35171.0",
+     "f": "EQUIPAMIENTO",
+     "u": "48 NÚMERO DE EQUIPOS"
     },
     {
      "n": "1.2 Adquisición de Herramientas :",
-     "c": "10459.82"
+     "c": "10459.82",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO : EQUIPO DE PROTECCION DE PERSONAL EPP",
-     "c": "9612"
+     "c": "9612.0",
+     "f": "EQUIPAMIENTO",
+     "u": "0.74 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -4632,23 +5356,31 @@
    "a": [
     {
      "n": "2.1 Adquisición de Vehículos :",
-     "c": "695031"
+     "c": "695031.0",
+     "f": "VEHICULOS",
+     "u": "2 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "2.2 Adquisición de Herramientas :",
-     "c": "680.29"
+     "c": "680.29",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO : EQUIPO DE PROTECCION DE PERSONAL EPP",
-     "c": "8854"
+     "c": "8854.0",
+     "f": "EQUIPAMIENTO",
+     "u": "5 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -4657,27 +5389,37 @@
    "a": [
     {
      "n": "3.1 Adquisición de Equipamiento :",
-     "c": "93577.18"
+     "c": "93577.18",
+     "f": "EQUIPAMIENTO",
+     "u": "0.40 NÚMERO DE EQUIPOS"
     },
     {
      "n": "3.2 Adquisición de Herramientas :",
-     "c": "13134.82"
+     "c": "13134.82",
+     "f": "EQUIPAMIENTO",
+     "u": "0.40 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO : EQUIPO DE PROTECCION DE PERSONAL EPP",
-     "c": "7666"
+     "c": "7666.0",
+     "f": "EQUIPAMIENTO",
+     "u": "0.40 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "3.2 Construcción de Infraestructura de Reaprovechamiento :",
-     "c": "315029.96"
+     "c": "315029.96",
+     "f": "INFRAESTRUCTURA",
+     "u": "637.18 ESPACIOS FISICOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -4686,31 +5428,43 @@
    "a": [
     {
      "n": "4.1 Adquisisción de Maquinaria y Vehículos :",
-     "c": "218074.12"
+     "c": "218074.12",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "ADQUISICION DE EQUIPO : HERRAIENTAS",
-     "c": "0"
+     "c": "0",
+     "f": "EQUIPAMIENTO",
+     "u": "5 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO : EQUIPO DE PROTECCION DE PERSONAL EPP",
-     "c": "7080"
+     "c": "7080.0",
+     "f": "EQUIPAMIENTO",
+     "u": "5 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "4.4 Construcción de infraestructura para disposición final de RRSS :",
-     "c": "2493921.62"
+     "c": "2493921.62",
+     "f": "INFRAESTRUCTURA",
+     "u": "9.10 ESPACIOS FISICOS"
     },
     {
      "n": "4.5 ACCIONES PREOPERATIVAS PARA LA PUESTA EN MARCHA EL RELLENO SANITARIO :",
-     "c": "65373.09"
+     "c": "65373.09",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE INFORMES"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -4719,27 +5473,37 @@
    "a": [
     {
      "n": "5.1 Adquisición de Vehículos :",
-     "c": "90031.9"
+     "c": "90031.9",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "5.2 Adquisición de Equipamiento :",
-     "c": "4410.25"
+     "c": "4410.25",
+     "f": "EQUIPAMIENTO",
+     "u": "1 NÚMERO DE EQUIPOS"
     },
     {
      "n": "5.3 Adquisición de Mobiliario :",
-     "c": "1259"
+     "c": "1259.0",
+     "f": "MOBILIARIO",
+     "u": "2 NÚMERO DE MOBILIARIO"
     },
     {
      "n": "ADQUISICION DE EQUIPO : EQUIPO DE PROTECCION DE PERSONAL EPP",
-     "c": "1979"
+     "c": "1979.0",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -4748,15 +5512,19 @@
    "a": [
     {
      "n": "6.1 Contratación del servicio de consultoría para eleborar planes, fortalecimiento de capacidades y practicas a la población :",
-     "c": "123993.9"
+     "c": "123993.9",
+     "f": "INTANGIBLES",
+     "u": "4 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -4765,15 +5533,19 @@
    "a": [
     {
      "n": "IMPLEMENTACION DE TALLER : EVALUACION EX POST",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   }
@@ -4784,23 +5556,31 @@
    "a": [
     {
      "n": "1.1 Adquisición de Equipamiento :",
-     "c": "56365.2"
+     "c": "56365.2",
+     "f": "EQUIPAMIENTO",
+     "u": "2.03 NÚMERO DE EQUIPOS"
     },
     {
      "n": "1.2 Adquisición de Herramientas :",
-     "c": "34536.22"
+     "c": "34536.22",
+     "f": "EQUIPAMIENTO",
+     "u": "2.03 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "1.3 Adquisición de Equipos de Protección de Personal :",
-     "c": "31051"
+     "c": "31051.0",
+     "f": "EQUIPAMIENTO",
+     "u": "2.03 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -4809,23 +5589,31 @@
    "a": [
     {
      "n": "2.1 Adquisición de Vehículos :",
-     "c": "1826357.76"
+     "c": "1826357.76",
+     "f": "VEHICULOS",
+     "u": "6 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "2.2 Adquisición de Herramientas :",
-     "c": "31833.66"
+     "c": "31833.66",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "2.3 Adquisición de Equipos de Protección de Personal (EPP) :",
-     "c": "19359"
+     "c": "19359.0",
+     "f": "EQUIPAMIENTO",
+     "u": "112 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -4834,27 +5622,37 @@
    "a": [
     {
      "n": "3.1 Adquisición de Equipamiento :",
-     "c": "101947.63"
+     "c": "101947.63",
+     "f": "EQUIPAMIENTO",
+     "u": "22 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "3.2 Adquisición de Equipos de Protección de Personal :",
-     "c": "9847"
+     "c": "9847.0",
+     "f": "EQUIPAMIENTO",
+     "u": "2 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "3.3 Adquisición de Equipamiento :",
-     "c": "23461.8"
+     "c": "23461.8",
+     "f": "EQUIPAMIENTO",
+     "u": "605 NÚMERO DE EQUIPOS"
     },
     {
      "n": "3.3 Construcción de infraestructura para disposición final de RRSS :",
-     "c": "443336.38"
+     "c": "443336.38",
+     "f": "INFRAESTRUCTURA",
+     "u": "605 ESPACIOS FISICOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -4863,43 +5661,61 @@
    "a": [
     {
      "n": "4.1 Adquisisción de Maquinaria y Vehículos :",
-     "c": "584093.4"
+     "c": "584093.4",
+     "f": "VEHICULOS",
+     "u": "2 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "4.2 Adquisición de Equipamiento :",
-     "c": "0"
+     "c": "0",
+     "f": "EQUIPAMIENTO",
+     "u": "112 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "4.3 Adquisición de Herramientas :",
-     "c": "0"
+     "c": "0",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "4.4 Adquisición de Equipos de Protección de Personal :",
-     "c": "8430"
+     "c": "8430.0",
+     "f": "EQUIPAMIENTO",
+     "u": "112 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "4.5 Construcción de infraestructura para disposición final de RRSS :",
-     "c": "4712175.6"
+     "c": "4712175.6",
+     "f": "INFRAESTRUCTURA",
+     "u": "203.64 ESPACIOS FISICOS"
     },
     {
      "n": "4.6 Elaboración del Expediente Técnico :",
-     "c": "252566.79"
+     "c": "252566.79",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "4.7 Supervisión :",
-     "c": "649233.09"
+     "c": "649233.09",
+     "f": "INTANGIBLES",
+     "u": "6 N° DE INFORMES"
     },
     {
      "n": "4.8 Implementación de Acciones Complementarias para una adecuada operación del relleno sanitario :",
-     "c": "32786.3"
+     "c": "32786.3",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE INFORMES"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -4908,27 +5724,37 @@
    "a": [
     {
      "n": "5.1 Adquisición de Vehículos :",
-     "c": "97005.99"
+     "c": "97005.99",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "5.2 Adquisición de Equipamiento :",
-     "c": "6826.32"
+     "c": "6826.32",
+     "f": "EQUIPAMIENTO",
+     "u": "2 NÚMERO DE EQUIPOS"
     },
     {
      "n": "5.3 Adquisición de Mobiliario :",
-     "c": "1259.04"
+     "c": "1259.04",
+     "f": "MOBILIARIO",
+     "u": "2 NÚMERO DE MOBILIARIO"
     },
     {
      "n": "5.4 Adquisición de Equipos de Protección de Personal :",
-     "c": "1978.04"
+     "c": "1978.04",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -4937,15 +5763,19 @@
    "a": [
     {
      "n": "6.1 Contratación del servicio de consultoría para eleborar planes, fortalecimiento de capacidades y practicas a la población :",
-     "c": "632776.53"
+     "c": "632776.53",
+     "f": "INTANGIBLES",
+     "u": "4 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -4954,15 +5784,19 @@
    "a": [
     {
      "n": "IMPLEMENTACION DE TALLER :",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   }
@@ -4973,23 +5807,31 @@
    "a": [
     {
      "n": "1.1 Adquisición de Equipamiento (papeleras, coches de barrido, contenedores, etc.) :",
-     "c": "253153.14"
+     "c": "253153.14",
+     "f": "EQUIPAMIENTO",
+     "u": "255 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "1.2 Adquisición de Herramientas :",
-     "c": "70490.6"
+     "c": "70490.6",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "1.3 Adquisición de Equipos de Protección de Personal :",
-     "c": "59249"
+     "c": "59249.0",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -4998,27 +5840,37 @@
    "a": [
     {
      "n": "2.1 Adquisición de camiones compactadoras y camiones baranda para recolección de residuos sólidos :",
-     "c": "3087300.66"
+     "c": "3087300.66",
+     "f": "VEHICULOS",
+     "u": "9 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "2.2 Adquisición de Trimoviles para recolección de residuos sólidos :",
-     "c": "67499.33"
+     "c": "67499.33",
+     "f": "VEHICULOS",
+     "u": "5 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "2.3 Adquisición de Equipos de Protección de Personal :",
-     "c": "71411.86"
+     "c": "71411.86",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "2.4 Elaboración e implementación del Plan de Barrido y Recoelcción :",
-     "c": "190393.64"
+     "c": "190393.64",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -5027,19 +5879,25 @@
    "a": [
     {
      "n": "3.1 Construcción de la Planta de Reaprovechamiento (Incluye equipamiento) :",
-     "c": "322277.02"
+     "c": "322277.02",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "CONSTRUCCION DE SISTEMA DE MANEJO DE LIXIVIADOS : 3.2 Diseño plan de reinserción y formalización de recicladores y recolección selectiva de la fuente",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -5048,35 +5906,49 @@
    "a": [
     {
      "n": "4.1 Adquisición de Minicargador para el relleno sanitario :",
-     "c": "163981.37"
+     "c": "163981.37",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "4.2 Adquisición de Compactador de residuos sólidos en relleno sanitario :",
-     "c": "851298.57"
+     "c": "851298.57",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "4.3 Adquisisción de Volquete para relleno sanitario :",
-     "c": "280852.46"
+     "c": "280852.46",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "4.4 Construcción del Relleno Sanitario 1era Etapa (Incluye equipamiento) :",
-     "c": "8565958.98"
+     "c": "8565958.98",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "4.5 Administración del Contrato para la ejecución de la Obra :",
-     "c": "82185.45"
+     "c": "82185.45",
+     "f": "INTANGIBLES",
+     "u": "7 N° DE INFORMES"
     },
     {
      "n": "CONSTRUCCION DE POZA DE ALMACENAMIENTO : DE LIXIVIADOS",
-     "c": "114948.53"
+     "c": "114948.53",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -5085,27 +5957,37 @@
    "a": [
     {
      "n": "5.1 Adquisición de camioneta para gestión de Unidad de Residuos Sólidos :",
-     "c": "124193.5"
+     "c": "124193.5",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "5.2 Adquisición de Computadoras para la Unidad de Residuos Sólidos :",
-     "c": "5665.15"
+     "c": "5665.15",
+     "f": "EQUIPAMIENTO",
+     "u": "2 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE MOBILIARIO DE CENTRO Y/O CAMPO EXPERIMENTAL : 5.3 Adquisición de Mobiliario para la Unidad de Residuos Sólidos",
-     "c": "0"
+     "c": "0",
+     "f": "MOBILIARIO",
+     "u": "2 NÚMERO DE MOBILIARIO"
     },
     {
      "n": "5.4 Elaboración e implementación del Plan de Gestión de la URS :",
-     "c": "112791.08"
+     "c": "112791.08",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -5114,15 +5996,19 @@
    "a": [
     {
      "n": "6.1 Elaboración e implementación del Plan de buenas prácticas a la población :",
-     "c": "114362.54"
+     "c": "114362.54",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -5131,15 +6017,19 @@
    "a": [
     {
      "n": "IMPLEMENTACION DE SISTEMA DE INFORMACION : 7.1 Elaboración de la Evaluación Ex-Post",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   }
@@ -5150,23 +6040,31 @@
    "a": [
     {
      "n": "1.1 Adquisición de Equipamiento (papeleras, coches de barrido, contenedores, etc.) :",
-     "c": "213243.15"
+     "c": "213243.15",
+     "f": "EQUIPAMIENTO",
+     "u": "219 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "1.2 Adquisición de Herramientas :",
-     "c": "33484.79"
+     "c": "33484.79",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "1.3 Adquisición de Equipos de Protección de Personal :",
-     "c": "31307.92"
+     "c": "31307.92",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -5175,27 +6073,37 @@
    "a": [
     {
      "n": "2.1 Adquisición de camiones compactadoras y camiones baranda para recolección de residuos sólidos :",
-     "c": "1515365.1"
+     "c": "1515365.1",
+     "f": "VEHICULOS",
+     "u": "4 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "2.2 Adquisición de Trimoviles para recolección de residuos sólidos :",
-     "c": "40499.6"
+     "c": "40499.6",
+     "f": "VEHICULOS",
+     "u": "3 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "2.3 Adquisición de Equipos de Protección de Personal :",
-     "c": "34199.01"
+     "c": "34199.01",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "2.4 Elaboración e implementación del Plan de Barrido y Recoelcción :",
-     "c": "455031.78"
+     "c": "455031.78",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -5204,19 +6112,25 @@
    "a": [
     {
      "n": "CONSTRUCCION DE PLANTA DE VALORIZACION : PLANTA DE VALORIZACIÓN Y CENTROS DE ACOPIO",
-     "c": "1609285.48"
+     "c": "1609285.48",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "CAPACITACION DE PLANTA DE VALORIZACION :",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -5225,35 +6139,49 @@
    "a": [
     {
      "n": "4.1 Adquisisción de Minicargador para el relleno sanitario :",
-     "c": "246692.51"
+     "c": "246692.51",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "4.2 Adquisición de Compactador de residuos sólidos en relleno sanitario :",
-     "c": "850251.71"
+     "c": "850251.71",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "4.3 Adquisisción de Volquete para relleno sanitario :",
-     "c": "279473"
+     "c": "279473.0",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "CONSTRUCCION DE RELLENO SANITARIO :",
-     "c": "12675601.68"
+     "c": "12675601.68",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "IMPLEMENTACION DE RELLENO SANITARIO : ADMINISTRADOR DE CONTRATOS DE OBRA",
-     "c": "33297.42"
+     "c": "33297.42",
+     "f": "INTANGIBLES",
+     "u": "7 N° DE INFORMES"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "OTRAS ACCIONES DE INFRAESTRUCTURA : 4.8. Acciones complementarias para la puesta en marcha de la infraestructura.",
-     "c": "358588.17"
+     "c": "358588.17",
+     "f": "INFRAESTRUCTURA",
+     "u": "6 ESPACIOS FISICOS"
     }
    ]
   },
@@ -5262,27 +6190,37 @@
    "a": [
     {
      "n": "5.1 Adquisición de camioneta para gestión de Unidad de Residuos Sólidos :",
-     "c": "124677.18"
+     "c": "124677.18",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "5.2 Adquisición de Computadoras para la Unidad de Residuos Sólidos :",
-     "c": "5665.15"
+     "c": "5665.15",
+     "f": "EQUIPAMIENTO",
+     "u": "2 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE MOBILIARIO :",
-     "c": "0"
+     "c": "0",
+     "f": "MOBILIARIO",
+     "u": "2 NÚMERO DE MOBILIARIO"
     },
     {
      "n": "5.4 Elaboración e implementación del Plan de Gestión de la URS :",
-     "c": "168128.7"
+     "c": "168128.7",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -5291,15 +6229,19 @@
    "a": [
     {
      "n": "6.1 Elaboración e implementación del Plan de buenas prácticas a la población :",
-     "c": "159762.53"
+     "c": "159762.53",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -5308,15 +6250,19 @@
    "a": [
     {
      "n": "CAPACITACION DE INFORMACION : EVALUACION EXPOST",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   }
@@ -5560,23 +6506,31 @@
    "a": [
     {
      "n": "ADQUISICIÓN DE CELDAS PARA RESIDUOS : EQUIPAMIENTO PARA ALMACENAMIENTO DE RESIDUOS SOLIDOS",
-     "c": "297120.38"
+     "c": "297120.38",
+     "f": "EQUIPAMIENTO",
+     "u": "325 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICIÓN DE CELDAS PARA RESIDUOS : ADQUISICION DE HERRAMIENTAS PARA EL BARRIDO Y RECOLECCION DE RESIDUOS SOLIDOS",
-     "c": "60140.28"
+     "c": "60140.28",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICIÓN DE ESTRUCTURA DE PROTECCION : ADQUISISCION DE EQUIPOS DE PROTECCION DE PERSONAL PARA BARRIDO DE RESIDUOS SOLIDOS",
-     "c": "74312.84"
+     "c": "74312.84",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -5585,27 +6539,37 @@
    "a": [
     {
      "n": "ADQUISICIÓN DE COMPACTADORA DE RESIDUOS :",
-     "c": "1682655.82"
+     "c": "1682655.82",
+     "f": "VEHICULOS",
+     "u": "5 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "ADQUISICIÓN DE TRIMÓVILES :",
-     "c": "53999.47"
+     "c": "53999.47",
+     "f": "VEHICULOS",
+     "u": "4 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "ADQUISICIÓN DE ESTRUCTURA DE PROTECCION : ADQUISISCION DE EQUIPOS DE PROTECCION DE PERSONAL PARA LA RECOLECCION DE RESIDUOS SOLIDOS",
-     "c": "38398.22"
+     "c": "38398.22",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "CAPACITACIÓN DE RELLENO SANITARIO : ELABORACION E IMPLEMENTACION DEL PLAN DE BARRIDO Y RECOLECCION DE RESIDUOS SOLIDOS",
-     "c": "127516.19"
+     "c": "127516.19",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -5614,19 +6578,25 @@
    "a": [
     {
      "n": "CONSTRUCCIÓN DE PLANTA DE VALORIZACIÓN :",
-     "c": "638867.04"
+     "c": "638867.04",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "CAPACITACIÓN DE PLANTA DE VALORIZACIÓN :",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -5635,31 +6605,43 @@
    "a": [
     {
      "n": "ADQUISICIÓN DE MINICARGADOR :",
-     "c": "163981.37"
+     "c": "163981.37",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "ADQUISICIÓN DE COMPACTADORA DE RESIDUOS : COMPACTADOR DE RELLENO SANITARIO",
-     "c": "850251.71"
+     "c": "850251.71",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "ADQUISICIÓN DE CAMIÓN BARANDA : CAMION VOLQUETE PARA TRANSPORTE DE MATERIAL DE COBERTURA PARA EL RELLENO SANITARIO",
-     "c": "278784.58"
+     "c": "278784.58",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "CONSTRUCCIÓN DE RELLENO SANITARIO :",
-     "c": "7523159.96"
+     "c": "7523159.96",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "CAPACITACIÓN DE RELLENO SANITARIO : ADMINISTRADOR DE CONTRATO DE LA OBRA DEL RELLENO SANITARIO",
-     "c": "355213.25"
+     "c": "355213.25",
+     "f": "INTANGIBLES",
+     "u": "7 N° DE INFORMES"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "325350.13"
+     "c": "325350.13",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -5668,27 +6650,37 @@
    "a": [
     {
      "n": "ADQUISICIÓN DE VEHÍCULO PARA SUPERVISIÓN :",
-     "c": "124573.36"
+     "c": "124573.36",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "ADQUISICIÓN DE RELLENO SANITARIO : adquisición DE EQUIPO DE COMPUTO PARA LA GESTION DE LA UNIDAD DE RESIDUOS SOLIDOS",
-     "c": "5665.15"
+     "c": "5665.15",
+     "f": "EQUIPAMIENTO",
+     "u": "2 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICIÓN DE RELLENO SANITARIO : adquisición DE EQUIPO MOBILIARIO PARA LA GESTION DE LA UNIDAD DE RESIDUOS SOLIDOS",
-     "c": "0"
+     "c": "0",
+     "f": "MOBILIARIO",
+     "u": "2 NÚMERO DE MOBILIARIO"
     },
     {
      "n": "CAPACITACIÓN DE RELLENO SANITARIO : FORTALECIMIENTO DE CAPACIDADES DE LA UNIDADES DE RESIDUOS SÓLIDOS",
-     "c": "143611.39"
+     "c": "143611.39",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -5697,15 +6689,19 @@
    "a": [
     {
      "n": "CAPACITACIÓN DE RELLENO SANITARIO : BUENAS PRACTICAS A LA POBLACION EN TEMAS DE GESTION DE RESIDUOS SOLIDOS DOMESTICOS",
-     "c": "132924.21"
+     "c": "132924.21",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -5714,15 +6710,19 @@
    "a": [
     {
      "n": "CAPACITACIÓN DE RELLENO SANITARIO : EVALUACION EX-POST",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   }
@@ -5733,23 +6733,31 @@
    "a": [
     {
      "n": "1.1 Adquisición de Equipamiento (papeleras, coches de barrido, contenedores, etc.) :",
-     "c": "36211.7"
+     "c": "36211.7",
+     "f": "EQUIPAMIENTO",
+     "u": "25 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "1.2 Adquisición de Herramientas :",
-     "c": "14556.04"
+     "c": "14556.04",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "1.3 Adquisición de Equipos de Protección de Personal :",
-     "c": "16820.31"
+     "c": "16820.31",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -5758,27 +6766,37 @@
    "a": [
     {
      "n": "2.1 Adquisición de camiones compactadoras y camiones baranda para recolección de residuos sólidos :",
-     "c": "618944.42"
+     "c": "618944.42",
+     "f": "VEHICULOS",
+     "u": "2 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "2.2 Adquisición de Trimoviles para recolección de residuos sólidos :",
-     "c": "13499.87"
+     "c": "13499.87",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "2.3 Adquisición de Equipos de Protección de Personal :",
-     "c": "9696.11"
+     "c": "9696.11",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "2.4 Elaboración e implementación del Plan de Barrido y Recolección :",
-     "c": "12553.26"
+     "c": "12553.26",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -5787,19 +6805,25 @@
    "a": [
     {
      "n": "CONSTRUCCIÓN DE PLANTA DE VALORIZACIÓN : pLANTA DE REAPROVECHAMIENTO DE RESIDUOS SOLIDOS ORGANICOS E INORGANICOS",
-     "c": "332700.28"
+     "c": "332700.28",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "CAPACITACIÓN DE PLANTA DE VALORIZACIÓN : rECICLADORES",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -5808,23 +6832,31 @@
    "a": [
     {
      "n": "4.1 Adquisisción de Minicargador para el relleno sanitario :",
-     "c": "260447.26"
+     "c": "260447.26",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "CONSTRUCCIÓN DE RELLENO SANITARIO :",
-     "c": "3182026.34"
+     "c": "3182026.34",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "CAPACITACIÓN DE RELLENO SANITARIO : Administrdos de Obra",
-     "c": "290865.62"
+     "c": "290865.62",
+     "f": "INTANGIBLES",
+     "u": "7 N° DE INFORMES"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "138917"
+     "c": "138917.0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "45515.4"
+     "c": "45515.4",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -5833,27 +6865,37 @@
    "a": [
     {
      "n": "5.1 Adquisición de camioneta para gestión de Unidad de Residuos Sólidos :",
-     "c": "124541.94"
+     "c": "124541.94",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "5.2 Adquisición de Computadoras para la Unidad de Residuos Sólidos :",
-     "c": "5665.15"
+     "c": "5665.15",
+     "f": "EQUIPAMIENTO",
+     "u": "2 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICIÓN DE KIT AGENTE COMUNITARIO : mOBILIARIO PARA urs",
-     "c": "0"
+     "c": "0",
+     "f": "MOBILIARIO",
+     "u": "2 NÚMERO DE MOBILIARIO"
     },
     {
      "n": "5.4 Elaboración e implementación del Plan de Gestión de la URS :",
-     "c": "142030.04"
+     "c": "142030.04",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -5862,15 +6904,19 @@
    "a": [
     {
      "n": "6.1 Elaboración e implementación del Plan de buenas prácticas a la población :",
-     "c": "119307.21"
+     "c": "119307.21",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -5879,15 +6925,19 @@
    "a": [
     {
      "n": "CAPACITACIÓN DE RELLENO SANITARIO : Evaluación Ex-post",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   }
@@ -5898,95 +6948,139 @@
    "a": [
     {
      "n": "ADQUISICION DE PAPELERA : Adquisición de papeleras de 70 lt con instalación",
-     "c": "88783.2"
+     "c": "88783.2",
+     "f": "EQUIPAMIENTO",
+     "u": "171 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE CONTENEDOR : Adquisición de contenedores (9 m3)",
-     "c": "568397.18"
+     "c": "568397.18",
+     "f": "EQUIPAMIENTO",
+     "u": "26 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE COCHE DE BARRIDO : Adquisición de Coches de barrido de polietileno de alta densidad. 120 litros",
-     "c": "66121.3"
+     "c": "66121.3",
+     "f": "EQUIPAMIENTO",
+     "u": "232 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Casillero metálicos barrido ( lockers de 3 cuerpos de 12 casilleros)",
-     "c": "15200"
+     "c": "15200.0",
+     "f": "EQUIPAMIENTO",
+     "u": "20 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Conos de seguridad",
-     "c": "9870.4"
+     "c": "9870.4",
+     "f": "EQUIPAMIENTO",
+     "u": "496 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Escobas de baja policia",
-     "c": "24552"
+     "c": "24552.0",
+     "f": "EQUIPAMIENTO",
+     "u": "1488 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Escobas metalicas",
-     "c": "41515.2"
+     "c": "41515.2",
+     "f": "EQUIPAMIENTO",
+     "u": "1488 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Recogedor Metálico",
-     "c": "5740"
+     "c": "5740.0",
+     "f": "EQUIPAMIENTO",
+     "u": "496 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Camisaco ( Barredores )",
-     "c": "48180"
+     "c": "48180.0",
+     "f": "EQUIPAMIENTO",
+     "u": "876 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Pantalón de drill ( Barredores)",
-     "c": "41172"
+     "c": "41172.0",
+     "f": "EQUIPAMIENTO",
+     "u": "876 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Polo ( Barredores)",
-     "c": "15768"
+     "c": "15768.0",
+     "f": "EQUIPAMIENTO",
+     "u": "876 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Gorro ( barredores)",
-     "c": "7008"
+     "c": "7008.0",
+     "f": "EQUIPAMIENTO",
+     "u": "438 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Guante respirable ( Barredores )",
-     "c": "10512"
+     "c": "10512.0",
+     "f": "EQUIPAMIENTO",
+     "u": "1488 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Mascarilla de Drill ( Barredores )",
-     "c": "5256"
+     "c": "5256.0",
+     "f": "EQUIPAMIENTO",
+     "u": "876 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Botines de Cuero ( Barredores )",
-     "c": "26718"
+     "c": "26718.0",
+     "f": "EQUIPAMIENTO",
+     "u": "438 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Mochila ( Barredores )",
-     "c": "7008"
+     "c": "7008.0",
+     "f": "EQUIPAMIENTO",
+     "u": "438 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Botas de jebe con forro (Barredores)",
-     "c": "0"
+     "c": "0",
+     "f": "EQUIPAMIENTO",
+     "u": "248 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Adquisición de Máquina Barredora vial mecánica aspirante",
-     "c": "750000"
+     "c": "750000.0",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "IMPLEMENTACION DE DOCUMENTO DE GESTION : Elaboración de Expediente técnico",
-     "c": "14999.95"
+     "c": "14999.95",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "CONSTRUCCION DE AMBIENTE COMPLEMENTARIO : Construcción de Locales descentralizados de barrido",
-     "c": "695329.83"
+     "c": "695329.83",
+     "f": "INFRAESTRUCTURA",
+     "u": "4 AMBIENTES"
     },
     {
      "n": "IMPLEMENTACION DE TALLER : Diseño de un plan-manual de Barrido de calles y Capacitacion a personal",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE INFORMES"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -5995,223 +7089,331 @@
    "a": [
     {
      "n": "ADQUISICION DE TERRENO : Costo de terreno",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESTRUCTURAS FISICAS"
     },
     {
      "n": "CONSTRUCCION DE PLANTA DE TRANSFERENCIA : Estructuras (Planta de Transferencia)",
-     "c": "3345138.68"
+     "c": "3345138.68",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESTRUCTURAS FISICAS"
     },
     {
      "n": "CONSTRUCCION DE PLANTA DE TRANSFERENCIA : Arquitectura (Planta de Transferencia)",
-     "c": "1632981.94"
+     "c": "1632981.94",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESTRUCTURAS FISICAS"
     },
     {
      "n": "CONSTRUCCION DE PLANTA DE TRANSFERENCIA : Instalaciones Sanitarias (Planta de Transferencia)",
-     "c": "415280.64"
+     "c": "415280.64",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESTRUCTURAS FISICAS"
     },
     {
      "n": "CONSTRUCCION DE PLANTA DE TRANSFERENCIA : Instalaciones Eléctricas (Planta de Transferencia)",
-     "c": "1072257.15"
+     "c": "1072257.15",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESTRUCTURAS FISICAS"
     },
     {
      "n": "CONSTRUCCION DE INFRAESTRUCTURA DE ALMACENAMIENTO : Instalaciones Mecánicas",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESTRUCTURAS FISICAS"
     },
     {
      "n": "CONSTRUCCION DE INFRAESTRUCTURA DE ALMACENAMIENTO : Instalaciones Mecánicas (ACI-Detección, Extención)",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 AMBIENTES"
     },
     {
      "n": "CONSTRUCCION DE INFRAESTRUCTURA DE ALMACENAMIENTO : Obras Exteriores",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESTRUCTURAS FISICAS"
     },
     {
      "n": "CONSTRUCCION DE INFRAESTRUCTURA DE ALMACENAMIENTO : Señalización y seguridad",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESTRUCTURAS FISICAS"
     },
     {
      "n": "CONSTRUCCION DE INFRAESTRUCTURA DE ALMACENAMIENTO : Vías de Acceso Exterior",
-     "c": "354091.08"
+     "c": "354091.08",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESTRUCTURAS FISICAS"
     },
     {
      "n": "CONSTRUCCION DE INFRAESTRUCTURA DE ALMACENAMIENTO : Medidas de mitigación de impacto ambiental",
-     "c": "5900"
+     "c": "5900.0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE INFORMES"
     },
     {
      "n": "CONSTRUCCION DE PLANTA DE TRANSFERENCIA : Obras para todo el proyecto (Planta de Transferencia)",
-     "c": "1437379.37"
+     "c": "1437379.37",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "CONSTRUCCION DE PLANTA DE TRANSFERENCIA : Pista y veredas (planta de transferencia)",
-     "c": "1587182.96"
+     "c": "1587182.96",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "CONSTRUCCION DE PLANTA DE TRANSFERENCIA : Equipamiento y Amoblamiento (Planta de Transferencia)",
-     "c": "677319.32"
+     "c": "677319.32",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "CONSTRUCCION DE PLANTA DE TRANSFERENCIA : Obras provisionales de vías de acceso Planta de Transferencia",
-     "c": "267576.84"
+     "c": "267576.84",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "ADQUISICION DE PLANTA DE TRANSFERENCIA : Puente de concreto de vías de acceso Planta de Transferencia",
-     "c": "537675.6"
+     "c": "537675.6",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "ADQUISICION DE CAMION COMPACTADOR : Adquisición de vehículo compactador (capacidad de 15 m3)",
-     "c": "2303534.82"
+     "c": "2303534.82",
+     "f": "VEHICULOS",
+     "u": "6 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "ADQUISICION DE CAMION COMPACTADOR : Adquisición de vehículo compactador (capacidad de 19 m3)",
-     "c": "873409"
+     "c": "873409.0",
+     "f": "VEHICULOS",
+     "u": "2 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "ADQUISICION DE VEHICULO : Adquisición de camión ampliroll (capacidad de 5 tn)",
-     "c": "442335.18"
+     "c": "442335.18",
+     "f": "VEHICULOS",
+     "u": "2 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "ADQUISICION DE SISTEMA : Adquisición de sistema de Izadora (contenedores)",
-     "c": "0"
+     "c": "0",
+     "f": "EQUIPAMIENTO",
+     "u": "2 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE CAMION MADRINA : Adquisicion de tracto de camion madrina",
-     "c": "895712.26"
+     "c": "895712.26",
+     "f": "VEHICULOS",
+     "u": "2 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "ADQUISICION DE CAMIÓN PLATAFORMA : Adquisicion de carreta (25 toneladas, para camion madrina)",
-     "c": "761525.64"
+     "c": "761525.64",
+     "f": "EQUIPAMIENTO",
+     "u": "3 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE CAMION BARANDA : Adquisición de camion baranda (capacidad 19.8 m3)",
-     "c": "270189.12"
+     "c": "270189.12",
+     "f": "VEHICULOS",
+     "u": "2 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "ADQUISICION DE TRIMOVIL : Adquisicion de trimóviles (1 m3)",
-     "c": "0"
+     "c": "0",
+     "f": "VEHICULOS",
+     "u": "24 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE AMBIENTE COMPLEMENTARIO : ESCOBA",
-     "c": "5148"
+     "c": "5148.0",
+     "f": "EQUIPAMIENTO",
+     "u": "312 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE AMBIENTE COMPLEMENTARIO : RECOGEDORES METALICOS",
-     "c": "1196"
+     "c": "1196.0",
+     "f": "EQUIPAMIENTO",
+     "u": "104 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE AMBIENTE COMPLEMENTARIO : Pala cuchara",
-     "c": "2381.6"
+     "c": "2381.6",
+     "f": "EQUIPAMIENTO",
+     "u": "104 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE AMBIENTE COMPLEMENTARIO : Zapas",
-     "c": "3120"
+     "c": "3120.0",
+     "f": "EQUIPAMIENTO",
+     "u": "104 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Rastrillos",
-     "c": "1549.6"
+     "c": "1549.6",
+     "f": "EQUIPAMIENTO",
+     "u": "104 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Caja Industrial",
-     "c": "4500"
+     "c": "4500.0",
+     "f": "EQUIPAMIENTO",
+     "u": "100 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Conos de seguridad",
-     "c": "3223.8"
+     "c": "3223.8",
+     "f": "EQUIPAMIENTO",
+     "u": "162 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Camisaco (ayudante y chofer de trimóvil)",
-     "c": "34980"
+     "c": "34980.0",
+     "f": "EQUIPAMIENTO",
+     "u": "636 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Pantalón (ayudante y chofer de trimóvil)",
-     "c": "29892"
+     "c": "29892.0",
+     "f": "EQUIPAMIENTO",
+     "u": "636 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Polos (ayudante y chofer de trimóvil)",
-     "c": "11448"
+     "c": "11448.0",
+     "f": "EQUIPAMIENTO",
+     "u": "636 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Gorro (ayudante y chofer de trimóvil)",
-     "c": "5088"
+     "c": "5088.0",
+     "f": "EQUIPAMIENTO",
+     "u": "318 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Chaleco reflectivo (ayudante y chofer de trimóvil)",
-     "c": "795"
+     "c": "795.0",
+     "f": "EQUIPAMIENTO",
+     "u": "15 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Lentes (ayudante y chofer de trimóvil)",
-     "c": "1590"
+     "c": "1590.0",
+     "f": "EQUIPAMIENTO",
+     "u": "318 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Guantes de cuero reforzados (ayudante y chofer de trimóvil)",
-     "c": "6201"
+     "c": "6201.0",
+     "f": "EQUIPAMIENTO",
+     "u": "477 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Mascarilla de drill (ayudante y chofer de trimóvil)",
-     "c": "5724"
+     "c": "5724.0",
+     "f": "EQUIPAMIENTO",
+     "u": "954 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Botin de cuero (ayudante y chofer de trimóvil)",
-     "c": "19398"
+     "c": "19398.0",
+     "f": "EQUIPAMIENTO",
+     "u": "318 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Botas de jebe con forro (ayudante y chofer de trimóvil)",
-     "c": "17172"
+     "c": "17172.0",
+     "f": "EQUIPAMIENTO",
+     "u": "318 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Mochilas (ayudante y chofer de trimóvil)",
-     "c": "2544"
+     "c": "2544.0",
+     "f": "EQUIPAMIENTO",
+     "u": "159 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Guante de cuero flexibles corto (ayudante y chofer de trimóvil)",
-     "c": "11448"
+     "c": "11448.0",
+     "f": "EQUIPAMIENTO",
+     "u": "954 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Guantes de cuero flexible corto (choferes y supervisores)",
-     "c": "312"
+     "c": "312.0",
+     "f": "EQUIPAMIENTO",
+     "u": "26 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Camisaco (choferes y supervisores)",
-     "c": "17160"
+     "c": "17160.0",
+     "f": "EQUIPAMIENTO",
+     "u": "312 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Pantalón de drill (choferes y supervisores)",
-     "c": "14664"
+     "c": "14664.0",
+     "f": "EQUIPAMIENTO",
+     "u": "312 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Polos (choferes y supervisores)",
-     "c": "5652"
+     "c": "5652.0",
+     "f": "EQUIPAMIENTO",
+     "u": "314 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Gorro taslan (choferes y supervisores)",
-     "c": "2304"
+     "c": "2304.0",
+     "f": "EQUIPAMIENTO",
+     "u": "144 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Botin de cuero (choferes y supervisores)",
-     "c": "8784"
+     "c": "8784.0",
+     "f": "EQUIPAMIENTO",
+     "u": "144 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Mochilas (choferes y supervisores)",
-     "c": "208"
+     "c": "208.0",
+     "f": "EQUIPAMIENTO",
+     "u": "13 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : Guante de cuero reforzados (choferes y supervisores)",
-     "c": "845"
+     "c": "845.0",
+     "f": "EQUIPAMIENTO",
+     "u": "65 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "IMPLEMENTACION DE TALLER : Diseño de un plan-manual de recolección y capacitacion a personal",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "IMPLEMENTACION DE TALLER : Diseño de rutas de recolección de residuos sólidos y capacitación de personal",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -6220,31 +7422,43 @@
    "a": [
     {
      "n": "IMPLEMENTACION DE TALLER : Diseño de un plan-manual de reaprovechamiento y Capacitacion a personal",
-     "c": "46000"
+     "c": "46000.0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "IMPLEMENTACION DE TALLER : Diseño de un plan de promoción para inserción y formalización de recicladores informales",
-     "c": "72000"
+     "c": "72000.0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "IMPLEMENTACION DE TALLER : Diseño de un plan de recoleccion selectiva en la fuente",
-     "c": "59953.18"
+     "c": "59953.18",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : ADQUISICION DE HERRAMIENTA",
-     "c": "36591.19"
+     "c": "36591.19",
+     "f": "EQUIPAMIENTO",
+     "u": "280 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : ADQUISICION DE EPP",
-     "c": "81849.6"
+     "c": "81849.6",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -6253,67 +7467,97 @@
    "a": [
     {
      "n": "ADQUISICION DE VEHICULO : Camión tracto de transporte de la estación de transferencia al relleno sanitario",
-     "c": "0"
+     "c": "0",
+     "f": "EQUIPAMIENTO",
+     "u": "4 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE VEHICULO : Caja rejolcador de transporte de la estación de transferencia al relleno sanitario",
-     "c": "0"
+     "c": "0",
+     "f": "EQUIPAMIENTO",
+     "u": "6 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE TRACTOR DE ORUGAS : Tractor Sobre Orugas para relleno sanitario",
-     "c": "3120000"
+     "c": "3120000.0",
+     "f": "EQUIPAMIENTO",
+     "u": "2 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE CARGADOR FRONTAL : Cargador frontal sobre llantas 100-125-HP -CAT para relleno sanitario",
-     "c": "2232430"
+     "c": "2232430.0",
+     "f": "EQUIPAMIENTO",
+     "u": "2 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE VEHICULO : Camioneta para personal de relleno sanitario",
-     "c": "346566.43"
+     "c": "346566.43",
+     "f": "VEHICULOS",
+     "u": "2 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "ADQUISICION DE GENERADOR ELECTRICO : Generador Eléctrico para relleno sanitario",
-     "c": "120293.92"
+     "c": "120293.92",
+     "f": "EQUIPAMIENTO",
+     "u": "2 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPOS COMPLEMENTARIOS : Electrobomba para relleno sanitario",
-     "c": "107115.68"
+     "c": "107115.68",
+     "f": "EQUIPAMIENTO",
+     "u": "2 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE VOLQUETE :",
-     "c": "1639176"
+     "c": "1639176.0",
+     "f": "VEHICULOS",
+     "u": "2 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "CONSTRUCCION DE RELLENO SANITARIO :",
-     "c": "31348712.37"
+     "c": "31348712.37",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "ADQUISICION DE EXCAVADORA HIDRAULICA : Excavadora sobre Orugas de 2m3 capacidad carga",
-     "c": "1340000"
+     "c": "1340000.0",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "ADQUISICION DE VEHICULO : ADQUISICION DE MINIBUS",
-     "c": "248500"
+     "c": "248500.0",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : ADQUISICION DE HERRAMIENTA",
-     "c": "12703.15"
+     "c": "12703.15",
+     "f": "EQUIPAMIENTO",
+     "u": "140 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPO DE ALMACENAMIENTO : ADQUISICION DE EPP",
-     "c": "50444.8"
+     "c": "50444.8",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "IMPLEMENTACION DE TALLER : Diseño de un manual de disposicion final de residuos sólidos y capacitación a personal:",
-     "c": "50000"
+     "c": "50000.0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -6322,192 +7566,275 @@
    "a": [
     {
      "n": "IMPLEMENTACION DE TALLER : Diseño e implementacion de un Programa para el Fortalecimiento de capacidades a nivel de funcionarios (instrumentos de gestión y Manejo de Residuos, legislación ambiental, gestión tributaria)",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "IMPLEMENTACION DE TALLER : Diseño de un Plan Operativo Anual (POA) para la Oficina de Salud y Limpieza Pública",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "IMPLEMENTACION DE TALLER : Actualización de PIGARS",
-     "c": "34000"
+     "c": "34000.0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "IMPLEMENTACION DE TALLER : Diseño de un plan de estrategias para la supervisión y monitoreo del servicio de limpieza",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "IMPLEMENTACION DE TALLER : Capacitación a personal técnico",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE INFORMES"
     },
     {
      "n": "ADQUISICION DE VEHICULO : Adquisición de una camioneta 4 x 4",
-     "c": "95300"
+     "c": "95300.0",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "ADQUISICION DE VEHICULO : Adquisición de moto lineal",
-     "c": "31707"
+     "c": "31707.0",
+     "f": "EQUIPAMIENTO",
+     "u": "1 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPOS COMPLEMENTARIOS : Adquisición de equipos para rastreo satelital",
-     "c": "27000"
+     "c": "27000.0",
+     "f": "EQUIPAMIENTO",
+     "u": "1 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPOS COMPLEMENTARIOS : Adquisición de equipos de comunicación (radio y antena)",
-     "c": "8740"
+     "c": "8740.0",
+     "f": "EQUIPAMIENTO",
+     "u": "1 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPOS COMPLEMENTARIOS : Central de comunicación (radio y antena)",
-     "c": "0"
+     "c": "0",
+     "f": "EQUIPAMIENTO",
+     "u": "1 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPOS COMPLEMENTARIOS : Adquisicion de alcoholimetros",
-     "c": "3544"
+     "c": "3544.0",
+     "f": "EQUIPAMIENTO",
+     "u": "1 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPOS COMPLEMENTARIOS : Software Sistema de Informacion Geografica (SIG)",
-     "c": "0"
+     "c": "0",
+     "f": "EQUIPAMIENTO",
+     "u": "1 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE EQUIPOS COMPLEMENTARIOS : Adquisición de equipos de cómputo",
-     "c": "9420"
+     "c": "9420.0",
+     "f": "EQUIPAMIENTO",
+     "u": "1 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE TELEVISOR : Adquisicion de pantalla -52 pulgadas (seguimiento de vehiculos)",
-     "c": "4000"
+     "c": "4000.0",
+     "f": "EQUIPAMIENTO",
+     "u": "1 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "IMPLEMENTACION DE TALLER : Diseño del plan de estrategias para incrementar la recaudación tributaria del servicio de limpieza pública",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "ADQUISICION DE EQUIPOS COMPLEMENTARIOS : Adquisición de equipos de comunicación (radio y antena)",
-     "c": "0"
+     "c": "0",
+     "f": "EQUIPAMIENTO",
+     "u": "1 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "ADQUISICION DE VEHICULO : Adquisición de una camioneta SUV (UGP)",
-     "c": "47600"
+     "c": "47600.0",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "IMPLEMENTACION DE TALLER : Capacitación a personal administrativo y financiero para la implantación del software (Módulo de rentas de arbitrios municipales - MEF)",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE INFORMES"
     },
     {
      "n": "IMPLEMENTACION DE TALLER : Consultoría para el cumplimiento de las metas municipales enmarcadas en el Plan de Incentivos para la Mejora de la Gestión Municipal (PI)",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE INFORMES"
     },
     {
      "n": "IMPLEMENTACION DE TALLER : Actualización de base de datos de contribuyentes para la determinacion de arbitrios (SATCH)",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "IMPLEMENTACION DE TALLER :",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "IMPLEMENTACION DE TALLER : Consultoría para el cumplimiento de las metas municipales enmarcadas en el Plan de Incentivos para la Mejora de la Gestión Municipal (PI)",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE INFORMES"
     },
     {
      "n": "IMPLEMENTACION DE TALLER : Actualización de base de datos de contribuyentes para la determinacion de arbitrios (SATCH)",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "IMPLEMENTACION DE TALLER : Diseño de campaña de sensibilización y comunicación radial sobre el pago del servicio",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
-    }
-   ]
-  },
-  {
-   "n": "6 ADECUADAS PRACTICAS DE LA POBLACION",
-   "a": [
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
+    },
     {
      "n": "IMPLEMENTACION DE TALLER : Plan Piloto de eduación Ambiental",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "IMPLEMENTACION DE TALLER :",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE INFORMES"
     },
     {
      "n": "IMPLEMENTACION DE TALLER : Elaboración de maqueta de relleno sanitario",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE INFORMES"
     },
     {
      "n": "IMPLEMENTACION DE TALLER : Traje inicial de volantes para el fomento de buenas prácticas ambientales",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE INFORMES"
     },
     {
      "n": "IMPLEMENTACION DE TALLER : Diseño de material de sensibilización ambiental",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "IMPLEMENTACION DE TALLER : Implementación Piloto de Murales y Paneles",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE INFORMES"
     },
     {
      "n": "IMPLEMENTACION DE TALLER : Piloto de talleres de informativos sobre el uso del presupuesto de limpieza pública",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "IMPLEMENTACION DE TALLER : Diseño inicial de las inversiones efectuadas y los beneficios",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "IMPLEMENTACION DE TALLER : Diseño de campaña de sensibilización y comunicación radial sobre el pago del servicio",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "IMPLEMENTACION DE TALLER : Piloto de reducción de residuos : Campaña bolsa sana",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "IMPLEMENTACION DE TALLER : Validación del programa de sensibilización y concientización radial",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "IMPLEMENTACION DE TALLER : Validación del programa de sensibilización y concientización radial",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "IMPLEMENTACION DE TALLER : Validación de los instrumentos de sensibilización a organizaciones (Comedores Populares, vaso de leche, etc)",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "IMPLEMENTACION DE TALLER : Validación de la campaña de sensibilización casa por casa",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "IMPLEMENTACION DE TALLER : Diseño de un plan para difusión y sensibilización en reducción, reuso, reciclaje de residuos para la población",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "IMPLEMENTACION DE TALLER : Traje inicial de volantes para la difusión de horarios y rutas",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "IMPLEMENTACION DE TALLER : Diseño de campaña de difusión de las rutas de horario del servicio",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "IMPLEMENTACION DE TALLER : Realización de plan piloto de concursos interescolares",
-     "c": "0"
+     "c": "0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   }
@@ -8772,23 +10099,31 @@
    "a": [
     {
      "n": "1.1 Adquisición de Equipamiento (papeleras, coches de barrido, contenedores, etc.) :",
-     "c": "187376.66"
+     "c": "187376.66",
+     "f": "EQUIPAMIENTO",
+     "u": "218 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "1.2 ADQUISICION DE HERRAMIENTAS :",
-     "c": "106346.58"
+     "c": "106346.58",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "1.3 ADQUISICION DE EQUIPOS DE PROTECCION DE PERSONAL :",
-     "c": "156028"
+     "c": "156028.0",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -8797,27 +10132,37 @@
    "a": [
     {
      "n": "2.1 Adquisición de camiones compactadoras y camiones baranda para recolección de residuos sólidos :",
-     "c": "4606518"
+     "c": "4606518.0",
+     "f": "VEHICULOS",
+     "u": "12 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "2.2 Adquisición de Trimoviles para recolección de residuos sólidos :",
-     "c": "121494"
+     "c": "121494.0",
+     "f": "VEHICULOS",
+     "u": "9 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "2.3 ADQUISICIÓN DE EQUIPOS DE PROTECCIÓN DE PERSONAL (EPP) :",
-     "c": "92410.15"
+     "c": "92410.15",
+     "f": "EQUIPAMIENTO",
+     "u": "1 KIT DE EQUIPAMIENTO"
     },
     {
      "n": "2.4 Elaboración e implementación del Plan de Barrido y Recoelcción :",
-     "c": "150050"
+     "c": "150050.0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -8826,19 +10171,25 @@
    "a": [
     {
      "n": "3.1 Construcción de la Planta de Reaprovechamiento (Incluye equipamiento) :",
-     "c": "966631.31"
+     "c": "966631.31",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "3.2 Diseño plan de reinserción y formalización de recicladores y recolección selectiva de la fuente :",
-     "c": "30000"
+     "c": "30000.0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -8847,31 +10198,43 @@
    "a": [
     {
      "n": "4.1 Adquisisción de Minicargador para el relleno sanitario :",
-     "c": "163981.37"
+     "c": "163981.37",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "4.2 Adquisición de Compactador de residuos sólidos en relleno sanitario :",
-     "c": "1241834.96"
+     "c": "1241834.96",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "4.3 Adquisisción de Volquete para relleno sanitario :",
-     "c": "319992"
+     "c": "319992.0",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "4.4 Construcción del Relleno Sanitario 1era Etapa (Incluye equipamiento) :",
-     "c": "12981359.79"
+     "c": "12981359.79",
+     "f": "INFRAESTRUCTURA",
+     "u": "1 ESPACIOS FISICOS"
     },
     {
      "n": "4.5 Administración del Contrato para la ejecución de la Obra :",
-     "c": "130000"
+     "c": "130000.0",
+     "f": "INTANGIBLES",
+     "u": "7 N° DE INFORMES"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -8880,27 +10243,37 @@
    "a": [
     {
      "n": "5.1 Adquisición de camioneta para gestión de Unidad de Residuos Sólidos :",
-     "c": "135965"
+     "c": "135965.0",
+     "f": "VEHICULOS",
+     "u": "1 NÚMERO DE VEHÍCULOS"
     },
     {
      "n": "5.2 Adquisición de Computadoras para la Unidad de Residuos Sólidos :",
-     "c": "9286.6"
+     "c": "9286.6",
+     "f": "EQUIPAMIENTO",
+     "u": "2 NÚMERO DE EQUIPAMIENTO"
     },
     {
      "n": "5.3 Adquisición de Mobiliario para la Unidad de Residuos Sólidos :",
-     "c": "1750"
+     "c": "1750.0",
+     "f": "MOBILIARIO",
+     "u": "2 MODULOS DE MOBILIARIO"
     },
     {
      "n": "5.4 Elaboración e implementación del Plan de Gestión de la URS :",
-     "c": "192000"
+     "c": "192000.0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -8909,15 +10282,19 @@
    "a": [
     {
      "n": "6.1 Elaboración e implementación del Plan de buenas prácticas a la población :",
-     "c": "205000"
+     "c": "205000.0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   },
@@ -8926,15 +10303,19 @@
    "a": [
     {
      "n": "7.1 Elaboración de la Evaluación Ex-Post :",
-     "c": "155000"
+     "c": "155000.0",
+     "f": "INTANGIBLES",
+     "u": "1 N° DE DOCUMENTOS"
     },
     {
      "n": "Gastos Generales por Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     },
     {
      "n": "Inventario físico Covid - 19 :",
-     "c": "0"
+     "c": "0",
+     "f": "INFRAESTRUCTURA"
     }
    ]
   }
