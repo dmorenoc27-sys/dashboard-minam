@@ -236,7 +236,7 @@ body{display:flex;flex-direction:column;height:100vh}
 .sel-txt,.sel-txt *{-webkit-user-select:text!important;user-select:text!important;cursor:text;}*{-webkit-tap-highlight-color:transparent;}</style></head>
 <body><script>
 (function(){
-var _permitir=function(e){return e.target&&e.target.closest&&e.target.closest('.sel-txt');};
+var _permitir=function(e){if(e.target&&e.target.closest&&e.target.closest('.sel-txt'))return true;if(e.clientX==null)return false;var els=document.querySelectorAll('.sel-txt');for(var i=0;i<els.length;i++){var r=els[i].getBoundingClientRect();if(e.clientX>=r.left-10&&e.clientX<=r.right+10&&e.clientY>=r.top-8&&e.clientY<=r.bottom+8)return true;}return false;};
 document.addEventListener('contextmenu',function(e){if(_permitir(e))return;e.preventDefault();return false;});
 document.addEventListener('selectstart',function(e){if(_permitir(e))return;e.preventDefault();return false;});
 document.addEventListener('dragstart',function(e){e.preventDefault();return false;});
