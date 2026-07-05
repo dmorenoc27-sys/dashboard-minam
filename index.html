@@ -232,7 +232,8 @@ body{display:flex;flex-direction:column;height:100vh}
 }
 </style>
 <script src="Dashboard_UE003_MINAM/Datos/datos_update.js"></script>
-<style>body{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}*{-webkit-tap-highlight-color:transparent;}</style></head>
+<style>body{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}
+.sel-txt,.sel-txt *{-webkit-user-select:text!important;user-select:text!important;cursor:text;}*{-webkit-tap-highlight-color:transparent;}</style></head>
 <body><script>
 (function(){
 document.addEventListener('contextmenu',function(e){e.preventDefault();return false;});
@@ -1614,11 +1615,11 @@ cursor:pointer;font-size:13px;color:rgba(255,255,255,.75);
 display:flex;align-items:center;justify-content:center;font-weight:700"
 onmouseover="this.style.background='rgba(180,30,30,.5)'"
 onmouseout="this.style.background='rgba(255,255,255,.07)'">✕</button>
-<div style="font-size:13.5px;font-weight:800;color:#ffffff;letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px">
+<div class="sel-txt" style="font-size:13.5px;font-weight:800;color:#ffffff;letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px">
 CUI ${cui}${p&&p.Programa?' · '+p.Programa:''}${p&&p.Convenio?' / '+p.Convenio:''}
 </div>
-<div style="font-size:17px;font-weight:800;color:#fff;line-height:1.35;max-width:calc(100% - 130px);margin-bottom:8px;text-shadow:0 1px 3px rgba(0,20,0,.28)">
-${nombre}
+<div class="sel-txt" style="font-size:17px;font-weight:800;color:#fff;line-height:1.35;max-width:calc(100% - 130px);margin-bottom:8px;text-shadow:0 1px 3px rgba(0,20,0,.28)">
+${nombre} <button onclick="if(window._copiarCui)_copiarCui('${cui}',event)" title="Copiar CUI y nombre" style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:6px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.15);color:#fff;font-size:11px;cursor:pointer;vertical-align:middle;margin-left:6px;padding:0">📋</button>
 </div>
 <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
 ${(t=>{if(!t)return"";const c={PROYECTO:"#5E35B1",IOARR:"#E65100",PROGRAMA:"#00838F"}[t]||"#546E7A";return`<span style="padding:3px 10px;border-radius:10px;font-size:10px;font-weight:800;background:#fff;color:${c};box-shadow:0 1px 3px rgba(0,0,0,.18);letter-spacing:.4px;white-space:nowrap">${t}</span>`})(p&&p.Tipo_Inversion)}
@@ -2163,6 +2164,17 @@ else if(e.key==='ArrowLeft')_fotoNav(-1);
 document.body.appendChild(lb);}
 window._fotoLbRender();
 lb.style.display='flex';
+};
+window._copiarCui=function(cui,ev){
+if(ev){ev.stopPropagation();}
+var p=(typeof proyectos!=='undefined'&&proyectos.find)?proyectos.find(function(x){return x.CUI===cui;}):null;
+var tx='CUI '+cui+(p&&p.Proyecto?' — '+p.Proyecto:'');
+var btn=ev&&ev.currentTarget;
+var listo=function(){if(!btn)return;var o=btn.innerText;btn.innerText='✓';btn.title='¡Copiado!';
+setTimeout(function(){btn.innerText=o;btn.title='Copiar CUI y nombre';},1300);};
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(tx).then(listo);}
+else{var ta=document.createElement('textarea');ta.value=tx;document.body.appendChild(ta);ta.select();
+try{document.execCommand('copy');}catch(e){}document.body.removeChild(ta);listo();}
 };
 </script>
 <!-- ══ DATOS ACTUALIZADOS MEF ══════════════════════════════════════════════
