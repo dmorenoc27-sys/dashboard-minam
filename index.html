@@ -2096,11 +2096,20 @@ img.style.display='block';
 img.src='foto/'+cui+'_'+meses[0]+'.jpg';
 };
 window._fotoMes=function(cui,ym){var img=document.getElementById('foto-inv-img');if(img){img.style.display='block';img.src='foto/'+cui+'_'+ym+'.jpg';}};
-window._fotoAmpliar=function(img){
-var cui=window._fotoCui||'';
+window._fotoNav=function(d,ev){
+if(ev){ev.stopPropagation();}
+var st=window._fotoLbState;if(!st||st.meses.length<2)return;
+var n=st.idx+d;if(n<0||n>=st.meses.length)return;
+st.idx=n;window._fotoLbRender();
+};
+window._fotoLbRender=function(){
+var st=window._fotoLbState;var lb=document.getElementById('foto-lightbox');
+if(!st||!lb)return;
+var cui=st.cui;
 var p=(typeof proyectos!=='undefined'&&proyectos.find)?(proyectos.find(function(x){return x.CUI===cui;})||{}):{};
-var mm=(img.src.match(/_(20\d{4})\.jpg/)||[])[1];
-var mesTxt=mm?_fotoMesLabel(mm):'';
+var mes=st.meses.length?st.meses[st.idx]:null;
+var src=mes?('foto/'+cui+'_'+mes+'.jpg'):st.src;
+var mesTxt=mes?_fotoMesLabel(mes):'';
 var tipo=p.Tipo_Inversion||'';
 var tc={PROYECTO:'#5E35B1',IOARR:'#E65100',PROGRAMA:'#00838F'}[tipo]||'#546E7A';
 var nombre=(p.Proyecto||('CUI '+cui));
@@ -2108,23 +2117,49 @@ var est=(typeof ssiData!=='undefined'&&ssiData[cui]&&ssiData[cui].est)||'';
 var avfV=(typeof _avFisicoData!=='undefined'&&_avFisicoData[cui]!=null&&_avFisicoData[cui]>=0)?_avFisicoData[cui]:null;
 var avf=avfV!=null?('Avance físico '+(+avfV.toFixed?avfV.toFixed(1):avfV)+'%'):'';
 var dev=(typeof devAcumData!=='undefined'&&devAcumData[cui])?('Dev. acumulado S/ '+(devAcumData[cui]/1e6).toFixed(2)+' M'):'';
-var extra=[est?(est==='ACTIVO'?'\u25CF ACTIVO':'\u25CB CERRADO'):'',avf,dev].filter(Boolean).join('  \u00B7  ');
-var lb=document.getElementById('foto-lightbox');
-if(!lb){lb=document.createElement('div');lb.id='foto-lightbox';
-lb.style.cssText='display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,10,0,.9);flex-direction:column;align-items:center;justify-content:center;cursor:zoom-out;padding:24px;box-sizing:border-box;gap:14px';
-lb.onclick=function(){lb.style.display='none';};
-document.body.appendChild(lb);}
+var extra=[est?(est==='ACTIVO'?'● ACTIVO':'○ CERRADO'):'',avf,dev].filter(Boolean).join('  ·  ');
+var fl=function(dir,on){
+return '<button onclick="_fotoNav('+dir+',event)" title="'+(dir<0?'Mes anterior':'Mes siguiente')+'" '
++'style="position:fixed;'+(dir<0?'left:20px':'right:20px')+';top:50%;transform:translateY(-50%);'
++'width:46px;height:46px;border-radius:50%;border:1.5px solid rgba(255,255,255,'+(on?'.32':'.12')+');'
++'background:rgba(255,255,255,'+(on?'.14':'.04')+');color:'+(on?'#fff':'rgba(255,255,255,.22)')+';'
++'font-size:24px;font-weight:700;cursor:'+(on?'pointer':'default')+';'
++'display:flex;align-items:center;justify-content:center;line-height:1;font-family:inherit;padding:0 0 3px 0">'
++(dir<0?'‹':'›')+'</button>';};
 lb.innerHTML='<div style="max-width:1150px;text-align:center;color:#fff;font-size:15px;font-weight:700;line-height:1.45;text-shadow:0 1px 3px rgba(0,0,0,.4)">'+nombre+'</div>'
-+'<img src="'+img.src+'" style="max-width:94%;max-height:68vh;border-radius:12px;box-shadow:0 8px 40px rgba(0,0,0,.6)">'
++'<img src="'+src+'" style="max-width:88%;max-height:66vh;border-radius:12px;box-shadow:0 8px 40px rgba(0,0,0,.6)">'
++(st.meses.length>1?fl(-1,st.idx>0)+fl(1,st.idx<st.meses.length-1):'')
 +'<div style="max-width:900px;text-align:center;color:#fff">'
 +'<div style="font-size:12px;font-weight:800;letter-spacing:.6px">'
 +'<span style="background:rgba(255,255,255,.16);padding:3px 10px;border-radius:10px">CUI '+cui+'</span>'
 +(tipo?' <span style="background:#fff;color:'+tc+';padding:3px 10px;border-radius:10px">'+tipo+'</span>':'')
-+(p.Departamento?' <span style="background:rgba(255,255,255,.16);padding:3px 10px;border-radius:10px">\uD83D\uDCCD '+p.Departamento+'</span>':'')
-+(mesTxt?' <span style="background:rgba(102,203,0,.28);color:#CFFFB0;padding:3px 10px;border-radius:10px">\uD83D\uDCF7 '+mesTxt+'</span>':'')
++(p.Departamento?' <span style="background:rgba(255,255,255,.16);padding:3px 10px;border-radius:10px">📍 '+p.Departamento+'</span>':'')
++(mesTxt?' <span style="background:rgba(102,203,0,.28);color:#CFFFB0;padding:3px 10px;border-radius:10px">📷 '+mesTxt+'</span>':'')
 +'</div>'
 +(extra?'<div style="font-size:11px;font-weight:600;color:rgba(255,255,255,.75);margin-top:7px">'+extra+'</div>':'')
 +'</div>';
+var pi=document.getElementById('foto-inv-img');if(pi&&mes)pi.src=src;
+var ps=document.getElementById('foto-inv-sel');if(ps&&mes)ps.value=mes;
+};
+window._fotoAmpliar=function(img){
+var cui=window._fotoCui||'';
+var meses=((window._fotoManifest&&window._fotoManifest[cui])||[]).slice().sort();
+var mm=(img.src.match(/_(20\d{4})\.jpg/)||[])[1];
+var idx=mm?meses.indexOf(mm):meses.length-1;if(idx<0)idx=meses.length-1;
+window._fotoLbState={cui:cui,meses:meses,idx:idx,src:img.src};
+var lb=document.getElementById('foto-lightbox');
+if(!lb){lb=document.createElement('div');lb.id='foto-lightbox';
+lb.style.cssText='display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,10,0,.9);flex-direction:column;align-items:center;justify-content:center;cursor:zoom-out;padding:24px;box-sizing:border-box;gap:14px';
+lb.onclick=function(){lb.style.display='none';};
+document.addEventListener('keydown',function(e){
+var l=document.getElementById('foto-lightbox');
+if(!l||l.style.display!=='flex')return;
+if(e.key==='Escape')l.style.display='none';
+else if(e.key==='ArrowRight')_fotoNav(1);
+else if(e.key==='ArrowLeft')_fotoNav(-1);
+});
+document.body.appendChild(lb);}
+window._fotoLbRender();
 lb.style.display='flex';
 };
 </script>
