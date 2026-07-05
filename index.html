@@ -1805,39 +1805,21 @@ var row=function(lbl,val,col,bg,br,sub){return '<div style="background:'+bg+';bo
 return row('PIM',_fmtSol(pim),'#37474F','#F8FFFE','#CFD8DC','Presupuesto Inst. Modificado')
 +((window._brechaHA&&_brechaHA[cui]>0)?
 '<div style="margin-top:8px;background:#F1F8E9;border:1.5px solid #A5D6A7;border-radius:14px;padding:10px 12px;display:flex;align-items:center;gap:10px">'
-+'<svg viewBox="0 0 52 40" width="44" height="34" style="flex-shrink:0">'
-+'<circle cx="40" cy="8" r="4.5" fill="#F9A825"/>'
-+'<g stroke="#F9A825" stroke-width="1.6" stroke-linecap="round"><line x1="40" y1="0.5" x2="40" y2="2.5"/><line x1="40" y1="13.5" x2="40" y2="15.5"/><line x1="32.5" y1="8" x2="34.5" y2="8"/><line x1="45.5" y1="8" x2="47.5" y2="8"/><line x1="34.6" y1="2.6" x2="36" y2="4"/><line x1="44" y1="12" x2="45.4" y2="13.4"/><line x1="34.6" y1="13.4" x2="36" y2="12"/><line x1="44" y1="4" x2="45.4" y2="2.6"/></g>'
-+'<path d="M0,40 Q13,26 26,34 Q39,42 52,30 L52,40 Z" fill="#2E7D32"/>'
-+'<path d="M0,40 Q10,30 22,37 Q36,44 52,36 L52,40 Z" fill="#66BB6A" opacity=".85"/>'
-+'<circle cx="10" cy="22" r="5" fill="#388E3C"/><rect x="9.2" y="26" width="1.6" height="6" fill="#5D4037"/>'
-+'<circle cx="19" cy="17" r="6" fill="#43A047"/><rect x="18.2" y="22" width="1.6" height="9" fill="#5D4037"/>'
-+'<path d="M30,31 q0,-6 -3,-8 M30,31 q0,-5 3,-7" stroke="#66BB6A" stroke-width="1.8" fill="none" stroke-linecap="round"/>'
-+'</svg>'
++'<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f3de.svg" width="44" height="44" style="flex-shrink:0" alt="" onerror="this.style.display=\'none\'">'
 +'<div style="flex:1;text-align:center">'
 +'<div style="font-size:23px;font-weight:900;color:#1B5E20;line-height:1;letter-spacing:-.5px">'+(+_brechaHA[cui].toFixed(2)).toLocaleString('es-PE')+'</div>'
 +'<div style="font-size:10px;font-weight:800;color:#33691E;margin-top:3px">Hectáreas a recuperar</div>'
 +'</div></div>':'')
 +((window._vehiculosLP&&_vehiculosLP[cui]>0)?
 '<div style="margin-top:8px;background:#F4F8FF;border:1.5px solid #9FB8DC;border-radius:14px;padding:10px 12px;display:flex;align-items:center;gap:10px">'
-+'<svg viewBox="0 0 54 34" width="46" height="30" style="flex-shrink:0">'
-+'<rect x="12" y="1" width="9" height="7" rx="1" fill="#7A5C3E"/><path d="M12.5 4.5 h8" stroke="#5D4037" stroke-width="1"/>'
-+'<rect x="2" y="6" width="30" height="15" rx="3" fill="#3D6B44"/>'
-+'<path d="M4.5 9 l4 9 M9.5 9 l4 9 M14.5 9 l4 9 M19.5 9 l4 9 M24.5 9 l4 9" stroke="#2E5235" stroke-width="1.4"/>'
-+'<path d="M32 10 h8.5 l6 6 v5 h-14.5 z" fill="#8BA793"/>'
-+'<path d="M33.5 11.5 h5.5 l3.6 4 h-9.1 z" fill="#DDEBFF"/>'
-+'<rect x="2" y="20" width="45" height="2.5" fill="#455A64"/>'
-+'<circle cx="10" cy="25" r="4" fill="#263238"/><circle cx="10" cy="25" r="1.6" fill="#90A4AE"/>'
-+'<circle cx="21" cy="25" r="4" fill="#263238"/><circle cx="21" cy="25" r="1.6" fill="#90A4AE"/>'
-+'<circle cx="40" cy="25" r="4" fill="#263238"/><circle cx="40" cy="25" r="1.6" fill="#90A4AE"/>'
-+'</svg>'
++'<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f69b.svg" width="44" height="44" style="flex-shrink:0" alt="" onerror="this.style.display=\'none\'">'
 +'<div style="flex:1;text-align:center">'
 +'<div style="font-size:23px;font-weight:900;color:#1A2E5C;line-height:1;letter-spacing:-.5px">'+_vehiculosLP[cui].toLocaleString('es-PE')+'</div>'
 +'<div style="font-size:10px;font-weight:800;color:#31456E;margin-top:3px;line-height:1.3">Vehículos para limpieza<br>pública a entregar</div>'
 +'</div></div>':'')
 +((window._obraTipo&&_obraTipo[cui])?
 '<div style="margin-top:8px;background:'+(_obraTipo[cui]==='REC'?'#FBF6EC':'#EFF7EF')+';border:1.5px solid '+(_obraTipo[cui]==='REC'?'#D8C49A':'#A8CBA8')+';border-radius:14px;padding:10px 12px;display:flex;align-items:center;gap:10px">'
-+(_obraTipo[cui]==='REC'?'<svg viewBox="0 0 56 38" width="46" height="31" style="flex-shrink:0">'+'<rect x="37" y="5" width="16" height="15" rx="2" fill="#E7EDF6" stroke="#8FA3BF" stroke-width="1.2"/>'+'<path d="M40 9 h10 M40 12.5 h7 M40 16 h9" stroke="#5B79A3" stroke-width="1.3"/>'+'<rect x="5" y="18" width="15" height="8" rx="2" fill="#E8A33D"/>'+'<rect x="8" y="12" width="7" height="7" rx="1.5" fill="#F2B950"/>'+'<path d="M15 15 L26 8 L29 11 L20 19 Z" fill="#D98F2B"/>'+'<path d="M26 8 L32 13 L28 16 Z" fill="#B7731D"/>'+'<rect x="3" y="26" width="19" height="5.5" rx="2.75" fill="#3E4750"/>'+'<circle cx="8" cy="28.7" r="1.6" fill="#9AA6B0"/><circle cx="13" cy="28.7" r="1.6" fill="#9AA6B0"/><circle cx="18" cy="28.7" r="1.6" fill="#9AA6B0"/>'+'</svg>':'<svg viewBox="0 0 56 38" width="46" height="31" style="flex-shrink:0">'+'<rect x="34" y="5" width="18" height="16" rx="2" fill="#E7EDF6" stroke="#8FA3BF" stroke-width="1.2"/>'+'<path d="M37 9 h12 M37 13 h8 M37 17 h10" stroke="#5B79A3" stroke-width="1.3"/>'+'<g stroke="#2E7D32" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round">'+'<path d="M10 24 A9 9 0 0 1 12 11"/><path d="M17 7 A9 9 0 0 1 25 13"/><path d="M25 21 A9 9 0 0 1 14 28"/>'+'</g>'+'<g fill="#2E7D32"><path d="M12 11 l4 -1 -3 -4 z"/><path d="M25 13 l1 4 3.5 -3.5 z"/><path d="M14 28 l-4 -0.5 2 4 z"/></g>'+'</svg>')
++'<span style="display:flex;gap:6px;align-items:center;flex-shrink:0">'+(_obraTipo[cui]==='REC'?'<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f69c.svg" width="34" height="34" style="flex-shrink:0" alt="" onerror="this.style.display=\'none\'">':'<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/267b.svg" width="34" height="34" style="flex-shrink:0" alt="" onerror="this.style.display=\'none\'">')+'<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f3d7.svg" width="34" height="34" style="flex-shrink:0" alt="" onerror="this.style.display=\'none\'">'+'</span>'
 +'<div style="flex:1;text-align:center">'
 +'<div style="font-size:23px;font-weight:900;color:'+(_obraTipo[cui]==='REC'?'#5D4037':'#1B5E20')+';line-height:1">1</div>'
 +'<div style="font-size:10px;font-weight:800;color:'+(_obraTipo[cui]==='REC'?'#6D4C41':'#33691E')+';margin-top:3px;line-height:1.3">'+(_obraTipo[cui]==='REC'?'Obra de recuperación<br>de áreas degradadas':'Obra de infraestructura de<br>manejo de residuos sólidos')+'</div>'
@@ -2216,6 +2198,7 @@ lb.style.display='flex';
 window._brechaHA={"2293276": 4.22, "2296349": 0.98, "2300503": 1.65, "2301094": 5.0, "2301296": 0.72, "2301456": 0.48, "2306932": 40.5, "2306986": 16.52, "2307521": 2.27, "2307941": 2.6, "2310834": 17.95, "2311557": 7.05, "2311564": 2.26, "2317137": 1.91, "2317388": 4.18, "2318183": 4.32, "2318601": 7.91, "2320372": 36.9, "2321144": 181.24, "2321618": 3.0, "2323393": 20.38, "2333883": 10.74, "2333916": 26.94};
 window._vehiculosLP={"2058430": 17, "2069525": 17, "2071893": 16, "2081431": 5, "2083297": 13, "2083453": 7, "2083455": 4, "2093153": 12, "2104603": 9, "2146134": 15, "2162888": 14, "2167487": 7, "2167488": 15, "2167489": 5, "2167490": 6, "2167491": 10, "2167492": 13, "2167493": 8, "2167494": 81, "2167531": 7, "2183892": 9, "2184006": 15, "2186708": 4, "2186709": 9, "2188381": 18, "2188977": 11, "2189704": 17, "2191614": 13, "2202186": 5, "2225760": 47, "2253933": 40, "2308546": 12, "2336972": 25, "2338187": 15, "2343091": 22, "2453667": 6, "2457716": 74, "2469365": 20, "2495981": 33, "2509786": 27, "2521752": 18, "2524728": 38, "2574892": 4, "2574899": 2, "2574940": 7};
 window._obraTipo={"2058430": "RRSS", "2069525": "RRSS", "2071893": "RRSS", "2081431": "RRSS", "2083297": "RRSS", "2083453": "RRSS", "2083455": "RRSS", "2093153": "RRSS", "2104602": "RRSS", "2104603": "RRSS", "2146134": "RRSS", "2162888": "RRSS", "2165139": "RRSS", "2167487": "RRSS", "2167488": "RRSS", "2167489": "RRSS", "2167490": "RRSS", "2167491": "RRSS", "2167492": "RRSS", "2167493": "RRSS", "2167494": "RRSS", "2167531": "RRSS", "2183892": "RRSS", "2184006": "RRSS", "2186708": "RRSS", "2186709": "RRSS", "2188381": "RRSS", "2188977": "RRSS", "2189704": "RRSS", "2191614": "RRSS", "2202186": "RRSS", "2225760": "RRSS", "2253933": "RRSS", "2293276": "REC", "2296349": "REC", "2300503": "REC", "2301094": "REC", "2301296": "REC", "2301456": "REC", "2306932": "REC", "2306986": "REC", "2307521": "REC", "2307941": "REC", "2310834": "REC", "2311557": "REC", "2311564": "REC", "2317137": "REC", "2317388": "REC", "2318183": "REC", "2318601": "REC", "2320372": "REC", "2321144": "REC", "2321618": "REC", "2323393": "REC", "2333883": "REC", "2333916": "REC", "2336972": "RRSS", "2338187": "RRSS", "2343091": "RRSS", "2437668": "RRSS", "2445163": "RRSS", "2448212": "RRSS", "2453667": "RRSS", "2455456": "RRSS", "2457102": "RRSS", "2457716": "RRSS", "2462298": "RRSS", "2469365": "RRSS", "2495981": "RRSS", "2509786": "RRSS", "2521752": "RRSS", "2524728": "RRSS", "2574899": "RRSS", "2574933": "RRSS", "2574973": "RRSS"};
+// Iconos de tarjetas: Twemoji (Copyright Twitter, CC-BY 4.0) via cdnjs
 window._copiarCui=function(cui,ev){
 if(ev){ev.stopPropagation();}
 var p=(typeof proyectos!=='undefined'&&proyectos.find)?proyectos.find(function(x){return x.CUI===cui;}):null;
