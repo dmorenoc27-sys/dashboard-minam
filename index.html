@@ -1683,59 +1683,38 @@ return '<div style="display:flex;gap:6px">'+bloqueIni+bloqueAct+'</div>'
 ${donut(avFis,'#0D47A1','Av. Físico','#EEF4FF','#90CAF9')}
 ${donut(avF,SC.bg,'Av. Financiero','#F0FBF0','#A5D6A7')}
 </div>
-<!-- COL 5: PIM 2026 + CERTIFICACION -->
-<div style="border-right:1px solid #E8F5E9;display:flex;flex-direction:column;justify-content:center;padding:8px 10px;gap:6px;background:linear-gradient(180deg,#F4FBF4 0%,#FAFFFE 100%)">
+<!-- COL 5: EJERCICIO 2026 (PIM + CERT + DEV, homogeneos) -->
+<div style="border-right:1px solid #E8F5E9;display:flex;flex-direction:column;justify-content:center;padding:8px 10px;gap:5px;background:linear-gradient(180deg,#F4FBF4 0%,#FAFFFE 100%)">
 ${(function(){
 const fa=(typeof finAno!=='undefined'&&finAno[cui])||null;
-const faCert=fa?fa.Cert:cert; const faAno=fa?fa.ano:'2026';
-const pimD=pim||0;
-return `
-<div style="background:#F0FBF0;border:1.5px solid #A5D6A7;border-radius:10px;padding:7px 10px">
-<div style="display:flex;align-items:center;gap:4px;margin-bottom:4px">
-<svg viewBox="0 0 12 12" width="10" height="10"><circle cx="6" cy="6" r="6" fill="#2E7D32" opacity=".18"/><circle cx="6" cy="6" r="3.5" fill="#2E7D32"/></svg>
-<div style="font-size:10px;color:#2E7D32;font-weight:800;text-transform:uppercase;letter-spacing:.7px">PIM ${faAno}</div>
+const faDev=fa?fa.Dev:dev; const faCert=fa?fa.Cert:cert; const faAno=fa?fa.ano:'2026';
+const tarjeta=function(lbl,val,dot){
+return `<div style="background:#FFFFFF;border:1.5px solid #C8E6C9;border-radius:10px;padding:5.5px 10px">
+<div style="display:flex;align-items:center;gap:4px;margin-bottom:2px">
+<svg viewBox="0 0 12 12" width="9" height="9"><circle cx="6" cy="6" r="6" fill="${dot}" opacity=".18"/><circle cx="6" cy="6" r="3.5" fill="${dot}"/></svg>
+<div style="font-size:9.5px;color:#37474F;font-weight:800;text-transform:uppercase;letter-spacing:.6px">${lbl}</div>
 </div>
-<div style="font-size:${pimD>=1e7?'14px':pimD>=1e6?'16px':'19px'};font-weight:900;color:#105000;letter-spacing:-0.5px;line-height:1.1">
-${_fmtSol(pimD)}
-</div>
-<div style="font-size:9px;color:#66BB6A;margin-top:3px">Presupuesto Inst. Modificado</div>
-</div>
-<div style="background:#F7F0FB;border:1.5px solid #CE93D8;border-radius:10px;padding:7px 10px">
-<div style="display:flex;align-items:center;gap:4px;margin-bottom:4px">
-<svg viewBox="0 0 12 12" width="10" height="10"><circle cx="6" cy="6" r="6" fill="#6A1B9A" opacity=".18"/><circle cx="6" cy="6" r="3.5" fill="#6A1B9A"/></svg>
-<div style="font-size:10px;color:#6A1B9A;font-weight:800;text-transform:uppercase;letter-spacing:.7px">Certificación ${faAno}</div>
-</div>
-<div style="font-size:${(faCert||0)>=1e7?'14px':(faCert||0)>=1e6?'16px':'19px'};font-weight:900;color:#4A148C;letter-spacing:-0.5px;line-height:1.1">
-${_fmtSol(faCert||0)}
-</div>
-</div>`;
+<div style="font-size:${val>=1e7?'13px':val>=1e6?'14.5px':'16px'};font-weight:900;color:#263238;letter-spacing:-0.4px;line-height:1.05">${_fmtSol(val||0)}</div>
+</div>`;};
+return tarjeta('PIM '+faAno, pim||0, '#2E7D32')
++tarjeta('Certificación '+faAno, faCert||0, '#6A1B9A')
++tarjeta('Devengado '+faAno, faDev||0, '#E65100');
 })()}
 </div>
-<!-- COL 6: DEV ACUMULADO + DEVENGADO AÑO -->
-<div style="border-right:1px solid #E8F5E9;display:flex;flex-direction:column;justify-content:center;padding:8px 10px;gap:6px;background:linear-gradient(180deg,#F4FBF4 0%,#FAFFFE 100%)">
+<!-- COL 6: DEVENGADO ACUMULADO (separado) -->
+<div style="border-right:1px solid #E8F5E9;display:flex;align-items:center;justify-content:center;padding:8px 10px;background:linear-gradient(180deg,#F4FBF4 0%,#FAFFFE 100%)">
 ${(function(){
-const fa=(typeof finAno!=='undefined'&&finAno[cui])||null;
-const faDev=fa?fa.Dev:dev; const faAno=fa?fa.ano:'2026';
 const devAcumDisp=isMultiUEI&&typeof devAcumData!=='undefined'&&devAcumData[cui]!=null?devAcumData[cui]:dev;
 return `
-<div style="background:#EEF4FF;border:1.5px solid #90CAF9;border-radius:10px;padding:7px 10px">
-<div style="display:flex;align-items:center;gap:4px;margin-bottom:4px">
+<div style="background:#EEF4FF;border:1.5px solid #90CAF9;border-radius:12px;padding:12px 10px;width:100%;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:4px">
+<div style="display:flex;align-items:center;gap:4px">
 <svg viewBox="0 0 12 12" width="10" height="10"><circle cx="6" cy="6" r="6" fill="#1565C0" opacity=".18"/><circle cx="6" cy="6" r="3.5" fill="#1565C0"/></svg>
-<div style="font-size:10px;color:#1565C0;font-weight:800;text-transform:uppercase;letter-spacing:.7px">${isMultiUEI?'Dev. Acumulado (Proyecto)':'Dev. Acumulado'}</div>
+<div style="font-size:10px;color:#1565C0;font-weight:800;text-transform:uppercase;letter-spacing:.7px;text-align:center;line-height:1.2">${isMultiUEI?'Dev. Acumulado (Proyecto)':'Dev. Acumulado'}</div>
 </div>
-<div style="font-size:${devAcumDisp>=1e7?'14px':devAcumDisp>=1e6?'16px':'19px'};font-weight:900;color:#0D47A1;letter-spacing:-0.5px;line-height:1.1">
+<div style="font-size:${devAcumDisp>=1e7?'15px':devAcumDisp>=1e6?'17px':'19px'};font-weight:900;color:#0D47A1;letter-spacing:-0.5px;line-height:1.1;text-align:center">
 ${_fmtSol(devAcumDisp)}
 </div>
-${isMultiUEI?'<div style="font-size:9px;color:#1565C0;margin-top:3px;opacity:.7">Todas las UEIs · SSI-SOSEM</div>':'<div style="font-size:9px;color:#64B5F6;margin-top:3px">Desde su creación a la fecha</div>'}
-</div>
-<div style="background:#FFF8F0;border:1.5px solid #FFCC80;border-radius:10px;padding:7px 10px">
-<div style="display:flex;align-items:center;gap:4px;margin-bottom:4px">
-<svg viewBox="0 0 12 12" width="10" height="10"><circle cx="6" cy="6" r="6" fill="${SC.bg}" opacity=".18"/><circle cx="6" cy="6" r="3.5" fill="${SC.bg}"/></svg>
-<div style="font-size:10px;color:${SC.bg};font-weight:800;text-transform:uppercase;letter-spacing:.7px">Devengado ${faAno}</div>
-</div>
-<div style="font-size:${faDev>=1e7?'14px':faDev>=1e6?'16px':'19px'};font-weight:900;color:${SC.lo};letter-spacing:-0.5px;line-height:1.1">
-${_fmtSol(faDev)}
-</div>
+<div style="font-size:9px;color:#64B5F6;text-align:center;line-height:1.2">${isMultiUEI?'Todas las UEIs · SSI-SOSEM':'Desde su creación a la fecha'}</div>
 </div>`;
 })()}
 </div>
