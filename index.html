@@ -1803,7 +1803,6 @@ var row=function(lbl,val,col,bg,br,sub){return '<div style="background:'+bg+';bo
 +'<div style="font-size:13px;font-weight:900;color:'+col+';letter-spacing:-.3px;line-height:1.05">'+val+'</div>'
 +(sub?'<div style="font-size:9px;color:#90A4AE;margin-top:2px">'+sub+'</div>':'')+'</div>';};
 return row('PIM',_fmtSol(pim),'#37474F','#F8FFFE','#CFD8DC','Presupuesto Inst. Modificado')
-+row('Devengado',_fmtSol(dev),'#2E7D32','#F0FBF0','#A5D6A7',pDev+'% del PIM ejecutado')
 +((window._brechaHA&&_brechaHA[cui]>0)?
 '<div style="margin-top:8px;background:#F1F8E9;border:1.5px solid #A5D6A7;border-radius:14px;padding:10px 12px;display:flex;align-items:center;gap:10px">'
 +'<svg viewBox="0 0 52 40" width="44" height="34" style="flex-shrink:0">'
