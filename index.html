@@ -236,8 +236,9 @@ body{display:flex;flex-direction:column;height:100vh}
 .sel-txt,.sel-txt *{-webkit-user-select:text!important;user-select:text!important;cursor:text;}*{-webkit-tap-highlight-color:transparent;}</style></head>
 <body><script>
 (function(){
-document.addEventListener('contextmenu',function(e){e.preventDefault();return false;});
-document.addEventListener('selectstart',function(e){e.preventDefault();return false;});
+var _permitir=function(e){return e.target&&e.target.closest&&e.target.closest('.sel-txt');};
+document.addEventListener('contextmenu',function(e){if(_permitir(e))return;e.preventDefault();return false;});
+document.addEventListener('selectstart',function(e){if(_permitir(e))return;e.preventDefault();return false;});
 document.addEventListener('dragstart',function(e){e.preventDefault();return false;});
 document.addEventListener('keydown',function(e){
 var k=e.key?e.key.toLowerCase():'',c=e.ctrlKey||e.metaKey;
