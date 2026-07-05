@@ -1805,7 +1805,22 @@ var row=function(lbl,val,col,bg,br,sub){return '<div style="background:'+bg+';bo
 return row('PIM',_fmtSol(pim),'#37474F','#F8FFFE','#CFD8DC','Presupuesto Inst. Modificado')
 +row('Devengado',_fmtSol(dev),'#2E7D32','#F0FBF0','#A5D6A7',pDev+'% del PIM ejecutado')
 +row('Girado',_fmtSol(gir),'#1565C0','#EEF4FF','#90CAF9',pGir+'% girado')
-+row('Saldo por Ejecutar',_fmtSol(saldo),'#E65100','#FFF8F0','#FFCC80',pSal+'% del PIM pendiente');
++row('Saldo por Ejecutar',_fmtSol(saldo),'#E65100','#FFF8F0','#FFCC80',pSal+'% del PIM pendiente')
++((window._brechaHA&&_brechaHA[cui]>0)?
+'<div style="margin-top:8px;background:#F1F8E9;border:1.5px solid #A5D6A7;border-radius:14px;padding:10px 12px;display:flex;align-items:center;gap:10px">'
++'<svg viewBox="0 0 52 40" width="44" height="34" style="flex-shrink:0">'
++'<circle cx="40" cy="8" r="4.5" fill="#F9A825"/>'
++'<g stroke="#F9A825" stroke-width="1.6" stroke-linecap="round"><line x1="40" y1="0.5" x2="40" y2="2.5"/><line x1="40" y1="13.5" x2="40" y2="15.5"/><line x1="32.5" y1="8" x2="34.5" y2="8"/><line x1="45.5" y1="8" x2="47.5" y2="8"/><line x1="34.6" y1="2.6" x2="36" y2="4"/><line x1="44" y1="12" x2="45.4" y2="13.4"/><line x1="34.6" y1="13.4" x2="36" y2="12"/><line x1="44" y1="4" x2="45.4" y2="2.6"/></g>'
++'<path d="M0,40 Q13,26 26,34 Q39,42 52,30 L52,40 Z" fill="#2E7D32"/>'
++'<path d="M0,40 Q10,30 22,37 Q36,44 52,36 L52,40 Z" fill="#66BB6A" opacity=".85"/>'
++'<circle cx="10" cy="22" r="5" fill="#388E3C"/><rect x="9.2" y="26" width="1.6" height="6" fill="#5D4037"/>'
++'<circle cx="19" cy="17" r="6" fill="#43A047"/><rect x="18.2" y="22" width="1.6" height="9" fill="#5D4037"/>'
++'<path d="M30,31 q0,-6 -3,-8 M30,31 q0,-5 3,-7" stroke="#66BB6A" stroke-width="1.8" fill="none" stroke-linecap="round"/>'
++'</svg>'
++'<div style="flex:1;text-align:center">'
++'<div style="font-size:23px;font-weight:900;color:#1B5E20;line-height:1;letter-spacing:-.5px">'+(+_brechaHA[cui].toFixed(2)).toLocaleString('es-PE')+'</div>'
++'<div style="font-size:10px;font-weight:800;color:#33691E;margin-top:3px">Hectáreas a recuperar</div>'
++'</div></div>':'');
 })()}
 </div>
 </div>
@@ -2177,6 +2192,7 @@ document.body.appendChild(lb);}
 window._fotoLbRender();
 lb.style.display='flex';
 };
+window._brechaHA={"2293276": 4.22, "2296349": 0.98, "2300503": 1.65, "2301094": 5.0, "2301296": 0.72, "2301456": 0.48, "2306932": 40.5, "2306986": 16.52, "2307521": 2.27, "2307941": 2.6, "2310834": 17.95, "2311557": 7.05, "2311564": 2.26, "2317137": 1.91, "2317388": 4.18, "2318183": 4.32, "2318601": 7.91, "2320372": 36.9, "2321144": 181.24, "2321618": 3.0, "2323393": 20.38, "2333883": 10.74, "2333916": 26.94};
 window._copiarCui=function(cui,ev){
 if(ev){ev.stopPropagation();}
 var p=(typeof proyectos!=='undefined'&&proyectos.find)?proyectos.find(function(x){return x.CUI===cui;}):null;
