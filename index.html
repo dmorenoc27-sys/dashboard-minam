@@ -1465,6 +1465,24 @@ var _updFis=window._datosActualizados.avFisico||{};
 Object.keys(_updFis).forEach(function(k){if(_updFis[k]!=null){_avFisicoData[k]=_updFis[k];}});
 var _fu=window._datosActualizados.finUpdate||{};
 if(Object.keys(_fu).length>0){proyectos.forEach(function(p){if(_fu[p.CUI])Object.assign(p.fin,_fu[p.CUI]);});}
+/* FIX 2026-07-06: antes finAnoUpdate y devAcumUpdate se ignoraban y las tarjetas
+   PIM/Cert/Dev del año mostraban lo incrustado (congelado hasta regenerar el HTML). */
+var _fan=window._datosActualizados.finAnoUpdate||{};
+Object.keys(_fan).forEach(function(k){finAno[k]=Object.assign(finAno[k]||{},_fan[k]);});
+var _dac=window._datosActualizados.devAcumUpdate||{};
+proyectos.forEach(function(p){if(_dac[p.CUI]!=null&&p.fin)p.fin.Dev=_dac[p.CUI];});
+/* FIX 2026-07-06 (2): cuiYearFinUpdate y costoUpdate tampoco se aplicaban.
+   Merge campo a campo saltando null para no pisar Cert/PIM embebidos con null. */
+var _cyu=window._datosActualizados.cuiYearFinUpdate||{};
+Object.keys(_cyu).forEach(function(c){
+  if(!cuiYearFin[c])cuiYearFin[c]={};
+  Object.keys(_cyu[c]||{}).forEach(function(y){
+    var src=_cyu[c][y]||{}; var dst=cuiYearFin[c][y]=cuiYearFin[c][y]||{};
+    Object.keys(src).forEach(function(k){if(src[k]!=null)dst[k]=src[k];});
+  });
+});
+var _cu=window._datosActualizados.costoUpdate||{};
+Object.keys(_cu).forEach(function(k){if(_cu[k]!=null)costoData[k]=_cu[k];});
 }
 function showProjectDetail(cui){
 const p=proyectos.find(x=>x.CUI===cui)||null;
@@ -1700,6 +1718,9 @@ ${donut(avF,SC.bg,'Av. Financiero','#F0FBF0','#A5D6A7')}
 ${(function(){
 const fa=(typeof finAno!=='undefined'&&finAno[cui])||null;
 const faDev=fa?fa.Dev:dev; const faCert=fa?fa.Cert:cert; const faAno=fa?fa.ano:'2026';
+/* FIX 2026-07-06: el PIM del año viene en finAnoUpdate (Consulta Amigable).
+   Antes se mostraba fin.PIM = acumulado multi-año etiquetado como PIM del año. */
+const faPim=(fa&&fa.PIM)||null;
 const tarjeta=function(lbl,val,dot,bg,br,txt){
 return `<div style="background:${bg};border:1.5px solid ${br};border-left:5px solid ${dot};border-radius:10px;padding:6px 10px;box-shadow:0 1px 4px rgba(16,24,40,.09)">
 <div style="display:flex;align-items:center;gap:4px;margin-bottom:2px">
@@ -1708,7 +1729,7 @@ return `<div style="background:${bg};border:1.5px solid ${br};border-left:5px so
 </div>
 <div style="font-size:${val>=1e7?'14px':val>=1e6?'15.5px':'17px'};font-weight:900;color:${txt};letter-spacing:-0.4px;line-height:1.05">${_fmtSol(val||0)}</div>
 </div>`;};
-return tarjeta('PIM '+faAno, pim||0, '#2E7D32','#F0FBF0','#A5D6A7','#105000')
+return tarjeta(faPim?('PIM '+faAno):'PIM total proyecto', faPim||pim||0, '#2E7D32','#F0FBF0','#A5D6A7','#105000')
 +tarjeta('Certificación '+faAno, faCert||0, '#6A1B9A','#F7F0FB','#CE93D8','#4A148C')
 +tarjeta('Devengado '+faAno, faDev||0, '#E65100','#FFF8F0','#FFCC80','#BF360C');
 })()}
@@ -2644,6 +2665,23 @@ s.onload = function() {
   if (!d) return;
   if (d.compDataUpdate && typeof window._compDataUpdate === 'function')
     window._compDataUpdate(d.compDataUpdate);
+  // FIX 2026-07-06: re-aplicar tambien finAnoUpdate/devAcumUpdate/cuiYearFinUpdate/costoUpdate frescos.
+  try {
+    var _fan = d.finAnoUpdate || {};
+    Object.keys(_fan).forEach(function(k){ finAno[k] = Object.assign(finAno[k]||{}, _fan[k]); });
+    var _dac = d.devAcumUpdate || {};
+    proyectos.forEach(function(p){ if (_dac[p.CUI] != null && p.fin) p.fin.Dev = _dac[p.CUI]; });
+    var _cyu = d.cuiYearFinUpdate || {};
+    Object.keys(_cyu).forEach(function(c){
+      if (!cuiYearFin[c]) cuiYearFin[c] = {};
+      Object.keys(_cyu[c]||{}).forEach(function(y){
+        var src = _cyu[c][y]||{}; var dst = cuiYearFin[c][y] = cuiYearFin[c][y]||{};
+        Object.keys(src).forEach(function(k){ if (src[k] != null) dst[k] = src[k]; });
+      });
+    });
+    var _cu = d.costoUpdate || {};
+    Object.keys(_cu).forEach(function(k){ if (_cu[k] != null) costoData[k] = _cu[k]; });
+  } catch(e) {}
 };
 document.head.appendChild(s);
 })();
