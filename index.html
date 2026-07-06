@@ -1794,7 +1794,7 @@ var row=function(lbl,val,col,bg,br,sub){return '<div style="background:'+bg+';bo
 +'<div style="font-size:13px;font-weight:900;color:'+col+';letter-spacing:-.3px;line-height:1.05">'+val+'</div>'
 +(sub?'<div style="font-size:9px;color:#90A4AE;margin-top:2px">'+sub+'</div>':'')+'</div>';};
 return ((benef>0)?
-'<div style="background:#F0FBF0;border:1.5px solid #A5D6A7;border-radius:14px;padding:10px 12px;display:flex;align-items:center;gap:10px">'
+'<div onclick="if(window._benefDetalle)_benefDetalle(\''+cui+'\',event)" title="Clic para ver beneficiarios y ubicación" style="background:#F0FBF0;border:1.5px solid #A5D6A7;border-radius:14px;padding:10px 12px;display:flex;align-items:center;gap:10px;cursor:pointer" onmouseover="this.style.boxShadow=\'0 2px 10px rgba(16,80,0,.25)\'" onmouseout="this.style.boxShadow=\'none\'">'
 +humanSVG
 +'<div style="flex:1;text-align:center">'
 +'<div style="font-size:23px;font-weight:900;color:#105000;line-height:1;letter-spacing:-.5px">'+_fmtN(benef)+'</div>'
@@ -2248,6 +2248,92 @@ html+='<div style="display:flex;justify-content:space-between;align-items:center
 +'</div>';
 lb.innerHTML=html;lb.style.display='flex';
 var card=lb.querySelector('.obra-card');
+if(src&&card.animate){
+var t=card.getBoundingClientRect();
+var dx=(src.left+src.width/2)-(t.left+t.width/2), dy=(src.top+src.height/2)-(t.top+t.height/2);
+card.animate([
+{transform:'translate('+dx+'px,'+dy+'px) perspective(1200px) rotateY(-180deg) scale('+(src.width/t.width)+','+(src.height/t.height)+')',opacity:.35},
+{transform:'translate('+(dx*0.5)+'px,'+(dy*0.5)+'px) perspective(1200px) rotateY(-105deg) scale('+((src.width/t.width+1)/2)+')',opacity:1,offset:.45},
+{transform:'translate(0px,0px) perspective(1200px) rotateY(0deg) scale(1)',opacity:1}
+],{duration:800,easing:'cubic-bezier(.25,.7,.3,1)'});
+lb.animate([{opacity:0},{opacity:1}],{duration:300,easing:'ease-out'});
+}
+};
+window._ubicacion={"2058430": [["LORETO", "MAYNAS", "SAN JUAN BAUTISTA"]], "2069525": [["PUNO", "PUNO", "PUNO"]], "2071893": [["ANCASH", "SANTA", "NUEVO CHIMBOTE"]], "2081431": [["PASCO", "OXAPAMPA", "OXAPAMPA"]], "2083297": [["PIURA", "PAITA", "PAITA"]], "2083453": [["PIURA", "SECHURA", "SECHURA"]], "2083455": [["PASCO", "OXAPAMPA", "POZUZO"]], "2093153": [["LIMA", "HUAURA", "HUACHO"]], "2104602": [["SAN MARTIN", "RIOJA", "ELIAS SOPLIN VARGAS"]], "2104603": [["SAN MARTIN", "MOYOBAMBA", "MOYOBAMBA"]], "2146134": [["SAN MARTIN", "SAN MARTIN", "TARAPOTO"]], "2162888": [["APURIMAC", "ABANCAY", "ABANCAY"]], "2165139": [["PASCO", "PASCO", "CHAUPIMARCA"]], "2167487": [["AMAZONAS", "BAGUA", "BAGUA"]], "2167488": [["PIURA", "TALARA", "PARIÑAS"]], "2167489": [["APURIMAC", "AYMARAES", "CHALHUANCA"], ["AYMARAES", "CARAYBAMBA", "CARAYBAMBA"], ["AYMARAES", "SAÑAYCA", "SAÑAYCA"], ["AYMARAES", "COTARUSE", "COTARUSE"]], "2167490": [["PUNO", "AZANGARO", "AZANGARO"]], "2167491": [["JUNIN", "TARMA", "TARMA"]], "2167492": [["TUMBES", "TUMBES", "TUMBES"]], "2167493": [["PUNO", "PUNO", "ACORA"]], "2167494": [["LIMA", "HUARAL", "CHANCAY"]], "2167531": [["AMAZONAS", "CHACHAPOYAS", "CHACHAPOYAS"]], "2183892": [["LAMBAYEQUE", "FERREÑAFE", "FERREÑAFE"]], "2184006": [["AYACUCHO", "HUAMANGA", "AYACUCHO"]], "2186708": [["JUNIN", "JAUJA", "YAUYOS"]], "2186709": [["APURIMAC", "ANDAHUAYLAS", "ANDAHUAYLAS"]], "2188381": [["PIURA", "SULLANA", "BELLAVISTA"]], "2188977": [["MADRE DE DIOS", "TAMBOPATA", "TAMBOPATA"]], "2189704": [["HUANUCO", "HUANUCO", "HUANUCO"]], "2191614": [["ICA", "CHINCHA", "CHINCHA ALTA"]], "2202186": [["ICA", "ICA", "SANTIAGO"]], "2225760": [["LAMBAYEQUE", "CHICLAYO", "CHICLAYO"]], "2253933": [["PIURA", "PIURA", "PIURA"]], "2293276": [["LIMA", "HUARAL", "CHANCAY"]], "2296349": [["JUNIN", "JAUJA", "SAUSA"]], "2300503": [["PIURA", "TALARA", "PARIÑAS"]], "2301094": [["PUNO", "PUNO", "PUNO"]], "2301296": [["PASCO", "OXAPAMPA", "HUANCABAMBA"]], "2301456": [["PASCO", "OXAPAMPA", "POZUZO"]], "2306932": [["LIMA", "HUAURA", "HUACHO"]], "2306986": [["PIURA", "SULLANA", "SULLANA"]], "2307521": [["AMAZONAS", "BAGUA", "BAGUA"]], "2307941": [["LAMBAYEQUE", "FERREÑAFE", "MANUEL ANTONIO MESONES MURO"]], "2308546": [["LIMA", "LIMA", "ANCON"]], "2310834": [["MADRE DE DIOS", "TAMBOPATA", "TAMBOPATA"]], "2311557": [["PUNO", "EL COLLAO", "ILAVE"], ["EL COLLAO", "ILAVE", "SECTOR APACHETA"]], "2311564": [["PUNO", "AZANGARO", "AZANGARO"]], "2317137": [["APURIMAC", "ANDAHUAYLAS", "SAN JERONIMO"]], "2317388": [["SAN MARTIN", "MOYOBAMBA", "MOYOBAMBA"]], "2318183": [["HUANUCO", "HUANUCO", "HUANUCO"]], "2318601": [["PIURA", "SECHURA", "SECHURA"]], "2320372": [["PIURA", "PAITA", "PAITA"]], "2321144": [["ICA", "CHINCHA", "PUEBLO NUEVO"]], "2321618": [["SAN MARTIN", "SAN MARTIN", "JUAN GUERRA"]], "2323393": [["TUMBES", "TUMBES", "TUMBES"]], "2333883": [["PUNO", "SAN ROMAN", "JULIACA"]], "2333916": [["ANCASH", "SANTA", "NUEVO CHIMBOTE"]], "2336972": [["PUNO", "SAN ROMAN", "JULIACA"]], "2338187": [["CAJAMARCA", "JAEN", "JAEN"]], "2343091": [["PIURA", "PIURA", "CASTILLA"]], "2445163": [["HUANCAVELICA", "TAYACAJA", "ACRAQUIA"]], "2453667": [["LAMBAYEQUE", "LAMBAYEQUE", "LAMBAYEQUE"]], "2457716": [["LA LIBERTAD", "TRUJILLO", "TRUJILLO"]], "2469365": [["SAN MARTIN", "HUALLAGA", "SACANCHE"], ["HUALLAGA", "SACANCHE", "SACANCHE"], ["HUALLAGA", "SACANCHE", "SAN JUAN"], ["HUALLAGA", "SACANCHE", "SANTA ROSA"], ["HUALLAGA", "SACANCHE", "MIRAFLORES"], ["HUALLAGA", "SACANCHE", "FLOR DE CAFE"], ["HUALLAGA", "SACANCHE", "VICTOR RAUL"], ["HUALLAGA", "SACANCHE", "LA UNION"], ["HUALLAGA", "SACANCHE", "PANCHILLO"], ["HUALLAGA", "SAPOSOA", "SHIMA"], ["HUALLAGA", "SAPOSOA", "SAPOSOA"], ["HUALLAGA", "SAPOSOA", "AGUA AZUL"], ["HUALLAGA", "SAPOSOA", "EL DORADO"], ["HUALLAGA", "SAPOSOA", "SANTA ROSA"], ["HUALLAGA", "SAPOSOA", "SAN REGIS"], ["HUALLAGA", "SAPOSOA", "TANGER"], ["HUALLAGA", "ALTO SAPOSOA", "PASARRAYA"], ["HUALLAGA", "ALTO SAPOSOA", "YACUSISA"], ["HUALLAGA", "PISCOYACU", "PISCOYACU"], ["HUALLAGA", "PISCOYACU", "LA PRIMAVERA"], ["HUALLAGA", "PISCOYACU", "NUEVO SACANCHE"], ["HUALLAGA", "PISCOYACU", "LOS LAURELES"], ["HUALLAGA", "PISCOYACU", "LOS CLAVELES"], ["HUALLAGA", "PISCOYACU", "NUEVO HUANUCO"], ["HUALLAGA", "PISCOYACU", "NUEVO PIURA"], ["HUALLAGA", "EL ESLABON", "EL ESLABON"], ["HUALLAGA", "EL ESLABON", "LA COLLPA"], ["HUALLAGA", "EL ESLABON", "NUEVO PORVENIR"]], "2495981": [["UCAYALI", "CORONEL PORTILLO", "CALLERIA"]], "2509786": [["HUANUCO", "LEONCIO PRADO", "MARIANO DAMASO BERAUN"], ["HUANUCO", "LEONCIO PRADO", "DANIEL ALOMIA ROBLES"]], "2521752": [["AREQUIPA", "AREQUIPA", "AREQUIPA"]], "2524728": [["TACNA", "TACNA", "TACNA"]]};
+
+window._benefDetalle=function(cui,ev){
+if(ev){ev.stopPropagation();}
+var benefN=(typeof benefiData!=='undefined'&&benefiData[cui])||0;
+var ubis=(window._ubicacion&&_ubicacion[cui])||[];
+if(!benefN&&!ubis.length)return;
+var src=null;
+if(ev&&ev.currentTarget&&ev.currentTarget.getBoundingClientRect){src=ev.currentTarget.getBoundingClientRect();window._benefSrc=src;}
+var lb=document.getElementById('benef-detalle');
+if(!lb){lb=document.createElement('div');lb.id='benef-detalle';
+lb.style.cssText='display:none;position:fixed;inset:0;z-index:99998;background:rgba(8,30,12,.55);align-items:center;justify-content:center;padding:24px;box-sizing:border-box;cursor:pointer';
+lb.onclick=function(){
+var card=lb.querySelector('.benef-card');var s=window._benefSrc;
+if(card&&s&&card.animate){
+var t=card.getBoundingClientRect();
+var dx=(s.left+s.width/2)-(t.left+t.width/2), dy=(s.top+s.height/2)-(t.top+t.height/2);
+card.animate([
+{transform:'translate(0px,0px) perspective(1200px) rotateY(0deg) scale(1)',opacity:1},
+{transform:'translate('+(dx*0.5)+'px,'+(dy*0.5)+'px) perspective(1200px) rotateY(-100deg) scale('+((s.width/t.width+1)/2)+')',opacity:.9,offset:.5},
+{transform:'translate('+dx+'px,'+dy+'px) perspective(1200px) rotateY(-180deg) scale('+(s.width/t.width)+','+(s.height/t.height)+')',opacity:0}
+],{duration:450,easing:'ease-in'});
+lb.animate([{opacity:1},{opacity:0}],{duration:450});
+setTimeout(function(){lb.style.display='none';},430);
+}else{lb.style.display='none';}
+};
+document.body.appendChild(lb);}
+var CDN='https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/';
+var html='<div class="benef-card" onclick="event.stopPropagation()" style="cursor:default;background:#fff;border-radius:16px;max-width:440px;width:100%;max-height:82vh;overflow-y:auto;box-shadow:0 12px 48px rgba(0,0,0,.35);padding:18px 20px">'
++'<div style="display:flex;align-items:center;gap:9px;border-bottom:2px solid #E6F2E6;padding-bottom:10px;margin-bottom:12px">'
++'<img src="'+CDN+'1f1f5-1f1ea.svg" width="26" height="26" alt="" style="border-radius:4px">'
++'<img src="'+CDN+'1f465.svg" width="28" height="28" alt="">'
++'<div><div style="font-size:14px;font-weight:900;color:#105000">Beneficiarios y ubicación</div>'
++'<div style="font-size:10.5px;font-weight:700;color:#5E8262">CUI '+cui+'</div></div>'
++'</div>';
+if(benefN>0){
+html+='<div style="text-align:center;margin-bottom:12px">'
++'<div style="font-size:34px;font-weight:900;color:#105000;letter-spacing:-1px;line-height:1">'+benefN.toLocaleString('es-PE')+'</div>'
++'<div style="font-size:11px;font-weight:800;color:#2E7D32;margin-top:3px;text-transform:uppercase;letter-spacing:.6px">personas beneficiadas</div>'
++'</div>';}
+if(ubis.length){
+html+='<div style="background:linear-gradient(180deg,#F4FBF4 0%,#EDF7ED 100%);border:1.5px solid #A5D6A7;border-radius:13px;padding:12px 14px">'
++'<div style="display:flex;align-items:center;gap:6px;margin-bottom:9px">'
++'<img src="'+CDN+'1f4cd.svg" width="17" height="17" alt="">'
++'<span style="font-size:10.5px;font-weight:900;color:#2E7D32;text-transform:uppercase;letter-spacing:.7px">Ubicación geográfica</span>'
++'</div>';
+var porDep={};
+for(var i=0;i<ubis.length;i++){
+var d=ubis[i][0],p=ubis[i][1],t=ubis[i][2];
+if(!porDep[d])porDep[d]={};
+if(!porDep[d][p])porDep[d][p]=[];
+if(porDep[d][p].indexOf(t)<0)porDep[d][p].push(t);}
+var deps=Object.keys(porDep);
+for(var di=0;di<deps.length;di++){
+var dep=deps[di];
+html+='<div style="'+(di>0?'margin-top:10px;padding-top:9px;border-top:1px dashed #C5E1C5;':'')+'">'
++'<div style="font-size:10px;font-weight:800;color:#66BB6A;text-transform:uppercase;letter-spacing:.8px">Departamento</div>'
++'<div style="font-size:16px;font-weight:900;color:#105000;margin:1px 0 6px">'+dep+'</div>';
+var provs=Object.keys(porDep[dep]);
+for(var pi=0;pi<provs.length;pi++){
+var pv=provs[pi];
+html+='<div style="margin-left:10px;margin-top:'+(pi>0?'7':'0')+'px">'
++'<div style="font-size:9.5px;font-weight:800;color:#7CB07C;text-transform:uppercase;letter-spacing:.6px">Provincia de</div>'
++'<div style="font-size:13.5px;font-weight:800;color:#1B5E20;margin:0 0 4px">'+pv+'</div>'
++'<div style="display:flex;flex-wrap:wrap;gap:4px;margin-left:10px">';
+var dists=porDep[dep][pv];
+for(var ti=0;ti<dists.length;ti++){
+html+='<span style="font-size:10.5px;font-weight:700;color:#fff;background:#2E7D32;border-radius:9px;padding:2.5px 10px">'+dists[ti]+'</span>';}
+html+='</div></div>';}
+html+='</div>';}
+html+='</div>';}
+html+='<div style="font-size:9px;color:#9CB59C;text-align:center;margin-top:9px">Fuente: Banco de Inversiones (SSI) — ficha de ejecución</div>'
++'</div>';
+lb.innerHTML=html;lb.style.display='flex';
+var card=lb.querySelector('.benef-card');
 if(src&&card.animate){
 var t=card.getBoundingClientRect();
 var dx=(src.left+src.width/2)-(t.left+t.width/2), dy=(src.top+src.height/2)-(t.top+t.height/2);
