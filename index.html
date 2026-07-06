@@ -2394,12 +2394,22 @@ lb.animate([{opacity:0},{opacity:1}],{duration:300,easing:'ease-out'});
 }
 };
 
+// ANULACION MANUAL (conocimiento de campo — editar aqui cuando cambie la realidad):
+// valores: 'culminada' | 'ejecucion' | 'suspendida' | 'por_iniciar'
+window._estadoManual={
+"2310834":"suspendida",   // Tambopata — clima
+"2317388":"suspendida",   // Moyobamba — clima
+"2165139":"suspendida",   // Cerro de Pasco — clima
+"2104602":"por_iniciar"   // Rioja — sin recursos, por reiniciar
+};
 window._estadoObra=function(cui){
+if(window._estadoManual&&_estadoManual[cui])return _estadoManual[cui];
 var est=(typeof ssiData!=='undefined'&&ssiData[cui]&&ssiData[cui].est)||'';
 var avRaw=(typeof _avFisicoData!=='undefined'&&_avFisicoData[cui]!=null)?_avFisicoData[cui]:null;
 var av=(avRaw==null||avRaw<0)?null:avRaw;
 var devAc=(typeof devAcumData!=='undefined'&&devAcumData[cui]!=null)?devAcumData[cui]:0;
 var d=window._datosActualizados||{};
+if(devAc<=0&&d.finUpdate&&d.finUpdate[cui]){for(var k in d.finUpdate[cui])devAc+=d.finUpdate[cui][k]||0;}
 var cy=(d.cuiYearFinUpdate&&d.cuiYearFinUpdate[cui]&&d.cuiYearFinUpdate[cui]['2026'])||null;
 var dev26=cy?(cy.Dev||0):0;
 if(est==='CERRADO'||(av!=null&&av>=99.95))return 'culminada';
