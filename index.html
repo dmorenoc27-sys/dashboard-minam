@@ -2420,7 +2420,7 @@ return 'suspendida';                                        // con historia, sin
 window._renderImpacto=function(){
 var root=document.getElementById('impacto-root');
 if(!root)return;
-var fS=function(v){return v>=1e9?('S/ '+(v/1e9).toLocaleString('es-PE',{maximumFractionDigits:2})+' mil M'):v>=1e6?('S/ '+(v/1e6).toLocaleString('es-PE',{maximumFractionDigits:1})+' M'):('S/ '+Math.round(v).toLocaleString('es-PE'));};
+var fS=function(v){return v>=1e6?('S/ '+(v/1e6).toLocaleString('es-PE',{maximumFractionDigits:1})+' M'):('S/ '+Math.round(v).toLocaleString('es-PE'));};
 var fN=function(v){return Math.round(v).toLocaleString('es-PE');};
 var cuis=(typeof proyectos!=='undefined')?proyectos.map(function(p){return p.CUI;}):[];
 var devTot=0,ben=0,pim26=0,cert26=0,dev26=0,gir26=0,nAct26=0;
