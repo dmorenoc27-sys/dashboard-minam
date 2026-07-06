@@ -2041,7 +2041,7 @@ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded'
 else{_setup();}
 })();
 </script>
-<div style="position:fixed;bottom:0;left:0;right:0;background:rgba(10,25,47,0.9);color:rgba(255,255,255,0.5);text-align:center;font-size:10px;padding:3px 8px;z-index:99999;pointer-events:none;user-select:none;">© 2024-2026 <b style="color:rgba(255,255,255,0.75);">ARKA PROYECTOS / Corporación DMC</b> &nbsp;—&nbsp; Dashboard Ejecutivo UE003 MINAM &nbsp;—&nbsp; Todos los derechos reservados. Prohibida la reproducción sin autorización.</div></body>
+<div style="position:fixed;bottom:0;left:0;right:0;background:rgba(10,25,47,0.9);color:rgba(255,255,255,0.5);text-align:center;font-size:10px;padding:3px 8px;z-index:99999;pointer-events:none;user-select:none;">© 2024-2026 <b style="color:rgba(255,255,255,0.75);">ARKA PROYECTOS / Corporación DMC</b> &nbsp;·&nbsp; <span style="white-space:nowrap">📧 dmoreno.c@hotmail.com</span> &nbsp;·&nbsp; <span style="white-space:nowrap">📱 966 614 682</span> &nbsp;—&nbsp; Dashboard Ejecutivo UE003 MINAM &nbsp;—&nbsp; Todos los derechos reservados. Prohibida la reproducción sin autorización.</div></body>
 </html>
 </body>
 <script>
@@ -2487,7 +2487,7 @@ root.innerHTML=''
 +'</div>'
 +'</div>';
 var initMapa=function(){
-if(window._mapaNac){window._mapaNac.invalidateSize();return;}
+if(window._mapaNac){try{window._mapaNac.remove();}catch(e){}window._mapaNac=null;}
 var mp=L.map('mapa-nacional',{scrollWheelZoom:true});
 window._mapaNac=mp;
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap',maxZoom:18}).addTo(mp);
