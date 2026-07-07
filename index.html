@@ -124,6 +124,13 @@ body{font-family:'Inter','Segoe UI',system-ui,sans-serif;background:#F0F2F5;colo
 [data-proj-card]{cursor:pointer;transition:box-shadow .15s,transform .15s}
 [data-proj-card]:hover{box-shadow:0 4px 16px rgba(16,80,0,.18)!important;transform:translateY(-1px)}
 [data-proj-card].proj-sel{outline:2.5px solid #66CB00;outline-offset:1px}
+/* FIX 2026-07-06: nota "Sin PIM <año>" con giro 3D al hacer clic (pedido de David) */
+.nfip{perspective:600px;cursor:pointer;width:100%;height:26px;flex:none}
+.nfip .nfi{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.nfip.flip .nfi{transform:rotateY(180deg)}
+.nfip .nff,.nfip .nfb{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:8px;display:flex;align-items:center;justify-content:center;box-sizing:border-box;padding:2px 8px}
+.nfip .nff{background:#FFF3E0;border:1.5px solid #FFCC80;border-left:4px solid #E65100;color:#BF360C;font-weight:800;font-size:9.5px;letter-spacing:.3px;gap:4px}
+.nfip .nfb{background:#FFF8F0;border:1.5px solid #FFCC80;color:#8D4A00;font-size:7.5px;line-height:1.2;text-align:center;transform:rotateY(180deg)}
 </style>
 
 <style>
@@ -1729,21 +1736,21 @@ return `<div style="background:${bg};border:1.5px solid ${br};border-left:5px so
 </div>
 <div style="font-size:${val>=1e7?'14px':val>=1e6?'15.5px':'17px'};font-weight:900;color:${txt};letter-spacing:-0.4px;line-height:1.05">${_fmtSol(val||0)}</div>
 </div>`;};
-return tarjeta(faPim?('PIM '+faAno):'PIM total proyecto', faPim||pim||0, '#2E7D32','#F0FBF0','#A5D6A7','#105000')
+/* FIX 2026-07-06: nota compacta PRIMERO (arriba del grupo PIM/Cert/Dev del año).
+   Muestra solo "⚠ Sin PIM <año>"; al hacer clic la caja gira y se lee el detalle. */
+const _anioAct=(window._datosActualizados&&window._datosActualizados._anioActual)||2026;
+const _notaSM=(fa&&fa.sinMarcoActual)?`<div class="nfip" title="Clic para ver detalle" onclick="event.stopPropagation();this.classList.toggle('flip')"><div class="nfi"><div class="nff">⚠ Sin PIM ${_anioAct}</div><div class="nfb">Se muestran las cifras de su último año con marco presupuestal (${faAno})</div></div></div>`:'';
+return _notaSM
++tarjeta(faPim?('PIM '+faAno):'PIM total proyecto', faPim||pim||0, '#2E7D32','#F0FBF0','#A5D6A7','#105000')
 +tarjeta('Certificación '+faAno, faCert||0, '#6A1B9A','#F7F0FB','#CE93D8','#4A148C')
 +tarjeta('Devengado '+faAno, faDev||0, '#E65100','#FFF8F0','#FFCC80','#BF360C');
 })()}
 </div>
 <!-- COL 6: DEVENGADO ACUMULADO (separado) -->
-<div style="border-right:1px solid #E8F5E9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:8px 10px;background:linear-gradient(180deg,#F4FBF4 0%,#FAFFFE 100%)">
+<div style="border-right:1px solid #E8F5E9;display:flex;align-items:center;justify-content:center;padding:8px 10px;background:linear-gradient(180deg,#F4FBF4 0%,#FAFFFE 100%)">
 ${(function(){
 const devAcumDisp=isMultiUEI&&typeof devAcumData!=='undefined'&&devAcumData[cui]!=null?devAcumData[cui]:dev;
-/* FIX 2026-07-06: nota "sin PIM del año actual" — va aquí arriba del Dev. Acumulado
-   para no alargar la columna PIM/Cert/Dev (pedido de David). */
-const _fa=(typeof finAno!=='undefined'&&finAno[cui])||null;
-const _anioAct=(window._datosActualizados&&window._datosActualizados._anioActual)||2026;
-const _notaSM=(_fa&&_fa.sinMarcoActual)?`<div style="background:#FFF3E0;border:1px solid #FFCC80;border-left:4px solid #E65100;border-radius:8px;padding:5px 8px;font-size:9px;color:#8D4A00;line-height:1.35;width:100%;box-sizing:border-box"><b>⚠ Sin PIM ${_anioAct}.</b> Se muestran las cifras de su último año con marco presupuestal (${_fa.ano}).</div>`:'';
-return _notaSM+`
+return `
 <div style="background:linear-gradient(180deg,#E3F0FF 0%,#EEF4FF 100%);border:2px solid #64B5F6;border-radius:12px;padding:13px 10px;width:100%;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:4px;box-shadow:0 2px 8px rgba(21,101,192,.18)">
 <div style="display:flex;align-items:center;gap:4px">
 <svg viewBox="0 0 12 12" width="10" height="10"><circle cx="6" cy="6" r="6" fill="#1565C0" opacity=".18"/><circle cx="6" cy="6" r="3.5" fill="#1565C0"/></svg>
