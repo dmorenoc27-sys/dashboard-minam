@@ -2547,7 +2547,10 @@ root.innerHTML=''
 +kpi(tw('1f3d7',38),(oRec+oRrss)+' <span style=\'font-size:14px\'>('+oRec+' REC · '+oRrss+' RRSS)</span>','Inversiones con obras de infraestructura','#5D4037','#FBF6EC','#E0CFA8')
 +'</div>'
 +'<div style="background:#fff;border:1px solid #E5E9EF;border-radius:14px;padding:10px 14px;margin-top:9px;box-shadow:0 1px 5px rgba(16,24,40,.06)">'
-+'<div style="font-size:11px;font-weight:900;color:#37474F;text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px">Estado de la cartera — '+lista.length+' inversiones</div>'
++'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">'
++'<div style="font-size:11px;font-weight:900;color:#37474F;text-transform:uppercase;letter-spacing:.6px">Estado de la cartera — '+lista.length+' inversiones</div>'
++'<div id="chip-filtro-clear" onclick="window._mapaFiltroToggle(window._mapaFiltroEstado)" title="Quitar filtro — mostrar todas" style="display:none;cursor:pointer;width:20px;height:20px;border-radius:50%;background:#ECEFF3;color:#546E7A;font-size:12px;font-weight:900;line-height:20px;text-align:center;flex:none">✕</div>'
++'</div>'
 +'<div style="display:flex;gap:9px">'
 +chip(est.culminada,'Culminadas','#2E7D32','culminada')
 +chip(est.ejecucion,'En ejecución','#1565C0','ejecucion')
@@ -2580,6 +2583,8 @@ root.innerHTML=''
 window._mapaFiltroToggle=function(e){
 window._mapaFiltroEstado=(window._mapaFiltroEstado===e)?null:e;
 var f=window._mapaFiltroEstado;
+var xb=document.getElementById('chip-filtro-clear');
+if(xb)xb.style.display=f?'block':'none';
 document.querySelectorAll('[data-chip-estado]').forEach(function(c){
 var on=!f||c.getAttribute('data-chip-estado')===f;
 c.style.opacity=on?'1':'.35';
