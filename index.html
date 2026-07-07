@@ -2535,7 +2535,7 @@ haItems.forEach(function(it){
 var nm=(typeof cuiShortName!=='undefined'&&cuiShortName[it[0]])||('CUI '+it[0]);
 haRows+='<div onclick="window._toggleHaLista();showProjectDetail(\''+it[0]+'\')" onmouseover="this.style.background=\'#F4FBF4\'" onmouseout="this.style.background=\'\'" style="display:flex;align-items:baseline;padding:7px 8px;border-radius:8px;cursor:pointer">'
 +'<span style="font-size:12px;font-weight:700;color:#37474F;white-space:nowrap">'+nm+'</span>'
-+'<span style="flex:1;border-bottom:1.5px dotted #C5D2DC;margin:0 7px;transform:translateY(-3px)"></span>'
++'<span style="width:24px;flex:none;border-bottom:1.5px dotted #C5D2DC;margin:0 6px;transform:translateY(-3px)"></span>'
 +'<span style="font-size:12px;font-weight:900;color:#2E7D32;white-space:nowrap">'+it[1].toLocaleString('es-PE')+' ha <span style="color:#1565C0;font-weight:800">→</span></span></div>';
 });
 window._toggleHaLista=function(){var d=document.getElementById('ha-lista');if(d)d.style.display=(d.style.display==='none'||!d.style.display)?'flex':'none';};
