@@ -2591,7 +2591,7 @@ for(var gi=0;gi<geo.length;gi++){
 var pt=geo[gi];
 var ic=L.divIcon({className:'',html:'<div class="nac-pin"><div class="on" style="background:'+col+'88"></div><div class="nu" style="background:'+col+'"></div></div>',iconSize:[20,20],iconAnchor:[10,10]});
 var mk=L.marker([pt[0],pt[1]],{icon:ic}).addTo(mp);
-mk.bindPopup('<div style="max-width:230px"><b style="font-size:11px">'+p2.Proyecto.slice(0,90)+(p2.Proyecto.length>90?'…':'')+'</b>'
+mk.bindPopup('<div style="max-width:190px"><b style="font-size:12px">'+((typeof cuiShortName!=='undefined'&&cuiShortName[cui])||p2.Proyecto.slice(0,40)+'…')+'</b>'
 +'<div style="font-size:10px;color:#555;margin-top:3px">CUI '+cui+' · '+pt[4]+', '+pt[2]+'</div>'
 +'<div style="font-size:10px;font-weight:800;color:'+col+';margin-top:2px">'+({culminada:'Obra culminada',ejecucion:'Obra en ejecución',suspendida:'Obra suspendida',por_iniciar:'Obra por iniciar'})[e]+'</div>'
 +'<div style="margin-top:5px"><a href="#" onclick="showProjectDetail(\''+cui+'\');return false;" style="font-size:10.5px;font-weight:800;color:#1565C0">Ver ficha completa →</a></div></div>');
