@@ -2442,11 +2442,19 @@ lb.animate([{opacity:0},{opacity:1}],{duration:300,easing:'ease-out'});
 
 // ANULACION MANUAL (conocimiento de campo — editar aqui cuando cambie la realidad):
 // valores: 'culminada' | 'ejecucion' | 'suspendida' | 'por_iniciar'
+// Actualizado 2026-07-06 con los estados situacionales a julio 2026 (David):
 window._estadoManual={
-"2310834":"suspendida",   // Tambopata — clima
-"2317388":"suspendida",   // Moyobamba — clima
-"2165139":"suspendida",   // Cerro de Pasco — clima
-"2104602":"por_iniciar"   // Rioja — sin recursos, por reiniciar
+"2306986":"culminada",   // Sullana (Piura) — recepcionada 13/02/2026
+"2320372":"culminada",   // Paita (Piura) — recepcionada 06/03/2026
+"2333916":"culminada",   // Nuevo Chimbote (Ancash) — recepcionada 24/02/2026
+"2323393":"culminada",   // Tumbes — culminada 27/03/2026
+"2189704":"culminada",   // Huanuco — culminada 30/03/2026
+"2225760":"culminada",   // Chiclayo (Lambayeque) — culminada, a la espera del suministro Electro Norte
+"2574899":"culminada",   // Chancay (Lima) — recepcionada 15/04/2026
+"2574933":"suspendida",  // Yanahuara (Arequipa) — paralizada con autorizacion CGR
+"2574973":"suspendida"   // San Juan B. (Iquitos) — IOARR celdas suspendida por clima
+// Tambopata (2310834), Moyobamba (2317388), Cerro de Pasco (2165139) y Rioja (2104602)
+// volvieron a EJECUCION — se quitaron de esta lista y el estado sale solo del SIAF.
 };
 window._estadoObra=function(cui){
 if(window._estadoManual&&_estadoManual[cui])return _estadoManual[cui];
