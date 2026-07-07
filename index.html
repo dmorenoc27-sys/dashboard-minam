@@ -1523,21 +1523,27 @@ const rPY = rBY + CHAIN;
 const CRC = 207.3;
 const OFF = -(CRC*0.25);
 function donut(pct, color, label, bgCard, borderCard){
-const R2=34, SW=6.5, CIRC=2*Math.PI*R2, OFF2=-(CIRC*0.25);
+/* FIX 2026-07-06: tacómetro de 40 marcas finas (estilo B elegido por David). */
+const N=40, RI=27, RO=34;
 const sd=(pct==null||isNaN(pct));
-const arc = sd?0:Math.min(pct/100*CIRC, CIRC);
+const filled = sd?0 : Math.min(N, Math.floor(Math.max(pct,0)/100*N));
 const bg = bgCard||'#F8FAFF';
 const br = borderCard||(color+'55');
 const num = sd?'s/d':(pct%1===0?pct:+(+pct).toFixed(1));
-const arcCircle = arc>0 ? '<circle cx="40" cy="40" r="'+R2+'" fill="none" stroke="'+color+'" stroke-width="'+SW+'" stroke-dasharray="'+arc+' '+CIRC+'" stroke-dashoffset="'+OFF2+'" stroke-linecap="round"/>' : '';
+let segs='';
+for(let i=0;i<N;i++){
+  const a=(-90+i*(360/N))*Math.PI/180, on=i<filled;
+  const x0=(40+RI*Math.cos(a)).toFixed(1), y0=(40+RI*Math.sin(a)).toFixed(1);
+  const x1=(40+RO*Math.cos(a)).toFixed(1), y1=(40+RO*Math.sin(a)).toFixed(1);
+  segs+='<line x1="'+x0+'" y1="'+y0+'" x2="'+x1+'" y2="'+y1+'" stroke="'+(on?color:'rgba(128,128,128,.22)')+'" stroke-width="'+(on?2.6:2)+'" stroke-linecap="round"/>';
+}
 const pctTs = sd?'':'<tspan font-size="9.5" font-weight="800" dx="1.5">%</tspan>';
 return `<div style="background:${bg};border:1.5px solid ${br};border-radius:12px;padding:11px 12px;
 display:flex;flex-direction:column;align-items:center;gap:7px;width:110px;box-sizing:border-box">
 <div style="font-size:11.5px;font-weight:800;color:${color};text-transform:uppercase;
 letter-spacing:.7px;text-align:center;line-height:1.25">${label}</div>
 <svg viewBox="0 0 80 80" width="72" height="72">
-<circle cx="40" cy="40" r="${R2}" fill="none" stroke="rgba(0,0,0,.07)" stroke-width="${SW}"/>
-${arcCircle}
+${segs}
 <text x="40" y="45.5" text-anchor="middle" font-size="16.5" font-weight="900"
 fill="${color}" font-family="system-ui,sans-serif">${num}${pctTs}</text>
 </svg>
@@ -1960,12 +1966,18 @@ return(last>15?s.substring(0,last):s)+'...';
 function _circKP(lbl,pct,bg,br,tx){
 var r=30,sz=74,cx=37,cy=37;
 var _sd=(pct==null||isNaN(pct)||pct<0);if(_sd){tx='#9E9E9E';bg='#F5F5F5';br='#E0E0E0';}
-var circ=2*Math.PI*r,dash=Math.min(Math.max(pct,0),100)/100*circ;
+/* FIX 2026-07-06: tacómetro de 40 marcas finas, igual que donut() (estilo B) */
+var N=40, RI=24, RO=31;
+var filled=_sd?0:Math.min(N,Math.floor(Math.max(pct,0)/100*N));
+var segs='';
+for(var i=0;i<N;i++){
+  var a=(-90+i*(360/N))*Math.PI/180, on=i<filled;
+  var x0=(cx+RI*Math.cos(a)).toFixed(1), y0=(cy+RI*Math.sin(a)).toFixed(1);
+  var x1=(cx+RO*Math.cos(a)).toFixed(1), y1=(cy+RO*Math.sin(a)).toFixed(1);
+  segs+='<line x1="'+x0+'" y1="'+y0+'" x2="'+x1+'" y2="'+y1+'" stroke="'+(on?tx:'rgba(128,128,128,.22)')+'" stroke-width="'+(on?2.4:1.8)+'" stroke-linecap="round"/>';
+}
 var svg='<svg width="'+sz+'" height="'+sz+'" viewBox="0 0 '+sz+' '+sz+'" style="display:block;margin:0 auto">'
-+'<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="rgba(0,0,0,.08)" stroke-width="6"/>'
-+'<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="'+tx+'" stroke-width="6"'
-+' stroke-dasharray="'+dash.toFixed(2)+' '+circ.toFixed(2)+'" stroke-linecap="round"'
-+' transform="rotate(-90 '+cx+' '+cy+')"/>'
++segs
 +'<text x="'+cx+'" y="'+(cy+6)+'" text-anchor="middle" font-size="13" font-weight="900" fill="'+tx+'">'+(_sd?'s/d':((pct%1===0?pct:(+pct.toFixed(2)))+'%'))+'</text>'
 +'</svg>';
 return '<div style="background:'+bg+';border:1.5px solid '+br+';border-radius:10px;padding:8px 4px 6px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:106px">'+svg
