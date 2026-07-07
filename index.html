@@ -2490,7 +2490,7 @@ return {Dev:(fresco&&fresco.Dev!=null?fresco.Dev:(base?base.Dev:0))||0,
 Gir:(fresco&&fresco.Gir!=null?fresco.Gir:(base?base.Gir:0))||0,
 Cert:((base?base.Cert:0)||0)};
 };
-var devTot=0,ben=0,pim26=0,certA=0,devA=0,girA=0,nAct=0;
+var devTot=0,ben=0,pim26=0,certA=0,devA=0,girA=0,compA=0,nAct=0;
 var ha=0,veh=0,oRec=0,oRrss=0;
 var est={culminada:0,ejecucion:0,suspendida:0,por_iniciar:0};
 for(var i=0;i<lista.length;i++){
@@ -2499,7 +2499,10 @@ if(_fu[c]){for(var k in _fu[c])devTot+=_fu[c][k]||0;}
 ben+=(typeof benefiData!=='undefined'&&benefiData[c])||0;
 var y=anual(c);
 if(y&&(y.Dev>0||y.Gir>0||y.Cert>0)){nAct++;devA+=y.Dev;girA+=y.Gir;certA+=y.Cert;}
-if(anio==='2026'&&typeof finAno!=='undefined'&&finAno[c]&&String(finAno[c].ano)==='2026'){pim26+=(p.fin&&p.fin.PIM)||0;}
+if(anio==='2026'&&typeof finAno!=='undefined'&&finAno[c]&&String(finAno[c].ano)==='2026'){
+/* FIX 2026-07-06: usar el PIM ANUAL real (finAnoUpdate/Consulta Amigable), no fin.PIM acumulado multi-año */
+pim26+=(finAno[c].PIM!=null?finAno[c].PIM:((p.fin&&p.fin.PIM)||0));
+compA+=(finAno[c].Comp||0);}
 ha+=(window._brechaHA&&_brechaHA[c])||0;
 veh+=(window._vehiculosLP&&_vehiculosLP[c])||0;
 var ot=window._obraTipo&&_obraTipo[c];
@@ -2508,6 +2511,8 @@ est[_estadoObra(c)]++;}
 var es26=(anio==='2026');
 var pD=es26&&pim26>0?Math.round(devA/pim26*100):(certA>0?Math.round(devA/certA*100):null);
 var pG=es26&&pim26>0?Math.round(girA/pim26*100):(certA>0?Math.round(girA/certA*100):null);
+var pC=es26&&pim26>0?Math.round(certA/pim26*100):null;
+var pCo=es26&&pim26>0?Math.round(compA/pim26*100):null;
 var kpi=function(icono,num,lbl,col,bg,br){
 return '<div style="background:'+bg+';border:1.5px solid '+br+';border-left:5px solid '+col+';border-radius:14px;padding:8px 12px;display:flex;align-items:center;gap:9px;box-shadow:0 1px 5px rgba(16,24,40,.08)">'
 +icono
@@ -2551,9 +2556,12 @@ root.innerHTML=''
 +'</div></div>'
 +'<div style="background:#fff;border:1px solid #E5E9EF;border-radius:14px;padding:10px 14px;margin-top:9px;box-shadow:0 1px 5px rgba(16,24,40,.06)">'
 +'<div style="font-size:11px;font-weight:900;color:#37474F;text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px">Ejecución presupuestal '+anio+'</div>'
-+(es26?barra('PIM (F12B-SSI)',pim26,null,'#37474F'):barra('Certificado '+anio+' (SIAF)',certA,null,'#37474F'))
-+barra('Devengado (SIAF)',devA,pD,'#E65100')
-+barra('Girado (SIAF)',girA,pG,'#1565C0')
++(es26?barra('PIM',pim26,null,'#37474F'):barra('Certificado '+anio+' (SIAF)',certA,null,'#37474F'))
++(es26?barra('Certificación',certA,pC,'#6A1B9A'):'')
++(es26&&compA>0?barra('Compromiso',compA,pCo,'#00838F'):'')
++barra('Devengado',devA,pD,'#E65100')
++(es26?'':barra('Girado (SIAF)',girA,pG,'#1565C0'))
++'<div style="font-size:9px;color:#90A4AE;margin-top:5px">Fuente: Transparencia Económica — MEF</div>'
 +'</div>'
 +'</div>'
 +'<div style="flex:1;min-width:420px;background:#fff;border:1px solid #E5E9EF;border-radius:14px;padding:12px;box-shadow:0 1px 5px rgba(16,24,40,.06);display:flex;flex-direction:column">'
