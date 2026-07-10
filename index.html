@@ -2535,6 +2535,40 @@ var pD=es26&&pim26>0?Math.round(devA/pim26*100):(certA>0?Math.round(devA/certA*1
 var pG=es26&&pim26>0?Math.round(girA/pim26*100):(certA>0?Math.round(girA/certA*100):null);
 var pC=es26&&pim26>0?Math.round(certA/pim26*100):null;
 var pCo=es26&&pim26>0?Math.round(compA/pim26*100):null;
+/* CURVA S 2026 — devengado mensual acumulado + proyección de cierre (mensualUpdate, respeta filtros) */
+var _mU=_d.mensualUpdate||{};
+var _curva=null;
+if(es26&&_mU.devPorCui&&String(_mU.anio)===anio){
+var _mens=[0,0,0,0,0,0,0,0,0,0,0,0];
+for(var _i=0;_i<lista.length;_i++){
+var _s=_mU.devPorCui[String(lista[_i].CUI)];
+if(_s)for(var _m in _s){var _mi=parseInt(_m,10);if(_mi>=1&&_mi<=12)_mens[_mi-1]+=(_s[_m]||0);}}
+var _mesU=Math.min(12,Math.max(1,parseInt(_mU.mesUltimo,10)||0));
+if(_mesU>=1&&_mens.some(function(v){return v>0;})){
+var _acum=[],_t=0;
+for(var _a=0;_a<12;_a++){_t+=_mens[_a];_acum.push(_a<_mesU?Math.round(_t):null);}
+/* ritmo = promedio de los últimos 3 meses CERRADOS (el mes en curso va parcial y no cuenta) */
+var _mCer=Math.max(1,_mesU-1);
+var _sum3=0,_n3=0;
+for(var _b=Math.max(0,_mCer-3);_b<_mCer;_b++){_sum3+=_mens[_b];_n3++;}
+var _ritmo=_n3>0?_sum3/_n3:_mens[0];
+var _acumCer=0;for(var _c2=0;_c2<_mCer;_c2++)_acumCer+=_mens[_c2];
+var _proy=[];
+for(var _p2=0;_p2<12;_p2++)_proy.push(_p2<_mCer-1?null:Math.round(_acumCer+_ritmo*(_p2-(_mCer-1))));
+_curva={acum:_acum,proy:_proy,cierre:Math.round(_acumCer+_ritmo*(12-_mCer)),mesU:_mesU,mCer:_mCer};
+}}
+var _curvaCard='';
+if(_curva){
+var _pctC=pim26>0?Math.round(_curva.cierre/pim26*100):null;
+_curvaCard='<div style="background:#fff;border:1px solid #E5E9EF;border-radius:14px;padding:10px 14px;margin-top:9px;box-shadow:0 1px 5px rgba(16,24,40,.06)">'
++'<div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:4px;margin-bottom:6px">'
++'<div style="font-size:11px;font-weight:900;color:#37474F;text-transform:uppercase;letter-spacing:.6px">Curva de ejecución '+anio+' — devengado acumulado</div>'
++'<div style="font-size:10px;font-weight:800;color:#E65100">Cierre proyectado: '+fS(_curva.cierre)+(_pctC!=null?' · '+_pctC+'% del PIM':'')+'</div>'
++'</div>'
++'<div style="height:215px;position:relative"><canvas id="cCurvaS"></canvas></div>'
++'<div style="font-size:9px;color:#90A4AE;margin-top:5px">Proyección al ritmo promedio de los últimos 3 meses cerrados · Fuente: Transparencia Económica — MEF (SIAF)</div>'
++'</div>';
+}
 var kpi=function(icono,num,lbl,col,bg,br){
 return '<div style="background:'+bg+';border:1.5px solid '+br+';border-left:5px solid '+col+';border-radius:14px;padding:8px 12px;display:flex;align-items:center;gap:9px;box-shadow:0 1px 5px rgba(16,24,40,.08)">'
 +icono
@@ -2660,6 +2694,7 @@ root.innerHTML=''
 +(es26?'':barra('Girado (SIAF)',girA,pG,'#1565C0'))
 +'<div style="font-size:9px;color:#90A4AE;margin-top:5px">Fuente: Transparencia Económica — MEF</div>'
 +'</div>'
++_curvaCard
 +'</div>'
 +'<div style="flex:1;min-width:420px;background:#fff;border:1px solid #E5E9EF;border-radius:14px;padding:12px;box-shadow:0 1px 5px rgba(16,24,40,.06);display:flex;flex-direction:column">'
 +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding:0 4px">'
@@ -2734,6 +2769,16 @@ document.head.appendChild(lc);}
 var ls=document.createElement('script');
 ls.src='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
 ls.onload=initMapa;document.head.appendChild(ls);}
+/* Instanciar la CURVA S (Chart.js ya cargado por las otras pestañas) */
+if(_curva&&window.Chart&&typeof mk==='function'&&document.getElementById('cCurvaS')){
+var _MESN=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Set','Oct','Nov','Dic'];
+var _dsC=[
+{label:'Devengado acumulado',data:_curva.acum,borderColor:'#E65100',backgroundColor:'rgba(230,81,0,.10)',fill:true,tension:.25,borderWidth:2,pointRadius:3,pointHoverRadius:5,pointBackgroundColor:'#E65100',spanGaps:false},
+{label:'Proyección',data:_curva.proy,borderColor:'rgba(230,81,0,.55)',borderDash:[6,4],borderWidth:2,pointRadius:0,pointHoverRadius:4,fill:false,tension:0}
+];
+if(pim26>0)_dsC.push({label:'PIM '+anio,data:_MESN.map(function(){return pim26;}),borderColor:'#37474F',borderDash:[2,3],borderWidth:1.5,pointRadius:0,pointHoverRadius:0,fill:false});
+mk('cCurvaS',{type:'line',data:{labels:_MESN,datasets:_dsC},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top',labels:{boxWidth:12,usePointStyle:false}},tooltip:{callbacks:{label:function(c){return c.raw==null?null:' '+c.dataset.label+': '+fS(c.raw);}}}},scales:{y:{beginAtZero:true,grid:{color:'#f0f0f0'},ticks:{callback:function(v){return 'S/ '+(v/1e6).toFixed(0)+'M';}}},x:{grid:{display:false}}}}});
+}
 };
 window._vehDetalle=function(cui,ev){
 if(ev){ev.stopPropagation();}
