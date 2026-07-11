@@ -1697,7 +1697,7 @@ ${p&&p.Tipo_Proyecto?`<span style="padding:3px 10px;border-radius:10px;font-size
 <!-- ══ DATA ROW: 6 COLUMNS ══════════════════════════════════════
 [Balance | Av.Fis | Av.Fin | Componentes | PIM+Dev | Beneficiarios]
 -->
-<div style="margin:14px 16px 0;display:grid;grid-template-columns:26% 19% 18% 11% 9% 17%;background:#fff;
+<div style="margin:14px 16px 0;display:grid;grid-template-columns:26% 13% 13% 18% 13% 17%;background:#fff;
 border:1px solid #E5E9EF;border-radius:16px;box-shadow:0 1px 2px rgba(16,24,40,.05),0 4px 14px rgba(16,24,40,.05);overflow:hidden;flex-shrink:0;min-height:0">
 <!-- COL 1: PRESUPUESTO DE INVERSIÓN -->
 <div style="border-right:1px solid #E8F5E9;padding:10px 14px;
@@ -1733,20 +1733,37 @@ const bgVar = bDiff>=0?'rgba(16,80,0,.07)':'rgba(183,28,28,.07)';
 const brVar = bDiff>=0?'#C8E6C9':'#FFCDD2';
 const ptVar = bDiff>=0?'5,0 10,10 0,10':'0,0 10,0 5,10';
 const badgeVar = (bIni>0&&bAct>0)
-? '<div style="display:flex;align-items:center;justify-content:center;gap:8px;padding:5px 10px;border-radius:8px;background:'+bgVar+';border:1px solid '+brVar+'">'
-+'<svg viewBox="0 0 10 10" width="10" height="10"><polygon points="'+ptVar+'" fill="'+bDiffColor+'"/></svg>'
-+'<span style="font-size:14px;font-weight:900;color:'+bDiffColor+'">'+(bDiff>=0?'+':'')+bDiffPct+'%</span>'
+? '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:8px 9px;border-radius:8px;background:'+bgVar+';border:1px solid '+brVar+';align-self:center">'
++'<svg viewBox="0 0 10 10" width="11" height="11"><polygon points="'+ptVar+'" fill="'+bDiffColor+'"/></svg>'
++'<span style="font-size:13.5px;font-weight:900;color:'+bDiffColor+';white-space:nowrap">'+(bDiff>=0?'+':'')+bDiffPct+'%</span>'
 +'<span style="font-size:8px;color:#9E9E9E;font-weight:600">variación</span>'
 +'</div>'
 : '';
-return '<div style="display:flex;gap:6px">'+bloqueIni+bloqueAct+'</div>'
-+(badgeVar?'<div style="margin-top:2px">'+badgeVar+'</div>':'');
+/* 11-07-2026: Perfil Viable y Costo Actualizado APILADOS, variación al costado */
+return '<div style="display:flex;gap:6px;align-items:stretch">'
++'<div style="flex:1;display:flex;flex-direction:column;gap:6px">'+bloqueIni+bloqueAct+'</div>'
++badgeVar
++'</div>';
 })()}
 </div>
-<!-- COL 2-3: AVANCES (Físico + Financiero juntos) -->
-<div style="border-right:1px solid #E8F5E9;display:flex;align-items:center;justify-content:center;gap:2px;padding:10px 4px;background:linear-gradient(180deg,#F4FBF4 0%,#FAFFFE 100%);min-width:0">
+<!-- COL 2: AV. FISICO + PMI -->
+<div style="border-right:1px solid #E8F5E9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:8px 6px;background:linear-gradient(180deg,#F4FBF4 0%,#FAFFFE 100%)">
 ${donut(avFis,'#0D47A1','Av. Físico','#EEF4FF','#90CAF9')}
+<div title="${s.pmi==='SI'?'Programado en el PMI':'No programado en el PMI'}" style="background:${s.pmi==='SI'?'#F0FBF0':'#FFF5F5'};border:1.5px solid ${s.pmi==='SI'?'#A5D6A7':'#FFCDD2'};border-radius:10px;padding:5px 12px;display:flex;align-items:center;gap:6px">
+<span style="width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:${s.pmi==='SI'?'rgba(16,80,0,.12)':'rgba(183,28,28,.1)'};border:1.5px solid ${s.pmi==='SI'?'rgba(16,80,0,.45)':'rgba(183,28,28,.35)'};font-size:10px;line-height:1">${s.pmi==='SI'?'✓':'✗'}</span>
+<span style="font-size:14px;font-weight:900;color:${s.pmi==='SI'?'#105000':'#B71C1C'};letter-spacing:-.5px;line-height:1">PMI</span>
+</div>
+</div>
+<!-- COL 3: AV. FINANCIERO + DEV. ACUMULADO -->
+<div style="border-right:1px solid #E8F5E9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:8px 6px;background:linear-gradient(180deg,#F4FBF4 0%,#FAFFFE 100%)">
 ${donut(avF,SC.bg,'Av. Financiero','#F0FBF0','#A5D6A7')}
+${(function(){
+const devAcumDisp=isMultiUEI&&typeof devAcumData!=='undefined'&&devAcumData[cui]!=null?devAcumData[cui]:dev;
+return `<div title="${isMultiUEI?'Dev. acumulado del proyecto (todas las UEIs) · SSI-SOSEM':'Desde su creación a la fecha'}" style="background:linear-gradient(180deg,#E3F0FF 0%,#EEF4FF 100%);border:1.5px solid #64B5F6;border-radius:10px;padding:5px 10px;text-align:center;max-width:100%">
+<div style="font-size:8.5px;color:#1565C0;font-weight:800;text-transform:uppercase;letter-spacing:.5px;line-height:1.15">${isMultiUEI?'Dev. Acum. (Proyecto)':'Dev. Acumulado'}</div>
+<div style="font-size:${devAcumDisp>=1e7?'13px':'14px'};font-weight:900;color:#0D47A1;letter-spacing:-.4px;line-height:1.2">${_fmtSol(devAcumDisp)}</div>
+</div>`;
+})()}
 </div>
 <!-- COL 5: EJERCICIO 2026 (PIM + CERT + DEV, homogeneos) -->
 <div style="border-right:1px solid #E8F5E9;display:flex;flex-direction:column;justify-content:center;padding:8px 10px;gap:5px;background:linear-gradient(180deg,#F4FBF4 0%,#FAFFFE 100%)">
@@ -1774,42 +1791,15 @@ return _notaSM
 +tarjeta('Devengado '+faAno, faDev||0, '#E65100','#FFF8F0','#FFCC80','#BF360C');
 })()}
 </div>
-<!-- COL 6: DEVENGADO ACUMULADO (separado) -->
-<div style="border-right:1px solid #E8F5E9;display:flex;align-items:center;justify-content:center;padding:8px 10px;background:linear-gradient(180deg,#F4FBF4 0%,#FAFFFE 100%)">
-${(function(){
-const devAcumDisp=isMultiUEI&&typeof devAcumData!=='undefined'&&devAcumData[cui]!=null?devAcumData[cui]:dev;
-return `
-<div style="background:linear-gradient(180deg,#E3F0FF 0%,#EEF4FF 100%);border:2px solid #64B5F6;border-radius:12px;padding:13px 10px;width:100%;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:4px;box-shadow:0 2px 8px rgba(21,101,192,.18)">
-<div style="display:flex;align-items:center;gap:4px">
-<svg viewBox="0 0 12 12" width="10" height="10"><circle cx="6" cy="6" r="6" fill="#1565C0" opacity=".18"/><circle cx="6" cy="6" r="3.5" fill="#1565C0"/></svg>
-<div style="font-size:10px;color:#1565C0;font-weight:800;text-transform:uppercase;letter-spacing:.7px;text-align:center;line-height:1.2">${isMultiUEI?'Dev. Acumulado (Proyecto)':'Dev. Acumulado'}</div>
+<!-- COL 6: FIDEICOMISOS + PUESTA EN MARCHA (paneles nuevos 11-07-2026; contenido pendiente de definir) -->
+<div style="border-right:1px solid #E8F5E9;display:flex;flex-direction:column;justify-content:stretch;gap:7px;padding:8px 8px;background:linear-gradient(180deg,#F4FBF4 0%,#FAFFFE 100%)">
+<div style="flex:1;background:#F6FDF6;border:1.5px solid #A5D6A7;border-radius:12px;padding:8px 11px;display:flex;flex-direction:column;justify-content:center;min-height:0;box-shadow:0 1px 4px rgba(16,24,40,.06)">
+<div style="font-size:9.5px;font-weight:900;color:#1B5E20;text-transform:uppercase;letter-spacing:.6px;display:flex;align-items:center;gap:5px;line-height:1.2"><span style="width:6px;height:6px;border-radius:50%;background:#4CAF50;display:inline-block;flex-shrink:0"></span>Fideicomisos</div>
+<div style="font-size:8.5px;color:#A5B8A5;font-weight:600;margin-top:3px;line-height:1.25">Información en preparación</div>
 </div>
-<div style="font-size:${devAcumDisp>=1e7?'16px':devAcumDisp>=1e6?'18px':'20px'};font-weight:900;color:#0D47A1;letter-spacing:-0.5px;line-height:1.1;text-align:center">
-${_fmtSol(devAcumDisp)}
-</div>
-<div style="font-size:9px;color:#64B5F6;text-align:center;line-height:1.2">${isMultiUEI?'Todas las UEIs · SSI-SOSEM':'Desde su creación a la fecha'}</div>
-</div>`;
-})()}
-</div>
-<!-- COL 7: PMI -->
-<div style="display:flex;align-items:center;justify-content:center;padding:8px 6px;background:linear-gradient(180deg,#F4FBF4 0%,#FAFFFE 100%)">
-<div style="background:${s.pmi==='SI'?'#F0FBF0':'#FFF5F5'};
-border:1.5px solid ${s.pmi==='SI'?'#A5D6A7':'#FFCDD2'};
-border-radius:12px;padding:10px 8px;
-display:flex;flex-direction:column;align-items:center;gap:5px;width:100%;box-sizing:border-box">
-<div style="font-size:20px;font-weight:900;color:${s.pmi==='SI'?'#105000':'#B71C1C'};
-letter-spacing:-1px;line-height:1">PMI</div>
-<div style="width:34px;height:34px;border-radius:50%;
-display:flex;align-items:center;justify-content:center;
-background:${s.pmi==='SI'?'rgba(16,80,0,.12)':'rgba(183,28,28,.1)'};
-border:2px solid ${s.pmi==='SI'?'rgba(16,80,0,.45)':'rgba(183,28,28,.35)'}">
-<span style="font-size:16px;line-height:1">${s.pmi==='SI'?'✓':'✗'}</span>
-</div>
-<div style="font-size:9px;font-weight:900;text-align:center;
-color:${s.pmi==='SI'?'#1B5E20':'#B71C1C'};
-text-transform:uppercase;letter-spacing:.3px;line-height:1.4;max-width:70px">
-${s.pmi==='SI'?'PROGRAMADO EN EL PMI':'NO PROGRAMADO EN EL PMI'}
-</div>
+<div style="flex:1;background:#F6FDF6;border:1.5px solid #A5D6A7;border-radius:12px;padding:8px 11px;display:flex;flex-direction:column;justify-content:center;min-height:0;box-shadow:0 1px 4px rgba(16,24,40,.06)">
+<div style="font-size:9.5px;font-weight:900;color:#1B5E20;text-transform:uppercase;letter-spacing:.6px;display:flex;align-items:center;gap:5px;line-height:1.2"><span style="width:6px;height:6px;border-radius:50%;background:#4CAF50;display:inline-block;flex-shrink:0"></span>Puesta en Marcha</div>
+<div style="font-size:8.5px;color:#A5B8A5;font-weight:600;margin-top:3px;line-height:1.25">Información en preparación</div>
 </div>
 </div>
 <!-- COL 8: VISTA DE LA INVERSIÓN (foto, junto a PMI) -->
