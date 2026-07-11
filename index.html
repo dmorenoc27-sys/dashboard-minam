@@ -1801,9 +1801,10 @@ return _notaSM
 </div>
 </div>
 <!-- COL 8: VISTA DE LA INVERSIÓN (foto, junto a PMI) -->
-<div style="padding:6px;display:flex;flex-direction:column;background:linear-gradient(180deg,#FAFFFE 0%,#F4FBF4 100%)">
-<div style="position:relative;flex:1;border-radius:8px;overflow:hidden;border:1.5px solid #C8E6C9;background:#EEF4EC;min-height:0">
+<div style="padding:6px;display:flex;flex-direction:column;justify-content:center;background:linear-gradient(180deg,#FAFFFE 0%,#F4FBF4 100%)">
+<div style="position:relative;width:100%;aspect-ratio:5/4;border-radius:8px;overflow:hidden;border:1.5px solid #C8E6C9;background:#EEF4EC;flex-shrink:0;margin:auto 0">
 <img id="foto-inv-img" src="foto/${cui}.jpg" alt="Inversión CUI ${cui}" loading="lazy" title="Clic para ampliar" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" onclick="if(window._fotoAmpliar)_fotoAmpliar(this)" onerror="this.style.display='none';var ph=this.parentNode.querySelector('.foto-ph2');if(ph)ph.style.display='flex'">
+<div id="foto-inv-badge" onclick="event.stopPropagation();var i=document.getElementById('foto-inv-img');if(i&&window._fotoAmpliar)_fotoAmpliar(i)" title="Este mes tiene varias fotos — clic para verlas" style="display:none;position:absolute;top:6px;right:6px;background:rgba(16,80,0,.82);color:#fff;font-size:9px;font-weight:800;border-radius:9px;padding:3px 7px;align-items:center;gap:3px;cursor:zoom-in;box-shadow:0 1px 4px rgba(0,0,0,.3);letter-spacing:.3px"></div>
 <select id="foto-inv-sel" onchange="if(window._fotoMes)_fotoMes('${cui}',this.value)" onclick="event.stopPropagation()" style="display:none;position:absolute;bottom:6px;right:6px;font-size:9px;font-weight:700;color:#105000;background:rgba(255,255,255,.92);border:1px solid #C8E6C9;border-radius:8px;padding:2px 4px;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.2);max-width:90%"></select>
 <div class="foto-ph2" style="display:none;position:absolute;inset:0;flex-direction:column;align-items:center;justify-content:center;gap:3px;text-align:center;padding:4px">
 <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#A5C8A5" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.6"/><path d="M3 16l5-5 4 4 3-3 6 6"/></svg>
@@ -2178,33 +2179,59 @@ panel.innerHTML='<div style="color:#666;font-style:italic;font-size:10px;text-al
 window._fotoManifest={};
 fetch('foto/manifest.json?v='+Date.now()).then(function(r){return r.ok?r.json():{}}).then(function(m){window._fotoManifest=m||{};}).catch(function(){});
 window._fotoMesLabel=function(ym){var M={'01':'Ene','02':'Feb','03':'Mar','04':'Abr','05':'May','06':'Jun','07':'Jul','08':'Ago','09':'Sep','10':'Oct','11':'Nov','12':'Dic'};return (M[ym.slice(4,6)]||'?')+' '+ym.slice(0,4);};
+/* MULTI-FOTO por mes (11-07-2026). Manifest v1: {cui:[meses]} · v2: {cui:{mes:cantidad}}.
+   Archivos: CUI_AAAAMM.jpg (1ra del mes) + CUI_AAAAMM_2.jpg, _3.jpg... */
+window._fotoMeses=function(cui){
+var m=(window._fotoManifest&&window._fotoManifest[cui])||null;
+if(!m)return [];
+if(Array.isArray(m))return m.slice().sort().map(function(x){return {mes:x,n:1};});
+return Object.keys(m).sort().map(function(x){return {mes:x,n:Math.max(1,parseInt(m[x],10)||1)};});
+};
+window._fotoSrc=function(cui,mes,k){return 'foto/'+cui+'_'+mes+(k>1?'_'+k:'')+'.jpg';};
+window._fotoLista=function(cui){
+var out=[];window._fotoMeses(cui).forEach(function(e){for(var k=1;k<=e.n;k++)out.push({mes:e.mes,k:k,n:e.n});});
+return out;
+};
 window._fotoInit=function(cui){
 window._fotoCui=cui;
 var sel=document.getElementById('foto-inv-sel'),img=document.getElementById('foto-inv-img');
 if(!sel||!img)return;
-var meses=(window._fotoManifest&&window._fotoManifest[cui])||[];
+var meses=window._fotoMeses(cui);
 if(!meses.length)return;
-meses=meses.slice().sort().reverse();
-sel.innerHTML=meses.map(function(m){return '<option value="'+m+'">'+_fotoMesLabel(m)+'</option>';}).join('');
-sel.style.display=meses.length>1?'block':'none';
+var desc=meses.slice().reverse();
+sel.innerHTML=desc.map(function(e){return '<option value="'+e.mes+'">'+_fotoMesLabel(e.mes)+(e.n>1?' · '+e.n+' fotos':'')+'</option>';}).join('');
+sel.style.display=(desc.length>1)?'block':'none';
 img.style.display='block';
-img.src='foto/'+cui+'_'+meses[0]+'.jpg';
+img.src=window._fotoSrc(cui,desc[0].mes,1);
+var bd=document.getElementById('foto-inv-badge');
+if(bd){bd.style.display=desc[0].n>1?'flex':'none';bd.textContent='📷 '+desc[0].n;}
 };
-window._fotoMes=function(cui,ym){var img=document.getElementById('foto-inv-img');if(img){img.style.display='block';img.src='foto/'+cui+'_'+ym+'.jpg';}};
+window._fotoMes=function(cui,ym){
+var img=document.getElementById('foto-inv-img');
+if(img){img.style.display='block';img.src=window._fotoSrc(cui,ym,1);}
+var e=window._fotoMeses(cui).filter(function(x){return x.mes===ym;})[0];
+var bd=document.getElementById('foto-inv-badge');
+if(bd){var n=e?e.n:1;bd.style.display=n>1?'flex':'none';bd.textContent='📷 '+n;}
+};
 window._fotoNav=function(d,ev){
 if(ev){ev.stopPropagation();}
-var st=window._fotoLbState;if(!st||st.meses.length<2)return;
-var n=st.idx+d;if(n<0||n>=st.meses.length)return;
+var st=window._fotoLbState;if(!st||st.lista.length<2)return;
+var n=st.idx+d;if(n<0||n>=st.lista.length)return;
 st.idx=n;window._fotoLbRender();
+};
+window._fotoIr=function(i,ev){
+if(ev){ev.stopPropagation();}
+var st=window._fotoLbState;if(!st||i<0||i>=st.lista.length)return;
+st.idx=i;window._fotoLbRender();
 };
 window._fotoLbRender=function(){
 var st=window._fotoLbState;var lb=document.getElementById('foto-lightbox');
 if(!st||!lb)return;
 var cui=st.cui;
 var p=(typeof proyectos!=='undefined'&&proyectos.find)?(proyectos.find(function(x){return x.CUI===cui;})||{}):{};
-var mes=st.meses.length?st.meses[st.idx]:null;
-var src=mes?('foto/'+cui+'_'+mes+'.jpg'):st.src;
-var mesTxt=mes?_fotoMesLabel(mes):'';
+var it=st.lista.length?st.lista[st.idx]:null;
+var src=it?window._fotoSrc(cui,it.mes,it.k):st.src;
+var mesTxt=it?_fotoMesLabel(it.mes):'';
 var tipo=p.Tipo_Inversion||'';
 var tc={PROYECTO:'#5E35B1',IOARR:'#E65100',PROGRAMA:'#00838F'}[tipo]||'#546E7A';
 var nombre=(p.Proyecto||('CUI '+cui));
@@ -2214,36 +2241,48 @@ var avf=avfV!=null?('Avance físico '+(+avfV.toFixed?avfV.toFixed(1):avfV)+'%'):
 var dev=(typeof devAcumData!=='undefined'&&devAcumData[cui])?('Dev. acumulado S/ '+(devAcumData[cui]/1e6).toFixed(2)+' M'):'';
 var extra=[est?(est==='ACTIVO'?'● ACTIVO':'○ CERRADO'):'',avf,dev].filter(Boolean).join('  ·  ');
 var fl=function(dir,on){
-return '<button onclick="_fotoNav('+dir+',event)" title="'+(dir<0?'Mes anterior':'Mes siguiente')+'" '
+return '<button onclick="_fotoNav('+dir+',event)" title="'+(dir<0?'Foto anterior':'Foto siguiente')+'" '
 +'style="position:absolute;'+(dir<0?'left:-58px':'right:-58px')+';top:50%;transform:translateY(-50%);'
 +'width:46px;height:46px;border-radius:50%;border:1.5px solid rgba(255,255,255,'+(on?'.32':'.12')+');'
 +'background:rgba(255,255,255,'+(on?'.14':'.04')+');color:'+(on?'#fff':'rgba(255,255,255,.22)')+';'
 +'font-size:24px;font-weight:700;cursor:'+(on?'pointer':'default')+';'
 +'display:flex;align-items:center;justify-content:center;line-height:1;font-family:inherit;padding:0 0 3px 0">'
 +(dir<0?'‹':'›')+'</button>';};
+/* puntitos: una fila por las fotos del MES actual, clicables */
+var dots='';
+if(it&&it.n>1){
+var base=st.idx-(it.k-1);
+for(var j=0;j<it.n;j++){
+var on=(j===it.k-1);
+dots+='<span onclick="_fotoIr('+(base+j)+',event)" title="Foto '+(j+1)+' de '+it.n+'" style="width:'+(on?'11px':'9px')+';height:'+(on?'11px':'9px')+';border-radius:50%;background:'+(on?'#66CB00':'rgba(255,255,255,.35)')+';border:1.5px solid '+(on?'#CFFFB0':'rgba(255,255,255,.5)')+';cursor:pointer;display:inline-block;transition:all .15s"></span>';
+}
+dots='<div style="display:flex;gap:8px;justify-content:center;align-items:center;margin-top:10px" onclick="event.stopPropagation()">'+dots+'</div>';
+}
 lb.innerHTML='<div style="max-width:1150px;text-align:center;color:#fff;font-size:15px;font-weight:700;line-height:1.45;text-shadow:0 1px 3px rgba(0,0,0,.4)">'+nombre+'</div>'
 +'<div style="position:relative;display:inline-block;max-width:86%">'
 +'<img src="'+src+'" style="max-width:100%;max-height:66vh;border-radius:12px;box-shadow:0 8px 40px rgba(0,0,0,.6);display:block">'
-+(st.meses.length>1?fl(-1,st.idx>0)+fl(1,st.idx<st.meses.length-1):'')
++(st.lista.length>1?fl(-1,st.idx>0)+fl(1,st.idx<st.lista.length-1):'')
 +'</div>'
++dots
 +'<div style="max-width:900px;text-align:center;color:#fff">'
 +'<div style="font-size:12px;font-weight:800;letter-spacing:.6px">'
 +'<span style="background:rgba(255,255,255,.16);padding:3px 10px;border-radius:10px">CUI '+cui+'</span>'
 +(tipo?' <span style="background:#fff;color:'+tc+';padding:3px 10px;border-radius:10px">'+tipo+'</span>':'')
 +(p.Departamento?' <span style="background:rgba(255,255,255,.16);padding:3px 10px;border-radius:10px">📍 '+p.Departamento+'</span>':'')
-+(mesTxt?' <span style="background:rgba(102,203,0,.28);color:#CFFFB0;padding:3px 10px;border-radius:10px">📷 '+mesTxt+'</span>':'')
++(mesTxt?' <span style="background:rgba(102,203,0,.28);color:#CFFFB0;padding:3px 10px;border-radius:10px">📷 '+mesTxt+(it&&it.n>1?' · '+it.k+'/'+it.n:'')+'</span>':'')
 +'</div>'
 
 +'</div>';
-var pi=document.getElementById('foto-inv-img');if(pi&&mes)pi.src=src;
-var ps=document.getElementById('foto-inv-sel');if(ps&&mes)ps.value=mes;
+var pi=document.getElementById('foto-inv-img');if(pi&&it)pi.src=window._fotoSrc(cui,it.mes,1);
+var ps=document.getElementById('foto-inv-sel');if(ps&&it)ps.value=it.mes;
 };
 window._fotoAmpliar=function(img){
 var cui=window._fotoCui||'';
-var meses=((window._fotoManifest&&window._fotoManifest[cui])||[]).slice().sort();
-var mm=(img.src.match(/_(20\d{4})\.jpg/)||[])[1];
-var idx=mm?meses.indexOf(mm):meses.length-1;if(idx<0)idx=meses.length-1;
-window._fotoLbState={cui:cui,meses:meses,idx:idx,src:img.src};
+var lista=window._fotoLista(cui);
+var mm=(img.src.match(/_(20\d{4})(?:_(\d+))?\.jpg/)||[]);
+var idx=lista.length-1;
+if(mm[1]){for(var i=0;i<lista.length;i++){if(lista[i].mes===mm[1]&&lista[i].k===(mm[2]?parseInt(mm[2],10):1)){idx=i;break;}}}
+window._fotoLbState={cui:cui,lista:lista,idx:idx<0?lista.length-1:idx,src:img.src};
 var lb=document.getElementById('foto-lightbox');
 if(!lb){lb=document.createElement('div');lb.id='foto-lightbox';
 lb.style.cssText='display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,10,0,.9);flex-direction:column;align-items:center;justify-content:center;cursor:zoom-out;padding:24px;box-sizing:border-box;gap:14px';
