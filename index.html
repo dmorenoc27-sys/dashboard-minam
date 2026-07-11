@@ -1797,13 +1797,21 @@ return _notaSM
 +tarjeta('Devengado '+faAno, faDev||0, '#E65100','#FFF8F0','#FFCC80','#BF360C');
 })()}
 </div>
-<!-- COL 6: FIDEICOMISOS + PUESTA EN MARCHA (paneles nuevos 11-07-2026; contenido pendiente de definir) -->
-<div style="border-right:1px solid #E8F5E9;display:flex;flex-direction:column;justify-content:stretch;gap:7px;padding:8px 8px;background:linear-gradient(180deg,#F4FBF4 0%,#FAFFFE 100%)">
-<div style="flex:1;background:#F6FDF6;border:1.5px solid #A5D6A7;border-radius:12px;padding:8px 11px;display:flex;flex-direction:column;justify-content:center;min-height:0;box-shadow:0 1px 4px rgba(16,24,40,.06)">
-<div style="font-size:9.5px;font-weight:900;color:#1B5E20;text-transform:uppercase;letter-spacing:.6px;display:flex;align-items:center;gap:5px;line-height:1.2"><span style="width:6px;height:6px;border-radius:50%;background:#4CAF50;display:inline-block;flex-shrink:0"></span>Fideicomisos</div>
-<div style="font-size:8.5px;color:#A5B8A5;font-weight:600;margin-top:3px;line-height:1.25">Información en preparación</div>
+<!-- COL 6: ESTADO SITUACIONAL (voltereta F12B) + PUESTA EN MARCHA (11-07-2026) -->
+<div style="border-right:1px solid #E8F5E9;display:flex;flex-direction:column;gap:7px;padding:8px 8px;background:linear-gradient(180deg,#F4FBF4 0%,#FAFFFE 100%)">
+<div style="flex:.85;perspective:900px;min-height:62px;cursor:pointer" title="Clic: situación actual de la inversión (Formato 12B — MEF)" onclick="var i=this.firstElementChild;i.style.transform=(i.style.transform?'':'rotateY(180deg)')">
+<div style="position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d">
+<div style="position:absolute;inset:0;backface-visibility:hidden;background:#F6FDF6;border:1.5px solid #A5D6A7;border-radius:12px;padding:8px 11px;display:flex;flex-direction:column;justify-content:center;box-shadow:0 1px 4px rgba(16,24,40,.06)">
+<div style="font-size:9.5px;font-weight:900;color:#1B5E20;text-transform:uppercase;letter-spacing:.6px;display:flex;align-items:center;gap:5px;line-height:1.2"><span style="width:6px;height:6px;border-radius:50%;background:#4CAF50;display:inline-block;flex-shrink:0"></span>Estado Situacional</div>
+<div style="font-size:8.5px;color:#7CA87C;font-weight:700;margin-top:3px;line-height:1.25">Clic para ver ⟳ · Formato 12B</div>
 </div>
-<div style="flex:1;background:#F6FDF6;border:1.5px solid #A5D6A7;border-radius:12px;padding:8px 11px;display:flex;flex-direction:column;justify-content:center;min-height:0;box-shadow:0 1px 4px rgba(16,24,40,.06)">
+<div style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateY(180deg);background:linear-gradient(135deg,#0B3D0B 0%,#1B5E20 100%);border:1.5px solid #1B5E20;border-radius:12px;padding:7px 10px;overflow:auto;box-shadow:0 2px 10px rgba(16,24,40,.25);cursor:pointer" onclick="event.stopPropagation();this.parentElement.style.transform='';">
+<div style="font-size:7.5px;font-weight:900;color:#A5D6A7;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px">Situación actual de la inversión — F12B</div>
+<div style="font-size:9px;color:#F1F8E9;line-height:1.45;font-weight:600">${window._situObraHTML?window._situObraHTML(cui):'Información en preparación'}</div>
+</div>
+</div>
+</div>
+<div style="flex:1.15;background:#F6FDF6;border:1.5px solid #A5D6A7;border-radius:12px;padding:8px 11px;display:flex;flex-direction:column;justify-content:center;min-height:0;box-shadow:0 1px 4px rgba(16,24,40,.06)">
 <div style="font-size:9.5px;font-weight:900;color:#1B5E20;text-transform:uppercase;letter-spacing:.6px;display:flex;align-items:center;gap:5px;line-height:1.2"><span style="width:6px;height:6px;border-radius:50%;background:#4CAF50;display:inline-block;flex-shrink:0"></span>Puesta en Marcha</div>
 <div style="font-size:8.5px;color:#A5B8A5;font-weight:600;margin-top:3px;line-height:1.25">Información en preparación</div>
 </div>
@@ -3054,4 +3062,13 @@ fin_(true);
 },function(){fin_(false);});
 };
 })();
+</script>
+<script>
+/* Estado Situacional (F12B td#situ_act) — texto por CUI via situacionUpdate */
+window._situObraHTML=function(cui){
+var d=(window._datosActualizados||{}).situacionUpdate||{};
+var t=d[cui];
+if(!t)return 'Información en preparación — se capturará automáticamente del Formato 12B (MEF) en la siguiente actualización diaria.';
+return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+};
 </script>
