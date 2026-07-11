@@ -1658,7 +1658,7 @@ ${isMultiUEI?`<div style="margin-top:5px">
 const html=`<div style="height:100%;display:flex;flex-direction:column;font-family:inherit;background:#EEF1F4;overflow:hidden">
 <!-- ══ HEADER ══════════════════════════════════════════════════ -->
 <div style="background:linear-gradient(135deg,#3D9A5C 0%,#4EAD6E 55%,#5BBD7A 100%);
-padding:11px 16px 9px;flex-shrink:0;position:relative">
+padding:8px 16px 7px;flex-shrink:0;position:relative">
 <div style="position:absolute;bottom:12px;right:14px">
 ${(function(){
 var av=(typeof avFisSD!=='undefined'&&avFisSD)?null:avFis;
@@ -1704,11 +1704,11 @@ ${p&&p.Tipo_Proyecto?`<span style="padding:3px 10px;border-radius:10px;font-size
 <!-- ══ DATA ROW: 6 COLUMNS ══════════════════════════════════════
 [Balance | Av.Fis | Av.Fin | Componentes | PIM+Dev | Beneficiarios]
 -->
-<div style="margin:14px 16px 0;display:grid;grid-template-columns:22% 17% 19% 24% 18%;background:#fff;
+<div style="margin:8px 12px 0;display:grid;grid-template-columns:22% 17% 19% 24% 18%;background:#fff;
 border:1px solid #E5E9EF;border-radius:16px;box-shadow:0 1px 2px rgba(16,24,40,.05),0 4px 14px rgba(16,24,40,.05);overflow:hidden;flex-shrink:0;min-height:0">
 <!-- COL 1: PRESUPUESTO DE INVERSIÓN -->
-<div style="border-right:1px solid #E8F5E9;padding:10px 14px;
-display:flex;flex-direction:column;gap:8px;
+<div style="border-right:1px solid #E8F5E9;padding:8px 14px;
+display:flex;flex-direction:column;gap:6px;justify-content:center;
 background:linear-gradient(180deg,#F4FBF4 0%,#FAFFFE 100%)">
 <!-- Título sección -->
 <div style="display:flex;align-items:center;gap:8px;padding-bottom:9px;border-bottom:1px solid #EEF1F4">
@@ -1771,7 +1771,7 @@ return `<div title="${isMultiUEI?'Dev. acumulado del proyecto (todas las UEIs) �
 </div>
 </div>
 <!-- COL 5: EJERCICIO 2026 (PIM + CERT + DEV, homogeneos) -->
-<div style="border-right:1px solid #E8F5E9;display:flex;flex-direction:column;justify-content:center;padding:8px 10px;gap:5px;background:linear-gradient(180deg,#F4FBF4 0%,#FAFFFE 100%)">
+<div style="border-right:1px solid #E8F5E9;display:flex;flex-direction:column;justify-content:center;padding:6px 10px;gap:4px;background:linear-gradient(180deg,#F4FBF4 0%,#FAFFFE 100%)">
 ${(function(){
 const fa=(typeof finAno!=='undefined'&&finAno[cui])||null;
 const faDev=fa?fa.Dev:dev; const faCert=fa?fa.Cert:cert; const faAno=fa?fa.ano:'2026';
@@ -1779,7 +1779,7 @@ const faDev=fa?fa.Dev:dev; const faCert=fa?fa.Cert:cert; const faAno=fa?fa.ano:'
    Antes se mostraba fin.PIM = acumulado multi-año etiquetado como PIM del año. */
 const faPim=(fa&&fa.PIM)||null;
 const tarjeta=function(lbl,val,dot,bg,br,txt){
-return `<div style="background:${bg};border:1.5px solid ${br};border-left:5px solid ${dot};border-radius:10px;padding:6px 10px;box-shadow:0 1px 4px rgba(16,24,40,.09)">
+return `<div style="background:${bg};border:1.5px solid ${br};border-left:5px solid ${dot};border-radius:10px;padding:4px 10px;box-shadow:0 1px 4px rgba(16,24,40,.09)">
 <div style="display:flex;align-items:center;gap:4px;margin-bottom:2px">
 <svg viewBox="0 0 12 12" width="9" height="9"><circle cx="6" cy="6" r="6" fill="${dot}" opacity=".2"/><circle cx="6" cy="6" r="3.5" fill="${dot}"/></svg>
 <div style="font-size:9.5px;color:${dot};font-weight:800;text-transform:uppercase;letter-spacing:.6px">${lbl}</div>
@@ -1809,7 +1809,7 @@ return _notaSM
 </div>
 <!-- COL 8: VISTA DE LA INVERSIÓN (foto, junto a PMI) -->
 <div style="padding:6px;display:flex;flex-direction:column;justify-content:center;background:linear-gradient(180deg,#FAFFFE 0%,#F4FBF4 100%)">
-<div style="position:relative;width:100%;aspect-ratio:5/4;border-radius:8px;overflow:hidden;border:1.5px solid #C8E6C9;background:#EEF4EC;flex-shrink:0;margin:auto 0">
+<div style="position:relative;width:100%;aspect-ratio:3/2;border-radius:8px;overflow:hidden;border:1.5px solid #C8E6C9;background:#EEF4EC;flex-shrink:0;margin:auto 0">
 <img id="foto-inv-img" src="foto/${cui}.jpg" alt="Inversión CUI ${cui}" loading="lazy" title="Clic para ampliar" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" onclick="if(window._fotoAmpliar)_fotoAmpliar(this)" onerror="this.style.display='none';var ph=this.parentNode.querySelector('.foto-ph2');if(ph)ph.style.display='flex'">
 <div id="foto-inv-badge" onclick="event.stopPropagation();var i=document.getElementById('foto-inv-img');if(i&&window._fotoAmpliar)_fotoAmpliar(i)" title="Este mes tiene varias fotos — clic para verlas" style="display:none;position:absolute;top:6px;right:6px;background:rgba(16,80,0,.82);color:#fff;font-size:9px;font-weight:800;border-radius:9px;padding:3px 7px;align-items:center;gap:3px;cursor:zoom-in;box-shadow:0 1px 4px rgba(0,0,0,.3);letter-spacing:.3px"></div>
 <select id="foto-inv-sel" onchange="if(window._fotoMes)_fotoMes('${cui}',this.value)" onclick="event.stopPropagation()" style="display:none;position:absolute;bottom:6px;right:6px;font-size:9px;font-weight:700;color:#105000;background:rgba(255,255,255,.92);border:1px solid #C8E6C9;border-radius:8px;padding:2px 4px;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.2);max-width:90%"></select>
@@ -1821,7 +1821,7 @@ return _notaSM
 </div>
 </div>
 <!-- ══ BOTTOM ROW: COMPONENTES | ACTIVIDAD | CAJA ════════════════ -->
-<div class="pd-bot4" style="display:grid;grid-template-columns:1.55fr 1.05fr 0.52fr;gap:12px;padding:14px 16px 16px;flex:1;overflow:hidden;background:transparent">
+<div class="pd-bot4" style="display:grid;grid-template-columns:1.55fr 1.05fr 0.52fr;gap:10px;padding:10px 12px 12px;flex:1;overflow:hidden;background:transparent">
 <!-- LEFT: Componentes y Acciones -->
 <div style="background:#fff;border:1px solid #E5E9EF;border-radius:14px;box-shadow:0 1px 2px rgba(16,24,40,.04),0 2px 6px rgba(16,24,40,.04);padding:14px 16px;overflow-y:auto">
 <div style="display:flex;align-items:center;gap:9px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid #EEF1F4">
