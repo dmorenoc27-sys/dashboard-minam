@@ -1797,19 +1797,11 @@ return _notaSM
 +tarjeta('Devengado '+faAno, faDev||0, '#E65100','#FFF8F0','#FFCC80','#BF360C');
 })()}
 </div>
-<!-- COL 6: ESTADO SITUACIONAL (voltereta F12B) + PUESTA EN MARCHA (11-07-2026) -->
+<!-- COL 6: ESTADO SITUACIONAL (voltereta 3D al centro, patron Vehiculos) + PUESTA EN MARCHA -->
 <div style="border-right:1px solid #E8F5E9;display:flex;flex-direction:column;gap:7px;padding:8px 8px;background:linear-gradient(180deg,#F4FBF4 0%,#FAFFFE 100%)">
-<div style="flex:.85;perspective:900px;min-height:62px;cursor:pointer" title="Clic: situación actual de la inversión (Formato 12B — MEF)" onclick="var i=this.firstElementChild;i.style.transform=(i.style.transform?'':'rotateY(180deg)')">
-<div style="position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d">
-<div style="position:absolute;inset:0;backface-visibility:hidden;background:#F6FDF6;border:1.5px solid #A5D6A7;border-radius:12px;padding:8px 11px;display:flex;flex-direction:column;justify-content:center;box-shadow:0 1px 4px rgba(16,24,40,.06)">
+<div style="flex:.85;background:#F6FDF6;border:1.5px solid #A5D6A7;border-radius:12px;padding:8px 11px;display:flex;flex-direction:column;justify-content:center;min-height:0;box-shadow:0 1px 4px rgba(16,24,40,.06);cursor:pointer;transition:box-shadow .15s,transform .15s" onclick="if(window._situDetalle)_situDetalle('${cui}',event)" onmouseover="this.style.boxShadow='0 3px 12px rgba(16,80,0,.22)';this.style.transform='translateY(-1px)'" onmouseout="this.style.boxShadow='0 1px 4px rgba(16,24,40,.06)';this.style.transform=''" title="Clic: situación actual de la inversión (Formato 12B — MEF)">
 <div style="font-size:9.5px;font-weight:900;color:#1B5E20;text-transform:uppercase;letter-spacing:.6px;display:flex;align-items:center;gap:5px;line-height:1.2"><span style="width:6px;height:6px;border-radius:50%;background:#4CAF50;display:inline-block;flex-shrink:0"></span>Estado Situacional</div>
 <div style="font-size:8.5px;color:#7CA87C;font-weight:700;margin-top:3px;line-height:1.25">Clic para ver ⟳ · Formato 12B</div>
-</div>
-<div style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateY(180deg);background:linear-gradient(135deg,#0B3D0B 0%,#1B5E20 100%);border:1.5px solid #1B5E20;border-radius:12px;padding:7px 10px;overflow:auto;box-shadow:0 2px 10px rgba(16,24,40,.25);cursor:pointer" onclick="event.stopPropagation();this.parentElement.style.transform='';">
-<div style="font-size:7.5px;font-weight:900;color:#A5D6A7;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px">Situación actual de la inversión — F12B</div>
-<div style="font-size:9px;color:#F1F8E9;line-height:1.45;font-weight:600">${window._situObraHTML?window._situObraHTML(cui):'Información en preparación'}</div>
-</div>
-</div>
 </div>
 <div style="flex:1.15;background:#F6FDF6;border:1.5px solid #A5D6A7;border-radius:12px;padding:8px 11px;display:flex;flex-direction:column;justify-content:center;min-height:0;box-shadow:0 1px 4px rgba(16,24,40,.06)">
 <div style="font-size:9.5px;font-weight:900;color:#1B5E20;text-transform:uppercase;letter-spacing:.6px;display:flex;align-items:center;gap:5px;line-height:1.2"><span style="width:6px;height:6px;border-radius:50%;background:#4CAF50;display:inline-block;flex-shrink:0"></span>Puesta en Marcha</div>
@@ -3070,5 +3062,55 @@ var d=(window._datosActualizados||{}).situacionUpdate||{};
 var t=d[cui];
 if(!t)return 'Información en preparación — se capturará automáticamente del Formato 12B (MEF) en la siguiente actualización diaria.';
 return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+};
+/* Voltereta 3D al centro (mismo patron que Vehiculos/Obras) */
+window._situDetalle=function(cui,ev){
+if(ev){ev.stopPropagation();}
+var src=null;
+if(ev&&ev.currentTarget&&ev.currentTarget.getBoundingClientRect){src=ev.currentTarget.getBoundingClientRect();window._situSrc=src;}
+var lb=document.getElementById('situ-detalle');
+if(!lb){lb=document.createElement('div');lb.id='situ-detalle';
+lb.style.cssText='display:none;position:fixed;inset:0;z-index:99998;background:rgba(8,28,12,.55);align-items:center;justify-content:center;padding:24px;box-sizing:border-box;cursor:pointer';
+lb.onclick=function(){
+var card=lb.querySelector('.situ-card');var s2=window._situSrc;
+if(card&&s2&&card.animate){
+var t=card.getBoundingClientRect();
+var dx=(s2.left+s2.width/2)-(t.left+t.width/2),dy=(s2.top+s2.height/2)-(t.top+t.height/2);
+card.animate([
+{transform:'translate(0px,0px) perspective(1200px) rotateY(0deg) scale(1)',opacity:1},
+{transform:'translate('+(dx*0.5)+'px,'+(dy*0.5)+'px) perspective(1200px) rotateY(-100deg) scale('+((s2.width/t.width+1)/2)+')',opacity:.9,offset:.5},
+{transform:'translate('+dx+'px,'+dy+'px) perspective(1200px) rotateY(-180deg) scale('+(s2.width/t.width)+','+(s2.height/t.height)+')',opacity:0}
+],{duration:450,easing:'ease-in'});
+lb.animate([{opacity:1},{opacity:0}],{duration:450});
+setTimeout(function(){lb.style.display='none';},430);
+}else{lb.style.display='none';}
+};
+document.body.appendChild(lb);}
+var p=(typeof proyectos!=='undefined'&&proyectos.find)?(proyectos.find(function(x){return x.CUI===cui;})||{}):{};
+var nombre=(typeof cuiShortName!=='undefined'&&cuiShortName[cui])||((p.Proyecto||'').slice(0,90));
+var html='<div class="situ-card" onclick="event.stopPropagation()" style="cursor:default;background:#fff;border-radius:16px;max-width:560px;width:100%;max-height:80vh;overflow-y:auto;box-shadow:0 12px 44px rgba(0,0,0,.35);padding:16px 20px 14px">'
++'<div style="display:flex;align-items:center;gap:10px;border-bottom:2px solid #E8F5E9;padding-bottom:10px;margin-bottom:11px">'
++'<div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#0B3D0B,#2E7D32);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">📋</div>'
++'<div><div style="font-size:14px;font-weight:900;color:#1B5E20">Situación actual de la inversión</div>'
++'<div style="font-size:10.5px;font-weight:700;color:#5E7290">CUI '+cui+' · Formato 12B — Ejecución de la inversión</div></div>'
++'</div>'
++(nombre?'<div style="font-size:10.5px;font-weight:700;color:#78909C;line-height:1.4;margin-bottom:10px">'+nombre+'</div>':'')
++'<div style="background:#F4FBF4;border:1.5px solid #C8E6C9;border-radius:12px;padding:12px 15px;font-size:12.5px;color:#1E293B;line-height:1.65;font-weight:600">'
++(window._situObraHTML?_situObraHTML(cui):'Información en preparación')
++'</div>'
++'<div style="font-size:9px;color:#9AA8BC;text-align:center;margin-top:10px">Fuente: Formato 12-B — Seguimiento de la ejecución · MEF (Banco de Inversiones) · clic fuera para cerrar</div>'
++'</div>';
+lb.innerHTML=html;lb.style.display='flex';
+var card=lb.querySelector('.situ-card');
+if(src&&card.animate){
+var t=card.getBoundingClientRect();
+var dx=(src.left+src.width/2)-(t.left+t.width/2),dy=(src.top+src.height/2)-(t.top+t.height/2);
+card.animate([
+{transform:'translate('+dx+'px,'+dy+'px) perspective(1200px) rotateY(-180deg) scale('+(src.width/t.width)+','+(src.height/t.height)+')',opacity:.35},
+{transform:'translate('+(dx*0.5)+'px,'+(dy*0.5)+'px) perspective(1200px) rotateY(-105deg) scale('+((src.width/t.width+1)/2)+')',opacity:1,offset:.45},
+{transform:'translate(0px,0px) perspective(1200px) rotateY(0deg) scale(1)',opacity:1}
+],{duration:800,easing:'cubic-bezier(.25,.7,.3,1)'});
+lb.animate([{opacity:0},{opacity:1}],{duration:300});
+}
 };
 </script>
