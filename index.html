@@ -1680,7 +1680,7 @@ border:1.5px solid rgba(255,255,255,.35);background:rgba(255,255,255,.14);
 cursor:pointer;font-size:10px;color:#fff;font-weight:800;
 display:flex;align-items:center;gap:5px;padding:0 11px;letter-spacing:.5px;font-family:inherit"
 onmouseover="this.style.background='rgba(255,255,255,.3)'"
-onmouseout="this.style.background='rgba(255,255,255,.14)'">⬇ EXCEL</button>
+onmouseout="this.style.background='rgba(255,255,255,.14)'">⬇ Descargar Excel</button>
 <button onclick="closeProjectDetail()" title="Cerrar"
 style="position:absolute;top:10px;right:10px;width:26px;height:26px;border-radius:50%;
 border:1.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.07);
@@ -3037,7 +3037,7 @@ ws.mergeCells(r,2,r,6);
 t=celda(r,2);t.value='Generado: '+fGen+'  ·  Fuente: SIAF / SSI-Invierte.pe / Transparencia Económica — MEF  ·  gica003.pe';
 t.font={italic:true,size:8.5,color:{argb:C.gris}};t.alignment={horizontal:'center'};r++;
 ws.mergeCells(r,2,r,6);
-t=celda(r,2);t.value='© 2024-2026 ARKA PROYECTOS / Corporación DMC — Dashboard Ejecutivo UE003 MINAM';
+t=celda(r,2);t.value='© 2024-2026 ARKA PROYECTOS — Dashboard Ejecutivo UE003 MINAM';
 t.font={italic:true,size:8,color:{argb:'FF90A4AE'}};t.alignment={horizontal:'center'};
 
 wb.xlsx.writeBuffer().then(function(buf){
