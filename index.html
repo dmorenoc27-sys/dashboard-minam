@@ -1563,7 +1563,7 @@ const pctTs = sd?'':'<tspan font-size="9.5" font-weight="800" dx="1.5">%</tspan>
 return `<div style="background:${bg};border:1.5px solid ${br};border-radius:12px;padding:11px 12px;
 display:flex;flex-direction:column;align-items:center;gap:7px;width:110px;box-sizing:border-box">
 <div style="font-size:11.5px;font-weight:800;color:${color};text-transform:uppercase;
-letter-spacing:.7px;text-align:center;line-height:1.25">${label}</div>
+letter-spacing:.7px;text-align:center;line-height:1.25;min-height:29px;display:flex;align-items:center;justify-content:center">${label}</div>
 <svg viewBox="0 0 80 80" width="72" height="72">
 ${segs}
 <text x="40" y="45.5" text-anchor="middle" font-size="16.5" font-weight="900"
@@ -1697,7 +1697,7 @@ ${p&&p.Tipo_Proyecto?`<span style="padding:3px 10px;border-radius:10px;font-size
 <!-- ══ DATA ROW: 6 COLUMNS ══════════════════════════════════════
 [Balance | Av.Fis | Av.Fin | Componentes | PIM+Dev | Beneficiarios]
 -->
-<div style="margin:14px 16px 0;display:grid;grid-template-columns:26% 13% 13% 18% 13% 17%;background:#fff;
+<div style="margin:14px 16px 0;display:grid;grid-template-columns:26% 11% 11% 18% 17% 17%;background:#fff;
 border:1px solid #E5E9EF;border-radius:16px;box-shadow:0 1px 2px rgba(16,24,40,.05),0 4px 14px rgba(16,24,40,.05);overflow:hidden;flex-shrink:0;min-height:0">
 <!-- COL 1: PRESUPUESTO DE INVERSIÓN -->
 <div style="border-right:1px solid #E8F5E9;padding:10px 14px;
@@ -1746,8 +1746,8 @@ return '<div style="display:flex;gap:6px;align-items:stretch">'
 +'</div>';
 })()}
 </div>
-<!-- COL 2: AV. FISICO + PMI -->
-<div style="border-right:1px solid #E8F5E9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:8px 6px;background:linear-gradient(180deg,#F4FBF4 0%,#FAFFFE 100%)">
+<!-- COL 2: AV. FISICO + PMI (pegado a Av. Financiero: sin separador y sin padding derecho) -->
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:8px 1px 8px 4px;background:linear-gradient(180deg,#F4FBF4 0%,#FAFFFE 100%)">
 ${donut(avFis,'#0D47A1','Av. Físico','#EEF4FF','#90CAF9')}
 <div title="${s.pmi==='SI'?'Programado en el PMI':'No programado en el PMI'}" style="background:${s.pmi==='SI'?'#F0FBF0':'#FFF5F5'};border:1.5px solid ${s.pmi==='SI'?'#A5D6A7':'#FFCDD2'};border-radius:10px;padding:5px 12px;display:flex;align-items:center;gap:6px">
 <span style="width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:${s.pmi==='SI'?'rgba(16,80,0,.12)':'rgba(183,28,28,.1)'};border:1.5px solid ${s.pmi==='SI'?'rgba(16,80,0,.45)':'rgba(183,28,28,.35)'};font-size:10px;line-height:1">${s.pmi==='SI'?'✓':'✗'}</span>
@@ -1755,7 +1755,7 @@ ${donut(avFis,'#0D47A1','Av. Físico','#EEF4FF','#90CAF9')}
 </div>
 </div>
 <!-- COL 3: AV. FINANCIERO + DEV. ACUMULADO -->
-<div style="border-right:1px solid #E8F5E9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:8px 6px;background:linear-gradient(180deg,#F4FBF4 0%,#FAFFFE 100%)">
+<div style="border-right:1px solid #E8F5E9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:8px 4px 8px 1px;background:linear-gradient(180deg,#F4FBF4 0%,#FAFFFE 100%)">
 ${donut(avF,SC.bg,'Av. Financiero','#F0FBF0','#A5D6A7')}
 ${(function(){
 const devAcumDisp=isMultiUEI&&typeof devAcumData!=='undefined'&&devAcumData[cui]!=null?devAcumData[cui]:dev;
