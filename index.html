@@ -2668,6 +2668,7 @@ var col=meta[1],bg=meta[2];
 var cuis=(window._estadoItemsImp&&window._estadoItemsImp[key])||[];
 var items=cuis.map(function(c){return [c,(typeof cuiShortName!=='undefined'&&cuiShortName[c])||('CUI '+c)];});
 items.sort(function(a,b){return a[1].localeCompare(b[1],'es');});
+var _filasCol=Math.ceil(items.length/3)||1; /* numeración corriendo en vertical, 3 columnas */
 var rows='';
 items.forEach(function(it,ix){
 rows+='<div onclick="showProjectDetail(\''+it[0]+'\')" onmouseover="this.style.background=\''+bg+'\'" onmouseout="this.style.background=\'\'" style="display:flex;align-items:center;gap:7px;padding:3px 7px;border-radius:7px;cursor:pointer">'
@@ -2678,7 +2679,7 @@ rows+='<div onclick="showProjectDetail(\''+it[0]+'\')" onmouseover="this.style.b
 return '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">'
 +'<div style="font-size:11px;font-weight:900;color:'+col+';text-transform:uppercase;letter-spacing:.6px"><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:'+col+';margin-right:6px"></span>'+meta[0]+' — '+items.length+(items.length===1?' inversión':' inversiones')+'</div>'
 +'<div onclick="window._mapaFiltroToggle(window._mapaFiltroEstado)" title="Volver a Ejecución presupuestal" style="cursor:pointer;width:20px;height:20px;border-radius:50%;background:#ECEFF3;color:#546E7A;font-size:12px;font-weight:900;line-height:20px;text-align:center;flex:none">✕</div></div>'
-+'<div style="max-height:300px;overflow:auto;margin:0 -4px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:16px;row-gap:1px;align-content:start">'+rows+'</div>'
++'<div style="max-height:300px;overflow:auto;margin:0 -4px;display:grid;grid-auto-flow:column;grid-template-rows:repeat('+_filasCol+',min-content);grid-auto-columns:minmax(0,1fr);column-gap:16px;row-gap:1px;align-content:start">'+rows+'</div>'
 +'<div style="font-size:9px;color:#90A4AE;margin-top:6px">Clic en una inversión para abrir su ficha · ✕ o el mismo estado para volver</div>';
 };
 root.innerHTML=''
