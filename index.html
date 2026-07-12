@@ -2670,11 +2670,10 @@ var items=cuis.map(function(c){return [c,(typeof cuiShortName!=='undefined'&&cui
 items.sort(function(a,b){return a[1].localeCompare(b[1],'es');});
 var rows='';
 items.forEach(function(it,ix){
-rows+='<div onclick="showProjectDetail(\''+it[0]+'\')" onmouseover="this.style.background=\''+bg+'\'" onmouseout="this.style.background=\'\'" style="display:flex;align-items:center;gap:9px;padding:6px 8px;border-radius:9px;cursor:pointer">'
-+'<span style="flex:none;width:22px;height:22px;border-radius:50%;background:'+bg+';color:'+col+';font-size:10px;font-weight:900;line-height:22px;text-align:center">'+(ix+1)+'</span>'
-+'<span style="flex:1;font-size:12px;font-weight:700;color:#37474F;line-height:1.3">'+it[1]+'</span>'
-+'<span style="flex:none;font-size:10px;font-weight:800;color:'+col+';background:'+bg+';border-radius:8px;padding:2px 8px;letter-spacing:.3px;white-space:nowrap">CUI '+it[0]+'</span>'
-+'<span style="flex:none;color:#1565C0;font-weight:900;font-size:12px">→</span></div>';
+rows+='<div onclick="showProjectDetail(\''+it[0]+'\')" onmouseover="this.style.background=\''+bg+'\'" onmouseout="this.style.background=\'\'" style="display:flex;align-items:center;gap:7px;padding:3px 7px;border-radius:7px;cursor:pointer">'
++'<span style="flex:none;width:17px;height:17px;border-radius:50%;background:'+bg+';color:'+col+';font-size:9px;font-weight:900;line-height:17px;text-align:center">'+(ix+1)+'</span>'
++'<span style="flex:1;font-size:11.5px;font-weight:700;color:#37474F;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+it[1]+'</span>'
++'<span style="flex:none;color:#1565C0;font-weight:900;font-size:11px">→</span></div>';
 });
 return '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">'
 +'<div style="font-size:11px;font-weight:900;color:'+col+';text-transform:uppercase;letter-spacing:.6px"><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:'+col+';margin-right:6px"></span>'+meta[0]+' — '+items.length+(items.length===1?' inversión':' inversiones')+'</div>'
