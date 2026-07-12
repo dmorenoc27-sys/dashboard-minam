@@ -2678,7 +2678,7 @@ rows+='<div onclick="showProjectDetail(\''+it[0]+'\')" onmouseover="this.style.b
 return '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">'
 +'<div style="font-size:11px;font-weight:900;color:'+col+';text-transform:uppercase;letter-spacing:.6px"><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:'+col+';margin-right:6px"></span>'+meta[0]+' — '+items.length+(items.length===1?' inversión':' inversiones')+'</div>'
 +'<div onclick="window._mapaFiltroToggle(window._mapaFiltroEstado)" title="Volver a Ejecución presupuestal" style="cursor:pointer;width:20px;height:20px;border-radius:50%;background:#ECEFF3;color:#546E7A;font-size:12px;font-weight:900;line-height:20px;text-align:center;flex:none">✕</div></div>'
-+'<div style="max-height:300px;overflow:auto;margin:0 -4px">'+rows+'</div>'
++'<div style="max-height:300px;overflow:auto;margin:0 -4px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:16px;row-gap:1px;align-content:start">'+rows+'</div>'
 +'<div style="font-size:9px;color:#90A4AE;margin-top:6px">Clic en una inversión para abrir su ficha · ✕ o el mismo estado para volver</div>';
 };
 root.innerHTML=''
