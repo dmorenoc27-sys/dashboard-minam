@@ -308,6 +308,19 @@ if(e.key==='F12'){e.preventDefault();return false;}
       onmouseover="this.style.background='#2E7D32'" onmouseout="this.style.background='#3D9A5C'">IR</button>
   </div>
   <span id="cuiSearchMsg" style="font-size:10px;color:#c62828;font-weight:700"></span>
+  <!-- Buscador por nombre (11-07-2026) -->
+  <div style="display:flex;align-items:center;gap:0;margin-left:8px;border:1.5px solid #1565C0;border-radius:8px;background:#fff;position:relative">
+    <span style="padding:0 8px;font-size:12px;color:#1565C0;font-weight:800;white-space:nowrap;border-right:1px solid #BBDEFB;background:#F5F9FF;height:100%;display:flex;align-items:center;border-radius:6px 0 0 6px">🔎 Nombre</span>
+    <input id="nomSearch" type="text" placeholder="Ej: Piura, Tarapoto…" autocomplete="off"
+      style="border:none;outline:none;padding:5px 10px;font-size:12px;width:150px;color:#333;font-family:inherit"
+      oninput="buscarNombreSug()"
+      onkeydown="if(event.key==='Enter')buscarNombreIr();if(event.key==='Escape')ocultarNomSug()"
+      onblur="setTimeout(ocultarNomSug,180)">
+    <button onclick="buscarNombreIr()"
+      style="border:none;background:#1565C0;color:#fff;font-size:11px;font-weight:800;padding:0 12px;cursor:pointer;height:100%;min-height:30px;letter-spacing:.3px;border-radius:0 6px 6px 0"
+      onmouseover="this.style.background='#0D47A1'" onmouseout="this.style.background='#1565C0'">IR</button>
+    <div id="nomSugBox" style="display:none;position:absolute;top:calc(100% + 4px);right:0;width:360px;max-height:280px;overflow:auto;background:#fff;border:1px solid #D7E3F4;border-radius:10px;box-shadow:0 10px 30px rgba(13,40,80,.18);z-index:9999;padding:4px"></div>
+  </div>
 </div>
 
 
@@ -533,6 +546,46 @@ document.getElementById('cuiSearch').value='';
 showProjectDetail(val);
 } else {
 msg.textContent='CUI '+val+' no encontrado';
+}
+}
+/* Buscador por nombre (11-07-2026): sugerencias en vivo, sin tildes, y abre la ficha */
+function _nomNorm(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');}
+function _nomMatches(q){
+var nq=_nomNorm(q);
+var res=[];
+proyectos.forEach(function(p){
+var corto=(typeof cuiShortName!=='undefined'&&cuiShortName[p.CUI])||'';
+var texto=_nomNorm(corto+' '+(p.Proyecto||'')+' '+(p.Departamento||''));
+if(nq&&texto.indexOf(nq)>=0)res.push([String(p.CUI),corto||('CUI '+p.CUI),p.Departamento||'']);
+});
+res.sort(function(a,b){return a[1].localeCompare(b[1],'es');});
+return res;
+}
+function ocultarNomSug(){var b=document.getElementById('nomSugBox');if(b)b.style.display='none';}
+function buscarNombreSug(){
+var v=(document.getElementById('nomSearch').value||'').trim();
+var box=document.getElementById('nomSugBox');
+if(v.length<2){box.style.display='none';box.innerHTML='';return;}
+var m=_nomMatches(v).slice(0,12);
+if(!m.length){box.innerHTML='<div style="padding:8px 10px;font-size:11px;color:#90A4AE;font-weight:700">Sin coincidencias…</div>';box.style.display='block';return;}
+var h='';
+m.forEach(function(it){
+h+='<div onmousedown="showProjectDetail(\''+it[0]+'\');ocultarNomSug();document.getElementById(\'nomSearch\').value=\'\'" onmouseover="this.style.background=\'#F5F9FF\'" onmouseout="this.style.background=\'\'" style="display:flex;align-items:center;gap:8px;padding:6px 9px;border-radius:7px;cursor:pointer">'
++'<span style="flex:1;font-size:12px;font-weight:700;color:#37474F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+it[1]+'</span>'
++(it[2]?'<span style="flex:none;font-size:9.5px;font-weight:800;color:#1565C0;background:#F5F9FF;border-radius:7px;padding:2px 7px">'+it[2]+'</span>':'')
++'</div>';
+});
+box.innerHTML=h;box.style.display='block';
+}
+function buscarNombreIr(){
+var v=(document.getElementById('nomSearch').value||'').trim();
+if(v.length<2)return;
+var m=_nomMatches(v);
+if(m.length){showProjectDetail(m[0][0]);ocultarNomSug();document.getElementById('nomSearch').value='';}
+else{
+var box=document.getElementById('nomSugBox');
+box.innerHTML='<div style="padding:8px 10px;font-size:11px;color:#c62828;font-weight:700">Sin coincidencias para &ldquo;'+v.replace(/</g,'&lt;')+'&rdquo;</div>';
+box.style.display='block';setTimeout(ocultarNomSug,1800);
 }
 }
 function applyF(){
