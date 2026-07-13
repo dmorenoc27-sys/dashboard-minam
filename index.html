@@ -1727,43 +1727,29 @@ const html=`<div style="height:100%;display:flex;flex-direction:column;font-fami
 <!-- ══ HEADER ══════════════════════════════════════════════════ -->
 <div style="background:linear-gradient(135deg,#3D9A5C 0%,#4EAD6E 55%,#5BBD7A 100%);
 padding:8px 16px 7px;flex-shrink:0;position:relative">
-<div style="position:absolute;bottom:12px;right:14px">
-${(function(){
-var av=(typeof avFisSD!=='undefined'&&avFisSD)?null:avFis;
-var cerrado=(s.est==='CERRADO');
-var devAc=(typeof devAcumData!=='undefined'&&devAcumData[cui]!=null)?devAcumData[cui]:dev;
-var est,col;
-if(cerrado||(av!=null&&av>=99.95)){est='Obra culminada';col='#2E7D32';}
-else if(devAc<=0&&(av==null||av<=0)){est='Obra por iniciar';col='#F57F17';}
-else if((pim||0)<=0){est='Obra suspendida';col='#C62828';}
-else{est='Obra en ejecución';col='#1565C0';}
-return '<div style="background:#fff;border-radius:12px;padding:8px 14px;box-shadow:0 2px 12px rgba(0,20,0,.28);display:flex;align-items:center;gap:8px">'
-+'<span style="width:9px;height:9px;border-radius:50%;background:'+col+';box-shadow:0 0 0 3.5px '+col+'26;flex-shrink:0"></span>'
-+'<span style="font-size:11.5px;font-weight:800;color:'+col+';letter-spacing:.3px;white-space:nowrap">'+est+'</span>'
-+'</div>';})()}
-</div>
-<button onclick="if(window._exportarFichaXLSX)_exportarFichaXLSX('${cui}',this)" id="btn-xls-ficha" title="Descargar la ficha completa en Excel"
-style="position:fixed;top:7px;right:16px;z-index:100000;height:28px;border-radius:14px;
-border:1.5px solid #1B5E20;background:#1B5E20;
-cursor:pointer;font-size:10.5px;color:#fff;font-weight:800;
-display:flex;align-items:center;gap:5px;padding:0 13px;letter-spacing:.5px;font-family:inherit;
-box-shadow:0 2px 8px rgba(16,80,0,.3)"
-onmouseover="this.style.background='#2E7D32'"
-onmouseout="this.style.background='#1B5E20'">⬇ Descargar Ficha</button>
-<button onclick="closeProjectDetail()" title="Cerrar"
-style="position:absolute;top:10px;right:10px;width:26px;height:26px;border-radius:50%;
-border:1.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.07);
-cursor:pointer;font-size:13px;color:rgba(255,255,255,.75);
-display:flex;align-items:center;justify-content:center;font-weight:700"
-onmouseover="this.style.background='rgba(180,30,30,.5)'"
-onmouseout="this.style.background='rgba(255,255,255,.07)'">✕</button>
+<!-- 12-07-2026: barra de acciones unificada (Regresar · Descargar · Cerrar) -->
+<div style="position:absolute;top:10px;right:10px;display:flex;align-items:center;gap:7px;z-index:5">
 <button onclick="if(window._volverAtras)_volverAtras()" title="Volver a la vista anterior"
-style="position:absolute;top:10px;right:44px;height:26px;border-radius:13px;
-border:1.5px solid rgba(255,255,255,.28);background:rgba(255,255,255,.1);
+style="height:28px;border-radius:14px;border:1.5px solid rgba(255,255,255,.28);background:rgba(255,255,255,.1);
 cursor:pointer;font-size:10.5px;color:#fff;font-weight:800;letter-spacing:.4px;
-display:flex;align-items:center;gap:6px;padding:0 12px;font-family:inherit;transition:background .18s"
+display:flex;align-items:center;gap:6px;padding:0 13px;font-family:inherit;transition:background .18s"
 onmouseover="this.style.background='rgba(255,255,255,.22)';var f=this.querySelector('span');if(f)f.style.transform='translateX(-3px)'"
 onmouseout="this.style.background='rgba(255,255,255,.1)';var f=this.querySelector('span');if(f)f.style.transform=''"><span style="display:inline-block;transition:transform .18s;font-size:12px;line-height:1">←</span>Regresar</button>
+<button onclick="if(window._exportarFichaXLSX)_exportarFichaXLSX('${cui}',this)" id="btn-xls-ficha" title="Descargar la ficha completa en Excel"
+style="height:28px;border-radius:14px;border:none;background:#fff;
+cursor:pointer;font-size:10.5px;color:#105000;font-weight:900;letter-spacing:.4px;
+display:flex;align-items:center;gap:5px;padding:0 14px;font-family:inherit;
+box-shadow:0 2px 8px rgba(0,20,0,.28);transition:box-shadow .18s,transform .18s"
+onmouseover="this.style.boxShadow='0 4px 14px rgba(0,20,0,.38)';this.style.transform='translateY(-1px)'"
+onmouseout="this.style.boxShadow='0 2px 8px rgba(0,20,0,.28)';this.style.transform=''">⬇ Descargar Ficha</button>
+<button onclick="closeProjectDetail()" title="Cerrar"
+style="width:28px;height:28px;border-radius:50%;
+border:1.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.07);
+cursor:pointer;font-size:13px;color:rgba(255,255,255,.75);
+display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;transition:background .18s"
+onmouseover="this.style.background='rgba(180,30,30,.5)'"
+onmouseout="this.style.background='rgba(255,255,255,.07)'">✕</button>
+</div>
 <div class="sel-txt" style="font-size:13.5px;font-weight:800;color:#ffffff;letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px">
 CUI ${cui}${p&&p.Programa?' · '+p.Programa:''}${p&&p.Convenio?' / '+p.Convenio:''}
 </div>
@@ -1775,6 +1761,20 @@ ${(t=>{if(!t)return"";const c={PROYECTO:"#5E35B1",IOARR:"#E65100",PROGRAMA:"#008
 ${s.est?`<span style="padding:3px 10px;border-radius:10px;font-size:10px;font-weight:800;background:#fff;color:${s.est==='ACTIVO'?'#2E7D32':'#C62828'};box-shadow:0 1px 3px rgba(0,0,0,.18);white-space:nowrap">${s.est==='ACTIVO'?'● ACTIVO':'○ CERRADO'}</span>`:''}
 ${p&&p.Departamento?`<span style="padding:3px 10px;border-radius:10px;font-size:10px;font-weight:700;background:#fff;color:#105000;box-shadow:0 1px 3px rgba(0,0,0,.18);white-space:nowrap">📍 ${p.Departamento}</span>`:''}
 ${p&&p.Tipo_Proyecto?`<span style="padding:3px 10px;border-radius:10px;font-size:10px;font-weight:600;background:rgba(255,255,255,.92);color:#455A64;box-shadow:0 1px 3px rgba(0,0,0,.15);white-space:nowrap">${p.Tipo_Proyecto}</span>`:''}
+${(function(){
+/* 12-07-2026: estado de la obra como chip destacado al final de la fila de metadatos */
+var av=(typeof avFisSD!=='undefined'&&avFisSD)?null:avFis;
+var cerrado=(s.est==='CERRADO');
+var devAc=(typeof devAcumData!=='undefined'&&devAcumData[cui]!=null)?devAcumData[cui]:dev;
+var est,col;
+if(cerrado||(av!=null&&av>=99.95)){est='Obra culminada';col='#2E7D32';}
+else if(devAc<=0&&(av==null||av<=0)){est='Obra por iniciar';col='#F57F17';}
+else if((pim||0)<=0){est='Obra suspendida';col='#C62828';}
+else{est='Obra en ejecución';col='#1565C0';}
+return '<span style="margin-left:auto;background:#fff;border-radius:11px;padding:4px 13px;box-shadow:0 2px 10px rgba(0,20,0,.25);display:inline-flex;align-items:center;gap:7px;white-space:nowrap">'
++'<span style="width:9px;height:9px;border-radius:50%;background:'+col+';box-shadow:0 0 0 3px '+col+'26;flex-shrink:0"></span>'
++'<span style="font-size:11px;font-weight:900;color:'+col+';letter-spacing:.4px">'+est+'</span></span>';
+})()}
 </div>
 </div>
 <!-- ══ DATA ROW: 6 COLUMNS ══════════════════════════════════════
