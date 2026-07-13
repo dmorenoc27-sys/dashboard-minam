@@ -1682,7 +1682,7 @@ const compFooterHTML=`
 <div style="margin-top:6px;padding:8px 11px;background:rgba(27,94,32,.09);border:2px solid #2E7D32;border-radius:10px">
 <div style="display:flex;justify-content:space-between;align-items:center">
 <span style="font-size:10px;font-weight:900;color:#1B5E20;text-transform:uppercase;letter-spacing:.4px">${isMultiUEI?'Total Dev. Acumulado (Proyecto)':'Total Dev. Acumulado UE003'}</span>
-<span style="font-size:${_muTot>=1e7?'13px':_muTot>=1e6?'15px':'17px'};font-weight:900;color:#105000">${fmtSolFt(_muTot)}</span>
+<span style="font-size:${_muTot>=1e8?'12px':_muTot>=1e7?'13px':'14px'};font-weight:900;color:#105000;white-space:nowrap">${'S/ '+_muTot.toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2})}</span>
 </div>
 ${isMultiUEI?'<div style="font-size:8px;color:#1B5E20;margin-top:2px;opacity:.75">Fuente: SSI-SOSEM · Todas las Unidades Ejecutoras</div>':''}
 </div>
@@ -1815,13 +1815,6 @@ ${donut(avFis,'#0D47A1','Av. Físico','#EEF4FF','#90CAF9')}
 </div>
 <div style="display:flex;flex-direction:column;align-items:center;gap:5px">
 ${donut(avF,SC.bg,'Av. Financiero','#F0FBF0','#A5D6A7')}
-${(function(){
-const devAcumDisp=isMultiUEI&&typeof devAcumData!=='undefined'&&devAcumData[cui]!=null?devAcumData[cui]:dev;
-return `<div title="${isMultiUEI?'Dev. acumulado del proyecto (todas las UEIs) · SSI-SOSEM':'Devengado acumulado desde su creación a la fecha'}" style="background:linear-gradient(180deg,#E3F0FF 0%,#EEF4FF 100%);border:1.5px solid #64B5F6;border-radius:9px;padding:4px 8px;text-align:center;max-width:100px">
-<div style="font-size:8px;color:#1565C0;font-weight:800;text-transform:uppercase;letter-spacing:.4px;line-height:1.15">Dev. Acum.${isMultiUEI?' (Proy.)':''}</div>
-<div style="font-size:${devAcumDisp>=1e7?'11.5px':'12.5px'};font-weight:900;color:#0D47A1;letter-spacing:-.4px;line-height:1.2;white-space:nowrap">${_fmtSol(devAcumDisp)}</div>
-</div>`;
-})()}
 </div>
 </div>
 <!-- COL 5: EJERCICIO 2026 (PIM + CERT + DEV, homogeneos) -->
@@ -1852,11 +1845,11 @@ return _notaSM
 </div>
 <!-- COL 6: ESTADO SITUACIONAL (voltereta 3D al centro, patron Vehiculos) + PUESTA EN MARCHA -->
 <div style="border-right:1px solid #E8F5E9;display:flex;flex-direction:column;gap:7px;padding:8px 8px;background:linear-gradient(180deg,#F4FBF4 0%,#FAFFFE 100%)">
-<div style="flex:.85;background:#F6FDF6;border:1.5px solid #A5D6A7;border-radius:12px;padding:8px 11px;display:flex;flex-direction:column;justify-content:center;min-height:0;box-shadow:0 1px 4px rgba(16,24,40,.06);cursor:pointer;transition:box-shadow .15s,transform .15s" onclick="if(window._situDetalle)_situDetalle('${cui}',event)" onmouseover="this.style.boxShadow='0 3px 12px rgba(16,80,0,.22)';this.style.transform='translateY(-1px)'" onmouseout="this.style.boxShadow='0 1px 4px rgba(16,24,40,.06)';this.style.transform=''" title="Clic: situación actual de la inversión (Formato 12B — MEF)">
+<div style="flex:1;background:#F6FDF6;border:1.5px solid #A5D6A7;border-radius:12px;padding:8px 11px;display:flex;flex-direction:column;justify-content:center;min-height:0;box-shadow:0 1px 4px rgba(16,24,40,.06);cursor:pointer;transition:box-shadow .15s,transform .15s" onclick="if(window._situDetalle)_situDetalle('${cui}',event)" onmouseover="this.style.boxShadow='0 3px 12px rgba(16,80,0,.22)';this.style.transform='translateY(-1px)'" onmouseout="this.style.boxShadow='0 1px 4px rgba(16,24,40,.06)';this.style.transform=''" title="Clic: situación actual de la inversión (Formato 12B — MEF)">
 <div style="font-size:12px;font-weight:900;color:#1B5E20;text-transform:uppercase;letter-spacing:.6px;display:flex;align-items:center;gap:8px;line-height:1.2"><span style="width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,#0B3D0B,#2E7D32);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;box-shadow:0 2px 6px rgba(16,80,0,.35)">📋</span>Estado Situacional</div>
 <div style="font-size:10px;color:#7CA87C;font-weight:700;margin-top:4px;line-height:1.2;padding-left:38px">Clic para ver ⟳ · Formato 12B</div>
 </div>
-<div style="flex:1.15;background:#F6FDF6;border:1.5px solid #A5D6A7;border-radius:12px;padding:8px 11px;display:flex;flex-direction:column;justify-content:center;min-height:0;box-shadow:0 1px 4px rgba(16,24,40,.06)">
+<div style="flex:1;background:#F6FDF6;border:1.5px solid #A5D6A7;border-radius:12px;padding:8px 11px;display:flex;flex-direction:column;justify-content:center;min-height:0;box-shadow:0 1px 4px rgba(16,24,40,.06)">
 <div style="font-size:12px;font-weight:900;color:#1B5E20;text-transform:uppercase;letter-spacing:.6px;display:flex;align-items:center;gap:8px;line-height:1.2"><span style="width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,#0D47A1,#1976D2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;box-shadow:0 2px 6px rgba(13,71,161,.35)">🚀</span>Puesta en Marcha</div>
 <div style="font-size:10px;color:#A5B8A5;font-weight:600;margin-top:4px;line-height:1.2;padding-left:38px">Información en preparación</div>
 </div>
