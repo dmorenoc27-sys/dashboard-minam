@@ -2092,7 +2092,9 @@ if(document.getElementById('mob-back-btn'))return;
 panel.style.overflowY='scroll';panel.style.webkitOverflowScrolling='touch';
 var btn=document.createElement('button');btn.id='mob-back-btn';btn.innerHTML='&#8592; Volver';
 btn.style.cssText='position:sticky;top:0;z-index:30;width:100%;padding:11px 16px;background:#105000;color:#fff;border:none;font-size:13px;font-weight:700;cursor:pointer;text-align:left;display:block;box-shadow:0 2px 6px rgba(0,0,0,.3);';
-btn.onclick=function(){if(typeof closeProjectDetail==='function')closeProjectDetail();_hideCharts();};
+btn.onclick=function(){ /* 13-07-2026: vuelve a la pestaña y scroll previos, no solo cierra */
+if(window._volverAtras)_volverAtras();else if(typeof closeProjectDetail==='function')closeProjectDetail();
+_hideCharts();};
 panel.insertBefore(btn,panel.firstChild);
 var outer=null;
 for(var i=0;i<panel.children.length;i++){if(panel.children[i].tagName==='DIV'){outer=panel.children[i];break;}}
