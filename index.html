@@ -1805,15 +1805,17 @@ return '<div style="display:flex;flex-direction:column;gap:6px">'+bloqueIni+bloq
 })()}
 </div>
 <!-- COL 2: AVANCES JUNTOS — físico+PMI | financiero+DevAcum (una sola columna, 11-07-2026) -->
-<div style="border-right:1px solid #E8F5E9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:6px 6px;background:linear-gradient(180deg,#F4FBF4 0%,#FAFFFE 100%)">
-<!-- 12-07-2026: chip PMI arriba de los dos donuts, a lo ancho -->
-<div title="${s.pmi==='SI'?'Programado en el PMI':'No programado en el PMI'}" style="align-self:stretch;background:${s.pmi==='SI'?'#F0FBF0':'#FFF5F5'};border:1.5px solid ${s.pmi==='SI'?'#A5D6A7':'#FFCDD2'};border-radius:9px;padding:4px 10px;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 1px 3px rgba(16,24,40,.05)">
+<div style="border-right:1px solid #E8F5E9;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 6px;background:linear-gradient(180deg,#F4FBF4 0%,#FAFFFE 100%)">
+<!-- 12-07-2026: chip PMI arriba, con el MISMO ancho que los dos donuts juntos -->
+<div style="display:flex;flex-direction:column;gap:7px;align-items:stretch;max-width:100%">
+<div title="${s.pmi==='SI'?'Programado en el PMI':'No programado en el PMI'}" style="width:0;min-width:100%;box-sizing:border-box;background:${s.pmi==='SI'?'#F0FBF0':'#FFF5F5'};border:1.5px solid ${s.pmi==='SI'?'#A5D6A7':'#FFCDD2'};border-radius:9px;padding:4px 8px;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 1px 3px rgba(16,24,40,.05);overflow:hidden">
 <span style="width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:${s.pmi==='SI'?'rgba(16,80,0,.12)':'rgba(183,28,28,.1)'};border:1.5px solid ${s.pmi==='SI'?'rgba(16,80,0,.45)':'rgba(183,28,28,.35)'};font-size:9px;line-height:1;flex-shrink:0">${s.pmi==='SI'?'✓':'✗'}</span>
-<span style="font-size:11px;font-weight:900;color:${s.pmi==='SI'?'#105000':'#B71C1C'};letter-spacing:.2px;line-height:1;white-space:nowrap">${s.pmi==='SI'?'PROGRAMADO EN EL PMI':'NO PROGRAMADO EN EL PMI'}</span>
+<span style="font-size:10px;font-weight:900;color:${s.pmi==='SI'?'#105000':'#B71C1C'};letter-spacing:.2px;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${s.pmi==='SI'?'PROGRAMADO EN EL PMI':'NO PROGRAMADO EN EL PMI'}</span>
 </div>
 <div style="display:flex;align-items:flex-start;justify-content:center;gap:5px">
 ${donut(avFis,'#0D47A1','Av. Físico','#EEF4FF','#90CAF9')}
 ${donut(avF,SC.bg,'Av. Financiero','#F0FBF0','#A5D6A7')}
+</div>
 </div>
 </div>
 <!-- COL 5: EJERCICIO 2026 (PIM + CERT + DEV, homogeneos) -->
