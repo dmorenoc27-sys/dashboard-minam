@@ -251,6 +251,10 @@ body{display:flex;flex-direction:column;height:100vh}
   .fl{flex-shrink:0!important;font-size:10px!important}
   .fs{flex-shrink:0!important;width:135px!important;font-size:12px!important;padding:4px 6px!important}
   .ftag{flex-shrink:0!important;padding:4px 8px!important;font-size:11px!important}
+  /* 13-07-2026: Impacto Nacional en móvil — columnas apiladas a lo ancho, sin recorte derecho */
+  .imp-col-izq,.imp-col-mapa{min-width:0!important;flex:1 1 100%!important;width:100%!important;max-width:100%!important}
+  #impacto-root{overflow-x:hidden!important}
+  #mapa-nacional{min-height:340px!important}
   #resumen-panel-body{overflow-y:visible!important;max-height:none!important;flex:none!important}
   .twrap{overflow-x:auto!important;-webkit-overflow-scrolling:touch!important;max-height:none!important}
   .dtable td{padding:9px 6px!important;font-size:12px!important}
@@ -2756,7 +2760,7 @@ root.innerHTML=''
 +'<img src="'+CDN+'1f1f5-1f1ea.svg" width="34" height="34" alt="" style="border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.3)">'
 +'</div>'
 +'<div style="display:flex;gap:14px;align-items:stretch;flex-wrap:wrap">'
-+'<div style="flex:1.15;min-width:480px">'
++'<div class="imp-col-izq" style="flex:1.15;min-width:480px">'
 +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">'
 +'<div style="cursor:pointer" onclick="window._toggleKpiLista(\'dev\')" title="Clic: ver detalle por inversión">'+kpi(tw('1f4b0',28),fS(devTot),'Ejecutado acumulado · SIAF 2013-2026 ▾','#105000','#F4FBF4','#C8E6C9')+'</div>'
 +'<div style="cursor:pointer" onclick="window._toggleKpiLista(\'ben\')" title="Clic: ver detalle por inversión">'+kpi(tw('1f465',28),fN(ben),'Beneficiarios directos ▾','#1B5E20','#F4FBF4','#C8E6C9')+'</div>'
@@ -2789,7 +2793,7 @@ root.innerHTML=''
 +'</div></div>'
 +'<div id="card-ejec-pres" style="background:#fff;border:1px solid #E5E9EF;border-radius:14px;padding:10px 14px;margin-top:9px;box-shadow:0 1px 5px rgba(16,24,40,.06)">'+window._ejecPresHTML+'</div>'
 +'</div>'
-+'<div style="flex:1;min-width:420px;background:#fff;border:1px solid #E5E9EF;border-radius:14px;padding:12px;box-shadow:0 1px 5px rgba(16,24,40,.06);display:flex;flex-direction:column">'
++'<div class="imp-col-mapa" style="flex:1;min-width:420px;background:#fff;border:1px solid #E5E9EF;border-radius:14px;padding:12px;box-shadow:0 1px 5px rgba(16,24,40,.06);display:flex;flex-direction:column">'
 +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding:0 4px">'
 +'<div style="font-size:11px;font-weight:900;color:#37474F;text-transform:uppercase;letter-spacing:.6px">Mapa nacional de inversiones</div>'
 +'<div style="display:flex;gap:8px;font-size:9px;font-weight:700;color:#546E7A">'
