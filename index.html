@@ -2100,10 +2100,12 @@ if(!outer||outer.children.length<2)return;
 outer.style.overflow='visible';outer.style.height='auto';
 var hdr=outer.children[0],drow=outer.children[1],brow=outer.children[2];
 if(hdr){
-hdr.style.position='sticky';hdr.style.top='40px';hdr.style.zIndex='9';hdr.style.padding='8px 12px 34px';
-/* 13-07-2026 móvil: Descargar Ficha más abajo (sin pisar el nombre) y menos alto */
+hdr.style.position='sticky';hdr.style.top='40px';hdr.style.zIndex='9';hdr.style.padding='8px 12px 7px';
+/* 13-07-2026 móvil: fuera Regresar (ya existe la barra "Volver") — Descargar Ficha toma su esquina */
+var rgb=hdr.querySelector('button[title="Volver a la vista anterior"]');
+if(rgb)rgb.style.display='none';
 var xb2=document.getElementById('btn-xls-ficha');
-if(xb2){xb2.style.height='22px';xb2.style.fontSize='9.5px';xb2.style.padding='0 11px';xb2.style.bottom='6px';xb2.style.right='10px';xb2.style.borderRadius='11px';}
+if(xb2){xb2.style.height='22px';xb2.style.fontSize='9.5px';xb2.style.padding='0 11px';xb2.style.bottom='';xb2.style.top='10px';xb2.style.right='10px';xb2.style.borderRadius='11px';}
 var sw=hdr.querySelector('div[style*="right:46px"]')||hdr.querySelector('div[style*="position:absolute"]');
 if(sw)sw.setAttribute('style','display:none');
 var cuiD=hdr.querySelector('div[style*="letter-spacing:.8px"]');
@@ -2130,7 +2132,7 @@ nc.textContent=nomC;
 nc.style.cssText='font-size:19px;font-weight:900;color:#fff;line-height:1.2;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;padding-right:30px;';
 hdr.insertBefore(nc,cuiD);
 }
-if(cuiD){cuiD.style.fontSize='11px';cuiD.style.marginBottom='2px';cuiD.style.opacity='0.8';}
+if(cuiD){cuiD.style.fontSize='11px';cuiD.style.marginBottom='2px';cuiD.style.opacity='0.8';cuiD.style.maxWidth='calc(100% - 120px)';}
 }
 if(drow)drow.setAttribute('style','display:none');
 if(!document.getElementById('mob-pd-kpis')){
