@@ -1730,21 +1730,14 @@ padding:8px 16px 7px;flex-shrink:0;position:relative">
 <!-- 12-07-2026 v3 (distribución de David): Regresar fijo arriba-derecha sobre la franja
      institucional; ✕ en la esquina del header a la altura del CUI; Descargar Ficha
      abajo-derecha del header; estado de la obra como chip en la fila de metadatos -->
+<!-- 12-07-2026: Regresar en la esquina del header (reemplaza a la ✕) -->
 <button onclick="if(window._volverAtras)_volverAtras()" title="Volver a la vista anterior"
-style="position:fixed;top:7px;right:16px;z-index:100000;height:28px;border-radius:14px;
-border:1.5px solid #A5D6A7;background:#2E7D32;
+style="position:absolute;top:12px;right:12px;height:28px;border-radius:14px;
+border:1.5px solid rgba(255,255,255,.32);background:rgba(255,255,255,.12);
 cursor:pointer;font-size:10.5px;color:#fff;font-weight:800;letter-spacing:.4px;
-display:flex;align-items:center;gap:6px;padding:0 14px;font-family:inherit;
-box-shadow:0 2px 8px rgba(16,80,0,.3);transition:background .18s"
-onmouseover="this.style.background='#1B5E20';var f=this.querySelector('span');if(f)f.style.transform='translateX(-3px)'"
-onmouseout="this.style.background='#2E7D32';var f=this.querySelector('span');if(f)f.style.transform=''"><span style="display:inline-block;transition:transform .18s;font-size:12px;line-height:1">←</span>Regresar</button>
-<button onclick="closeProjectDetail()" title="Cerrar"
-style="position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:50%;
-border:1.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.07);
-cursor:pointer;font-size:13px;color:rgba(255,255,255,.75);
-display:flex;align-items:center;justify-content:center;font-weight:700;transition:background .18s"
-onmouseover="this.style.background='rgba(180,30,30,.5)'"
-onmouseout="this.style.background='rgba(255,255,255,.07)'">✕</button>
+display:flex;align-items:center;gap:6px;padding:0 14px;font-family:inherit;transition:background .18s"
+onmouseover="this.style.background='rgba(255,255,255,.24)';var f=this.querySelector('span');if(f)f.style.transform='translateX(-3px)'"
+onmouseout="this.style.background='rgba(255,255,255,.12)';var f=this.querySelector('span');if(f)f.style.transform=''"><span style="display:inline-block;transition:transform .18s;font-size:12px;line-height:1">←</span>Regresar</button>
 <button onclick="if(window._exportarFichaXLSX)_exportarFichaXLSX('${cui}',this)" id="btn-xls-ficha" title="Descargar la ficha completa en Excel"
 style="position:absolute;bottom:10px;right:12px;height:28px;border-radius:14px;border:none;background:#fff;
 cursor:pointer;font-size:10.5px;color:#105000;font-weight:900;letter-spacing:.4px;
