@@ -258,6 +258,24 @@ body{display:flex;flex-direction:column;height:100vh}
   .imp-col-izq,.imp-col-mapa{min-width:0!important;flex:1 1 100%!important;width:100%!important;max-width:100%!important}
   #impacto-root{overflow-x:hidden!important}
   #mapa-nacional{min-height:340px!important}
+  /* 13-07-2026: Impacto Nacional móvil v2 — nada se sale de pantalla y botones uniformes/compactos */
+  .imp-head{padding:9px 12px!important;border-radius:12px!important;gap:8px!important}
+  .imp-head>div>div:first-child{font-size:13.5px!important;line-height:1.2!important}
+  .imp-head>div>div:last-child{font-size:9px!important;line-height:1.3!important}
+  .imp-head>img{width:24px!important;height:24px!important}
+  .imp-kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+  .imp-kpi-grid>div{min-width:0!important}
+  .imp-kpi{height:100%!important;box-sizing:border-box!important;min-width:0!important;padding:6px 8px!important;gap:7px!important;border-radius:11px!important;border-left-width:4px!important}
+  .imp-kpi>img{width:20px!important;height:20px!important}
+  .imp-kpi>div{min-width:0!important}
+  .imp-kpi>div>div:first-child{font-size:14px!important;letter-spacing:-.3px!important;overflow-wrap:anywhere!important;line-height:1.1!important}
+  .imp-kpi>div>div:first-child span{font-size:10.5px!important}
+  .imp-kpi>div>div:last-child{font-size:8.5px!important;letter-spacing:.2px!important;margin-top:2px!important}
+  .imp-chips{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:6px!important}
+  .imp-chip{min-width:0!important;padding:5px 2px!important;border-radius:10px!important}
+  .imp-chip>div:first-child{font-size:15px!important}
+  .imp-chip>div:last-child{font-size:7.5px!important;letter-spacing:.2px!important;white-space:normal!important;line-height:1.15!important;margin-top:2px!important}
+  .imp-leyenda{flex-wrap:wrap!important;justify-content:flex-end!important;gap:4px 8px!important;font-size:8px!important}
   #resumen-panel-body{overflow-y:visible!important;max-height:none!important;flex:none!important}
   .twrap{overflow-x:auto!important;-webkit-overflow-scrolling:touch!important;max-height:none!important}
   .dtable td{padding:9px 6px!important;font-size:12px!important}
@@ -2687,13 +2705,13 @@ var pG=es26&&pim26>0?Math.round(girA/pim26*100):(certA>0?Math.round(girA/certA*1
 var pC=es26&&pim26>0?Math.round(certA/pim26*100):null;
 var pCo=es26&&pim26>0?Math.round(compA/pim26*100):null;
 var kpi=function(icono,num,lbl,col,bg,br){
-return '<div style="background:'+bg+';border:1.5px solid '+br+';border-left:5px solid '+col+';border-radius:14px;padding:8px 12px;display:flex;align-items:center;gap:9px;box-shadow:0 1px 5px rgba(16,24,40,.08)">'
+return '<div class="imp-kpi" style="background:'+bg+';border:1.5px solid '+br+';border-left:5px solid '+col+';border-radius:14px;padding:8px 12px;display:flex;align-items:center;gap:9px;box-shadow:0 1px 5px rgba(16,24,40,.08)">'
 +icono
 +'<div><div style="font-size:18px;font-weight:900;color:'+col+';letter-spacing:-.6px;line-height:1">'+num+'</div>'
 +'<div style="font-size:10px;font-weight:800;color:#546E7A;margin-top:3px;line-height:1.3;text-transform:uppercase;letter-spacing:.4px">'+lbl+'</div></div></div>';};
 var CDN='https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/';
 var tw=function(c,w){return '<img src="'+CDN+c+'.svg" width="'+w+'" height="'+w+'" alt="" style="flex-shrink:0">';};
-var chip=function(n,lbl,col,key){return '<div data-chip-estado="'+key+'" onclick="window._mapaFiltroToggle(\''+key+'\')" title="Clic para ver solo estas en el mapa" style="flex:1;cursor:pointer;transition:opacity .2s,transform .2s;background:'+col+';border-radius:13px;padding:7px 6px;text-align:center;color:#fff;box-shadow:0 2px 8px '+col+'55">'
+var chip=function(n,lbl,col,key){return '<div class="imp-chip" data-chip-estado="'+key+'" onclick="window._mapaFiltroToggle(\''+key+'\')" title="Clic para ver solo estas en el mapa" style="flex:1;cursor:pointer;transition:opacity .2s,transform .2s;background:'+col+';border-radius:13px;padding:7px 6px;text-align:center;color:#fff;box-shadow:0 2px 8px '+col+'55">'
 +'<div style="font-size:19px;font-weight:900;line-height:1">'+n+'</div>'
 +'<div style="font-size:9.5px;font-weight:800;margin-top:3px;text-transform:uppercase;letter-spacing:.4px;opacity:.95">'+lbl+'</div></div>';};
 var barra=function(lbl,val,pct,col){
@@ -2797,14 +2815,14 @@ return '<div style="display:flex;justify-content:space-between;align-items:cente
 +'<div style="font-size:9px;color:#90A4AE;margin-top:6px">Clic en una inversión para abrir su ficha · ✕ o el mismo estado para volver</div>';
 };
 root.innerHTML=''
-+'<div style="background:linear-gradient(120deg,#0B3D0B 0%,#1B5E20 55%,#2E7D32 100%);border-radius:16px;padding:11px 20px;margin-bottom:9px;display:flex;align-items:center;justify-content:space-between;gap:14px;box-shadow:0 4px 18px rgba(16,80,0,.25)">'
++'<div class="imp-head" style="background:linear-gradient(120deg,#0B3D0B 0%,#1B5E20 55%,#2E7D32 100%);border-radius:16px;padding:11px 20px;margin-bottom:9px;display:flex;align-items:center;justify-content:space-between;gap:14px;box-shadow:0 4px 18px rgba(16,80,0,.25)">'
 +'<div><div style="font-size:17px;font-weight:900;color:#fff;letter-spacing:.5px">IMPACTO NACIONAL DE LA INVERSIÓN</div>'
 +'<div style="font-size:10.5px;font-weight:700;color:#A5D6A7;margin-top:2px">UE 003 — Gestión Integral de la Calidad Ambiental · Ministerio del Ambiente'+(gen?' · Corte: '+gen.slice(0,10):'')+filtroTxt+'</div></div>'
 +'<img src="'+CDN+'1f1f5-1f1ea.svg" width="34" height="34" alt="" style="border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.3)">'
 +'</div>'
 +'<div style="display:flex;gap:14px;align-items:stretch;flex-wrap:wrap">'
 +'<div class="imp-col-izq" style="flex:1.15;min-width:480px">'
-+'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">'
++'<div class="imp-kpi-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">'
 +'<div style="cursor:pointer" onclick="window._toggleKpiLista(\'dev\')" title="Clic: ver detalle por inversión">'+kpi(tw('1f4b0',28),fS(devTot),'Ejecutado acumulado · SIAF 2013-2026 ▾','#105000','#F4FBF4','#C8E6C9')+'</div>'
 +'<div style="cursor:pointer" onclick="window._toggleKpiLista(\'ben\')" title="Clic: ver detalle por inversión">'+kpi(tw('1f465',28),fN(ben),'Beneficiarios directos ▾','#1B5E20','#F4FBF4','#C8E6C9')+'</div>'
 +(es26?'<div style="cursor:pointer" onclick="window._toggleKpiLista(\'pim\')" title="Clic: ver detalle por inversión">'+kpi3+'</div>':kpi3)
@@ -2828,7 +2846,7 @@ root.innerHTML=''
 +'<div style="font-size:11px;font-weight:900;color:#37474F;text-transform:uppercase;letter-spacing:.6px">Estado de la cartera — '+lista.length+' inversiones</div>'
 +'<div id="chip-filtro-clear" onclick="window._mapaFiltroToggle(window._mapaFiltroEstado)" title="Quitar filtro — mostrar todas" style="display:none;cursor:pointer;width:20px;height:20px;border-radius:50%;background:#ECEFF3;color:#546E7A;font-size:12px;font-weight:900;line-height:20px;text-align:center;flex:none">✕</div>'
 +'</div>'
-+'<div style="display:flex;gap:9px">'
++'<div class="imp-chips" style="display:flex;gap:9px">'
 +chip(est.culminada,'Culminadas','#2E7D32','culminada')
 +chip(est.ejecucion,'En ejecución','#1565C0','ejecucion')
 +chip(est.suspendida,'Suspendidas','#E65100','suspendida')
@@ -2839,7 +2857,7 @@ root.innerHTML=''
 +'<div class="imp-col-mapa" style="flex:1;min-width:420px;background:#fff;border:1px solid #E5E9EF;border-radius:14px;padding:12px;box-shadow:0 1px 5px rgba(16,24,40,.06);display:flex;flex-direction:column">'
 +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding:0 4px">'
 +'<div style="font-size:11px;font-weight:900;color:#37474F;text-transform:uppercase;letter-spacing:.6px">Mapa nacional de inversiones</div>'
-+'<div style="display:flex;gap:8px;font-size:9px;font-weight:700;color:#546E7A">'
++'<div class="imp-leyenda" style="display:flex;gap:8px;font-size:9px;font-weight:700;color:#546E7A">'
 +'<span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#2E7D32"></span> Culminada</span>'
 +'<span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#1565C0"></span> En ejecución</span>'
 +'<span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#E65100"></span> Suspendida</span>'
