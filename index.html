@@ -1727,18 +1727,16 @@ const html=`<div style="height:100%;display:flex;flex-direction:column;font-fami
 <!-- ══ HEADER ══════════════════════════════════════════════════ -->
 <div style="background:linear-gradient(135deg,#3D9A5C 0%,#4EAD6E 55%,#5BBD7A 100%);
 padding:8px 16px 7px;flex-shrink:0;position:relative">
-<!-- 12-07-2026: fila superior = CUI (izq) + barra de acciones (der), sin superposiciones -->
-<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:4px">
-<div class="sel-txt" style="font-size:13.5px;font-weight:800;color:#ffffff;letter-spacing:.8px;text-transform:uppercase;padding-top:5px">
-CUI ${cui}${p&&p.Programa?' · '+p.Programa:''}${p&&p.Convenio?' / '+p.Convenio:''}
-</div>
-<div style="display:flex;align-items:center;gap:7px;flex-shrink:0">
+<!-- 12-07-2026 v2: patrón estándar de página de detalle — Regresar arriba-izq (breadcrumb),
+     acciones arriba-der, estado de la obra junto al CUI -->
+<div style="display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:10px">
 <button onclick="if(window._volverAtras)_volverAtras()" title="Volver a la vista anterior"
 style="height:28px;border-radius:14px;border:1.5px solid rgba(255,255,255,.28);background:rgba(255,255,255,.1);
 cursor:pointer;font-size:10.5px;color:#fff;font-weight:800;letter-spacing:.4px;
-display:flex;align-items:center;gap:6px;padding:0 13px;font-family:inherit;transition:background .18s"
+display:flex;align-items:center;gap:6px;padding:0 13px;font-family:inherit;transition:background .18s;flex-shrink:0"
 onmouseover="this.style.background='rgba(255,255,255,.22)';var f=this.querySelector('span');if(f)f.style.transform='translateX(-3px)'"
 onmouseout="this.style.background='rgba(255,255,255,.1)';var f=this.querySelector('span');if(f)f.style.transform=''"><span style="display:inline-block;transition:transform .18s;font-size:12px;line-height:1">←</span>Regresar</button>
+<div style="display:flex;align-items:center;gap:7px;flex-shrink:0">
 <button onclick="if(window._exportarFichaXLSX)_exportarFichaXLSX('${cui}',this)" id="btn-xls-ficha" title="Descargar la ficha completa en Excel"
 style="height:28px;border-radius:14px;border:none;background:#fff;
 cursor:pointer;font-size:10.5px;color:#105000;font-weight:900;letter-spacing:.4px;
@@ -1755,16 +1753,11 @@ onmouseover="this.style.background='rgba(180,30,30,.5)'"
 onmouseout="this.style.background='rgba(255,255,255,.07)'">✕</button>
 </div>
 </div>
-<div class="sel-txt" style="font-size:13.5px;font-weight:800;color:#fff;line-height:1.35;margin-bottom:8px;text-shadow:0 1px 3px rgba(0,20,0,.28)">
-${nombre} <button onclick="if(window._copiarCui)_copiarCui('${cui}',event)" title="Copiar CUI y nombre" style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:6px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.15);color:#fff;font-size:11px;cursor:pointer;vertical-align:middle;margin-left:6px;padding:0">📋</button>
+<div style="display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:4px">
+<div class="sel-txt" style="font-size:13.5px;font-weight:800;color:#ffffff;letter-spacing:.8px;text-transform:uppercase">
+CUI ${cui}${p&&p.Programa?' · '+p.Programa:''}${p&&p.Convenio?' / '+p.Convenio:''}
 </div>
-<div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
-${(t=>{if(!t)return"";const c={PROYECTO:"#5E35B1",IOARR:"#E65100",PROGRAMA:"#00838F"}[t]||"#546E7A";return`<span style="padding:3px 10px;border-radius:10px;font-size:10px;font-weight:800;background:#fff;color:${c};box-shadow:0 1px 3px rgba(0,0,0,.18);letter-spacing:.4px;white-space:nowrap">${t}</span>`})(p&&p.Tipo_Inversion)}
-${s.est?`<span style="padding:3px 10px;border-radius:10px;font-size:10px;font-weight:800;background:#fff;color:${s.est==='ACTIVO'?'#2E7D32':'#C62828'};box-shadow:0 1px 3px rgba(0,0,0,.18);white-space:nowrap">${s.est==='ACTIVO'?'● ACTIVO':'○ CERRADO'}</span>`:''}
-${p&&p.Departamento?`<span style="padding:3px 10px;border-radius:10px;font-size:10px;font-weight:700;background:#fff;color:#105000;box-shadow:0 1px 3px rgba(0,0,0,.18);white-space:nowrap">📍 ${p.Departamento}</span>`:''}
-${p&&p.Tipo_Proyecto?`<span style="padding:3px 10px;border-radius:10px;font-size:10px;font-weight:600;background:rgba(255,255,255,.92);color:#455A64;box-shadow:0 1px 3px rgba(0,0,0,.15);white-space:nowrap">${p.Tipo_Proyecto}</span>`:''}
 ${(function(){
-/* 12-07-2026: estado de la obra como chip destacado al final de la fila de metadatos */
 var av=(typeof avFisSD!=='undefined'&&avFisSD)?null:avFis;
 var cerrado=(s.est==='CERRADO');
 var devAc=(typeof devAcumData!=='undefined'&&devAcumData[cui]!=null)?devAcumData[cui]:dev;
@@ -1773,10 +1766,19 @@ if(cerrado||(av!=null&&av>=99.95)){est='Obra culminada';col='#2E7D32';}
 else if(devAc<=0&&(av==null||av<=0)){est='Obra por iniciar';col='#F57F17';}
 else if((pim||0)<=0){est='Obra suspendida';col='#C62828';}
 else{est='Obra en ejecución';col='#1565C0';}
-return '<span style="margin-left:auto;background:#fff;border-radius:11px;padding:4px 13px;box-shadow:0 2px 10px rgba(0,20,0,.25);display:inline-flex;align-items:center;gap:7px;white-space:nowrap">'
+return '<span style="flex-shrink:0;background:#fff;border-radius:11px;padding:4px 13px;box-shadow:0 2px 10px rgba(0,20,0,.25);display:inline-flex;align-items:center;gap:7px;white-space:nowrap">'
 +'<span style="width:9px;height:9px;border-radius:50%;background:'+col+';box-shadow:0 0 0 3px '+col+'26;flex-shrink:0"></span>'
 +'<span style="font-size:11px;font-weight:900;color:'+col+';letter-spacing:.4px">'+est+'</span></span>';
 })()}
+</div>
+<div class="sel-txt" style="font-size:13.5px;font-weight:800;color:#fff;line-height:1.35;margin-bottom:8px;text-shadow:0 1px 3px rgba(0,20,0,.28)">
+${nombre} <button onclick="if(window._copiarCui)_copiarCui('${cui}',event)" title="Copiar CUI y nombre" style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:6px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.15);color:#fff;font-size:11px;cursor:pointer;vertical-align:middle;margin-left:6px;padding:0">📋</button>
+</div>
+<div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+${(t=>{if(!t)return"";const c={PROYECTO:"#5E35B1",IOARR:"#E65100",PROGRAMA:"#00838F"}[t]||"#546E7A";return`<span style="padding:3px 10px;border-radius:10px;font-size:10px;font-weight:800;background:#fff;color:${c};box-shadow:0 1px 3px rgba(0,0,0,.18);letter-spacing:.4px;white-space:nowrap">${t}</span>`})(p&&p.Tipo_Inversion)}
+${s.est?`<span style="padding:3px 10px;border-radius:10px;font-size:10px;font-weight:800;background:#fff;color:${s.est==='ACTIVO'?'#2E7D32':'#C62828'};box-shadow:0 1px 3px rgba(0,0,0,.18);white-space:nowrap">${s.est==='ACTIVO'?'● ACTIVO':'○ CERRADO'}</span>`:''}
+${p&&p.Departamento?`<span style="padding:3px 10px;border-radius:10px;font-size:10px;font-weight:700;background:#fff;color:#105000;box-shadow:0 1px 3px rgba(0,0,0,.18);white-space:nowrap">📍 ${p.Departamento}</span>`:''}
+${p&&p.Tipo_Proyecto?`<span style="padding:3px 10px;border-radius:10px;font-size:10px;font-weight:600;background:rgba(255,255,255,.92);color:#455A64;box-shadow:0 1px 3px rgba(0,0,0,.15);white-space:nowrap">${p.Tipo_Proyecto}</span>`:''}
 </div>
 </div>
 <!-- ══ DATA ROW: 6 COLUMNS ══════════════════════════════════════
