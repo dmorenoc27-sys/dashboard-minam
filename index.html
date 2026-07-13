@@ -1531,6 +1531,16 @@ const gBody=document.getElementById('geo-panel-body');
 if(gBody){delete gBody.dataset.savedHtml;}
 document.querySelectorAll('[data-proj-card].proj-sel').forEach(c=>c.classList.remove('proj-sel'));
 }
+/* 12-07-2026: botón Regresar — cierra la ficha y vuelve a la pestaña y scroll previos */
+window._volverAtras=function(){
+var st=window._navRegreso||{page:'resumen',scroll:0};
+if(typeof closeProjectDetail==='function')closeProjectDetail();
+try{
+var btn=document.querySelector('.nb[onclick*="\''+st.page+'\'"]');
+if(btn&&typeof showPage==='function'&&!btn.classList.contains('active'))showPage(st.page,btn);
+}catch(_){}
+setTimeout(function(){(document.scrollingElement||document.documentElement).scrollTop=st.scroll||0;},140);
+};
 function _renderGeoBack(){
 const gTitle=document.getElementById('geo-panel-title');
 const gSub=document.getElementById('geo-panel-sub');
@@ -1567,6 +1577,11 @@ var _cu=window._datosActualizados.costoUpdate||{};
 Object.keys(_cu).forEach(function(k){if(_cu[k]!=null)costoData[k]=_cu[k];});
 }
 function showProjectDetail(cui){
+/* 12-07-2026: recordar de dónde venimos (pestaña + scroll) para el botón Regresar */
+try{
+var _actPg=document.querySelector('.page.active');
+window._navRegreso={page:_actPg?_actPg.id.replace('page-',''):'resumen',scroll:(document.scrollingElement||document.documentElement).scrollTop};
+}catch(_){}
 const p=proyectos.find(x=>x.CUI===cui)||null;
 const s=ssiData[cui]||{};
 const f=(p&&p.fin)||{};
@@ -1742,6 +1757,13 @@ cursor:pointer;font-size:13px;color:rgba(255,255,255,.75);
 display:flex;align-items:center;justify-content:center;font-weight:700"
 onmouseover="this.style.background='rgba(180,30,30,.5)'"
 onmouseout="this.style.background='rgba(255,255,255,.07)'">✕</button>
+<button onclick="if(window._volverAtras)_volverAtras()" title="Volver a la vista anterior"
+style="position:absolute;top:10px;right:44px;height:26px;border-radius:13px;
+border:1.5px solid rgba(255,255,255,.28);background:rgba(255,255,255,.1);
+cursor:pointer;font-size:10.5px;color:#fff;font-weight:800;letter-spacing:.4px;
+display:flex;align-items:center;gap:6px;padding:0 12px;font-family:inherit;transition:background .18s"
+onmouseover="this.style.background='rgba(255,255,255,.22)';var f=this.querySelector('span');if(f)f.style.transform='translateX(-3px)'"
+onmouseout="this.style.background='rgba(255,255,255,.1)';var f=this.querySelector('span');if(f)f.style.transform=''"><span style="display:inline-block;transition:transform .18s;font-size:12px;line-height:1">←</span>Regresar</button>
 <div class="sel-txt" style="font-size:13.5px;font-weight:800;color:#ffffff;letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px">
 CUI ${cui}${p&&p.Programa?' · '+p.Programa:''}${p&&p.Convenio?' / '+p.Convenio:''}
 </div>
