@@ -2388,7 +2388,7 @@ lb.innerHTML='<div style="max-width:1150px;text-align:center;color:#fff;font-siz
 +'<div style="max-width:900px;text-align:center;color:#fff">'
 +'<div style="font-size:12px;font-weight:800;letter-spacing:.6px">'
 +'<span style="background:rgba(255,255,255,.16);padding:3px 10px;border-radius:10px">CUI '+cui+'</span>'
-+(tipo?' <span style="background:#fff;color:'+tc+';padding:3px 10px;border-radius:10px">'+tipo+'</span>':'')
++((tipo&&window.innerWidth>900)?' <span style="background:#fff;color:'+tc+';padding:3px 10px;border-radius:10px">'+tipo+'</span>':'')
 +(p.Departamento?' <span style="background:rgba(255,255,255,.16);padding:3px 10px;border-radius:10px">📍 '+p.Departamento+'</span>':'')
 +(mesTxt?' <span style="background:rgba(102,203,0,.28);color:#CFFFB0;padding:3px 10px;border-radius:10px">📷 '+mesTxt+(it&&it.n>1?' · '+it.k+'/'+it.n:'')+'</span>':'')
 +'</div>'
