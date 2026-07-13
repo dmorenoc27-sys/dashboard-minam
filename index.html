@@ -2101,8 +2101,18 @@ hdr.style.position='sticky';hdr.style.top='40px';hdr.style.zIndex='9';hdr.style.
 var sw=hdr.querySelector('div[style*="right:46px"]')||hdr.querySelector('div[style*="position:absolute"]');
 if(sw)sw.setAttribute('style','display:none');
 var cuiD=hdr.querySelector('div[style*="letter-spacing:.8px"]');
-var nameD=hdr.querySelector('div[style*="max-width:calc(100%"]');
-if(nameD)nameD.setAttribute('style','font-size:10px;color:rgba(255,255,255,0.78);font-weight:500;line-height:1.3;max-width:calc(100% - 40px);margin-bottom:5px;padding-right:0');
+/* 13-07-2026 móvil: el nombre completo aprovecha TODO el ancho del panel, en varias líneas */
+var nameD=hdr.querySelector('div[style*="max-width:74%"]')||hdr.querySelector('div[style*="max-width:calc(100%"]');
+if(nameD)nameD.setAttribute('style','font-size:11px;color:rgba(255,255,255,.92);font-weight:700;line-height:1.35;max-width:100%;margin-bottom:6px;padding-right:0');
+/* 13-07-2026 móvil: solo chips esenciales — fuera ACTIVO/CERRADO, departamento y tipo */
+var chipsRow=hdr.querySelector('div[style*="flex-wrap:wrap"]');
+if(chipsRow){
+Array.prototype.forEach.call(chipsRow.children,function(ch){
+var t=(ch.textContent||'').trim();
+if(/ACTIVO|CERRADO/.test(t)||t.indexOf('📍')>=0){ch.style.display='none';return;}
+if(!/Obra /.test(t)&&!/^(PROYECTO|IOARR|PROGRAMA)$/.test(t))ch.style.display='none';
+});
+}
 var cuiMatch=cuiD?(/\b(\d{5,8})\b/.exec(cuiD.textContent)):null;
 var cui=cuiMatch?cuiMatch[1]:'';
 var prj=(typeof proyectos!=='undefined'&&cui)?proyectos.find(function(x){return String(x.CUI)===cui;}):null;
@@ -2126,16 +2136,27 @@ var avFis=0;try{avFis=parseFloat((_avFisicoData&&(_avFisicoData[cui2]||_avFisico
 var bnf=0;try{bnf=benefiData[cui2]||benefiData[String(cui2)]||0;}catch(e){}
 var pmiV='NO';try{var sd=ssiData[cui2]||ssiData[String(cui2)];if(sd)pmiV=sd.pmi||'NO';}catch(e){}
 var cF=_aC(avFis),cFi=_aC(avFin);
-var pmiSI=(pmiV==='SI'),pBg=pmiSI?'#E8F5E9':'#FFEBEE',pBr=pmiSI?'#A5D6A7':'#EF9A9A',pTx=pmiSI?'#2E7D32':'#B71C1C';
+/* 13-07-2026 móvil: paneles más pequeños — AvFís, AvFin, Situación (clic), Puesta en
+   Marcha (clic, por desarrollar), Hectáreas y Obra de infraestructura */
+if(!window._pmDetalle){window._pmDetalle=function(){
+var d=document.createElement('div');
+d.style.cssText='position:fixed;inset:0;z-index:99999;background:rgba(8,28,12,.55);display:flex;align-items:center;justify-content:center;padding:24px';
+d.innerHTML='<div style="background:#fff;border-radius:14px;padding:18px 22px;max-width:420px;text-align:center;box-shadow:0 12px 44px rgba(0,0,0,.35)"><div style="font-size:15px;font-weight:900;color:#0D47A1;margin-bottom:6px">🚀 Puesta en Marcha</div><div style="font-size:12px;color:#546E7A;font-weight:600;line-height:1.5">Información en preparación — este módulo se habilitará próximamente.</div><div style="font-size:9px;color:#9AA8BC;margin-top:10px">toca fuera para cerrar</div></div>';
+d.onclick=function(){d.remove();};
+document.body.appendChild(d);
+};}
+var haV=0;try{haV=(window._brechaHA&&(_brechaHA[cui2]||_brechaHA[String(cui2)]))||0;}catch(e){}
+var obT=null;try{obT=(window._obraTipo&&(_obraTipo[cui2]||_obraTipo[String(cui2)]))||null;}catch(e){}
 var kbx=document.createElement('div');kbx.id='mob-pd-kpis';
-kbx.style.cssText='display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;padding:8px 10px;background:#F0F7F0;border-bottom:2px solid #C8E6C9;';
+kbx.style.cssText='display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;padding:7px 9px;background:#F0F7F0;border-bottom:2px solid #C8E6C9;';
 kbx.innerHTML=
 _circKP('Av. Fisico',avFis,cF.bg,cF.br,cF.tx)+
 _circKP('Av. Financiero',avFin,cFi.bg,cFi.br,cFi.tx)+
-_iconKP('PMI',pmiSI?'EN PMI':'NO PMI',_icoPMI(pTx),pBg,pBr,pTx)+
-_iconKP('Costo Inv.',_fM(ciT),_icoCoins('#E65100'),'#FFF3E0','#FFCC80','#E65100')+
-_iconKP('Dev. Acum.',_fM(devT),_icoCoin1('#105000'),'#E8F5E9','#81C784','#105000')+
-_iconKP('Beneficiarios',_fN(bnf),_icoPeople('#4527A0'),'#EDE7F6','#B39DDB','#4527A0');
+'<div onclick="if(window._situDetalle)_situDetalle(\''+cui2+'\',event)" style="cursor:pointer">'+_iconKP('Estado Situacional','Ver detalle','<span style="font-size:23px;line-height:1">📋</span>','#F0FBF0','#A5D6A7','#1B5E20')+'</div>'+
+'<div onclick="if(window._pmDetalle)_pmDetalle()" style="cursor:pointer">'+_iconKP('Puesta en Marcha','Ver detalle','<span style="font-size:23px;line-height:1">🚀</span>','#F5F9FF','#90CAF9','#0D47A1')+'</div>'+
+_iconKP('Hectareas a recuperar',(haV>0?haV.toLocaleString('es-PE')+' ha':'—'),'<span style="font-size:23px;line-height:1">🌿</span>','#F1F8E9','#AED581','#33691E')+
+_iconKP('Obra de infraestructura',(obT?(obT==='REC'?'Recuperación':'RRSS'):'—'),'<span style="font-size:23px;line-height:1">🏗️</span>','#FBF6EC','#E0CFA8','#5D4037');
+Array.prototype.forEach.call(kbx.querySelectorAll('div[style*="min-height:106px"]'),function(tl){tl.style.minHeight='88px';tl.style.padding='6px 3px 5px';});
 if(hdr&&hdr.parentNode)hdr.parentNode.insertBefore(kbx,hdr.nextSibling);
 }
 if(brow){
