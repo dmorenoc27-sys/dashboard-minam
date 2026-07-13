@@ -2136,27 +2136,39 @@ var avFis=0;try{avFis=parseFloat((_avFisicoData&&(_avFisicoData[cui2]||_avFisico
 var bnf=0;try{bnf=benefiData[cui2]||benefiData[String(cui2)]||0;}catch(e){}
 var pmiV='NO';try{var sd=ssiData[cui2]||ssiData[String(cui2)];if(sd)pmiV=sd.pmi||'NO';}catch(e){}
 var cF=_aC(avFis),cFi=_aC(avFin);
-/* 13-07-2026 móvil: paneles más pequeños — AvFís, AvFin, Situación (clic), Puesta en
-   Marcha (clic, por desarrollar), Hectáreas y Obra de infraestructura */
-if(!window._pmDetalle){window._pmDetalle=function(){
+/* 13-07-2026 móvil v2: 9 paneles compactos 3x3 — AvFís, AvFin, Situación (clic),
+   Puesta en Marcha (clic), Vehículos (clic), Beneficiarios (clic), Hectáreas,
+   Obra infra (clic = voltereta de la PC) y Fotos (clic = lightbox) */
+if(!window._avisoMini){window._avisoMini=function(tit,txt){
 var d=document.createElement('div');
 d.style.cssText='position:fixed;inset:0;z-index:99999;background:rgba(8,28,12,.55);display:flex;align-items:center;justify-content:center;padding:24px';
-d.innerHTML='<div style="background:#fff;border-radius:14px;padding:18px 22px;max-width:420px;text-align:center;box-shadow:0 12px 44px rgba(0,0,0,.35)"><div style="font-size:15px;font-weight:900;color:#0D47A1;margin-bottom:6px">🚀 Puesta en Marcha</div><div style="font-size:12px;color:#546E7A;font-weight:600;line-height:1.5">Información en preparación — este módulo se habilitará próximamente.</div><div style="font-size:9px;color:#9AA8BC;margin-top:10px">toca fuera para cerrar</div></div>';
+d.innerHTML='<div style="background:#fff;border-radius:14px;padding:18px 22px;max-width:420px;text-align:center;box-shadow:0 12px 44px rgba(0,0,0,.35)"><div style="font-size:15px;font-weight:900;color:#0D47A1;margin-bottom:6px">'+tit+'</div><div style="font-size:12px;color:#546E7A;font-weight:600;line-height:1.5">'+txt+'</div><div style="font-size:9px;color:#9AA8BC;margin-top:10px">toca fuera para cerrar</div></div>';
 d.onclick=function(){d.remove();};
 document.body.appendChild(d);
 };}
+if(!window._pmDetalle){window._pmDetalle=function(){_avisoMini('🚀 Puesta en Marcha','Información en preparación — este módulo se habilitará próximamente.');};}
+if(!window._fotoTile){window._fotoTile=function(){
+var i=document.getElementById('foto-inv-img');
+if(i&&i.style.display!=='none'&&i.getAttribute('src')&&window._fotoAmpliar){_fotoAmpliar(i);}
+else{_avisoMini('📷 Vista de la inversión','Aún no hay fotos registradas para esta inversión.');}
+};}
 var haV=0;try{haV=(window._brechaHA&&(_brechaHA[cui2]||_brechaHA[String(cui2)]))||0;}catch(e){}
 var obT=null;try{obT=(window._obraTipo&&(_obraTipo[cui2]||_obraTipo[String(cui2)]))||null;}catch(e){}
+var vehV=0;try{vehV=(window._vehiculosLP&&(_vehiculosLP[cui2]||_vehiculosLP[String(cui2)]))||0;}catch(e){}
 var kbx=document.createElement('div');kbx.id='mob-pd-kpis';
 kbx.style.cssText='display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;padding:7px 9px;background:#F0F7F0;border-bottom:2px solid #C8E6C9;';
 kbx.innerHTML=
 _circKP('Av. Fisico',avFis,cF.bg,cF.br,cF.tx)+
 _circKP('Av. Financiero',avFin,cFi.bg,cFi.br,cFi.tx)+
-'<div onclick="if(window._situDetalle)_situDetalle(\''+cui2+'\',event)" style="cursor:pointer">'+_iconKP('Estado Situacional','Ver detalle','<span style="font-size:23px;line-height:1">📋</span>','#F0FBF0','#A5D6A7','#1B5E20')+'</div>'+
-'<div onclick="if(window._pmDetalle)_pmDetalle()" style="cursor:pointer">'+_iconKP('Puesta en Marcha','Ver detalle','<span style="font-size:23px;line-height:1">🚀</span>','#F5F9FF','#90CAF9','#0D47A1')+'</div>'+
-_iconKP('Hectareas a recuperar',(haV>0?haV.toLocaleString('es-PE')+' ha':'—'),'<span style="font-size:23px;line-height:1">🌿</span>','#F1F8E9','#AED581','#33691E')+
-_iconKP('Obra de infraestructura',(obT?(obT==='REC'?'Recuperación':'RRSS'):'—'),'<span style="font-size:23px;line-height:1">🏗️</span>','#FBF6EC','#E0CFA8','#5D4037');
-Array.prototype.forEach.call(kbx.querySelectorAll('div[style*="min-height:106px"]'),function(tl){tl.style.minHeight='88px';tl.style.padding='6px 3px 5px';});
+'<div onclick="if(window._situDetalle)_situDetalle(\''+cui2+'\',event)" style="cursor:pointer">'+_iconKP('Situación','Ver ▸','<span style="font-size:22px;line-height:1">📋</span>','#F0FBF0','#A5D6A7','#1B5E20')+'</div>'+
+'<div onclick="if(window._pmDetalle)_pmDetalle()" style="cursor:pointer">'+_iconKP('P. en Marcha','Ver ▸','<span style="font-size:22px;line-height:1">🚀</span>','#F5F9FF','#90CAF9','#0D47A1')+'</div>'+
+'<div onclick="if(window._vehDetalle)_vehDetalle(\''+cui2+'\',event)" style="cursor:pointer">'+_iconKP('Vehículos',(vehV>0?_fN(vehV):'—'),'<span style="font-size:22px;line-height:1">🚛</span>','#EEF4FF','#90CAF9','#1A2E5C')+'</div>'+
+'<div onclick="if(window._benefDetalle)_benefDetalle(\''+cui2+'\',event)" style="cursor:pointer">'+_iconKP('Beneficiarios',_fN(bnf),'<span style="font-size:22px;line-height:1">👥</span>','#EDE7F6','#B39DDB','#4527A0')+'</div>'+
+_iconKP('Hectáreas',(haV>0?haV.toLocaleString('es-PE')+' ha':'—'),'<span style="font-size:22px;line-height:1">🌿</span>','#F1F8E9','#AED581','#33691E')+
+'<div onclick="if(window._obraDetalle)_obraDetalle(\''+cui2+'\',event)" style="cursor:pointer">'+_iconKP('Obra Infra.',(obT?obT:'—'),'<span style="font-size:22px;line-height:1">🏗️</span>','#FBF6EC','#E0CFA8','#5D4037')+'</div>'+
+'<div onclick="if(window._fotoTile)_fotoTile()" style="cursor:pointer;grid-column:1 / -1">'+_iconKP('Vista de la inversión','Ver fotos ▸','<span style="font-size:22px;line-height:1">📷</span>','#FFF8E1','#FFD54F','#8D6E63')+'</div>';
+Array.prototype.forEach.call(kbx.querySelectorAll('div[style*="min-height:106px"]'),function(tl){tl.style.minHeight='60px';tl.style.padding='4px 3px 3px';tl.style.gap='2px';});
+Array.prototype.forEach.call(kbx.querySelectorAll('svg'),function(sv){sv.style.width='50px';sv.style.height='50px';});
 if(hdr&&hdr.parentNode)hdr.parentNode.insertBefore(kbx,hdr.nextSibling);
 }
 if(brow){
