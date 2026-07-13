@@ -313,8 +313,8 @@ if(e.key==='F12'){e.preventDefault();return false;}
 </div>
 
 <nav class="nav">
-  <button class="nb active" onclick="showPage('resumen',this)">📊 Resumen Ejecutivo</button>
-  <button class="nb" onclick="showPage('impacto',this)">🇵🇪 Impacto Nacional</button>
+  <button class="nb active" onclick="showPage('impacto',this)">🇵🇪 Impacto Nacional</button>
+  <button class="nb" onclick="showPage('resumen',this)">📊 Detalle de Inversiones</button>
   <button class="nb" onclick="showPage('ejecucion',this)">📈 Ejecución Presupuestal</button>
   
   
@@ -358,7 +358,7 @@ if(e.key==='F12'){e.preventDefault();return false;}
 <div class="con">
 
 <!-- PAGE 1: RESUMEN -->
-<div class="page active" id="page-resumen">
+<div class="page" id="page-resumen">
   <div class="kg" id="kpi-grid">
     <div class="kc"><span class="ki">💰</span><div class="kl" id="ej-pim-lbl">Devengado 2025</div><div class="kv" id="ej-pim">S/ 294.61M</div><div class="ks">Presupuesto Institucional Modificado</div><div class="pb"><div class="pf" style="width:100%"></div></div></div>
     <div class="kc"><span class="ki">✅</span><div class="kl">Devengado 2025</div><div class="kv">S/ 340.5M</div><div class="ks">Gasto ejecutado acumulado</div><div class="pb"><div class="pf" style="width:55.6%"></div></div></div>
@@ -434,7 +434,7 @@ if(e.key==='F12'){e.preventDefault();return false;}
 </div>
 
 <!-- PAGE 1B: IMPACTO NACIONAL -->
-<div class="page" id="page-impacto">
+<div class="page active" id="page-impacto">
 <div id="impacto-root" style="min-height:70vh"></div>
 </div>
 
@@ -3317,13 +3317,11 @@ lb.animate([{opacity:0},{opacity:1}],{duration:300});
 };
 </script>
 <script>
-/* 13-07-2026: en móvil la página de inicio es "Impacto Nacional" (en escritorio sigue Resumen Ejecutivo) */
+/* 13-07-2026: la página de inicio es "Impacto Nacional" en móvil Y escritorio (renderiza el mapa al cargar) */
 (function(){
 try{
-if(window.matchMedia&&window.matchMedia('(max-width:900px)').matches){
 var b=document.querySelector('.nav .nb[onclick*="impacto"]');
 if(b&&typeof showPage==='function')showPage('impacto',b);
-}
 }catch(_){}
 })();
 </script>
