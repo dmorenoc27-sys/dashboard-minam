@@ -1710,7 +1710,7 @@ return '<div style="position:relative;margin-bottom:11px">'
 +'</div>'
 +'<div style="position:relative;height:27px;background:#EDF0F1;border-radius:6px;overflow:hidden">'
 +'<div style="position:absolute;top:0;left:0;height:100%;width:'+w+'%;background:linear-gradient(90deg,'+x.c+' 0%,'+x.c+'CC 100%);border-radius:6px;box-shadow:0 1px 4px '+x.c+'55"></div>'
-+'<span style="position:absolute;top:0;height:100%;display:flex;align-items:center;font-size:12px;font-weight:900;white-space:nowrap;'+(parseFloat(w)>52?'right:11px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.3)':'left:calc('+w+'% + 9px);color:#1A2327')+'">'+_fmtSol(val)+'</span>'
++'<span style="position:absolute;top:0;height:100%;display:flex;align-items:center;font-size:12px;font-weight:900;white-space:nowrap;'+(parseFloat(w)>52?'right:calc('+(100-parseFloat(w)).toFixed(1)+'% + 11px);color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.3)':'left:calc('+w+'% + 9px);color:#1A2327')+'">'+_fmtSol(val)+'</span>'
 +'</div>'
 +'</div>';
 }).join('')
