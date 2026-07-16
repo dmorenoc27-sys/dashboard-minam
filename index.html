@@ -1194,7 +1194,7 @@ const totalDev=_yrSum?(_dy.Dev||0):(agg.Dev||dProjs.reduce((s,p)=>s+p.fin.Dev,0)
 const totalCert=_yrSum?(_dy.Cert||0):(agg.Cert||totalDev);
 const avPct=totalCert>0?(totalDev/totalCert*100).toFixed(1):0;
 if(title) title.textContent=dept;
-if(sub) sub.textContent=`${dProjs.length} proyecto${dProjs.length!==1?'s':''} · S/ ${(totalDev/1e6).toFixed(1)}M devengado · ${avPct}% avance`;
+if(sub) sub.textContent=`${dProjs.length} proyecto${dProjs.length!==1?'s':''} · S/ ${totalDev.toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2})} devengado · ${avPct}% avance`;
 const compColor={Obra:'#105000',Gestion:'#2191F1',Expediente:'#F9A825',Supervision:'#6A1B9A',Adquisicion:'#00838F'};
 const compLabel={Obra:'Obras',Gestion:'Gestión',Expediente:'Exp. Técnico',Supervision:'Supervisión',Adquisicion:'Adquisición'};
 body.innerHTML=`
@@ -1202,11 +1202,11 @@ body.innerHTML=`
 <div class="dept-sumbar" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:#eee;border-bottom:2px solid #105000;margin-bottom:2px">
 <div style="background:#fff;padding:8px 12px;text-align:center">
 <div style="font-size:9px;color:#888;text-transform:uppercase;letter-spacing:.5px">Certificación</div>
-<div style="font-size:15px;font-weight:800;color:#2191F1">S/ ${(totalCert/1e6).toFixed(1)}M</div>
+<div style="font-size:12px;font-weight:800;color:#2191F1">S/ ${totalCert.toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2})}</div>
 </div>
 <div style="background:#fff;padding:8px 12px;text-align:center">
 <div style="font-size:9px;color:#888;text-transform:uppercase;letter-spacing:.5px">Devengado</div>
-<div style="font-size:15px;font-weight:800;color:#105000">S/ ${(totalDev/1e6).toFixed(1)}M</div>
+<div style="font-size:12px;font-weight:800;color:#105000">S/ ${totalDev.toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2})}</div>
 </div>
 <div style="background:#fff;padding:8px 12px;text-align:center">
 <div style="font-size:9px;color:#888;text-transform:uppercase;letter-spacing:.5px">% Avance</div>
@@ -1233,7 +1233,7 @@ const comps=['Obra','Gestion','Expediente','Supervision','Adquisicion']
 .filter(k=>f[k]>0)
 .map(k=>`<span style="display:inline-flex;align-items:center;gap:3px;font-size:9px;background:${compColor[k]}18;color:${compColor[k]};padding:2px 6px;border-radius:10px;font-weight:600">
 <span style="width:5px;height:5px;border-radius:50%;background:${compColor[k]};display:inline-block"></span>
-${compLabel[k]}: S/ ${(f[k]/1e6).toFixed(2)}M
+${compLabel[k]}: S/ ${f[k].toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2})}
 </span>`).join('');
 const _ti=p.Tipo_Inversion||'';const _tiBg={PROYECTO:'#ede7f6',IOARR:'#fff3e0',PROGRAMA:'#e0f7fa'}[_ti]||'#eeeeee';const _tiCo={PROYECTO:'#5e35b1',IOARR:'#e65100',PROGRAMA:'#00838f'}[_ti]||'#555555';const _tiTag=_ti?`<span style="font-size:9px;background:${_tiBg};color:${_tiCo};padding:2px 7px;border-radius:8px;font-weight:700;letter-spacing:.3px">${_ti}</span>`:'';
 return `<div data-proj-card data-proj-cui="${p.CUI}" onclick="showProjectDetail('${p.CUI}')" style="margin:6px 12px;border:1px solid #e8f5e9;border-radius:10px;overflow:hidden;background:#fff;box-shadow:0 1px 4px rgba(16,80,0,.06)">
@@ -1254,11 +1254,11 @@ ${_tiTag}
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:6px">
 <div style="text-align:center">
 <div style="font-size:8px;color:#999;text-transform:uppercase">Certificación</div>
-<div style="font-size:13px;font-weight:800;color:#2191F1">S/ ${pim.toFixed(1)}M</div>
+<div style="font-size:10.5px;font-weight:800;color:#2191F1">S/ ${(f.PIM||0).toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2})}</div>
 </div>
 <div style="text-align:center">
 <div style="font-size:8px;color:#999;text-transform:uppercase">Devengado</div>
-<div style="font-size:13px;font-weight:800;color:#105000">S/ ${dev.toFixed(1)}M</div>
+<div style="font-size:10.5px;font-weight:800;color:#105000">S/ ${(f.Dev||0).toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2})}</div>
 </div>
 <div style="text-align:center">
 <div style="font-size:8px;color:#999;text-transform:uppercase">% Avance</div>
@@ -1422,8 +1422,8 @@ const _dNm={'HUANUCO':'Huánuco','SAN MARTIN':'San Martín','MADRE DE DIOS':'Mad
 const _dLabel=_dNm[dept]||(dept.charAt(0)+dept.slice(1).toLowerCase());
 if(title) title.textContent=dept;
 if(back) back.style.display='inline-flex';
-if(deptSum) deptSum.innerHTML='<span style="color:#2191F1;font-weight:700">Certif. S/ '+(totalCert/1e6).toFixed(1)+'M</span>'
-+' &nbsp;·&nbsp; <span style="color:#105000;font-weight:700">Dev. S/ '+(totalDev/1e6).toFixed(1)+'M</span>'
+if(deptSum) deptSum.innerHTML='<span style="color:#2191F1;font-weight:700">Certif. S/ '+totalCert.toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2})+'</span>'
++' &nbsp;·&nbsp; <span style="color:#105000;font-weight:700">Dev. S/ '+totalDev.toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2})+'</span>'
 +' &nbsp;·&nbsp; <span style="color:'+avColor+';font-weight:700">'+avPct+'% avance</span>';
 if(sub) sub.textContent=_dLabel+' · '+dProjs.length+' proyecto'+(dProjs.length!==1?'s':'');
 const compColor={Obra:'#105000',Gestion:'#2191F1',Expediente:'#E65100',Supervision:'#6A1B9A',Adquisicion:'#00838F'};
@@ -1441,7 +1441,7 @@ const nombre=p.Proyecto.length>90?p.Proyecto.slice(0,90)+'…':p.Proyecto;
 const compRow=comps.map(k=>
 '<div style="flex:1;text-align:center;padding:7px 4px;border-right:1px solid #eef5ee">'
 +'<div style="font-size:9px;color:'+compColor[k]+';text-transform:uppercase;font-weight:700;letter-spacing:.3px;margin-bottom:2px">'+compLabel[k]+'</div>'
-+'<div style="font-size:12px;font-weight:800;color:'+compColor[k]+'">S/'+(f[k]/1e6).toFixed(1)+'M</div>'
++'<div style="font-size:10px;font-weight:800;color:'+compColor[k]+'">S/ '+f[k].toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2})+'</div>'
 +'</div>'
 ).join('');
 return '<div data-proj-card data-proj-cui="'+p.CUI+'" onclick="showProjectDetail(\''+p.CUI+'\')" style="border:1px solid #d4edd9;border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 2px 8px rgba(16,80,0,.08);cursor:pointer">'
@@ -1464,15 +1464,15 @@ return '<div data-proj-card data-proj-cui="'+p.CUI+'" onclick="showProjectDetail
 +'<div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid #eef7f0">'
 +'<div style="padding:7px 8px;text-align:center;border-right:1px solid #eef7f0">'
 +'<div style="font-size:9px;color:#aaa;text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px">Certificación</div>'
-+'<div style="font-size:13px;font-weight:900;color:#2191F1">S/'+pim.toFixed(1)+'M</div>'
++'<div style="font-size:10.5px;font-weight:900;color:#2191F1">S/ '+(f.PIM||0).toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2})+'</div>'
 +'</div>'
 +'<div style="padding:7px 8px;text-align:center;border-right:1px solid #eef7f0">'
 +'<div style="font-size:9px;color:#aaa;text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px">Devengado</div>'
-+'<div style="font-size:13px;font-weight:900;color:#105000">S/'+dev.toFixed(1)+'M</div>'
++'<div style="font-size:10.5px;font-weight:900;color:#105000">S/ '+(f.Dev||0).toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2})+'</div>'
 +'</div>'
 +'<div style="padding:7px 8px;text-align:center">'
 +'<div style="font-size:9px;color:#aaa;text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px">Girado</div>'
-+'<div style="font-size:13px;font-weight:900;color:#37474F">S/'+gir.toFixed(1)+'M</div>'
++'<div style="font-size:10.5px;font-weight:900;color:#37474F">S/ '+(f.Gir||0).toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2})+'</div>'
 +'</div></div>'
 +'<div style="padding:5px 12px;background:#f9fdf9">'
 +'<div style="display:flex;justify-content:space-between;margin-bottom:4px">'
@@ -1546,7 +1546,7 @@ return Number(v).toLocaleString('es-PE');
 }
 function _fmtSol(v){
 if(!v||v<=0)return'—';
-return 'S/ '+Number(v).toLocaleString('es-PE',{minimumFractionDigits:0,maximumFractionDigits:0});
+return 'S/ '+Number(v).toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2});
 }
 function closeProjectDetail(){
 const panel=document.getElementById('proj-detail-panel');
@@ -1721,7 +1721,7 @@ const isMultiUEI=MULTI_UEI_CUIS.has(cui);
 const ssiDevAcum=(typeof devAcumData!=='undefined'&&devAcumData[cui]!=null)?devAcumData[cui]:0;
 const excelDevTot=ACT_DEFS.reduce((s,x)=>s+(f[x.k]||0),0);
 const diffMU=ssiDevAcum-excelDevTot;
-const fmtSolFt=n=>n>=1e6?'S/ '+(n/1e6).toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2})+' M':'S/ '+Math.round(n).toLocaleString('es-PE');
+const fmtSolFt=n=>'S/ '+Number(n||0).toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2});
 const _muTot=isMultiUEI?ssiDevAcum:excelDevTot;
 const compFooterHTML=`
 <div style="margin-top:6px;padding:8px 11px;background:rgba(27,94,32,.09);border:2px solid #2E7D32;border-radius:10px">
@@ -1827,7 +1827,7 @@ background:linear-gradient(180deg,#F4FBF4 0%,#FAFFFE 100%)">
 <span style="font-size:12px;font-weight:800;color:#1E293B;text-transform:uppercase;letter-spacing:.4px;line-height:1.15">Presupuesto de Inversión</span>
 </div>
 ${(function(){
-const fmtS = n => n>0 ? 'S/ '+Number(n).toLocaleString('es-PE',{minimumFractionDigits:0,maximumFractionDigits:0}) : '—';
+const fmtS = n => n>0 ? 'S/ '+Number(n).toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2}) : '—';
 const fmtM = n => n>=1e6 ? 'S/ '+(n/1e6).toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2})+' M' : fmtS(n);
 const fsNum = n => n>=1e9?'11.5px':n>=1e8?'12.5px':n>=1e7?'13.5px':'15px';
 const bloqueIni = '<div style="background:#F8FFFE;border:1.5px solid #CFD8DC;border-radius:10px;padding:5px 9px;flex:1">'
