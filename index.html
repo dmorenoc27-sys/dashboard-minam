@@ -326,7 +326,7 @@ if(e.key==='F12'){e.preventDefault();return false;}
     .lang-btn.active{background:#105000;color:#fff;box-shadow:0 1px 4px rgba(16,80,0,.35)}
     .lang-btn.active:hover{background:#105000}
     @media(max-width:900px){.lang-btn .lbl{display:none}.lang-btn{padding:4px 8px}}
-    @media(max-width:900px){.hdr img{height:29px!important}.hdr{height:44px!important;padding:0 8px!important}}
+    @media(max-width:900px){.hdr img{height:26px!important}.hdr{height:42px!important;padding:0 6px!important}#lang-sw{padding:2px;gap:1px}.lang-btn{padding:3px 6px}.lang-btn .lang-flag svg{width:15px;height:11px}}
   </style>
 </nav>
 
@@ -2277,8 +2277,7 @@ window.addEventListener('resize',_lblM);
 function _ubicarLang(){
 var sw=document.getElementById('lang-sw');if(!sw)return;
 var hdr=document.querySelector('.hdr'),nav=document.querySelector('.nav');
-if(window.innerWidth>900){if(hdr&&sw.parentNode!==hdr)hdr.appendChild(sw);}
-else{if(nav&&sw.parentNode!==nav)nav.appendChild(sw);}
+if(hdr&&sw.parentNode!==hdr)hdr.appendChild(sw); /* 17-07-2026: siempre arriba a la derecha, tambien en movil */
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',_ubicarLang);else _ubicarLang();
 window.addEventListener('resize',_ubicarLang);
