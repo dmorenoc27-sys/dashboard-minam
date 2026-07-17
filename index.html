@@ -3161,6 +3161,19 @@ dato('Programado en el PMI',s.pmi==='SI'?'SÍ':'NO',null,s.pmi==='SI'?C.verdeMed
 if(fx&&fx.i&&fx.f){dato('Inicio de obra (SSI)',fx.i);dato('Fin previsto (SSI)',fx.f);}
 r++;
 
+/* Estado situacional (F12B) en la ficha descargable — 17-07-2026 */
+var situTx=(((window._datosActualizados||{}).situacionUpdate||{})[cui])||null;
+if(situTx){
+seccion('SITUACIÓN ACTUAL DE LA INVERSIÓN — FORMATO 12B');
+ws.mergeCells(r,2,r,7);
+var cS=celda(r,2);cS.value=String(situTx);
+cS.font={size:9.5,color:{argb:'FF1E293B'}};
+cS.alignment={wrapText:true,vertical:'top'};
+for(var _bc=2;_bc<=7;_bc++)bordes(celda(r,_bc));
+ws.getRow(r).height=Math.max(28,14*String(situTx).split('\n').reduce(function(a,l){return a+Math.ceil(((l||' ').length)/135);},0)+10);
+r+=2;
+}
+
 seccion('EJECUCIÓN FINANCIERA'+(fa&&fa.ano?' — AÑO '+fa.ano:''));
 if(fa&&fa.PIM!=null&&fa.PIM>0)dato('PIM '+fa.ano,fa.PIM,SOL,C.verdeMedio);
 if(fa&&fa.Cert)dato('Certificación '+fa.ano,fa.Cert,SOL,C.morado);
