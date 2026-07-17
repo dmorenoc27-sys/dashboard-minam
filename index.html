@@ -2390,6 +2390,7 @@ var D={
 'Ene':'1月','Feb':'2月','Mar':'3月','Abr':'4月','May':'5月','Jun':'6月','Jul':'7月','Ago':'8月','Sep':'9月','Oct':'10月','Nov':'11月','Dic':'12月'
 };
 var RX=[
+[/^CUI (\d+) · Formato 12B — Ejecución de la inversión$/,'CUI $1 · 様式12B — 投資の執行'],
 [/^Avance: ([\d\.]+)% de Certif\.$/,'進捗: 予算確保の$1%'],
 [/^Avance: ([\d\.]+)% del PIM$/,'進捗: PIMの$1%'],
 [/^UE 003 — Gestión Integral de la Calidad Ambiental · Ministerio del Ambiente · Corte: (.+)$/,'UE 003 — 環境品質総合管理(GICA) · ペルー環境省 · 基準日: $1'],
@@ -3863,4 +3864,19 @@ var t=card.getBoundingClientRect();
 var dx=(src.left+src.width/2)-(t.left+t.width/2),dy=(src.top+src.height/2)-(t.top+t.height/2);
 card.animate([
 {transform:'translate('+dx+'px,'+dy+'px) perspective(1200px) rotateY(-180deg) scale('+(src.width/t.width)+','+(src.height/t.height)+')',opacity:.35},
-{transform:'translate('+(dx*0.5)+'px,'+(dy*0.5)+'px) perspective(1200px) ro
+{transform:'translate('+(dx*0.5)+'px,'+(dy*0.5)+'px) perspective(1200px) rotateY(-105deg) scale('+((src.width/t.width+1)/2)+')',opacity:1,offset:.45},
+{transform:'translate(0px,0px) perspective(1200px) rotateY(0deg) scale(1)',opacity:1}
+],{duration:800,easing:'cubic-bezier(.25,.7,.3,1)'});
+lb.animate([{opacity:0},{opacity:1}],{duration:300});
+}
+};
+</script>
+<script>
+/* 13-07-2026: la página de inicio es "Impacto Nacional" en móvil Y escritorio (renderiza el mapa al cargar) */
+(function(){
+try{
+var b=document.querySelector('.nav .nb[onclick*="impacto"]');
+if(b&&typeof showPage==='function')showPage('impacto',b);
+}catch(_){}
+})();
+</script>
