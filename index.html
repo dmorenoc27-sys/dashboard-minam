@@ -326,6 +326,7 @@ if(e.key==='F12'){e.preventDefault();return false;}
     .lang-btn.active{background:#105000;color:#fff;box-shadow:0 1px 4px rgba(16,80,0,.35)}
     .lang-btn.active:hover{background:#105000}
     @media(max-width:900px){.lang-btn .lbl{display:none}.lang-btn{padding:4px 8px}}
+    @media(max-width:900px){.hdr img{height:29px!important}.hdr{height:44px!important;padding:0 8px!important}}
   </style>
 </nav>
 
@@ -728,7 +729,7 @@ filtered.forEach(p=>{if(p.Tipo_Proyecto)cnt[p.Tipo_Proyecto]=(cnt[p.Tipo_Proyect
 const labels=Object.keys(cnt).map(sT);
 const vals=Object.values(cnt);
 const pcts=vals.map(v=>total?Math.round(v/total*100):0);
-CH['cTipoD'].data.labels=labels;
+CH['cTipoD'].data.labels=(window._trTxt?labels.map(_trTxt):labels);
 CH['cTipoD'].data.datasets[0].data=vals;
 CH['cTipoD'].options.plugins.tooltip={callbacks:{label:c=>{
 const pct=total?Math.round(c.raw/total*100):0;
@@ -739,13 +740,13 @@ CH['cTipoD'].update();
 function updateConvChart(filtered,hasFilter){
 if(!CH['cConvB'])return;
 if(!hasFilter){
-CH['cConvB'].data.labels=cLabels;
+CH['cConvB'].data.labels=(window._trTxt?cLabels.map(_trTxt):cLabels);
 CH['cConvB'].data.datasets[0].data=cPim;
 CH['cConvB'].data.datasets[1].data=cDev;
 } else {
 const cnt={};
 filtered.forEach(p=>{if(p.Convenio)cnt[p.Convenio]=(cnt[p.Convenio]||0)+1;});
-CH['cConvB'].data.labels=Object.keys(cnt);
+CH['cConvB'].data.labels=(window._trTxt?Object.keys(cnt).map(_trTxt):Object.keys(cnt));
 CH['cConvB'].data.datasets[0].data=Object.keys(cnt).map(c=>convData[c]?convData[c].PIM/1e6:0);
 CH['cConvB'].data.datasets[1].data=Object.keys(cnt).map(c=>convData[c]?convData[c].Devengado/1e6:0);
 }
@@ -978,7 +979,7 @@ tCert=tMnums.map(function(m){var x=tMsrc[String(m)];return x?+(x.c).toFixed(2):0
 tDev=tMnums.map(function(m){var x=tMsrc[String(m)];return x?+(x.d).toFixed(2):0;});
 tGir=tMnums.map(function(m){var x=tMsrc[String(m)];return x?+(x.g).toFixed(2):0;});
 tTitle='Ejecución Mensual '+anio+(dept?' · '+dept:cv?' · '+cv:tp?' · '+sT(tp):'');
-if(CH['cTend']){CH['cTend'].data.labels=tLabs;CH['cTend'].data.datasets[0].data=tCert;CH['cTend'].data.datasets[1].data=tDev;CH['cTend'].data.datasets[2].data=tGir;CH['cTend'].update('none');}
+if(CH['cTend']){CH['cTend'].data.labels=(window._trTxt?tLabs.map(_trTxt):tLabs);CH['cTend'].data.datasets[0].data=tCert;CH['cTend'].data.datasets[1].data=tDev;CH['cTend'].data.datasets[2].data=tGir;CH['cTend'].update('none');}
 }else{
 tCert=pimExt.slice();tDev=devExt.slice();tGir=girExt.slice();tTitle='Tendencia Histórica de Ejecución 2013–2026';
 if(CH['cTend']){CH['cTend'].data.labels=yrs;CH['cTend'].data.datasets[0].data=tCert;CH['cTend'].data.datasets[1].data=tDev;CH['cTend'].data.datasets[2].data=tGir;CH['cTend'].update('none');}
@@ -2138,7 +2139,7 @@ var hdr=outer.children[0],drow=outer.children[1],brow=outer.children[2];
 if(hdr){
 hdr.style.position='sticky';hdr.style.top='40px';hdr.style.zIndex='9';hdr.style.padding='8px 12px 7px';
 /* 13-07-2026 móvil: fuera Regresar (ya existe la barra "Volver") — Descargar Ficha toma su esquina */
-var rgb=hdr.querySelector('button[title="Volver a la vista anterior"]');
+var rgb=hdr.querySelector('button[title="Volver a la vista anterior"],button[title="前の画面に戻る"],button[data-_es_title="Volver a la vista anterior"]');
 if(rgb)rgb.style.display='none';
 var xb2=document.getElementById('btn-xls-ficha');
 if(xb2){xb2.style.height='22px';xb2.style.fontSize='9.5px';xb2.style.padding='0 11px';xb2.style.bottom='';xb2.style.top='10px';xb2.style.right='10px';xb2.style.borderRadius='11px';}
@@ -2402,9 +2403,15 @@ var D={
 'Adquisición de bienes / terrenos':'資機材・用地の取得','Adquisicion de bienes / terrenos':'資機材・用地の取得',
 'NO PROGRAMADO EN EL PMI':'PMI計画未掲載','No programado en el PMI':'PMI計画未掲載',
 'Obra Infra.':'インフラ工事','Fotos':'写真','Ver ▸':'見る ▸','REC':'回復','REC/RRSS':'回復/廃棄物',
+'← Todos los departamentos':'← すべての県','Rec. Áreas':'劣化地域回復','Limp. Pública':'公共清掃','Infr. disposición final':'最終処分インフラ',
 'Ene':'1月','Feb':'2月','Mar':'3月','Abr':'4月','May':'5月','Jun':'6月','Jul':'7月','Ago':'8月','Sep':'9月','Oct':'10月','Nov':'11月','Dic':'12月'
 };
 var RX=[
+[/^Ejecución Mensual (\d{4}) · (.+)$/,'月次執行 $1 · $2'],
+[/^Devengado Mensual (\d{4}) · (.+)$/,'月次支出実績 $1 · $2'],
+[/^Ejecución Histórica · (.+)$/,'執行の推移 · $1'],
+[/^([\d\.,]+)% avance$/,'進捗率 $1%'],
+[/^(\d+) proyectos? · S\/ (.+) devengado · ([\d\.,]+)% avance$/,'プロジェクト$1件 · 支出実績 S/ $2 · 進捗率 $3%'],
 [/^([\d\.,]+)\s*N[ÚU]MERO DE CAPACITACIONES$/i,'研修 $1回'],
 [/^([\d\.,]+)\s*N[ÚU]MERO DE SOFTWARE$/i,'ソフトウェア $1件'],
 [/^([\d\.,]+)\s*N[ÚU]MERO DE MOBILIARIO$/i,'什器 $1点'],
