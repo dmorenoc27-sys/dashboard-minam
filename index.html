@@ -2244,6 +2244,26 @@ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded'
 else{_setup();}
 })();
 </script>
+<script>
+/* 17-07-2026: etiquetas cortas en móvil — pestañas y filtros (se restauran al agrandar) */
+(function(){
+var TAB={impacto:['🇵🇪 Impacto Nacional','🇵🇪 Impacto'],resumen:['📊 Detalle de Inversiones','📊 Detalle'],ejecucion:['📈 Ejecución Presupuestal','📈 Presupuesto']};
+var OPT={fConv:['Todos los convenios','Convenios'],'fAño':['Todos los años','Años'],fTipo:['Todos los tipos','Tipos']};
+function _lblM(){
+var m=window.innerWidth<=900?1:0;
+document.querySelectorAll('.nb').forEach(function(b){
+var oc=b.getAttribute('onclick')||'';
+Object.keys(TAB).forEach(function(k){if(oc.indexOf("'"+k+"'")>=0)b.textContent=TAB[k][m];});
+});
+Object.keys(OPT).forEach(function(id){
+var s=document.getElementById(id);
+if(s&&s.options.length&&s.options[0].value==='')s.options[0].textContent=OPT[id][m];
+});
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',_lblM);else _lblM();
+window.addEventListener('resize',_lblM);
+})();
+</script>
 <div id="ftr-legal" style="position:fixed;bottom:0;left:0;right:0;background:rgba(10,25,47,0.9);color:rgba(255,255,255,0.5);text-align:center;font-size:10px;padding:3px 8px;z-index:99999;pointer-events:none;user-select:none;"><span id="ftr-full">© 2024-2026 <b style="color:rgba(255,255,255,0.75);">ARKA PROYECTOS / Corporación DMC</b> &nbsp;·&nbsp; <span style="white-space:nowrap">📧 dmoreno.c@hotmail.com</span> &nbsp;·&nbsp; <span style="white-space:nowrap">📱 966 614 682</span> &nbsp;—&nbsp; Dashboard Ejecutivo UE003 MINAM &nbsp;—&nbsp; Todos los derechos reservados. Prohibida la reproducción sin autorización.</span><span id="ftr-mini" style="display:none">© ARKA PROYECTOS &nbsp;·&nbsp; <span onclick="var d=document.createElement('div');d.style.cssText='position:fixed;inset:0;z-index:999999;background:rgba(8,28,12,.55);display:flex;align-items:center;justify-content:center;padding:24px';d.innerHTML='&lt;div style=&quot;background:#fff;border-radius:14px;padding:18px 20px;max-width:420px;text-align:center;box-shadow:0 12px 44px rgba(0,0,0,.35)&quot;&gt;&lt;div style=&quot;font-size:14px;font-weight:900;color:#105000;margin-bottom:8px&quot;&gt;ARKA PROYECTOS / Corporación DMC&lt;/div&gt;&lt;div style=&quot;font-size:12px;color:#37474F;font-weight:600;line-height:1.9&quot;&gt;© 2024-2026 · Dashboard Ejecutivo UE003 MINAM&lt;br&gt;📧 dmoreno.c@hotmail.com&lt;br&gt;📱 966 614 682&lt;br&gt;&lt;span style=&quot;font-size:10px;color:#90A4AE&quot;&gt;Todos los derechos reservados. Prohibida la reproducción sin autorización.&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;';d.onclick=function(){d.remove();};document.body.appendChild(d);" style="pointer-events:auto;cursor:pointer;color:rgba(255,255,255,0.85);font-weight:800;text-decoration:underline">Contacto</span></span></div></body>
 </html>
 </body>
