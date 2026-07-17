@@ -2272,6 +2272,15 @@ if(s&&s.options.length&&s.options[0].value==='')s.options[0].textContent=OPT[id]
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',_lblM);else _lblM();
 window.addEventListener('resize',_lblM);
+/* 17-07-2026: en escritorio, el selector de idioma va en el encabezado blanco */
+function _ubicarLang(){
+var sw=document.getElementById('lang-sw');if(!sw)return;
+var hdr=document.querySelector('.hdr'),nav=document.querySelector('.nav');
+if(window.innerWidth>900){if(hdr&&sw.parentNode!==hdr)hdr.appendChild(sw);}
+else{if(nav&&sw.parentNode!==nav)nav.appendChild(sw);}
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',_ubicarLang);else _ubicarLang();
+window.addEventListener('resize',_ubicarLang);
 })();
 </script>
 <script>
