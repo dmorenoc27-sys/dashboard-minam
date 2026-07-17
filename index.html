@@ -2389,9 +2389,23 @@ var D={
 'Equipamiento':'機材','Vehiculos':'車両','Intangibles':'無形資産','Infraestructura':'インフラ','Componente / Acción':'コンポーネント / アクション','Tipo de factor de producción':'生産要素の種類','Unidad de producción / Meta':'生産単位 / 目標','Costo (S/)':'費用 (S/)',
 'FICHA DE INVERSIÓN PÚBLICA':'公共投資プロジェクト帳票','Tipo':'種別','Convenio':'協定','Departamento':'県','Estado':'状態',
 'LIMA':'リマ','PIURA':'ピウラ','LA LIBERTAD':'ラ・リベルタ','ICA':'イカ','AREQUIPA':'アレキパ','TACNA':'タクナ','ANCASH':'アンカシュ','HUANUCO':'ワヌコ','PASCO':'パスコ','APURIMAC':'アプリマック','CAJAMARCA':'カハマルカ','JUNIN':'フニン','HUANCAVELICA':'ワンカベリカ','AYACUCHO':'アヤクチョ','SAN MARTIN':'サン・マルティン','LORETO':'ロレト','UCAYALI':'ウカヤリ','AMAZONAS':'アマソナス','MADRE DE DIOS':'マドレ・デ・ディオス','LAMBAYEQUE':'ランバイェケ','TUMBES':'トゥンベス','PUNO':'プノ','CUSCO':'クスコ','MOQUEGUA':'モケグア','CALLAO':'カヤオ',
+'Vehículos de limpieza pública':'公共清掃車両','Hectáreas a recuperar':'回復予定ヘクタール','Beneficiarios directos':'直接受益者','Perfil viable':'承認時予算','Costo actualizado':'更新後コスト',
+'Adquisición de bienes / terrenos':'資機材・用地の取得','Adquisicion de bienes / terrenos':'資機材・用地の取得',
+'NO PROGRAMADO EN EL PMI':'PMI計画未掲載','No programado en el PMI':'PMI計画未掲載',
 'Ene':'1月','Feb':'2月','Mar':'3月','Abr':'4月','May':'5月','Jun':'6月','Jul':'7月','Ago':'8月','Sep':'9月','Oct':'10月','Nov':'11月','Dic':'12月'
 };
 var RX=[
+[/^([\d\.,]+)\s*N[ÚU]MERO DE CAPACITACIONES$/i,'研修 $1回'],
+[/^([\d\.,]+)\s*N[ÚU]MERO DE SOFTWARE$/i,'ソフトウェア $1件'],
+[/^([\d\.,]+)\s*N[ÚU]MERO DE MOBILIARIO$/i,'什器 $1点'],
+[/^([\d\.,]+)\s*N[ÚU]MERO DE PROCESOS$/i,'手続き $1件'],
+[/^([\d\.,]+)\s*N[ÚU]MERO DE PLANES$/i,'計画 $1件'],
+[/^([\d\.,]+)\s*N[ÚU]MERO DE TALLERES$/i,'研修会 $1回'],
+[/^N[ÚU]MERO DE EQUIPAMIENTO \/ ([\d\.,]+)$/i,'機材数 / $1'],
+[/^N[ÚU]MERO DE VEH[ÍI]CULOS \/ ([\d\.,]+)$/i,'車両数 / $1'],
+[/^N[ÚU]MERO DE ESTRUCTURAS F[ÍI]SICAS \/ ([\d\.,]+)$/i,'構造物数 / $1'],
+[/^N[ÚU]MERO DE ESPACIOS F[ÍI]SICOS \/ ([\d\.,]+)$/i,'物理スペース数 / $1'],
+[/^Generado: (.+?)\s+·\s+Fuente: SIAF \/ SSI-Invierte\.pe \/ Transparencia Económica — MEF\s+·\s+gica003\.pe$/,'生成日時: $1 ・ 出典: SIAF / SSI-Invierte.pe / 経済透明性ポータル(MEF) ・ gica003.pe'],
 [/^CUI (\d+) · Formato 12B — Ejecución de la inversión$/,'CUI $1 · 様式12B — 投資の執行'],
 [/^Avance: ([\d\.]+)% de Certif\.$/,'進捗: 予算確保の$1%'],
 [/^Avance: ([\d\.]+)% del PIM$/,'進捗: PIMの$1%'],
@@ -2417,14 +2431,14 @@ var RX=[
 [/^(\d+)\+ proy\.$/,'$1件以上'],[/^(\d+) proy\.$/,'$1件'],
 [/^🌿 Inversiones con hectáreas a recuperar · (\d{4}) \((\d+)\)$/i,'🌿 ヘクタール回復投資 · $1年 ($2件)'],
 [/^🚛 Vehículos de limpieza pública · (\d{4}) \((\d+) inversiones\)$/i,'🚛 公共清掃車両 · $1年 (投資$2件)'],
-[/^(\d+)\s*NÚMERO DE EQUIPAMIENTO$/i,'機材 $1台'],
-[/^(\d+)\s*NÚMERO DE VEHÍCULOS$/i,'車両 $1台'],
-[/^(\d+)\s*KIT DE EQUIPAMIENTO$/i,'機材キット $1式'],
-[/^(\d+)\s*N° DE DOCUMENTOS$/i,'文書 $1件'],
-[/^(\d+)\s*N° DE INFORMES$/i,'報告書 $1件'],
-[/^(\d+)\s*AMBIENTES$/i,'施設 $1室'],
-[/^(\d+)\s*ESPACIOS FISICOS$/i,'物理スペース $1'],
-[/^(\d+)\s*ESTRUCTURAS FISICAS$/i,'構造物 $1'],
+[/^([\d\.,]+)\s*N[ÚU]MERO DE EQUIPAMIENTO$/i,'機材 $1台'],[/^([\d\.,]+)\s*N[ÚU]MERO DE EQUIPOS$/i,'機器 $1台'],
+[/^([\d\.,]+)\s*N[ÚU]MERO DE VEH[ÍI]CULOS$/i,'車両 $1台'],
+[/^([\d\.,]+)\s*KIT DE EQUIPAMIENTO$/i,'機材キット $1式'],[/^([\d\.,]+)\s*KIT DE HERRAMIENTAS$/i,'工具キット $1式'],
+[/^([\d\.,]+)\s*N° DE DOCUMENTOS$/i,'文書 $1件'],
+[/^([\d\.,]+)\s*N° DE INFORMES$/i,'報告書 $1件'],
+[/^([\d\.,]+)\s*AMBIENTES$/i,'施設 $1室'],
+[/^([\d\.,]+)\s*ESPACIOS F[ÍI]SICOS$/i,'物理スペース $1'],
+[/^([\d\.,]+)\s*ESTRUCTURAS F[ÍI]SICAS$/i,'構造物 $1'],
 [/^(\d+)\s+acciones$/,'アクション$1件'],[/^(\d+)\s+accion(es)?$/i,'アクション$1件'],[/^1 acci[oó]n$/i,'アクション1件'],
 [/^ESTADO DE LA CARTERA — (\d[\d,\.]*) INVERSIONES$/,'ポートフォリオの状況 — 投資$1件'],
 [/^PIM (\d{4}) · (\d+)\s*INVERSIONES CON EJECUCIÓN ▾$/,'PIM $1 · 執行中の投資$2件 ▾'],
@@ -3758,7 +3772,7 @@ seccion('COMPONENTES Y ACCIONES PROGRAMADOS');
 var h1=celda(r,2);ws.mergeCells(r,2,r,3);h1.value=window._trTxt?_trTxt('Componente / Acción'):'Componente / Acción';
 var h2=celda(r,4);h2.value=window._trTxt?_trTxt('Tipo de factor de producción'):'Tipo de factor de producción';
 var h3=celda(r,5);h3.value=window._trTxt?_trTxt('Unidad de producción / Meta'):'Unidad de producción / Meta';
-var h4=celda(r,6);h4.value='Costo (S/)';
+var h4=celda(r,6);h4.value=window._trTxt?_trTxt('Costo (S/)'):'Costo (S/)';
 [h1,celda(r,3),h2,h3,h4].forEach(function(c){c.font={bold:true,size:9,color:{argb:C.blanco}};c.fill={type:'pattern',pattern:'solid',fgColor:{argb:C.verdeMedio}};c.alignment={vertical:'middle',horizontal:'center',wrapText:true};bordes(c);});
 h1.alignment={vertical:'middle',horizontal:'left',wrapText:true};
 ws.getRow(r).height=30;
@@ -3803,7 +3817,7 @@ r++;
 
 /* Pie con sello de fecha/hora */
 ws.mergeCells(r,2,r,7);
-t=celda(r,2);t.value='Generado: '+fGen+'  ·  Fuente: SIAF / SSI-Invierte.pe / Transparencia Económica — MEF  ·  gica003.pe';
+t=celda(r,2);t.value=(window._lang==='ja'?('生成日時: '+fGen+'  ・  出典: SIAF / SSI-Invierte.pe / 経済透明性ポータル(MEF)  ・  gica003.pe'):('Generado: '+fGen+'  ·  Fuente: SIAF / SSI-Invierte.pe / Transparencia Económica — MEF  ·  gica003.pe'));
 t.font={italic:true,size:8.5,color:{argb:C.blanco}};t.alignment={horizontal:'center'};r++; /* 12-07-2026: letra blanca (presente pero discreta) */
 ws.mergeCells(r,2,r,7);
 t=celda(r,2);t.value='© 2024-2026 ARKA PROYECTOS — Dashboard Ejecutivo UE003 MINAM';
