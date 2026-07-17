@@ -2386,6 +2386,7 @@ var D={
 'Norte/Oriente':'北部/東部','Sur/Oriente':'南部/東部','POR VALIDAR':'検証待ち','Multidepartamental':'複数県',
 'Certificación (M S/)':'予算確保 (百万S/)','Devengado (M S/)':'支出実績 (百万S/)',
 'proyectos con ejecución':'執行中のプロジェクト','Proyectos con ejecución':'執行中のプロジェクト',
+'Equipamiento':'機材','Vehiculos':'車両','Intangibles':'無形資産','Infraestructura':'インフラ','Componente / Acción':'コンポーネント / アクション','Tipo de factor de producción':'生産要素の種類','Unidad de producción / Meta':'生産単位 / 目標','Costo (S/)':'費用 (S/)',
 'Ene':'1月','Feb':'2月','Mar':'3月','Abr':'4月','May':'5月','Jun':'6月','Jul':'7月','Ago':'8月','Sep':'9月','Oct':'10月','Nov':'11月','Dic':'12月'
 };
 var RX=[
@@ -2435,6 +2436,7 @@ var RX=[
 function trStr(s){
 if(D.hasOwnProperty(s))return D[s];
 for(var i=0;i<RX.length;i++){var m=RX[i][0].exec(s);if(m)return s.replace(RX[i][0],RX[i][1]);}
+if(window._trSSI){var t=window._trSSI(s);if(t!=null)return t;}
 return null;
 }
 window._trTxt=function(s){if(window._lang!=='ja')return s;var t=trStr(String(s).trim());return t!=null?t:s;};
@@ -2521,6 +2523,266 @@ if(g==='ja')window._setLang('ja');
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',arranque);else arranque();
 })();
 </script>
+<script>
+/* ═══ TRADUCTOR SSI (componentes y acciones) — ARKA 17-07-2026 ═══
+   Traduce las denominaciones del expediente SSI al japonés con diccionario
+   exacto de componentes + glosario del dominio + regla de orden japonés.
+   Política: todo-o-nada por segmento (no deja frases a medias). */
+(function(){
+function N(s){return String(s).normalize('NFD').replace(/[̀-ͯ]/g,'').toUpperCase().replace(/\s+/g,' ').trim();}
+/* componentes (clave normalizada sin numeración) */
+var COMP={
+'ADECUADA CAPACIDAD DE RECOLECCION Y TRANSPORTE':'適切な収集・運搬能力',
+'ADECUADA CAPACIDAD OPERATIVA DE RECOLECCION Y TRANSPORTE':'適切な収集・運搬の運用能力',
+'ADECUADA CAPACIDAD PARA LA RECOLECCION Y TRANSPORTE':'適切な収集・運搬能力',
+'ADECUADA DISPOSICION DE LOS RESIDUOS SOLIDOS':'廃棄物の適切な処分',
+'ADECUADA DISPOSICION FINAL':'適切な最終処分',
+'ADECUADA DISPOSICION FINAL DE LOS RESIDUOS SOLIDOS':'廃棄物の適切な最終処分',
+'ADECUADA DISPOSICION FINAL DE RESIDUOS SOLIDOS':'廃棄物の適切な最終処分',
+'ADECUADA EDUCACION Y CULTURA AMBIENTAL DE LA POBLACION':'住民の適切な環境教育・文化',
+'ADECUADA GESTION ADMINISTRATIVA FINANCIERA Y TECNICA':'適切な行政・財務・技術管理',
+'ADECUADA GESTION ADMINISTRATIVA, FINANCIERA Y TECNICA':'適切な行政・財務・技術管理',
+'ADECUADA GESTION ADMINISTRATIVA. FINANCIERA Y TECNICA':'適切な行政・財務・技術管理',
+'ADECUADA GESTION TECNICA, ADMINISTRATIVA, ECONOMICA Y FINANCIERA':'適切な技術・行政・経済・財務管理',
+'ADECUADA RECOLECCION Y TRANSPORTE DE RESIDUOS SOLIDOS':'廃棄物の適切な収集・運搬',
+'ADECUADA VALORIZACION DE LOS RESIDUOS SOLIDOS':'廃棄物の適切な資源化',
+'ADECUADA VALORIZACION DE RESIDUOS INORGANICOS':'無機廃棄物の適切な資源化',
+'ADECUADA VALORIZACION DE RESIDUOS ORGANICOS':'有機廃棄物の適切な資源化',
+'ADECUADAS PRACTICAS DE LA POBLACION':'住民の適切な実践',
+'ADECUADAS PRACTICAS DE LA POBLACION EN EL MANEJO DE RESIDUOS SOLIDOS':'廃棄物管理における住民の適切な実践',
+'ADECUADO ALMACENAMIENTO':'適切な保管',
+'ADECUADO ALMACENAMIENTO DE RESIDUOS SOLIDOS Y BARRIDO DE CALLES':'廃棄物の適切な保管と道路清掃',
+'ADECUADO ALMACENAMIENTO EN VIAS URBANAS Y AREAS PUBLICAS':'市街地道路・公共空間での適切な保管',
+'ADECUADO ALMACENAMIENTO Y BARRIDO':'適切な保管・清掃',
+'ADECUADO ALMACENAMIENTO Y BARRIDO DE CALLES Y PLAZAS':'道路・広場の適切な保管・清掃',
+'ADECUADO ALMACENAMIENTO Y BARRIDO DE RESIDUOS SOLIDOS':'廃棄物の適切な保管・清掃',
+'ADECUADO ALMACENAMIENTO Y BARRIDO DE RRSS':'廃棄物の適切な保管・清掃',
+'ADECUADO APROVECHAMIENTO DE LOS RESIDUOS SOLIDOS':'廃棄物の適切な利活用',
+'ADECUADO BARRIDO':'適切な清掃',
+'ADECUADO BARRIDO DE VIAS URBANAS Y AREAS PUBLICAS':'市街地道路・公共空間の適切な清掃',
+'ADECUADO MANEJO DE RESIDUOS SOLIDOS EN EL AREA DEGRADADA':'劣化地域における廃棄物の適切な管理',
+'ADECUADO RECOLECCION Y TRANSPORTE':'適切な収集・運搬',
+'ADECUADO RECOLECCION Y TRANSPORTE DE RESIDUOS SOLIDOS':'廃棄物の適切な収集・運搬',
+'ADECUADO RECOLECCION Y TRANSPORTE DE RRSS':'廃棄物の適切な収集・運搬',
+'ADQUISICION DE ACTIVOS':'資産の調達',
+'APROPIADA DISPOSICION FINAL DE LOS RESIDUOS SOLIDOS MUNICIPALES':'一般廃棄物の適切な最終処分',
+'APROPIADA DISPOSICION FINAL DE RESIDUOS SOLIDOS':'廃棄物の適切な最終処分',
+'APROPIADA DISPOSICION FINAL DE RESIDUOS SOLIDOS MUNICIPALES':'一般廃棄物の適切な最終処分',
+'APROPIADA DISPOSICION FINAL DE RESISUOS SOLIDOS MUNICIPALES':'一般廃棄物の適切な最終処分',
+'APROPIADA DISPOSICION FINAL DE RRSS':'廃棄物の適切な最終処分',
+'PROPIADA DISPOSICION FINAL DE RESIDUOS SOLIDOS MUNICIPALES':'一般廃棄物の適切な最終処分',
+'APROPIADAS PRACTICAS DE LA POBLACION INVOLUCRADA':'関係住民の適切な実践',
+'APROPIADO RE APROVECHAMIENTO DE RESIDUOS SOLIDOS ORGANICOS E INORGANICOS':'有機・無機廃棄物の適切な再利用',
+'APROPIADO REAPROVECHAMIENTO DE RESIDUOS SOLIDOS':'廃棄物の適切な再利用',
+'APROPIADO REAPROVECHAMIENTO DE RESIDUOS SOLIDOS ORGANICOS E INORGANICO':'有機・無機廃棄物の適切な再利用',
+'APROPIADO REAPROVECHAMIENTO DE RESIDUOS SOLIDOS ORGANICOS E INORGANICOS':'有機・無機廃棄物の適切な再利用',
+'APROPIADO REAPROVECHAMIENTO DE RRSS ORGANICOS E INORGANICOS':'有機・無機廃棄物の適切な再利用',
+'APROPIADO REAPROVECHAMIENTO DE RRSS ORGANICOS Y INORGANICOS':'有機・無機廃棄物の適切な再利用',
+'APROPIADO REAPROVECHAMIENTO E RESIDUOS SOLIDOS ORGANICOS E INORGANICO':'有機・無機廃棄物の適切な再利用',
+'AREA OPERATIVA':'運用区域',
+'BUENAS PRACTICAS A LA POBLACION':'住民への良好実践の普及',
+'CAPACIDAD OPERATIVA DE RECOLECCION Y DE TRANSPORTE':'収集・運搬の運用能力',
+'CAPACITACION Y SENSIBILIZACION A LA POBLACION':'住民への研修・啓発',
+'COMPONENTE 01: ALMACENAMIENTO Y BARRIDO':'コンポーネント01: 保管・清掃',
+'COMPONENTE 02: CAPACITACION OPERATIVA RECOLECCION Y TRANSPORTE DE RESIDUOS SOLIDOS':'コンポーネント02: 廃棄物収集・運搬の運用研修',
+'COMPONENTE 03: SISTEMA DE TRATAMIENTO DE RESIDUOS SOLIDOS':'コンポーネント03: 廃棄物処理システム',
+'COMPONENTE 05: GESTION TECNICA, ADMINISTRATIVA Y TECNICA':'コンポーネント05: 技術・行政管理',
+'COMPONENTE 06: PLAN DE SENSIBILIZACION Y CAPACITACION PARA EDUCACION AMBIENTAL':'コンポーネント06: 環境教育の啓発・研修計画',
+'COMPONENTE 4: DISPOSICION FINAL DE RESIDUOS SOLIDOS':'コンポーネント4: 廃棄物の最終処分',
+'CONSTRUCCION DE OBRAS CIVILES':'土木工事の建設',
+'EDIFICACION':'建屋',
+'EFICIENTE CAPACIDAD OPERATIVA DE RECOLECCION DE RESIDUOS SOLIDOS':'効率的な廃棄物収集の運用能力',
+'EFICIENTE CAPACIDAD OPERATIVA DE TRANSFERENCIA DE RESIDUOS SOLIDOS AL LUGAR DE DISPOSICION FINAL':'最終処分場への効率的な廃棄物中継能力',
+'EFICIENTE GESTION MUNICIPAL EN EL AREA DEGRADADA':'劣化地域における効率的な自治体管理',
+'EFICIENTE GESTION TECNICA, ADMINISTRATIVA, ECONOMICA Y FINANCIERA DEL SERVICIO':'サービスの効率的な技術・行政・経済・財務管理',
+'EFICIENTE GESTION TECNICA, ADMINISTRATIVA, ECONOMICA Y FINANCIERA DEL SERVICIO DE LIMPIEZA PUBLICA':'公共清掃サービスの効率的な技術・行政・経済・財務管理',
+'EFICIENTE GESTION TECNICA, ADMINISTRATIVA, ECONOMICA, FINANCIERA DEL SERVICIO DE LIMPIEZA PUBLICA':'公共清掃サービスの効率的な技術・行政・経済・財務管理',
+'EFICIENTE GESTION TECNICA, LEGAL, ADMINISTRATIVA, ECONOMICA Y FINANCIERA DEL SERVICIO DE LIMPIEZA PUBLICA':'公共清掃サービスの効率的な技術・法務・行政・経済・財務管理',
+'EQUIPAMIENTO':'機材',
+'EQUIPAMIENTO PARA FASES DE OPERACIONES Y MEDIA TENSION':'運用段階・中電圧用機材',
+'ESTUDIO BASE':'基礎調査',
+'EVALUACION EX - POST':'事後評価','EVALUACION EX POST':'事後評価','EVALUACION EX-POST':'事後評価','EVALUACION EXPOST':'事後評価',
+'GESTION ADMINISTRATIVA Y FINANCIERA':'行政・財務管理',
+'GESTION DEL PROGRAMA':'プログラム管理',
+'INFRAESTRUCTURA':'インフラ',
+'INTANGIBLES':'無形資産',
+'MOBILIARIO Y EQUIPAMIENTO':'什器・機材',
+'OBRAS PROVISIONALES Y SEGURIDAD OCUPACIONAL':'仮設工事・労働安全',
+'OTRA INTERVENCION':'その他の介入',
+'PLAN DE MANEJO AMBIENTAL':'環境管理計画',
+'PLANES DE BARRIDO Y RECOLECCION, FORTALECIMIENTO DE CAPACIDADES DE LA URS Y PRACTICAS DIRIGIDAS A LA POBLACION':'清掃・収集計画、廃棄物課(URS)の能力強化、住民向け実践',
+'PLANES DE BARRIDO Y RECOLECCION, FORTALECIMIENTO DE CAPACIDADES DE LA URS Y PRACTICAS DIRIGUIDAS A LA POBLACION':'清掃・収集計画、廃棄物課(URS)の能力強化、住民向け実践',
+'PLANES DE BARRIDO Y RECOLECCION, FORTALECIMIENTO DE CAPCIDADES DE LA URS Y PRACTICAS DIRIGIDAS A LA POBLACION':'清掃・収集計画、廃棄物課(URS)の能力強化、住民向け実践',
+'ADECUADO ALMACENAMIENTO Y BARRIDO; ADECUADA RECOLECCION Y TRANSPORTE; VALORIZACION DE RESIDUOS SOLIDOS INORGANICOS Y ORGANICOS; DISPOSICION FINAL;GESTION ADMINISTIVA, TECNICA Y FINANCIERA; BUENAS PRACTICAS DE LA POBLACIONP':'適切な保管・清掃、収集・運搬、有機・無機廃棄物の資源化、最終処分、行政・技術・財務管理、住民の良好実践',
+'PROYECTOS DEL PROGRAMA':'プログラムのプロジェクト',
+'REAPROVECHAMIENTO MANUAL DE RESIDUOS SOLIDOS':'廃棄物の手作業による再利用',
+'SUFICIENTE CAPACIDAD OPERATIVA DE RECOLECCION Y TRANSPORTE':'十分な収集・運搬の運用能力',
+'VEHICULOS':'車両',
+'VIAS DE ACCESO INTERIOR':'場内アクセス道路',
+'GASTOS GENERALES POR COVID - 19':'COVID-19一般経費','INVENTARIO FISICO COVID - 19':'COVID-19実地棚卸',
+'SUPERVISION':'監理','AMBIENTE ADMINISTRATIVO':'管理棟',
+'ACCIONES PREOPERATIVAS PARA LA PUESTA EN MARCHA EL RELLENO SANITARIO':'衛生埋立地稼働前の準備アクション',
+'ACCIONES PREOPERATIVAS PARA LA PUESTA EN MARCHA DEL RELLENO SANITARIO':'衛生埋立地稼働前の準備アクション',
+'ACCIONES COMPLEMENTARIAS PARA LA PUESTA EN MARCHA DEL RELLENO SANITARIOS':'衛生埋立地稼働のための補完アクション',
+'ACCIONES COMPLEMENTARIAS PARA LA PUESTA EN MARCHA DEL RELLENO SANITARIO':'衛生埋立地稼働のための補完アクション',
+'IMPLEMENTACION DE ACCIONES COMPLEMENTARIAS PARA UNA ADECUADA OPERACION DEL RELLENO SANITARIO':'衛生埋立地の適切な運用のための補完アクション',
+'ADMINISTRACION DEL CONTRATO PARA LA EJECUCION DE LA OBRA':'工事実施のための契約管理',
+'CONTRATACION DEL SERVICIO DE CONSULTORIA PARA ELABORAR PLANES, FORTALECIMIENTO DE CAPACIDADES Y PRACTICAS DIRIGIDAS A LA POBLACION':'計画策定・能力強化・住民向け実践のためのコンサルティング契約',
+'CONTRATACION DEL SERVICIO DE CONSULTORIA PARA ELEBORAR PLANES, FORTALECIMIENTO DE CAPACIDADES Y PRACTICAS DIRIGIDAS A LA POBLACION':'計画策定・能力強化・住民向け実践のためのコンサルティング契約'
+};
+/* objetos del dominio (clave normalizada) */
+var OBJ={
+'TALLER':'研修','TALLERES':'研修','EQUIPO DE ALMACENAMIENTO':'保管用機材','EQUIPO':'機材','EQUIPOS':'機材','EQUIPAMIENTO':'機材','QUIPAMIENDO':'機材',
+'VEHICULO':'車両','VEHICULOS':'車両','CAMION COMPACTADOR':'圧縮式ごみ収集車','CAMIONES COMPACTADORES Y CAMIONES BARANDAS':'圧縮車・平ボディ車',
+'CAMIONES COMPACTADORAS Y CAMIONES BARANDA PARA RECOLECCION DE RESIDUOS SOLIDOS':'廃棄物収集用の圧縮車・平ボディ車',
+'CAMIONES COMPACTADORES Y CAMIONES BARANDA PARA RECOLECCION DE RESIDUOS SOLIDOS':'廃棄物収集用の圧縮車・平ボディ車',
+'CAMION BARANDA':'平ボディトラック','CAMION CISTERNA':'給水車','CAMION MADRINA':'車両運搬車','CAMION PLATAFORMA':'プラットフォームトラック','CAMION AMPLIROLL':'アームロール車','CAMION':'トラック',
+'CAMIONETA':'ピックアップトラック','CAMIONETA 4 X 4':'4WDピックアップ','CAMIONETA SUV (UGP)':'SUV車(UGP)','CARGADOR FRONTAL':'ホイールローダー',
+'MINICARGADOR':'ミニローダー','MINI CARGADOR':'ミニローダー','MINICARGADOR SOBRE ORUGAS':'クローラー式ミニローダー','TRACTOR DE ORUGAS':'ブルドーザー',
+'VOLQUETE':'ダンプトラック','TRIMOVIL':'三輪運搬車','TRIMOVILES':'三輪運搬車','TRIMOVILES PARA RECOLECCION DE RESIDUOS SOLIDOS':'廃棄物収集用三輪運搬車',
+'MOTOCICLETA':'バイク','MOTO LINEAL':'バイク','EXCAVADORA HIDRAULICA':'油圧ショベル','RODILLO LISO VIBRATORIO':'振動ローラー','GENERADOR ELECTRICO':'発電機',
+'COMPUTADORA (LABORATORIO)':'パソコン(実験室)','COMPUTADORAS':'パソコン','COMPUTADORA':'パソコン','COMPUTADORAS PARA LA UNIDAD DE RESIDUOS SOLIDOS':'廃棄物課用パソコン',
+'TELEVISOR':'テレビ','PAPELERA':'ゴミ箱','PAPELERAS':'ゴミ箱','CONTENEDOR':'コンテナ','CONTENEDORES':'コンテナ','COCHE DE BARRIDO':'清掃カート','COCHES DE BARRIDO':'清掃カート',
+'HERRAMIENTA':'工具','HERRAMIENTAS':'工具','MOBILIARIO':'什器','MOBILIARIO DE OFICINA':'事務用什器','MOBILIARIO DE AMBIENTES COMPLEMENTARIOS':'付帯施設用什器',
+'MOBILIARIO DE CENTRO Y/O CAMPO EXPERIMENTAL':'実験センター・実験圃場用什器','TERRENO':'用地','TERRENOS':'用地',
+'RELLENO SANITARIO':'衛生埋立地','RELLENO SANITARIOS':'衛生埋立地','EL RELLENO SANITARIO':'衛生埋立地',
+'CELDAS PARA RESIDUOS':'廃棄物埋立セル','PLANTA DE VALORIZACION':'資源化プラント','PLANTA DE TRANSFERENCIA':'中継プラント',
+'PLANTA DE REAPROVECHAMIENTO':'再利用プラント','LA PLANTA DE REAPROVECHAMIENTO':'再利用プラント','ESTACION DE TRANSFERENCIA':'中継施設','CENTRO DE ACOPIO':'集積センター',
+'CERCO PERIMETRICO':'外周フェンス','CHIMENEA':'ガス抜き煙突','CUNETA':'側溝','DEPOSITO':'倉庫','EDIFICACION':'建屋','ESTRUCTURA DE PROTECCION':'保護構造物',
+'INFRAESTRUCTURA DE ALMACENAMIENTO':'保管インフラ','INFRAESTRUCTURA DE REAPROVECHAMIENTO':'再利用インフラ','INFRAESTRUCTURA PARA DISPOSICION FINAL DE RRSS':'廃棄物最終処分インフラ',
+'MURO DE CONTENCION':'擁壁','OBRAS EXTERIORES':'外構工事','PAVIMENTO':'舗装','PLATAFORMA':'プラットフォーム','POZA DE ALMACENAMIENTO':'貯留池','POZO DE MONITOREO':'モニタリング井戸',
+'PTAR':'排水処理場(PTAR)','SISTEMA DE DRENAJE':'排水システム','SISTEMA DE MANEJO DE GASES':'ガス管理システム','SISTEMA DE MANEJO DE LIXIVIADOS':'浸出水管理システム',
+'SISTEMA':'システム','SISTEMA DE INFORMACION':'情報システム','SISTEMA DE FAJA TRANSPORTADORA':'ベルトコンベアシステム','SISTEMA INTEGRADO DE GESTION DE CALIDAD':'統合品質管理システム',
+'SISTEMA DE IZADORA (CONTENEDORES)':'コンテナ昇降システム','VIAS DE ACCESO':'アクセス道路','VIAS DE ACCESO EXTERIOR':'場外アクセス道路',
+'AMBIENTE ADMINISTRATIVO':'管理棟','AMBIENTE COMPLEMENTARIO':'付帯施設','AMBIENTES COMPLEMENTARIOS':'付帯施設','AMBIENTE U OFICINA DE SEDE ADMINISTRATIVA':'管理事務所',
+'AMBIENTE DE GESTION ADMINISTRATIVA':'行政管理室','AMBIENTE DE MANEJO DE RESIDUOS SOLIDOS Y SSHH':'廃棄物管理室・衛生設備',
+'EQUIPOS COMPLEMENTARIOS':'補助機材','EQUIPOS DE PROTECCION DE PERSONAL':'個人保護具(PPE)','EQUIPOS DE PROTECCION DE PERSONAL (EPP)':'個人保護具(PPE)',
+'EQUIPOS DE PROTECCION PERSONAL':'個人保護具(PPE)','EQUIPOS DE PROTECTOS DE PERSONAL':'個人保護具(PPE)','EPP':'個人保護具(PPE)',
+'EQUIPO DE SEGURIDAD PARA EL SERVICIO DE CONTROL':'管理業務用保安機材','EQUIPO TACTICO DE SEGURIDAD PERSONAL':'個人保安装備',
+'EQUIPO DE CENTRO DE CONTROL Y MONITOREO':'管制・モニタリングセンター機材','EQUIPO DE AMBIENTE COMPLEMENTARIO':'付帯施設用機材',
+'EQUIPAMIENTO DE AMBIENTES COMPLEMENTARIOS':'付帯施設の機材','EQUIPAMIENTO DE AMBIENTES DE BIENESTAR Y SERVICIOS GENERALES':'福利厚生・共用施設の機材',
+'EQUIPAMIENTO DE INGENIERIA':'エンジニアリング機材','EQUIPAMIENTO (PAPELERAS, COCHES DE BARRIDO, CONTENEDORES, ETC.)':'機材(ゴミ箱・清掃カート・コンテナ等)',
+'EQUIPAMIENTO (PAPELERAS, COCHES DE BARRIDO, CONTENEDORES, ETC)':'機材(ゴミ箱・清掃カート・コンテナ等)','EQUIPAMIENTO (PAPELERAS, COCHES DE BARRIDO, CONTENEDORES':'機材(ゴミ箱・清掃カート・コンテナ等)',
+'QUIPAMIENTO (PAPELERAS, COCHES DE BARRIDO, CONTENEDORES, ETC)':'機材(ゴミ箱・清掃カート・コンテナ等)',
+'DOCUMENTO DE GESTION':'管理文書','EXPEDIENTE TECNICO':'技術文書(実施設計)','LA EVALUACION EX-POST':'事後評価',
+'CAPACIDAD ORGANIZACIONAL':'組織能力','CAPACIDAD HUMANA':'人材能力','RECURSO HUMANO':'人材','INFORMACION':'広報・情報','CONOCIMIENTO':'知識','ORGANIZACION':'組織',
+'PANEL INFORMATIVO':'案内パネル','COBERTURA':'覆土','CONEXIONES DOMICILIARIAS':'宅内接続','AREA DE CONTROL DE CALIDAD':'品質管理区域',
+'KIT AGENTE COMUNITARIO':'コミュニティ活動キット','MAQUINARIA Y VEHICULOS':'機械・車両','MAQUINARIAS Y EQUIPOS':'機械・機材',
+'BASCULAS DE PISO O DE PLATAFORMA':'台貫(トラックスケール)','COMPACTADOR':'コンパクター','COMPACTADOR DE RESIDUOS SOLIDOS EN RELLENO SANITARIO':'埋立地用廃棄物コンパクター',
+'COMPACTADOR DE RESIDUOS SOLIDOS EN EL RELLENO SANITARIO':'埋立地用廃棄物コンパクター','COMPACTADORA DE RESIDUOS':'廃棄物圧縮機','TRITURADOR DE RESIDUOS':'廃棄物破砕機',
+'VEHICULO PARA ALZA DE CONTENEDORES':'コンテナ昇降車','VEHICULO PARA SUPERVISION':'監理用車両','ACTIVOS':'資産',
+'PLAN DE BARRIDO Y RECOLECCION':'清掃・収集計画','PLAN DE BARRIDO Y RECOELCCION':'清掃・収集計画','PLAN DE GESTION DE LA URS':'廃棄物課(URS)管理計画',
+'PLAN DE GESTION DE LA UNIDAD DE RESIDUOS SOLIDOS':'廃棄物課(URS)管理計画','PLAN DE BUENAS PRACTICAS A LA POBLACION':'住民良好実践計画',
+'UNIDAD DE RESIDUOS SOLIDOS':'廃棄物課','LA UNIDAD DE RESIDUOS SOLIDOS':'廃棄物課','GESTION DE LA UNIDAD DE RESIDUOS SOLIDOS':'廃棄物課の管理','GESTION DE UNIDAD DE RESIDUOS SOLIDOS':'廃棄物課の管理',
+'ALCOHOLIMETROS':'アルコール検知器','EQUIPOS DE COMPUTO':'コンピューター機器','MINIBUS':'ミニバス','SEDE ADMINISTRATIVA':'管理拠点','SUBDRENAJE':'暗渠排水','VIGILANCIA':'警備',
+'RECOLECCION DE RESIDUOS SOLIDOS':'廃棄物収集','RESIDUOS SOLIDOS':'廃棄物','LABORATORIO':'実験室',
+'INFRAESTRUCTURA':'インフラ','INTANGIBLES':'無形資産','TERRENOS':'用地','EQUIPAMIENDO':'機材','ALMACEN':'倉庫',
+'SERVICIOS HIGIENICOS':'衛生設備(トイレ)','PLANTA TMB':'TMB(機械生物処理)プラント','CARTELES EDUCATIVOS':'教育用掲示物',
+'DIFUSION EN MEDIOS LOCALES':'地元メディアでの広報','SALDOS DE OBRA':'残工事','POZA DE LIXIVIADOS':'浸出水池'
+};
+var VERB={'ADQUISICION':'調達','ADQUISISCION':'調達','ADQUISICIOON':'調達','ADUISICION':'調達','ADQUISICON':'調達',
+'CONSTRUCCION':'建設','IMPLEMENTACION':'整備','CAPACITACION':'研修','ELABORACION':'作成','INSTALACION':'設置',
+'CONTRATACION':'契約','REPARACION':'補修','MEJORAMIENTO':'改善','AMPLIACION':'拡張','REHABILITACION':'改修'};
+var cache={};
+function trObj(o){
+o=o.replace(/\s+/g,' ').trim();
+if(OBJ.hasOwnProperty(o))return OBJ[o];
+/* sufijos de etapa / inclusiones */
+var m=o.match(/^(.+?)\s+(1ERA ETAPA|PRIMERA ETAPA|1 ETAPA)\s*(\(INCLUYE EQUIPAMIENTO\))?$/);
+if(m){var b=trObj(m[1]);if(b!=null)return b+'(第1期'+(m[3]?'・機材を含む':'')+')';}
+m=o.match(/^(.+?)\s*\(INCLUYE EQUIPAMIENTO\)$/);
+if(m){var b2=trObj(m[1]);if(b2!=null)return b2+'(機材を含む)';}
+/* "X PARA (EL/LA/...) Y" → Y用X */
+m=o.match(/^(.+?) PARA (?:EL |LA |LOS |LAS )?(.+)$/);
+if(m){var x=trObj(m[1]),y=trObj(m[2]);if(x!=null&&y!=null)return y+'用'+x;}
+/* "X EN (EL) Y" → Y のX */
+m=o.match(/^(.+?) EN (?:EL |LA )?(.+)$/);
+if(m){var x2=trObj(m[1]),y2=trObj(m[2]);if(x2!=null&&y2!=null)return y2+'の'+x2;}
+/* "X Y Z" (conjunción) */
+m=o.match(/^(.+?) Y (.+)$/);
+if(m){var a=trObj(m[1]),b3=trObj(m[2]);if(a!=null&&b3!=null)return a+'・'+b3;}
+/* "DEL/DE LA X" */
+m=o.match(/^(?:DEL?|DE LA|DE LOS|DE LAS)\s+(.+)$/);
+if(m)return trObj(m[1]);
+return null;
+}
+window._trSSI=function(s0){
+var s=String(s0).replace(/\s+/g,' ').trim();
+if(!s)return null;
+if(cache.hasOwnProperty(s))return cache[s];
+var out=(function(){
+/* numeración inicial se conserva */
+var pref='';
+var mnum=s.match(/^(\d+[\d\.]*[\.\-]?\s*)(.*)$/);
+var cuerpo=s;
+if(mnum&&mnum[2]){pref=mnum[1];cuerpo=mnum[2];}
+/* separar HEAD : detalle */
+var todo=trParte(cuerpo);
+if(todo!=null)return pref+todo;
+var head=cuerpo, det=null;
+var ci=cuerpo.indexOf(':');
+if(ci>=0){head=cuerpo.slice(0,ci).trim();det=cuerpo.slice(ci+1).trim();}
+if(head===''&&det){var dsolo=trParte(det);return dsolo!=null?pref+'：'+dsolo:null;}
+var hj=trParte(head);
+if(hj==null)return null;
+if(det==null||det==='')return pref+hj+(ci>=0?' :':'');
+var dj=trParte(det);
+return pref+hj+'：'+(dj!=null?dj:det);
+})();
+cache[s]=out;
+return out;
+};
+function trParte(p){
+var n=N(p).replace(/^\d+[\d\.]*[\.\-\s]*/,'').replace(/[\s\.:]+$/,'').trim();
+if(!n)return null;
+if(COMP.hasOwnProperty(n))return COMP[n];
+if(OBJ.hasOwnProperty(n))return OBJ[n];
+/* sufijo de factor "(VEHICULOS)" etc. */
+var mf=n.match(/^(.+?)\s*\((VEHICULOS|EQUIPAMIENTO|INFRAESTRUCTURA|INTANGIBLES)\)$/);
+if(mf){var base=trParte(mf[1]);if(base!=null)return base+'('+({VEHICULOS:'車両',EQUIPAMIENTO:'機材',INFRAESTRUCTURA:'インフラ',INTANGIBLES:'無形資産'})[mf[2]]+')';}
+/* modalidades de administración (datos con glitch numérico) */
+var ma=n.match(/^(.*?)\(ADMINISTRACION (DIRECTA|INDIRECTA - POR CONTRATA)\)$/);
+if(ma)return (ma[1]?ma[1].trim()+' ':'')+'('+(ma[2]==='DIRECTA'?'直営':'間接実施(請負)')+')';
+/* OTRAS ACCIONES DE X */
+var mo=n.match(/^OTRAS ACCIONES DE (.+)$/);
+if(mo){var ox=trObj(mo[1]);if(ox!=null)return 'その他の'+ox+'整備';}
+/* ELABORACION E IMPLEMENTACION DE(L) X */
+var me=n.match(/^ELABORACION E IMPLEMENTACION DE(?:L|E)? ?(.+)$/);
+if(me){var ex=trObj(me[1]);if(ex!=null)return ex+'の作成・実施';}
+/* VERBO DE(L) X */
+var mv=n.match(/^([A-Z]+) DE(?:L|E)? ?(.+)$/);
+if(mv&&VERB.hasOwnProperty(mv[1])){var vx=trObj(mv[2]);if(vx!=null)return vx+'の'+VERB[mv[1]];}
+/* nombres oficiales largos: prefijo JA + resto ES */
+var ml=n.match(/^RECUPERACION DE(?:L)? AREAS? DEGRADA(?:DA|DAS)?(?: POR RESIDUOS SOLIDOS)?\s*(.*)$/);
+if(ml)return '廃棄物による劣化地域の回復'+(ml[1]?' — '+ml[1]:'');
+ml=n.match(/^MEJORAMIENTO Y AMPLIACION DE LA GESTION INTEGRAL DE (?:LOS )?RESIDUOS SOLIDOS(?: MUNICIPALES)?\s*(.*)$/);
+if(ml)return '廃棄物総合管理(GIRS)の改善・拡張'+(ml[1]?' — '+ml[1]:'');
+ml=n.match(/^AMPLIACION Y MEJORAMIENTO DE LA GESTION INTEGRAL DE (?:LOS )?RESIDUOS SOLIDOS(?: MUNICIPALES)?\s*(.*)$/);
+if(ml)return '廃棄物総合管理(GIRS)の拡張・改善'+(ml[1]?' — '+ml[1]:'');
+ml=n.match(/^MEJORAMIENTO DE LA GESTION INTEGRAL DE (?:LOS )?RESIDUOS SOLIDOS(?: MUNICIPALES| URBANOS)?\s*(.*)$/);
+if(ml)return '廃棄物総合管理(GIRS)の改善'+(ml[1]?' — '+ml[1]:'');
+ml=n.match(/^MEJORAMIENTO Y AMPLIACION DEL SERVICIO DE LIMPIEZA PUBLICA\s*(.*)$/);
+if(ml)return '公共清掃サービスの改善・拡張'+(ml[1]?' — '+ml[1]:'');
+ml=n.match(/^MEJORAMIENTO DEL SERVICIO DE LIMPIEZA PUBLICA\s*(.*)$/);
+if(ml)return '公共清掃サービスの改善'+(ml[1]?' — '+ml[1]:'');
+ml=n.match(/^CONTRATACION DEL SERVICIO DE CONSULTORIA PARA EL[AE]BORAR PLANES.*$/);
+if(ml)return '計画策定・能力強化・住民向け実践のためのコンサルティング契約';
+ml=n.match(/^DISENO PLAN DE (?:RE)?INSERCION Y FORMALIZACION DE RECICLADORES.*$/);
+if(ml)return 'リサイクル業者の再編入・正規化および発生源分別収集計画の設計';
+ml=n.match(/^INSTALACION DE SUBDRENES.*$/);
+if(ml)return '浸出水池の暗渠排水設置・池底および法尻の再整形';
+ml=n.match(/^OTROS (\d+) DOCUMENTOS$/);
+if(ml)return '他'+ml[1]+'件の文書';
+ml=n.match(/^OTROS (\d+) INFORMES$/);
+if(ml)return '他'+ml[1]+'件の報告書';
+/* objeto directo (frases sueltas del glosario compuesto) */
+var od=trObj(n);
+if(od!=null)return od;
+return null;
+}
+})();
+</script>
+
 
 <div id="ftr-legal" style="position:fixed;bottom:0;left:0;right:0;background:rgba(10,25,47,0.9);color:rgba(255,255,255,0.5);text-align:center;font-size:10px;padding:3px 8px;z-index:99999;pointer-events:none;user-select:none;"><span id="ftr-full">© 2024-2026 <b style="color:rgba(255,255,255,0.75);">ARKA PROYECTOS / Corporación DMC</b> &nbsp;·&nbsp; <span style="white-space:nowrap">📧 dmoreno.c@hotmail.com</span> &nbsp;·&nbsp; <span style="white-space:nowrap">📱 966 614 682</span> &nbsp;—&nbsp; Dashboard Ejecutivo UE003 MINAM &nbsp;—&nbsp; Todos los derechos reservados. Prohibida la reproducción sin autorización.</span><span id="ftr-mini" style="display:none">© ARKA PROYECTOS &nbsp;·&nbsp; <span onclick="var d=document.createElement('div');d.style.cssText='position:fixed;inset:0;z-index:999999;background:rgba(8,28,12,.55);display:flex;align-items:center;justify-content:center;padding:24px';d.innerHTML='&lt;div style=&quot;background:#fff;border-radius:14px;padding:18px 20px;max-width:420px;text-align:center;box-shadow:0 12px 44px rgba(0,0,0,.35)&quot;&gt;&lt;div style=&quot;font-size:14px;font-weight:900;color:#105000;margin-bottom:8px&quot;&gt;ARKA PROYECTOS / Corporación DMC&lt;/div&gt;&lt;div style=&quot;font-size:12px;color:#37474F;font-weight:600;line-height:1.9&quot;&gt;© 2024-2026 · Dashboard Ejecutivo UE003 MINAM&lt;br&gt;📧 dmoreno.c@hotmail.com&lt;br&gt;📱 966 614 682&lt;br&gt;&lt;span style=&quot;font-size:10px;color:#90A4AE&quot;&gt;Todos los derechos reservados. Prohibida la reproducción sin autorización.&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;';d.onclick=function(){d.remove();};document.body.appendChild(d);" style="pointer-events:auto;cursor:pointer;color:rgba(255,255,255,0.85);font-weight:800;text-decoration:underline">Contacto</span></span></div></body>
 </html>
@@ -3413,13 +3675,13 @@ r+=2;
 
 var seccion=function(titulo){
 ws.mergeCells(r,2,r,7);
-var c=celda(r,2);c.value=titulo;
+var c=celda(r,2);c.value=window._trTxt?_trTxt(titulo):titulo;
 c.font={bold:true,size:10,color:{argb:C.verde}};
 c.fill={type:'pattern',pattern:'solid',fgColor:{argb:C.verdeSuave}};
 c.alignment={vertical:'middle'};ws.getRow(r).height=17;r++;
 };
 var dato=function(lbl,val,fmt,color){
-var c1=celda(r,2);ws.mergeCells(r,2,r,3);c1.value=lbl;c1.font={size:9.5,color:{argb:C.gris}};bordes(c1);bordes(celda(r,3));
+var c1=celda(r,2);ws.mergeCells(r,2,r,3);c1.value=window._trTxt?_trTxt(lbl):lbl;c1.font={size:9.5,color:{argb:C.gris}};bordes(c1);bordes(celda(r,3));
 var c2=celda(r,4);ws.mergeCells(r,4,r,5);
 c2.value=val;c2.font={bold:true,size:10,color:{argb:color||'FF1E293B'}};
 if(fmt)c2.numFmt=fmt;c2.alignment={horizontal:'right'};bordes(c2);bordes(celda(r,5));
@@ -3481,9 +3743,9 @@ r++;
 if(comps&&comps.length){
 seccion('COMPONENTES Y ACCIONES PROGRAMADOS');
 /* Cabecera: N°+Acción | Tipo de factor | Unidad/Meta | Costo */
-var h1=celda(r,2);ws.mergeCells(r,2,r,3);h1.value='Componente / Acción';
-var h2=celda(r,4);h2.value='Tipo de factor de producción';
-var h3=celda(r,5);h3.value='Unidad de producción / Meta';
+var h1=celda(r,2);ws.mergeCells(r,2,r,3);h1.value=window._trTxt?_trTxt('Componente / Acción'):'Componente / Acción';
+var h2=celda(r,4);h2.value=window._trTxt?_trTxt('Tipo de factor de producción'):'Tipo de factor de producción';
+var h3=celda(r,5);h3.value=window._trTxt?_trTxt('Unidad de producción / Meta'):'Unidad de producción / Meta';
 var h4=celda(r,6);h4.value='Costo (S/)';
 [h1,celda(r,3),h2,h3,h4].forEach(function(c){c.font={bold:true,size:9,color:{argb:C.blanco}};c.fill={type:'pattern',pattern:'solid',fgColor:{argb:C.verdeMedio}};c.alignment={vertical:'middle',horizontal:'center',wrapText:true};bordes(c);});
 h1.alignment={vertical:'middle',horizontal:'left',wrapText:true};
@@ -3499,7 +3761,7 @@ var capital1=function(s){s=String(s==null?'':s);return s?s.charAt(0).toUpperCase
 var nComp=0;
 comps.forEach(function(comp){
 nComp++;
-var cc=celda(r,2);ws.mergeCells(r,2,r,5);cc.value=nComp+'. '+comp.n;
+var cc=celda(r,2);ws.mergeCells(r,2,r,5);cc.value=nComp+'. '+(window._trTxt?_trTxt(comp.n):comp.n);
 cc.font={bold:true,size:9,color:{argb:C.verde}};cc.alignment={wrapText:true,vertical:'middle'};
 [2,3,4,5].forEach(function(cl){var x=celda(r,cl);x.fill={type:'pattern',pattern:'solid',fgColor:{argb:C.verdeSuave}};bordes(x);});
 var tot=0;(comp.a||[]).forEach(function(a){tot+=parseFloat(a.c)||0;});
@@ -3512,11 +3774,11 @@ var nAcc=0;
 nAcc++;
 var cn=celda(r,2);cn.value=nComp+'.'+nAcc;
 cn.font={bold:true,size:8.5,color:{argb:C.gris}};cn.alignment={horizontal:'center',vertical:'middle'};bordes(cn);
-var ca=celda(r,3);ca.value=String(a.n||'');
+var ca=celda(r,3);ca.value=window._trTxt?_trTxt(String(a.n||'')):String(a.n||'');
 ca.font={size:8.5,color:{argb:'FF37474F'}};ca.alignment={wrapText:true,vertical:'middle'};bordes(ca);
-var tf=celda(r,4);tf.value=capital1(a.f);
+var tf=celda(r,4);tf.value=window._trTxt?_trTxt(capital1(a.f)):capital1(a.f);
 tf.font={size:8.5,color:{argb:'FF37474F'}};tf.alignment={wrapText:true,vertical:'middle',horizontal:'center'};bordes(tf);
-var un=celda(r,5);un.value=a.u||'';
+var un=celda(r,5);un.value=window._trTxt?_trTxt(a.u||''):(a.u||'');
 un.font={size:8.5,color:{argb:'FF37474F'}};un.alignment={wrapText:true,vertical:'middle',horizontal:'center'};bordes(un);
 var cv=celda(r,6);var v=parseFloat(a.c);if(v){cv.value=v;cv.numFmt='#,##0';}
 cv.font={size:8.5,color:{argb:'FF37474F'}};cv.alignment={horizontal:'right',vertical:'middle'};bordes(cv);
