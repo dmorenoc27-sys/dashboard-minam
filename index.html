@@ -316,8 +316,17 @@ if(e.key==='F12'){e.preventDefault();return false;}
   <button class="nb active" onclick="showPage('impacto',this)">🇵🇪 Impacto Nacional</button>
   <button class="nb" onclick="showPage('resumen',this)">📊 Detalle de Inversiones</button>
   <button class="nb" onclick="showPage('ejecucion',this)">📈 Ejecución Presupuestal</button>
-  
-  
+  <div id="lang-sw" style="margin-left:auto;align-self:center;display:flex;gap:2px;background:#F2F5F3;border:1px solid #DCE4DE;border-radius:999px;padding:2px;flex-shrink:0">
+    <button type="button" class="lang-btn active" id="lang-es" onclick="if(window._setLang)_setLang('es')" title="Ver en español"><span class="lang-flag" style="display:inline-flex;border-radius:2.5px;overflow:hidden;box-shadow:0 0 0 .5px rgba(0,0,0,.15)"><svg width="17" height="12" viewBox="0 0 3 2"><rect width="3" height="2" fill="#D91023"/><rect x="1" width="1" height="2" fill="#fff"/></svg></span><span class="lbl">Español</span></button>
+    <button type="button" class="lang-btn" id="lang-ja" onclick="if(window._setLang)_setLang('ja')" title="日本語で表示"><span class="lang-flag" style="display:inline-flex;border-radius:2.5px;overflow:hidden;box-shadow:0 0 0 .5px rgba(0,0,0,.15)"><svg width="17" height="12" viewBox="0 0 3 2"><rect width="3" height="2" fill="#fff"/><circle cx="1.5" cy="1" r=".55" fill="#BC002D"/></svg></span><span class="lbl">日本語</span></button>
+  </div>
+  <style>
+    .lang-btn{border:none;background:transparent;border-radius:999px;padding:4px 12px;font-size:11.5px;font-weight:800;color:#5E7266;cursor:pointer;display:flex;align-items:center;gap:6px;letter-spacing:.3px;transition:all .2s;font-family:inherit;white-space:nowrap}
+    .lang-btn:hover{background:#E6EDE8}
+    .lang-btn.active{background:#105000;color:#fff;box-shadow:0 1px 4px rgba(16,80,0,.35)}
+    .lang-btn.active:hover{background:#105000}
+    @media(max-width:900px){.lang-btn .lbl{display:none}.lang-btn{padding:4px 8px}}
+  </style>
 </nav>
 
 <div class="fb">
@@ -751,6 +760,7 @@ function mk(id,cfg){
 if(CH[id])CH[id].destroy();
 const c=document.getElementById(id);
 if(!c)return;
+if(window._trCfg)cfg=window._trCfg(cfg); /* 17-07-2026: traducir etiquetas de gráficos si idioma=ja */
 CH[id]=new Chart(c,cfg);
 }
 const MU=['#105000','#2191F1','#F9A825','#C62828','#6A1B9A','#00838F','#558B2F','#E65100'];
@@ -2264,6 +2274,254 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 window.addEventListener('resize',_lblM);
 })();
 </script>
+<script>
+/* ═══ TRADUCTOR ES ⇄ 日本語 — ARKA 17-07-2026 ═══
+   Diccionario + motor de nodos de texto + observer para contenido dinámico.
+   El español es el idioma canónico del DOM; al volver a ES se restauran los originales. */
+(function(){
+var D={
+/* pestañas y navegación */
+'🇵🇪 Impacto Nacional':'🇵🇪 全国インパクト','📊 Detalle de Inversiones':'📊 投資の詳細','📈 Ejecución Presupuestal':'📈 予算執行',
+'🇵🇪 Impacto':'🇵🇪 インパクト','📊 Detalle':'📊 詳細','📈 Presupuesto':'📈 予算',
+'Impacto Nacional':'全国インパクト','Detalle de Inversiones':'投資の詳細','Ejecución Presupuestal':'予算執行',
+'Volver':'戻る','← Volver':'← 戻る','Regresar':'戻る','← Regresar':'← 戻る',
+/* filtros y buscadores */
+'Filtros:':'絞り込み:','FILTROS:':'絞り込み:','Todos los convenios':'すべての協定','Todos los años':'すべての年度','Todos los tipos':'すべての種類',
+'Convenios':'協定','Años':'年度','Tipos':'種類','✕ Limpiar':'✕ クリア','IR':'検索','Nombre':'名称',
+'Gestión integral de residuos sólidos':'廃棄物総合管理','Infraestructura de disposición final':'最終処分インフラ','Recuperación de áreas degradadas':'劣化地域の回復','Limpieza pública':'公共清掃','Fortalecimiento institucional':'組織能力強化',
+/* Impacto Nacional */
+'IMPACTO NACIONAL DE LA INVERSIÓN':'投資の全国インパクト',
+'UE 003 — Gestión Integral de la Calidad Ambiental · Ministerio del Ambiente':'UE 003 — 環境品質総合管理(GICA) · ペルー環境省',
+'EJECUTADO ACUMULADO · SIAF 2013-2026 ▾':'累計執行額 · SIAF 2013-2026 ▾','BENEFICIARIOS DIRECTOS ▾':'直接受益者 ▾',
+'HECTÁREAS A RECUPERAR ▾':'回復予定ヘクタール ▾','VEHÍCULOS DE LIMPIEZA PÚBLICA ▾':'公共清掃車両 ▾',
+'INVERSIONES CON OBRAS DE INFRAESTRUCTURA ▾':'インフラ工事を伴う投資 ▾',
+'CULMINADAS':'完了','EN EJECUCIÓN':'実施中','SUSPENDIDAS':'中断','POR INICIAR':'開始前',
+'MAPA NACIONAL DE INVERSIONES':'全国投資マップ','Culminada':'完了','En ejecución':'実施中','Suspendida':'中断','Por iniciar':'開始前',
+'Ejecución presupuestal':'予算執行','Certificación':'予算確保','Devengado':'支出実績','Girado':'支払額','Compromiso':'契約締結額','Certificado':'予算確保',
+'Fuente: Transparencia Económica — MEF':'出典: 経済透明性ポータル — 経済財政省(MEF)',
+'Fuente: MEF — Consulta Amigable · SSI':'出典: MEF — Consulta Amigable · SSI',
+'Beneficiarios':'受益者','Vehículos':'車両','Hectáreas':'ヘクタール',
+/* ficha — encabezado y KPIs */
+'Descargar Ficha':'帳票ダウンロード','⬇ Descargar Ficha':'⬇ 帳票ダウンロード','⏳ Generando…':'⏳ 生成中…',
+'PROYECTO':'プロジェクト','PROGRAMA':'プログラム','ACTIVO':'有効','CERRADO':'終了',
+'Obra en ejecución':'工事実施中','Obra culminada':'工事完了','Obra suspendida':'工事中断','Obra por iniciar':'工事開始前',
+'PRESUPUESTO DE INVERSIÓN':'投資予算','PERFIL VIABLE':'承認時予算','COSTO ACTUALIZADO':'更新後コスト',
+'Perfil viable':'承認時予算','Costo actualizado':'更新後コスト','Variación':'変動率',
+'AV. FÍSICO':'物理進捗','AV. FINANCIERO':'財務進捗','AV. FISICO':'物理進捗','Av. Físico':'物理進捗','Av. Financiero':'財務進捗','Av. Fisico':'物理進捗',
+'AVANCES':'進捗','Avance físico (SSI)':'物理的進捗(SSI)','Avance financiero':'財務進捗','Programado en el PMI':'PMI計画掲載','SÍ':'はい','NO':'いいえ',
+'Inicio de obra (SSI)':'工事開始(SSI)','Fin previsto (SSI)':'完了予定(SSI)',
+'PIM TOTAL PROYECTO':'プロジェクト総PIM','ESTADO SITUACIONAL':'現状ステータス','Clic para ver ⟳ · Formato 12B':'クリックで表示 ⟳ · 様式12B',
+'PUESTA EN MARCHA':'稼働開始','Información en preparación':'情報準備中','VISTA DE LA INVERSIÓN':'投資の画像',
+'SITUACIÓN ACTUAL DE LA INVERSIÓN — FORMATO 12B':'投資の現状 — 様式12B',
+'EJECUCIÓN FINANCIERA':'財務執行','Devengado acumulado (desde su creación)':'累計支出実績(開始以降)',
+'EJECUCIÓN ACUMULADA POR ACTIVIDAD':'活動別累計執行','EJECUCIÓN POR ACTIVIDAD':'活動別執行',
+'UE003/GICA · ejecución parcial':'UE003/GICA · 部分執行','Por acción de inversión':'投資アクション別',
+'Construcción / Instalación de Obras':'工事の建設・設置','Supervisión y Liquidación de Obras':'工事監理・清算','Fortalecimiento / Exp. Técnico':'能力強化・技術文書','Gestión y Administración':'管理・運営','Adquisición de Bienes/Terrenos':'資機材・用地取得',
+'Construcción / Instalación de obras':'工事の建設・設置','Supervisión y liquidación de obras':'工事監理・清算','Fortalecimiento / Expediente técnico':'能力強化・技術文書','Gestión y administración':'管理・運営',
+'Total Dev. Acumulado (Proyecto)':'累計支出総額(プロジェクト)','Total Dev. Acumulado UE003':'累計支出総額(UE003)',
+'TOTAL DEV. ACUMULADO (PROYECTO)':'累計支出総額(プロジェクト)','TOTAL DEV. ACUMULADO UE003':'累計支出総額(UE003)',
+'Fuente: SSI-SOSEM · Todas las Unidades Ejecutoras':'出典: SSI-SOSEM · 全執行機関',
+'⚠️ Proyecto Multi-UEI · ver desglose por unidades ejecutoras':'⚠️ 複数執行機関(Multi-UEI) · 機関別内訳を見る',
+'Dev. acum. UE003/GICA (MEF Transparencia):':'UE003/GICA 累計支出(MEF透明性ポータル):',
+'Dev. total del proyecto (SSI-SOSEM, todas las UEIs):':'プロジェクト総支出(SSI-SOSEM・全執行機関):',
+'Ejecutado por otras UEIs:':'他の執行機関による執行:',
+'COMPONENTES Y ACCIONES PROGRAMADOS':'計画コンポーネントとアクション',
+'IMPACTO DE LA INVERSIÓN':'投資のインパクト','Entregables y población beneficiada':'成果物と受益人口',
+'Vehículos para limpieza pública a entregar':'納入予定の公共清掃車両','Obra de infraestructura de manejo de residuos sólidos':'廃棄物管理インフラ工事','Obras de infraestructura de manejo de residuos sólidos':'廃棄物管理インフラ工事',
+'Beneficiarios directos':'直接受益者','Hectáreas a recuperar':'回復予定ヘクタール',
+/* situación / modales */
+'Situación actual de la inversión':'投資の現状','Formato 12B — Ejecución de la inversión':'様式12B — 投資の執行',
+'Fuente: Formato 12-B — Seguimiento de la ejecución · MEF (Banco de Inversiones) · clic fuera para cerrar':'出典: 様式12-B — 執行モニタリング · MEF(投資銀行システム) · 外側をクリックで閉じる',
+'Copiar':'コピー','✓ ¡Copiado!':'✓ コピー済み','Cerrar':'閉じる','Ver':'見る','Ver ▸':'見る ▸','ver detalle':'詳細を見る',
+'FOTOS':'写真','SITUACIÓN':'現状','P. EN MARCHA':'稼働開始','VEHÍCULOS':'車両','BENEFICIARIOS':'受益者','RRSS':'廃棄物','OBRA INFRA.':'インフラ工事','Situación':'現状','P. en Marcha':'稼働開始',
+/* estados y semáforos */
+'En Meta':'目標達成','En Riesgo':'リスクあり','Crítico':'要注意','s/d':'情報なし',
+/* pie */
+'Todos los derechos reservados. Prohibida la reproducción sin autorización.':'無断複製・転載を禁じます。全著作権所有。',
+'Dashboard Ejecutivo UE003 MINAM':'UE003 環境省 経営ダッシュボード','Contacto':'連絡先',
+/* meses (gráficos) */
+
+/* ── ampliación 2ª pasada ── */
+'Ejecutado acumulado · SIAF 2013-2026 ▾':'累計執行額 · SIAF 2013-2026 ▾','Beneficiarios directos ▾':'直接受益者 ▾',
+'Hectáreas a recuperar ▾':'回復予定ヘクタール ▾','Vehículos de limpieza pública ▾':'公共清掃車両 ▾','Inversiones con obras de infraestructura ▾':'インフラ工事を伴う投資 ▾',
+'Culminadas':'完了','Suspendidas':'中断','Mapa nacional de inversiones':'全国投資マップ','🔎 Nombre':'🔎 名称',
+'Proyectos en Cartera':'ポートフォリオ内プロジェクト','Total acumulado · Cartera completa':'累計総額 · 全ポートフォリオ',
+'📍 Perú — UE003 GICA':'📍 ペルー — UE003 GICA','PIM Acumulado':'累計PIM',
+'Presupuesto Institucional Modificado · Perú — UE003 GICA':'修正機関予算(PIM) · ペルー — UE003 GICA',
+'Devengado Acumulado':'累計支出実績','Girado Acumulado':'累計支払額','Distribución Geográfica':'地理的分布',
+'Selecciona un departamento':'県を選択してください','Nacional':'全国','Multi-departamental':'複数県','Costa':'海岸部','Sierra':'山岳部','Selva':'アマゾン部',
+'Millones de soles':'百万ソル','Millones S/':'百万S/','Pres. Institucional de Apertura':'当初機関予算(PIA)',
+'Distribución por Macrorregión':'マクロ地域別分布','PIM vs Devengado por Convenio':'協定別 PIM対支出実績',
+'Presupuesto de Inversión':'投資予算','Perfil Viable':'承認時予算','Costo Actualizado':'更新後コスト',
+'Estado Situacional':'現状ステータス','Puesta en Marcha':'稼働開始','PROGRAMADO EN EL PMI':'PMI計画掲載',
+'Componentes y Acciones Programados':'計画コンポーネントとアクション','Ejecución por Actividad':'活動別執行','Impacto de la Inversión':'投資のインパクト',
+'● ACTIVO':'● 有効','○ CERRADO':'○ 終了',
+'Vista de la':'投資の','Inversión':'画像','Vehículos para limpieza':'納入予定の','pública a entregar':'公共清掃車両',
+'Obra de infraestructura de':'廃棄物管理','manejo de residuos sólidos':'インフラ工事',
+'EQUIPAMIENTO':'機材','VEHICULOS':'車両','INTANGIBLES':'無形資産','INFRAESTRUCTURA':'インフラ',
+'Este proyecto es ejecutado por':'このプロジェクトの実施主体:','múltiples Unidades Ejecutoras':'複数の執行機関','. El':'。',
+'Total Dev. Acumulado del Proyecto':'プロジェクト累計支出総額','y el':'と','mostrados provienen del':'の出典:',
+'y consolidan la ejecución de todas las UEIs. Las barras de actividad muestran únicamente la ejecución de':'(全執行機関の執行を統合)。活動バーは次の機関の執行のみを表示:',
+'registrada en MEF Transparencia Económica.':'(MEF経済透明性ポータル登録分)。',
+'El % de Avance Financiero proviene del SSI y refleja el avance consolidado de todas las UEIs.':'財務進捗率はSSIによるもので、全執行機関の統合進捗を反映しています。',
+'Ministerio del Ambiente (MINAM)':'ペルー環境省(MINAM)','Unidad Ejecutora 003 - Gestión Integral de la Calidad Ambiental':'執行機関003 - 環境品質総合管理',
+'Fuente: Transparencia Económica MEF':'出典: MEF経済透明性ポータル','Sistema BI UE003':'UE003 BIシステム',
+'Ver en español':'スペイン語で表示','Ej: 2058430':'例: 2058430','Ej: Piura, Tarapoto…':'例: Piura, Tarapoto…',
+'Clic: ver detalle por inversión':'クリック: 投資別の詳細を見る','Clic: ver las inversiones que recuperan hectáreas':'クリック: ヘクタール回復投資を見る',
+'Clic: ver las inversiones con vehículos':'クリック: 車両を含む投資を見る','Quitar filtro — mostrar todas':'フィルター解除 — すべて表示',
+'Clic para ver solo estas en el mapa':'クリック: 地図でこれらのみ表示','Zoom in':'拡大','Zoom out':'縮小',
+'Volver a la vista anterior':'前の画面に戻る','Descargar la ficha completa en Excel':'帳票一式をExcelでダウンロード',
+'Copiar CUI y nombre':'CUIと名称をコピー','Clic: situación actual de la inversión (Formato 12B — MEF)':'クリック: 投資の現状(様式12B — MEF)',
+'Clic para ampliar':'クリックで拡大','Este mes tiene varias fotos — clic para verlas':'今月は複数の写真あり — クリックで表示',
+'Clic para ver beneficiarios y ubicación':'クリック: 受益者と位置を見る','Clic para ver el detalle de vehículos':'クリック: 車両の詳細を見る',
+'Clic para ver el detalle de obras':'クリック: 工事の詳細を見る','Copiar el texto':'テキストをコピー',
+
+/* departamentos (katakana) */
+'Lima':'リマ','Piura':'ピウラ','La Libertad':'ラ・リベルタ','Ica':'イカ','Arequipa':'アレキパ','Tacna':'タクナ',
+'Ancash':'アンカシュ','Huánuco':'ワヌコ','Pasco':'パスコ','Apurimac':'アプリマック','Apurímac':'アプリマック','Cajamarca':'カハマルカ',
+'Junin':'フニン','Junín':'フニン','Huancavelica':'ワンカベリカ','Ayacucho':'アヤクチョ','San Martín':'サン・マルティン','San Martin':'サン・マルティン',
+'Loreto':'ロレト','Ucayali':'ウカヤリ','Amazonas':'アマソナス','Madre de Dios':'マドレ・デ・ディオス','Madre De Dios':'マドレ・デ・ディオス',
+'Lambayeque':'ランバイェケ','Tumbes':'トゥンベス','Puno':'プノ','Cusco':'クスコ','Moquegua':'モケグア','Callao':'カヤオ',
+'Mensual':'月次','Acumulado':'累計','Oriente':'東部','Sur':'南部','Centro':'中部','Norte':'北部',
+'Norte/Oriente':'北部/東部','Sur/Oriente':'南部/東部','POR VALIDAR':'検証待ち','Multidepartamental':'複数県',
+'Certificación (M S/)':'予算確保 (百万S/)','Devengado (M S/)':'支出実績 (百万S/)',
+'proyectos con ejecución':'執行中のプロジェクト','Proyectos con ejecución':'執行中のプロジェクト',
+'Ene':'1月','Feb':'2月','Mar':'3月','Abr':'4月','May':'5月','Jun':'6月','Jul':'7月','Ago':'8月','Sep':'9月','Oct':'10月','Nov':'11月','Dic':'12月'
+};
+var RX=[
+[/^Avance: ([\d\.]+)% de Certif\.$/,'進捗: 予算確保の$1%'],
+[/^Avance: ([\d\.]+)% del PIM$/,'進捗: PIMの$1%'],
+[/^UE 003 — Gestión Integral de la Calidad Ambiental · Ministerio del Ambiente · Corte: (.+)$/,'UE 003 — 環境品質総合管理(GICA) · ペルー環境省 · 基準日: $1'],
+[/^Ministerio del Ambiente \(MINAM\)[\s\u00a0|]+Unidad Ejecutora 003 [–-] Gestión Integral de la Calidad Ambiental[\s\u00a0|]+Fuente: Transparencia Económica MEF[\s\u00a0|]+Sistema BI UE003[\s\u00a0|]+© (\d{4})$/,'ペルー環境省(MINAM) ｜ 執行機関003 – 環境品質総合管理 ｜ 出典: MEF経済透明性ポータル ｜ UE003 BIシステム ｜ © $1'],
+[/Dashboard Ejecutivo UE003 MINAM([\s\u00a0]+—[\s\u00a0]+)Todos los derechos reservados\. Prohibida la reproducción sin autorización\./,'UE003 環境省 経営ダッシュボード$1無断複製・転載を禁じます。全著作権所有。'],
+[/^\((\d+) REC · (\d+) RRSS\)$/,'(回復$1 · 廃棄物$2)'],
+
+[/^Estado de la cartera — (\d[\d,\.]*) inversiones$/i,'ポートフォリオの状況 — 投資$1件'],
+[/^PIM (\d{4}) · (\d+)\s*inversiones con ejecución ▾$/i,'PIM $1 · 執行中の投資$2件 ▾'],
+[/^Ejecución presupuestal (\d{4})$/i,'予算執行 $1'],
+[/^Ejecutado total · ([\d\.]+)% del PIM$/,'執行総額 · PIMの$1%'],
+[/^Pagado efectivo · ([\d\.]+)% del devengado$/,'実支払 · 支出実績の$1%'],
+[/^Cobertura Nacional · (\d+) departamentos intervenidos$/,'全国カバレッジ · $1県で実施'],
+[/^Devengado Mensual (\d{4})$/,'月次支出実績 $1'],
+[/^Tendencia Histórica de Ejecución (\d{4})[–-](\d{4})$/,'執行の推移 $1–$2'],
+[/^Variación vs (\d{4}): (.+)$/,'$1年比の変動: $2'],
+[/^Avance: ([\d\.]+)% del devengado$/,'進捗: 支出実績の$1%'],
+[/^N° Proyectos (\d{4})$/,'プロジェクト数 $1'],
+[/^Proyectos con ejecución en (\d{4})$/,'$1年に執行のあったプロジェクト'],
+[/^Ejecución Mensual vs Acumulada (\d{4})$/,'月次執行と累計 $1'],
+[/^PIM – Devengado – Girado \((\d{4})[–-](\d{4})\)$/,'PIM – 支出実績 – 支払額 ($1–$2)'],
+[/^(\d+)\+ proy\.$/,'$1件以上'],[/^(\d+) proy\.$/,'$1件'],
+[/^🌿 Inversiones con hectáreas a recuperar · (\d{4}) \((\d+)\)$/i,'🌿 ヘクタール回復投資 · $1年 ($2件)'],
+[/^🚛 Vehículos de limpieza pública · (\d{4}) \((\d+) inversiones\)$/i,'🚛 公共清掃車両 · $1年 (投資$2件)'],
+[/^(\d+)\s*NÚMERO DE EQUIPAMIENTO$/i,'機材 $1台'],
+[/^(\d+)\s*NÚMERO DE VEHÍCULOS$/i,'車両 $1台'],
+[/^(\d+)\s*KIT DE EQUIPAMIENTO$/i,'機材キット $1式'],
+[/^(\d+)\s*N° DE DOCUMENTOS$/i,'文書 $1件'],
+[/^(\d+)\s*N° DE INFORMES$/i,'報告書 $1件'],
+[/^(\d+)\s*AMBIENTES$/i,'施設 $1室'],
+[/^(\d+)\s*ESPACIOS FISICOS$/i,'物理スペース $1'],
+[/^(\d+)\s*ESTRUCTURAS FISICAS$/i,'構造物 $1'],
+[/^(\d+)\s+acciones$/,'アクション$1件'],[/^(\d+)\s+accion(es)?$/i,'アクション$1件'],[/^1 acci[oó]n$/i,'アクション1件'],
+[/^ESTADO DE LA CARTERA — (\d[\d,\.]*) INVERSIONES$/,'ポートフォリオの状況 — 投資$1件'],
+[/^PIM (\d{4}) · (\d+)\s*INVERSIONES CON EJECUCIÓN ▾$/,'PIM $1 · 執行中の投資$2件 ▾'],
+[/^CERTIFICACIÓN (\d{4})$/,'予算確保 $1'],[/^DEVENGADO (\d{4})$/,'支出実績 $1'],[/^GIRADO (\d{4})$/,'支払額 $1'],
+[/^Certificación (\d{4})$/,'予算確保 $1'],[/^Devengado (\d{4})$/,'支出実績 $1'],[/^Girado (\d{4})$/,'支払額 $1'],[/^Compromiso (\d{4})$/,'契約締結額 $1'],
+[/^EJECUCIÓN FINANCIERA — AÑO (\d{4})$/,'財務執行 — $1年度'],
+[/^Dev\. Acumulado$/,'累計支出'],[/^Dev\. acumulado$/,'累計支出'],
+[/^(\d[\d,\.]*)\s*ha$/,'$1 ha'],
+[/^Corte: (.+)$/,'基準日: $1'],
+[/^(\d+) proyectos?$/,'プロジェクト$1件']
+];
+function trStr(s){
+if(D.hasOwnProperty(s))return D[s];
+for(var i=0;i<RX.length;i++){var m=RX[i][0].exec(s);if(m)return s.replace(RX[i][0],RX[i][1]);}
+return null;
+}
+window._trTxt=function(s){if(window._lang!=='ja')return s;var t=trStr(String(s).trim());return t!=null?t:s;};
+window._trCfg=function(cfg){
+if(window._lang!=='ja')return cfg;
+var f=function(o){
+if(typeof o==='string'){var t=trStr(o.trim());return t!=null?t:o;}
+if(Array.isArray(o))return o.map(f);
+if(o&&typeof o==='object'&&o.constructor===Object){var r={};for(var k in o)r[k]=(typeof o[k]==='function')?o[k]:f(o[k]);return r;}
+return o;
+};
+try{return f(cfg);}catch(_){return cfg;}
+};
+window._lang='es';
+var orig=new WeakMap();
+function trNode(n){
+var raw=n.nodeValue,s=raw.trim();
+if(!s)return;
+var p=n.parentNode;
+if(p&&(p.nodeName==='SCRIPT'||p.nodeName==='STYLE'))return;
+if(p&&p.closest&&p.closest('#lang-sw'))return;
+if(window._lang==='ja'){
+var t=trStr(s);
+if(t!=null){var nv=raw.replace(s,t);if(nv!==raw){if(!orig.has(n))orig.set(n,raw);n.nodeValue=nv;}}
+}else if(orig.has(n)){n.nodeValue=orig.get(n);orig.delete(n);}
+}
+function trAttrs(root){
+if(!root.querySelectorAll)return;
+['title','placeholder'].forEach(function(at){
+root.querySelectorAll('['+at+']').forEach(function(el){
+if(el.closest&&el.closest('#lang-sw'))return;
+var key='_es_'+at;
+if(window._lang==='ja'){
+var v=el.getAttribute(at)||'';var t=trStr(v.trim());
+if(t!=null){if(!el.dataset[key])el.dataset[key]=v;el.setAttribute(at,t);}
+}else if(el.dataset[key]){el.setAttribute(at,el.dataset[key]);delete el.dataset[key];}
+});
+});
+}
+function walk(root){
+if(root.nodeType===3){trNode(root);return;}
+if(root.nodeType!==1&&root.nodeType!==9)return;
+var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,null);
+var n;while(n=w.nextNode())trNode(n);
+trAttrs(root);
+}
+window._i18nWalk=function(){walk(document.body);};
+/* asegurar que las opciones de filtros conserven su valor original en español */
+function fijarValores(){
+['fConv','fAño','fTipo'].forEach(function(id){
+var s=document.getElementById(id);if(!s)return;
+Array.prototype.forEach.call(s.options,function(o){if(!o.hasAttribute('value'))o.setAttribute('value',o.textContent);});
+});
+}
+var mo=new MutationObserver(function(muts){
+if(window._lang!=='ja')return;
+muts.forEach(function(m){
+if(m.type==='characterData'){trNode(m.target);return;}
+if(m.addedNodes)Array.prototype.forEach.call(m.addedNodes,function(nd){walk(nd);});
+});
+});
+window._setLang=function(l){
+if(window._lang===l)return;
+fijarValores();
+window._lang=l;
+try{localStorage.setItem('gica_lang',l);}catch(_){}
+var be=document.getElementById('lang-es'),bj=document.getElementById('lang-ja');
+if(be&&bj){be.classList.toggle('active',l==='es');bj.classList.toggle('active',l==='ja');}
+walk(document.body);
+/* recrear los gráficos de la página activa con etiquetas del idioma */
+try{
+var ap=document.querySelector('.page.active');
+var id=ap?ap.id.replace('page-',''):null;
+if(id&&typeof initPage==='function')initPage(id);
+}catch(_){}
+setTimeout(function(){walk(document.body);},350);
+};
+function arranque(){
+fijarValores();
+mo.observe(document.body,{childList:true,subtree:true,characterData:true});
+var g=null;try{g=localStorage.getItem('gica_lang');}catch(_){}
+if(g==='ja')window._setLang('ja');
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',arranque);else arranque();
+})();
+</script>
+
 <div id="ftr-legal" style="position:fixed;bottom:0;left:0;right:0;background:rgba(10,25,47,0.9);color:rgba(255,255,255,0.5);text-align:center;font-size:10px;padding:3px 8px;z-index:99999;pointer-events:none;user-select:none;"><span id="ftr-full">© 2024-2026 <b style="color:rgba(255,255,255,0.75);">ARKA PROYECTOS / Corporación DMC</b> &nbsp;·&nbsp; <span style="white-space:nowrap">📧 dmoreno.c@hotmail.com</span> &nbsp;·&nbsp; <span style="white-space:nowrap">📱 966 614 682</span> &nbsp;—&nbsp; Dashboard Ejecutivo UE003 MINAM &nbsp;—&nbsp; Todos los derechos reservados. Prohibida la reproducción sin autorización.</span><span id="ftr-mini" style="display:none">© ARKA PROYECTOS &nbsp;·&nbsp; <span onclick="var d=document.createElement('div');d.style.cssText='position:fixed;inset:0;z-index:999999;background:rgba(8,28,12,.55);display:flex;align-items:center;justify-content:center;padding:24px';d.innerHTML='&lt;div style=&quot;background:#fff;border-radius:14px;padding:18px 20px;max-width:420px;text-align:center;box-shadow:0 12px 44px rgba(0,0,0,.35)&quot;&gt;&lt;div style=&quot;font-size:14px;font-weight:900;color:#105000;margin-bottom:8px&quot;&gt;ARKA PROYECTOS / Corporación DMC&lt;/div&gt;&lt;div style=&quot;font-size:12px;color:#37474F;font-weight:600;line-height:1.9&quot;&gt;© 2024-2026 · Dashboard Ejecutivo UE003 MINAM&lt;br&gt;📧 dmoreno.c@hotmail.com&lt;br&gt;📱 966 614 682&lt;br&gt;&lt;span style=&quot;font-size:10px;color:#90A4AE&quot;&gt;Todos los derechos reservados. Prohibida la reproducción sin autorización.&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;';d.onclick=function(){d.remove();};document.body.appendChild(d);" style="pointer-events:auto;cursor:pointer;color:rgba(255,255,255,0.85);font-weight:800;text-decoration:underline">Contacto</span></span></div></body>
 </html>
 </body>
