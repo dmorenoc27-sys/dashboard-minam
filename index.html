@@ -25,8 +25,8 @@ console.log('%cEste dashboard es obra protegida de ARKA PROYECTOS / Corporación
 </script><meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
 <meta name="author" content="ARKA PROYECTOS / Corporacion DMC"><meta name="copyright" content="2024-2026 ARKA PROYECTOS. Todos los derechos reservados."><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" integrity="sha512-CQBWl4fJHWbryGE+Pc7UAxWMUMNMWzWxF4SQo9CgkJIN1kx6djDQZjh3Y8SZ1d+6I+1zze6Z7kHXO7q3UyZAWw==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js" integrity="sha512-JPcRR8yFa8mmCsfrw4TNte1ZvF1e3+1SdGMslZvmrzDYxS69J7J49vkFL8u6u8PlPJK+H3voElBtUCzaXj+6ig==" crossorigin="anonymous"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{--v1:#105000;--v2:#66CB00;--v3:#66CB00;--v4:#EEF4EC;--v5:#44546A;--gold:#F9A825;--azul:#2191F1;--g1:#F5F5F5;--g2:#E0E0E0;--g3:#9E9E9E;--g4:#1C1917;--sh:0 2px 12px rgba(0,0,0,.10);--sh2:0 6px 30px rgba(0,0,0,.14);--rad:12px}
@@ -3231,9 +3231,11 @@ else{
 if(!document.getElementById('leaflet-css')){
 var lc=document.createElement('link');lc.id='leaflet-css';lc.rel='stylesheet';
 lc.href='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css';
+lc.integrity='sha512-h9FcoyWjHcOcmEVkxOfTLnmZFWIH0iZhZT1H2TbOq55xssQGEJHEaIm+PgoUaZbRvQTNTluNOEfb1ZRy6D3BOw==';lc.crossOrigin='anonymous';
 document.head.appendChild(lc);}
 var ls=document.createElement('script');
 ls.src='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
+ls.integrity='sha512-puJW3E/qXDqYp9IfhAI54BJEaWIfloJ7JWs7OeD5i6ruC9JZL1gERT1wjtwXFlh7CjE7ZJ+/vcRZRkIYIb6p4g==';ls.crossOrigin='anonymous';
 ls.onload=initMapa;
 document.head.appendChild(ls);}
 }
@@ -3561,9 +3563,11 @@ else{
 if(!document.getElementById('leaflet-css')){
 var lc=document.createElement('link');lc.id='leaflet-css';lc.rel='stylesheet';
 lc.href='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css';
+lc.integrity='sha512-h9FcoyWjHcOcmEVkxOfTLnmZFWIH0iZhZT1H2TbOq55xssQGEJHEaIm+PgoUaZbRvQTNTluNOEfb1ZRy6D3BOw==';lc.crossOrigin='anonymous';
 document.head.appendChild(lc);}
 var ls=document.createElement('script');
 ls.src='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
+ls.integrity='sha512-puJW3E/qXDqYp9IfhAI54BJEaWIfloJ7JWs7OeD5i6ruC9JZL1gERT1wjtwXFlh7CjE7ZJ+/vcRZRkIYIb6p4g==';ls.crossOrigin='anonymous';
 ls.onload=initMapa;document.head.appendChild(ls);}
 };
 window._vehDetalle=function(cui,ev){
@@ -3691,7 +3695,7 @@ document.head.appendChild(s);
 var CDNX='https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js';
 function cargarExcelJS(cb,err){
 if(window.ExcelJS)return cb();
-var sc=document.createElement('script');sc.src=CDNX;sc.onload=cb;sc.onerror=err;document.head.appendChild(sc);
+var sc=document.createElement('script');sc.src=CDNX;sc.integrity='sha512-dlPw+ytv/6JyepmelABrgeYgHI0O+frEwgfnPdXDTOIZz+eDgfW07QXG02/O8COfivBdGNINy+Vex+lYmJ5rxw==';sc.crossOrigin='anonymous';sc.onload=cb;sc.onerror=err;document.head.appendChild(sc);
 }
 var C={verde:'FF1B5E20',verdeSuave:'FFE8F5E9',verdeMedio:'FF2E7D32',gris:'FF546E7A',
 grisClaro:'FFF4F6F8',blanco:'FFFFFFFF',naranja:'FFBF360C',azul:'FF0D47A1',morado:'FF4A148C',borde:'FFCFD8DC'};
