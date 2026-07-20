@@ -564,7 +564,7 @@ if(e.key==='F12'){e.preventDefault();return false;}
 
 <div class="ftr">
   Ministerio del Ambiente (MINAM) &nbsp;|&nbsp; Unidad Ejecutora 003 – Gestión Integral de la Calidad Ambiental &nbsp;|&nbsp;
-  Fuente: Transparencia Económica MEF &nbsp;|&nbsp; Sistema BI UE003 &nbsp;|&nbsp; © 2025
+  Fuente: Transparencia Económica MEF &nbsp;|&nbsp; Sistema BI UE003 &nbsp;|&nbsp; © 2026
   <span style="display:block;margin-top:5px;font-size:9px;opacity:.55;letter-spacing:.4px;display:flex;justify-content:center;align-items:center;gap:14px;flex-wrap:wrap"><span>David Moreno ®</span><span>✉ dmoreno.c@hotmail.com</span><span>📱 +51 966 614 682</span></span>
 </div>
 
@@ -861,7 +861,19 @@ const NOVEDADES=[
 window._novHTML=function(){
 var M={NORMA:['NORMATIVA','#6A1B9A'],PRENSA:['PRENSA','#1565C0'],DOC:['DOCUMENTO','#2E7D32'],SEG:['EN SEGUIMIENTO','#E65100']};
 var hoy=new Date();
-var items=NOVEDADES.slice().sort(function(a,b){return ((a.pin?1:0)-(b.pin?1:0))||b.f.localeCompare(a.f);});
+var items=NOVEDADES.slice();
+try{
+var _su=(window._datosActualizados||{}).situacionUpdate||{};
+var _autos=[];
+Object.keys(_su).forEach(function(cui){
+var m=String(_su[cui]).match(/^\[(\d{2})\/(\d{2})\/(\d{4})\]/);
+if(!m)return;
+_autos.push({f:m[3]+'-'+m[2]+'-'+m[1],t:'SEG',ti:((typeof cuiShortName!=='undefined'&&cuiShortName[cui])||('CUI '+cui))+' — Estado situacional actualizado',d:'Formato 12B — Banco de Inversiones · clic para abrir la ficha',cui:cui});
+});
+_autos.sort(function(a,b){return b.f.localeCompare(a.f);});
+items=items.concat(_autos.slice(0,3));
+}catch(_){}
+items=items.sort(function(a,b){return ((a.pin?1:0)-(b.pin?1:0))||b.f.localeCompare(a.f);});
 if(!items.length)return '<div style="font-size:11px;color:#90A4AE;padding:8px 4px">Sin novedades por ahora.</div>';
 var h='';
 items.forEach(function(n){
@@ -869,7 +881,7 @@ var m=M[n.t]||M.NORMA;
 var dias=(hoy-new Date(n.f+'T12:00:00'))/86400000;
 var nuevo=(!n.pin&&dias<=7);
 var fch=n.f.slice(8,10)+'/'+n.f.slice(5,7)+'/'+n.f.slice(2,4);
-h+='<a href="'+n.u+'" target="_blank" rel="noopener" title="Abrir en pestaña nueva" style="display:block;text-decoration:none;background:#fff;border:1px solid #E5E9EF;border-left:4px solid '+m[1]+';border-radius:10px;padding:7px 9px;margin-bottom:7px;box-shadow:0 1px 3px rgba(16,24,40,.05)">'
+h+='<a href="'+(n.cui?'#':n.u)+'" '+(n.cui?('onclick="showProjectDetail(\''+n.cui+'\');return false;" title="Abrir la ficha de la inversión"'):'target="_blank" rel="noopener" title="Abrir en pestaña nueva"')+' style="display:block;text-decoration:none;background:#fff;border:1px solid #E5E9EF;border-left:4px solid '+m[1]+';border-radius:10px;padding:7px 9px;margin-bottom:7px;box-shadow:0 1px 3px rgba(16,24,40,.05)">'
 +'<div style="display:flex;align-items:center;gap:5px;margin-bottom:3px;flex-wrap:wrap">'
 +(n.pin?'<span style="font-size:9px">📌</span>':'')
 +'<span style="font-size:8px;font-weight:900;color:#fff;background:'+m[1]+';border-radius:4px;padding:1.5px 5px;letter-spacing:.4px">'+m[0]+'</span>'
@@ -905,45 +917,17 @@ const portfolio=dept
 ? proyectos.filter(p=>p.Departamento===dept&&(!cv||_convON(p.Convenio)===cv)&&(!tp||p.Tipo_Proyecto===tp))
 : getFiltered();
 const nProj=portfolio.length;
-let pim,dev,gir,label,sublabel;
-if(dept&&anio){
-const dy=(deptYear[dept]||{})[anio]||{};
-pim=dy.Cert||0; dev=dy.Dev||0; gir=dy.Gir||0;
-label=dept+' · '+anio; sublabel='Cartera del departamento · Ejecución '+anio;
-} else if(dept){
-pim=portfolio.reduce((s,p)=>s+(p.fin.PIM||0),0);
-dev=portfolio.reduce((s,p)=>s+p.fin.Dev,0);
-gir=portfolio.reduce((s,p)=>s+(p.fin.Gir||0),0);
-label=dept; sublabel='Proyectos del departamento';
-} else if(anio&&(cv||tp)){
-const cvData=cv?(convYear[cv]||{})[anio]||{}:{};
-const tpData=tp?(tipoYear[tp]||{})[anio]||{}:{};
-if(cv&&tp){
-pim=cvData.Cert||0; dev=cvData.Dev||0; gir=cvData.Gir||0;
-} else if(cv){
-pim=cvData.Cert||0; dev=cvData.Dev||0; gir=cvData.Gir||0;
-} else {
-pim=tpData.Cert||0; dev=tpData.Dev||0; gir=tpData.Gir||0;
-}
-label=[cv,anio,tp].filter(Boolean).join(' · ');
-sublabel='Cartera '+[cv,tp].filter(Boolean).join('+')+' · Ejecución '+anio;
-} else if(anio){
-const yd=yearData[anio]||{};
-pim=(yd.PIM||0)*1e6; dev=(yd.Dev||0)*1e6; gir=(yd.Gir||0)*1e6;
-label='Perú · '+anio; sublabel='Ejecución nacional año '+anio;
-} else if(cv||tp){
-pim=portfolio.reduce((s,p)=>s+(p.fin.PIM||0),0);
-dev=portfolio.reduce((s,p)=>s+p.fin.Dev,0);
-gir=portfolio.reduce((s,p)=>s+(p.fin.Gir||0),0);
-label=[cv,tp].filter(Boolean).join(' · '); sublabel='Proyectos filtrados · Acumulado';
-} else {
-pim=portfolio.reduce((s,p)=>s+(p.fin.PIM||0),0);
-dev=portfolio.reduce((s,p)=>s+p.fin.Dev,0);
-gir=portfolio.reduce((s,p)=>s+(p.fin.Gir||0),0);
-label='Perú — UE003 GICA'; sublabel='Total acumulado · Cartera completa';
-}
-const avPct =pim>0?Math.round(dev/pim*100):0;
-const girPct=dev>0?Math.round(gir/dev*100):0;
+let pim=0,dev=0,gir=0,label,sublabel;
+const atomsK=proyectos.filter(p=>(!dept||p.Departamento===dept)&&(!cv||_convON(p.Convenio)===cv)&&(!tp||p.Tipo_Proyecto===tp));
+atomsK.forEach(p=>{const yf=cuiYearFin[String(p.CUI)]||{};yearsExt.forEach(y=>{if(anio&&y!==anio)return;const r=yf[y];if(!r)return;pim+=r.Cert||0;dev+=r.Dev||0;gir+=r.Gir||0;});});
+if(dept&&anio){label=dept+' · '+anio;sublabel='Cartera del departamento · Ejecución '+anio;}
+else if(dept){label=dept;sublabel='Proyectos del departamento';}
+else if(anio&&(cv||tp)){label=[cv,anio,tp].filter(Boolean).join(' · ');sublabel='Cartera '+[cv,tp].filter(Boolean).join('+')+' · Ejecución '+anio;}
+else if(anio){label='Perú · '+anio;sublabel='Ejecución nacional año '+anio;}
+else if(cv||tp){label=[cv,tp].filter(Boolean).join(' · ');sublabel='Proyectos filtrados · Acumulado';}
+else{label='Perú — UE003 GICA';sublabel='Total acumulado · Cartera completa';}
+const avPct =pim>0?+(dev/pim*100).toFixed(1):0;
+const girPct=dev>0?+(gir/dev*100).toFixed(1):0;
 grid.innerHTML=`
 <div class="kc azul">
 <span class="ki">🏗</span>
@@ -954,16 +938,16 @@ grid.innerHTML=`
 </div>
 <div class="kc">
 <span class="ki">💰</span>
-<div class="kl">PIM Acumulado</div>
+<div class="kl">Certificación Acumulada</div>
 <div class="kv">${fmtM(pim/1e6)}</div>
-<div class="ks">Presupuesto Institucional Modificado · ${label}</div>
+<div class="ks">Presupuesto certificado · ${label}</div>
 <div class="pb"><div class="pf" style="width:100%"></div></div>
 </div>
 <div class="kc">
 <span class="ki">✅</span>
 <div class="kl">Devengado Acumulado</div>
 <div class="kv">${fmtM(dev/1e6)}</div>
-<div class="ks">Ejecutado total · ${avPct}% del PIM</div>
+<div class="ks">Ejecutado total · ${avPct}% de la Certificación</div>
 <div class="pb"><div class="pf" style="width:${Math.min(avPct,100)}%"></div></div>
 </div>
 <div class="kc gold">
@@ -1002,23 +986,22 @@ plugins:[ChartDataLabels],
 data:{
 labels:mnames,
 datasets:[
-{label:'Certificación (M S/)',data:cert2026M,backgroundColor:'rgba(249,168,37,0.25)',borderColor:'#F9A825',borderWidth:2,borderRadius:4,type:'bar'},
-{label:'Devengado (M S/)',data:dev2026M,backgroundColor:dev2026M.map((_,i)=>i<6?'#105000cc':'#cccccc55'),borderRadius:5,type:'bar'},
+{label:'Devengado (M S/)',data:dev2026M,backgroundColor:'#105000cc',borderRadius:5,type:'bar'},
 ]
 },
 options:{
 responsive:true,maintainAspectRatio:false,
 plugins:{
-legend:{position:'top'},
+legend:{display:false},
 datalabels:{
 anchor:'end',align:'top',
 font:{size:9,weight:'bold'},
-color:ctx=>ctx.datasetIndex===1?'#105000':'#E65100',
+color:'#105000',
 formatter:(v)=>v>0?v.toFixed(1):'',
 }
 },
 scales:{
-y:{grid:{color:'#f5f5f5'},ticks:{callback:v=>v+'M'}},
+y:{beginAtZero:true,grid:{color:'#f5f5f5'},ticks:{callback:v=>v+'M'}},
 x:{grid:{display:false}}
 }
 }
@@ -1078,10 +1061,9 @@ mCert=moNums.map(function(m){var x=mSrc[String(m)];return x?+(x.c).toFixed(2):0;
 var mLabel=dept||cv||'';
 var mTitle='Devengado Mensual '+curYear+(mLabel?' · '+mLabel:'');
 mk('cMens',{type:'bar',plugins:[ChartDataLabels],data:{labels:mLabels,datasets:[
-{label:'Certificación (M S/)',data:mCert,backgroundColor:'rgba(249,168,37,0.25)',borderColor:'#F9A825',borderWidth:2,borderRadius:4,type:'bar'},
-{label:'Devengado (M S/)',data:mDev,backgroundColor:mDev.map(function(){return'#105000cc';}),borderRadius:5,type:'bar'}
-]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top'},datalabels:{anchor:'end',align:'top',font:{size:9,weight:'bold'},color:function(ctx){return ctx.datasetIndex===1?'#105000':'#E65100';},formatter:function(v){return v>0?v.toFixed(1)+'M':'';}
-}},scales:{y:{grid:{color:'#f5f5f5'},ticks:{callback:function(v){return v+'M';}}},x:{grid:{display:false}}}}});
+{label:'Devengado (M S/)',data:mDev,backgroundColor:'#105000cc',borderRadius:5,type:'bar'}
+]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{anchor:'end',align:'top',font:{size:9,weight:'bold'},color:'#105000',formatter:function(v){return v>0?v.toFixed(1)+'M':'';}
+}},scales:{y:{beginAtZero:true,grid:{color:'#f5f5f5'},ticks:{callback:function(v){return v+'M';}}},x:{grid:{display:false}}}}});
 var mEl=document.getElementById('cMens');
 if(mEl){var mh=mEl.closest('.card').querySelector('.ct');if(mh)mh.innerHTML='<span class="dot"></span>'+mTitle;}
 }
@@ -1241,7 +1223,7 @@ CH['cMens2'].update();
 set('ej-t-mens',T('Ejecución Mensual vs Acumulada '+my));
 /* 3) macrorregión (dona): n° de inversiones del filtro (con año: solo las que ejecutaron ese año) */
 var atomsY=anio?atoms.filter(function(p){var r=(cuiYearFin[String(p.CUI)]||{})[anio];return r&&((r.Cert||0)>0||(r.Dev||0)>0);}):atoms;
-var mac={};atomsY.forEach(function(p){var k=p.Macroregion||'—';mac[k]=(mac[k]||0)+1;});
+var mac={};atomsY.forEach(function(p){var k=p.Macroregion||'—';if(k==='POR VALIDAR')k='Por validar';mac[k]=(mac[k]||0)+1;});
 var mks=Object.keys(mac).sort(function(a,b){return mac[b]-mac[a];});
 CH['cMacro'].data.labels=mks.map(function(x){return T(x);});
 CH['cMacro'].data.datasets[0].data=mks.map(function(k){return mac[k];});
@@ -1513,7 +1495,7 @@ const d=dept2026[dept];
 const n=d.nProj||0;
 const deptNames={'HUANUCO':'Huánuco','SAN MARTIN':'San Martín','MADRE DE DIOS':'Madre de Dios','LA LIBERTAD':'La Libertad','MULTIDEPARTAMENTAL':'Multi-departamental'};
 const lbl=deptNames[dept]||(dept.split(' ').map(w=>w[0]+w.slice(1).toLowerCase()).join(' '));
-g+='<div onclick="selectDeptCard(\''+dept+'\')" '
+g+='<div onclick="selectDeptCard(\''+dept+'\')" title="Devengado acumulado: S/ '+((depDv[dept]||0)).toFixed(1)+'M" '
 +'style="background:#fff;border:1.5px solid '+col+'30;border-left:4px solid '+col+';'
 +'border-radius:8px;padding:9px 11px;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.06);'
 +'display:flex;align-items:center;justify-content:space-between;gap:6px;" '
@@ -1806,6 +1788,8 @@ Object.keys(_cyu).forEach(function(c){
 });
 var _cu=window._datosActualizados.costoUpdate||{};
 Object.keys(_cu).forEach(function(k){if(_cu[k]!=null)costoData[k]=_cu[k];});
+/* 19-07-2026: repintar KPIs tras fusionar el corte diario (evita cifras viejas en el primer render) */
+try{if(typeof renderKPIs==='function')renderKPIs(selectedDept||null);}catch(_){}
 }
 function showProjectDetail(cui){
 /* 12-07-2026: recordar de dónde venimos (pestaña + scroll) para el botón Regresar */
@@ -2114,7 +2098,7 @@ return _notaSM
 <select id="foto-inv-sel" onchange="if(window._fotoMes)_fotoMes('${cui}',this.value)" onclick="event.stopPropagation()" style="display:none;position:absolute;bottom:6px;right:6px;font-size:9px;font-weight:700;color:#105000;background:rgba(255,255,255,.92);border:1px solid #C8E6C9;border-radius:8px;padding:2px 4px;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.2);max-width:90%"></select>
 <div class="foto-ph2" style="display:none;position:absolute;inset:0;flex-direction:column;align-items:center;justify-content:center;gap:3px;text-align:center;padding:4px">
 <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#A5C8A5" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.6"/><path d="M3 16l5-5 4 4 3-3 6 6"/></svg>
-<div style="font-size:9px;font-weight:700;color:#8AA98A;text-transform:uppercase;letter-spacing:.3px;line-height:1.3">Vista de la<br>Inversión</div>
+<div style="font-size:9px;font-weight:700;color:#8AA98A;text-transform:uppercase;letter-spacing:.3px;line-height:1.3">Fotografía de obra<br>en preparación</div>
 </div>
 </div>
 </div>
@@ -2484,7 +2468,7 @@ var D={
 'Impacto Nacional':'全国インパクト','Detalle de Inversiones':'投資の詳細','Ejecución Presupuestal':'予算執行',
 'Volver':'戻る','← Volver':'← 戻る','Regresar':'戻る','← Regresar':'← 戻る',
 /* filtros y buscadores */
-'Filtros:':'絞り込み:','FILTROS:':'絞り込み:','Todos los convenios':'すべての協定','Sin convenio':'協定なし','Devengado por Tipo de inversión':'投資タイプ別支出実績','Cartera: Avance físico vs Devengado':'ポートフォリオ: 物理的進捗×支出実績','tamaño = certificación':'バブルの大きさ = 予算確保額','% avance físico':'物理的進捗率(%)','Devengado (M S/)':'支出実績(百万S/)','Avance físico':'物理的進捗','N° Inversiones':'投資件数','con ejecución en el período':'対象期間に執行実績あり','Acumulado histórico UE003':'UE003歴代累計','Vista actual:':'現在の表示:','Todo el período':'全期間','Limpiar filtros':'フィルター解除','El detalle mensual con filtros está disponible solo para 2026':'フィルター適用時の月次詳細は2026年のみ表示できます','Certificación vs Devengado por Convenio':'協定別 予算確保対支出実績','N° de inversiones':'投資件数','Norte/Oriente':'北部/東部','Sur/Oriente':'南部/東部','Multidepartamental':'複数県','POR VALIDAR':'確認待ち','🔔 Novedades':'🔔 最新情報','Novedades':'最新情報','NORMATIVA · PRENSA · DOCUMENTOS':'法令 · 報道 · 文書','NORMATIVA':'法令','PRENSA':'報道','DOCUMENTO':'文書','EN SEGUIMIENTO':'フォロー中','NUEVO':'新着','Sin novedades por ahora.':'現在、新着情報はありません。','Abrir en pestaña nueva':'新しいタブで開く','Nuevo Reglamento del SNPMGI — DS 140-2026-EF':'SNPMGI新規則 — DS 140-2026-EF','Publicado en El Peruano el 18/07/2026 · aprueba el nuevo Reglamento del DL 1252 y deroga el DS 284-2018-EF · clic para abrir el PDF':'2026年7月18日エル・ペルアーノ官報に公布 · DL 1252の新規則を承認しDS 284-2018-EFを廃止 · クリックでPDFを開く','Todos los años':'すべての年度','Todos los tipos':'すべての種類',
+'Filtros:':'絞り込み:','FILTROS:':'絞り込み:','Todos los convenios':'すべての協定','Certificación Acumulada':'累計予算確保','Abrir la ficha de la inversión':'投資帳票を開く','Formato 12B — Banco de Inversiones · clic para abrir la ficha':'様式12B — 投資銀行(MEF) · クリックで帳票を開く','Fotografía de obra':'工事写真','en preparación':'準備中','Por validar':'確認待ち','Sin convenio':'協定なし','Devengado por Tipo de inversión':'投資タイプ別支出実績','Cartera: Avance físico vs Devengado':'ポートフォリオ: 物理的進捗×支出実績','tamaño = certificación':'バブルの大きさ = 予算確保額','% avance físico':'物理的進捗率(%)','Devengado (M S/)':'支出実績(百万S/)','Avance físico':'物理的進捗','N° Inversiones':'投資件数','con ejecución en el período':'対象期間に執行実績あり','Acumulado histórico UE003':'UE003歴代累計','Vista actual:':'現在の表示:','Todo el período':'全期間','Limpiar filtros':'フィルター解除','El detalle mensual con filtros está disponible solo para 2026':'フィルター適用時の月次詳細は2026年のみ表示できます','Certificación vs Devengado por Convenio':'協定別 予算確保対支出実績','N° de inversiones':'投資件数','Norte/Oriente':'北部/東部','Sur/Oriente':'南部/東部','Multidepartamental':'複数県','POR VALIDAR':'確認待ち','🔔 Novedades':'🔔 最新情報','Novedades':'最新情報','NORMATIVA · PRENSA · DOCUMENTOS':'法令 · 報道 · 文書','NORMATIVA':'法令','PRENSA':'報道','DOCUMENTO':'文書','EN SEGUIMIENTO':'フォロー中','NUEVO':'新着','Sin novedades por ahora.':'現在、新着情報はありません。','Abrir en pestaña nueva':'新しいタブで開く','Nuevo Reglamento del SNPMGI — DS 140-2026-EF':'SNPMGI新規則 — DS 140-2026-EF','Publicado en El Peruano el 18/07/2026 · aprueba el nuevo Reglamento del DL 1252 y deroga el DS 284-2018-EF · clic para abrir el PDF':'2026年7月18日エル・ペルアーノ官報に公布 · DL 1252の新規則を承認しDS 284-2018-EFを廃止 · クリックでPDFを開く','Todos los años':'すべての年度','Todos los tipos':'すべての種類',
 'Convenios':'協定','Años':'年度','Tipos':'種類','✕ Limpiar':'✕ クリア','IR':'検索','Nombre':'名称',
 'Gestión integral de residuos sólidos':'廃棄物総合管理','Infraestructura de disposición final':'最終処分インフラ','Recuperación de áreas degradadas':'劣化地域の回復','Limpieza pública':'公共清掃','Fortalecimiento institucional':'組織能力強化',
 /* Impacto Nacional */
@@ -2636,7 +2620,7 @@ var RX=[
 [/^(\d+)\+ proy\.$/,'$1件以上'],[/^(\d+) proy\.$/,'$1件'],
 [/^🌿 Inversiones con hectáreas a recuperar · (\d{4}) \((\d+)\)$/i,'🌿 ヘクタール回復投資 · $1年 ($2件)'],
 [/^🚛 Vehículos de limpieza pública · (\d{4}) \((\d+) inversiones\)$/i,'🚛 公共清掃車両 · $1年 (投資$2件)'],
-[/^([\d\.,]+)\s*N[ÚU]MERO DE EQUIPAMIENTO$/i,'機材 $1台'],[/^Certificación (\d{4}(?:–\d{4})?)$/,'予算確保 $1'],[/^Devengado (\d{4}(?:–\d{4})?)$/,'支出実績 $1'],[/^Girado (\d{4}(?:–\d{4})?)$/,'支払額 $1'],[/^Presupuesto certificado (\d{4})$/,'$1年の予算確保額'],[/^Avance: ([\d\.,]+)% de la Certificación$/,'進捗率: $1%(予算確保比)'],[/^Certificación – Devengado – Girado \((\d{4}(?:–\d{4})?)\)$/,'予算確保・支出実績・支払額($1)'],[/^Año (\d{4})$/,'$1年'],[/^([\d\.,]+)\s*N[ÚU]MERO DE ESTRUCTURAS F[ÍI]SICAS$/i,'構造物 $1基'],[/^([\d\.,]+)\s*ESTUDIOS$/i,'調査 $1件'],[/^([\d\.,]+)\s*MODULOS? DE MOBILIARIO$/i,'家具モジュール $1式'],[/^([\d\.,]+)\s*KIT DE MOBILIARIO$/i,'家具キット $1式'],[/^([\d\.,]+)\s*HA$/i,'$1ヘクタール'],[/^M2 ?\/ ?([\d\.,]+)$/i,'面積 $1 m²'],[/^M3 ?\/ ?([\d\.,]+)$/i,'容量 $1 m³'],[/^KM ?\/ ?([\d\.,]+)$/i,'延長 $1 km'],[/^KIT DE EQUIPAMIENTO ?\/ ?([\d\.,]+)$/i,'機材キット $1式'],[/^([\d\.,]+)\s*N[ÚU]MERO DE EQUIPOS$/i,'機器 $1台'],
+[/^([\d\.,]+)\s*N[ÚU]MERO DE EQUIPAMIENTO$/i,'機材 $1台'],[/^(.+) — Estado situacional actualizado$/,'$1 — 状況報告更新'],[/^Presupuesto certificado · (.+)$/,'予算確保 · $1'],[/^Ejecutado total · ([\d\.]+)% de la Certificación$/,'執行総額 · 予算確保の$1%'],[/^Devengado acumulado: S\/ ([\d\.,]+)M$/,'累計支出実績: S/ $1M'],[/^Certificación (\d{4}(?:–\d{4})?)$/,'予算確保 $1'],[/^Devengado (\d{4}(?:–\d{4})?)$/,'支出実績 $1'],[/^Girado (\d{4}(?:–\d{4})?)$/,'支払額 $1'],[/^Presupuesto certificado (\d{4})$/,'$1年の予算確保額'],[/^Avance: ([\d\.,]+)% de la Certificación$/,'進捗率: $1%(予算確保比)'],[/^Certificación – Devengado – Girado \((\d{4}(?:–\d{4})?)\)$/,'予算確保・支出実績・支払額($1)'],[/^Año (\d{4})$/,'$1年'],[/^([\d\.,]+)\s*N[ÚU]MERO DE ESTRUCTURAS F[ÍI]SICAS$/i,'構造物 $1基'],[/^([\d\.,]+)\s*ESTUDIOS$/i,'調査 $1件'],[/^([\d\.,]+)\s*MODULOS? DE MOBILIARIO$/i,'家具モジュール $1式'],[/^([\d\.,]+)\s*KIT DE MOBILIARIO$/i,'家具キット $1式'],[/^([\d\.,]+)\s*HA$/i,'$1ヘクタール'],[/^M2 ?\/ ?([\d\.,]+)$/i,'面積 $1 m²'],[/^M3 ?\/ ?([\d\.,]+)$/i,'容量 $1 m³'],[/^KM ?\/ ?([\d\.,]+)$/i,'延長 $1 km'],[/^KIT DE EQUIPAMIENTO ?\/ ?([\d\.,]+)$/i,'機材キット $1式'],[/^([\d\.,]+)\s*N[ÚU]MERO DE EQUIPOS$/i,'機器 $1台'],
 [/^([\d\.,]+)\s*N[ÚU]MERO DE VEH[ÍI]CULOS$/i,'車両 $1台'],
 [/^([\d\.,]+)\s*KIT DE EQUIPAMIENTO$/i,'機材キット $1式'],[/^([\d\.,]+)\s*KIT DE HERRAMIENTAS$/i,'工具キット $1式'],
 [/^([\d\.,]+)\s*N° DE DOCUMENTOS$/i,'文書 $1件'],
@@ -3644,8 +3628,8 @@ root.innerHTML=''
 +'<div class="imp-leyenda" style="display:flex;gap:8px;font-size:9px;font-weight:700;color:#546E7A">'
 +'<span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#2E7D32"></span> Culminada</span>'
 +'<span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#1565C0"></span> En ejecución</span>'
-+'<span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#E65100"></span> Suspendida</span>'
-+'<span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#F9A825"></span> Por iniciar</span>'
++'<span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:#E65100"></span> Suspendida</span>'
++'<span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;transform:rotate(45deg);background:#F9A825"></span> Por iniciar</span>'
 +'</div></div>'
 +'<div id="mapa-nacional" style="flex:1;min-height:440px;border-radius:11px;overflow:hidden"></div>'
 +'</div>'
@@ -3702,7 +3686,7 @@ if(!geo.length)continue;
 var e=_estadoObra(cui);var col=cols[e];
 for(var gi=0;gi<geo.length;gi++){
 var pt=geo[gi];
-var ic=L.divIcon({className:'',html:'<div class="nac-pin"><div class="on" style="background:'+col+'88"></div><div class="nu" style="background:'+col+'"></div></div>',iconSize:[20,20],iconAnchor:[10,10]});
+var ic=L.divIcon({className:'',html:'<div class="nac-pin"><div class="on" style="background:'+col+'88"></div><div class="nu" style="background:'+col+(e==='suspendida'?';border-radius:3px':'')+(e==='por_iniciar'?';border-radius:3px;transform:rotate(45deg)':'')+'"></div></div>',iconSize:[20,20],iconAnchor:[10,10]});
 var mk=L.marker([pt[0],pt[1]],{icon:ic}).addTo(mp);
 mk.bindPopup('<div style="max-width:190px"><b style="font-size:12px">'+((typeof cuiShortName!=='undefined'&&cuiShortName[cui])||p2.Proyecto.slice(0,40)+'…')+'</b>'
 +'<div style="font-size:10px;color:#555;margin-top:3px">CUI '+cui+' · '+pt[4]+', '+pt[2]+'</div>'
