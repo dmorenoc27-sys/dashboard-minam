@@ -493,9 +493,9 @@ if(e.key==='F12'){e.preventDefault();return false;}
   <div id="ej-grid">
     <div class="card"><div class="ch"><div class="ct"><span class="dot"></span><span id="ej-t-mens">Ejecución Mensual vs Acumulada 2026</span></div><span class="csub">Millones S/</span></div><div class="cb"><div class="ej-cv"><canvas id="cMens2"></canvas><div id="ej-mens-empty"></div></div></div></div>
     <div class="card"><div class="ch"><div class="ct"><span class="dot"></span><span id="ej-t-tend">Certificación – Devengado – Girado (2013–2026)</span></div><span class="csub">Millones S/</span></div><div class="cb"><div class="ej-cv"><canvas id="cTend2"></canvas></div></div></div>
-    <div class="card"><div class="ch"><div class="ct"><span class="dot"></span><span id="ej-t-conv">Certificación vs Devengado por Convenio</span></div><span class="csub">Millones S/</span></div><div class="cb"><div class="ej-cv"><canvas id="cConv2"></canvas></div></div></div>
+    <div class="card"><div class="ch"><div class="ct"><span class="dot"></span><span id="ej-t-conv">Certificación vs Devengado por Convenio</span></div><span class="csub">Millones S/ · clic = filtrar</span></div><div class="cb"><div class="ej-cv"><canvas id="cConv2"></canvas></div></div></div>
     <div class="card"><div class="ch"><div class="ct"><span class="dot"></span><span id="ej-t-macro">Distribución por Macrorregión</span></div><span class="csub">N° de inversiones</span></div><div class="cb"><div class="ej-cv"><canvas id="cMacro"></canvas></div></div></div>
-    <div class="card"><div class="ch"><div class="ct"><span class="dot"></span><span id="ej-t-tipo">Devengado por Tipo de inversión</span></div><span class="csub">Millones S/</span></div><div class="cb"><div class="ej-cv"><canvas id="cTipo2"></canvas></div></div></div>
+    <div class="card"><div class="ch"><div class="ct"><span class="dot"></span><span id="ej-t-tipo">Devengado por Tipo de inversión</span></div><span class="csub">Millones S/ · clic = filtrar</span></div><div class="cb"><div class="ej-cv"><canvas id="cTipo2"></canvas></div></div></div>
     <div class="card"><div class="ch"><div class="ct"><span class="dot"></span><span id="ej-t-burb">Cartera: Avance físico vs Devengado</span></div><span class="csub" id="ej-burb-sub">tamaño = certificación</span></div><div class="cb"><div class="ej-cv"><canvas id="cBurb"></canvas></div></div></div>
   </div>
 </div>
@@ -815,10 +815,10 @@ if(id==='ejecucion'){
 var _tE=window._trTxt||function(x){return x;};
 mk('cMens2',{type:'bar',data:{labels:[],datasets:[{label:'Mensual',data:[],backgroundColor:'#66CB00cc',borderRadius:5,maxBarThickness:24},{label:'Acumulado',data:[],type:'line',borderColor:'#105000',borderWidth:2.5,tension:.35,pointRadius:3,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{boxWidth:14,font:{size:10}}}},scales:{y:{ticks:{callback:yFmt,font:{size:9.5}},grid:{color:'#f2f4f2'}},x:{grid:{display:false},ticks:{font:{size:9.5}}}}}});
 mk('cTend2',{type:'line',data:{labels:yearsExt,datasets:[{label:'Certificación',data:[],borderColor:'#2191F1',backgroundColor:'rgba(13,71,161,.07)',fill:true,tension:.4,pointRadius:2.5},{label:'Devengado',data:[],borderColor:'#105000',backgroundColor:'rgba(16,80,0,.08)',fill:true,tension:.4,pointRadius:2.5},{label:'Girado',data:[],borderColor:'#F9A825',tension:.4,pointRadius:2.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{boxWidth:14,font:{size:10}}}},scales:{y:{ticks:{callback:yFmt,font:{size:9.5}},grid:{color:'#f2f4f2'}},x:{grid:{display:false},ticks:{font:{size:9},maxRotation:0,autoSkip:true}}}}});
-mk('cConv2',{type:'bar',data:{labels:[],datasets:[{label:'Certificación (M S/)',data:[],backgroundColor:'#105000cc',borderRadius:5,maxBarThickness:15},{label:'Devengado (M S/)',data:[],backgroundColor:'#66CB00cc',borderRadius:5,maxBarThickness:15}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{boxWidth:14,font:{size:10}}}},scales:{x:{ticks:{callback:yFmt,font:{size:9.5}},grid:{color:'#f2f4f2'}},y:{grid:{display:false},ticks:{font:{size:9.5}}}}}});
+mk('cConv2',{type:'bar',data:{labels:[],datasets:[{label:'Certificación (M S/)',data:[],backgroundColor:'#105000cc',borderRadius:5,maxBarThickness:15},{label:'Devengado (M S/)',data:[],backgroundColor:'#66CB00cc',borderRadius:5,maxBarThickness:15}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,onHover:function(e,el){e.native.target.style.cursor=el.length?'pointer':'default';},onClick:function(e,els){if(!els||!els.length)return;var k=(CH['cConv2']._keys||[])[els[0].index];var sel=document.getElementById('fConv');if(!k||!sel)return;sel.value=(sel.value===k)?'':k;applyF();},plugins:{legend:{position:'top',labels:{boxWidth:14,font:{size:10}}}},scales:{x:{ticks:{callback:yFmt,font:{size:9.5}},grid:{color:'#f2f4f2'}},y:{grid:{display:false},ticks:{font:{size:9.5}}}}}});
 mk('cMacro',{type:'doughnut',data:{labels:[],datasets:[{data:[],backgroundColor:MU,borderWidth:2,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,cutout:'58%',plugins:{legend:{position:'right',labels:{boxWidth:11,font:{size:9.5}}}}}});
-mk('cTipo2',{type:'polarArea',data:{labels:[],datasets:[{data:[],backgroundColor:MU.map(c=>c+'bb'),borderWidth:1.5,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{boxWidth:11,font:{size:9.5}}}},scales:{r:{ticks:{display:false}}}}});
-mk('cBurb',{type:'bubble',data:{datasets:[{label:'Inversiones',data:[],borderWidth:1,borderColor:'#ffffff'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){var d=c.raw;return d.n+' · '+_tE('Avance físico')+': '+d.x+'% · '+_tE('Devengado')+': S/ '+d.y+'M';}}}},scales:{x:{min:0,max:105,title:{display:true,text:_tE('% avance físico'),font:{size:9.5,weight:'700'},color:'#607D8B'},ticks:{font:{size:9.5}},grid:{color:'#f2f4f2'}},y:{title:{display:true,text:_tE('Devengado (M S/)'),font:{size:9.5,weight:'700'},color:'#607D8B'},ticks:{font:{size:9.5}},grid:{color:'#f2f4f2'}}}}});
+mk('cTipo2',{type:'polarArea',data:{labels:[],datasets:[{data:[],backgroundColor:MU.map(c=>c+'bb'),borderWidth:1.5,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,onHover:function(e,el){e.native.target.style.cursor=el.length?'pointer':'default';},onClick:function(e,els){if(!els||!els.length)return;var k=(CH['cTipo2']._keys||[])[els[0].index];var sel=document.getElementById('fTipo');if(!k||!sel)return;sel.value=(sel.value===k)?'':k;applyF();},plugins:{legend:{position:'right',labels:{boxWidth:11,font:{size:9.5}}}},scales:{r:{ticks:{display:false}}}}});
+mk('cBurb',{type:'bubble',data:{datasets:[{label:'Inversiones',data:[],borderWidth:1,borderColor:'#ffffff'}]},options:{responsive:true,maintainAspectRatio:false,onHover:function(e,el){e.native.target.style.cursor=el.length?'pointer':'default';},onClick:function(e,els){if(!els||!els.length)return;var d=CH['cBurb'].data.datasets[0].data[els[0].index];if(d&&d.cui&&typeof showProjectDetail==='function')showProjectDetail(d.cui);},plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){var d=c.raw;return d.n+' · '+_tE('Avance físico')+': '+d.x+'% · '+_tE('Devengado')+': S/ '+d.y+'M';}}}},scales:{x:{min:0,max:105,title:{display:true,text:_tE('% avance físico'),font:{size:9.5,weight:'700'},color:'#607D8B'},ticks:{font:{size:9.5}},grid:{color:'#f2f4f2'}},y:{title:{display:true,text:_tE('Devengado (M S/)'),font:{size:9.5,weight:'700'},color:'#607D8B'},ticks:{font:{size:9.5}},grid:{color:'#f2f4f2'}}}}});
 if(window._renderEjec)_renderEjec();
 }
 if(id==='cartera'){
@@ -1236,6 +1236,7 @@ yearsExt.forEach(function(y){if(anio&&y!==anio)return;var r=yf[y];if(r){c4+=r.Ce
 if(c4>0||d4>0){var k4=_convON(p.Convenio);var q2=cvAgg[k4]||(cvAgg[k4]={c:0,d:0});q2.c+=c4;q2.d+=d4;}
 });
 var cks=Object.keys(cvAgg).sort(function(a,b){return cvAgg[b].c-cvAgg[a].c;});
+CH['cConv2']._keys=cks;
 CH['cConv2'].data.labels=cks.map(function(x){return T(x);});
 CH['cConv2'].data.datasets[0].data=cks.map(function(k){return +Mm(cvAgg[k].c).toFixed(2);});
 CH['cConv2'].data.datasets[1].data=cks.map(function(k){return +Mm(cvAgg[k].d).toFixed(2);});
@@ -1248,6 +1249,7 @@ yearsExt.forEach(function(y){if(anio&&y!==anio)return;var r=yf[y];if(r)d5+=r.Dev
 if(d5>0){var k5=p.Tipo_Proyecto||'—';tpAgg[k5]=(tpAgg[k5]||0)+d5;}
 });
 var tks=Object.keys(tpAgg).sort(function(a,b){return tpAgg[b]-tpAgg[a];});
+CH['cTipo2']._keys=tks;
 CH['cTipo2'].data.labels=tks.map(function(k){return T(sT(k));});
 CH['cTipo2'].data.datasets[0].data=tks.map(function(k){return +Mm(tpAgg[k]).toFixed(2);});
 CH['cTipo2'].update();
@@ -1260,13 +1262,13 @@ var yf=cuiYearFin[String(p.CUI)]||{},c6=0,d6=0;
 yearsExt.forEach(function(y){if(anio&&y!==anio)return;var r=yf[y];if(r){c6+=r.Cert||0;d6+=r.Dev||0;}});
 if(d6<=0&&c6<=0)return;
 var av=AV[String(p.CUI)];if(av==null)av=0;
-bubs.push({x:+(+av).toFixed(1),y:+Mm(d6).toFixed(2),r:Math.max(4,Math.min(15,Math.sqrt(Mm(c6)||0)*2.1)),n:(typeof cuiShortName!=='undefined'&&cuiShortName[String(p.CUI)])||('CUI '+p.CUI),cv:_convON(p.Convenio)});
+bubs.push({x:+(+av).toFixed(1),y:+Mm(d6).toFixed(2),r:Math.max(4,Math.min(15,Math.sqrt(Mm(c6)||0)*2.1)),n:(typeof cuiShortName!=='undefined'&&cuiShortName[String(p.CUI)])||('CUI '+p.CUI),cv:_convON(p.Convenio),cui:String(p.CUI)});
 });
 CH['cBurb'].data.datasets[0].data=bubs;
 CH['cBurb'].data.datasets[0].backgroundColor=bubs.map(function(b){return (CC[b.cv]||'#607D8B')+'b3';});
 CH['cBurb'].update();
 set('ej-t-burb',T('Cartera: Avance físico vs Devengado'));
-set('ej-burb-sub',T('tamaño = certificación'));
+set('ej-burb-sub',T('tamaño = certificación · clic abre la ficha'));
 };
 const yearData={
 "2013":{"PIA":6.33,"PIM":6.33,"Dev":6.33,"Gir":6.32,"Av":100.0,"N":9,"Obra":0.0,"Gestion":5.68,"Expediente":0.65,"Supervision":0.0,"Adquisicion":0.0},
@@ -2468,7 +2470,7 @@ var D={
 'Impacto Nacional':'全国インパクト','Detalle de Inversiones':'投資の詳細','Ejecución Presupuestal':'予算執行',
 'Volver':'戻る','← Volver':'← 戻る','Regresar':'戻る','← Regresar':'← 戻る',
 /* filtros y buscadores */
-'Filtros:':'絞り込み:','FILTROS:':'絞り込み:','Todos los convenios':'すべての協定','Certificación Acumulada':'累計予算確保','Abrir la ficha de la inversión':'投資帳票を開く','Formato 12B — Banco de Inversiones · clic para abrir la ficha':'様式12B — 投資銀行(MEF) · クリックで帳票を開く','Fotografía de obra':'工事写真','en preparación':'準備中','Por validar':'確認待ち','Sin convenio':'協定なし','Devengado por Tipo de inversión':'投資タイプ別支出実績','Cartera: Avance físico vs Devengado':'ポートフォリオ: 物理的進捗×支出実績','tamaño = certificación':'バブルの大きさ = 予算確保額','% avance físico':'物理的進捗率(%)','Devengado (M S/)':'支出実績(百万S/)','Avance físico':'物理的進捗','N° Inversiones':'投資件数','con ejecución en el período':'対象期間に執行実績あり','Acumulado histórico UE003':'UE003歴代累計','Vista actual:':'現在の表示:','Todo el período':'全期間','Limpiar filtros':'フィルター解除','El detalle mensual con filtros está disponible solo para 2026':'フィルター適用時の月次詳細は2026年のみ表示できます','Certificación vs Devengado por Convenio':'協定別 予算確保対支出実績','N° de inversiones':'投資件数','Norte/Oriente':'北部/東部','Sur/Oriente':'南部/東部','Multidepartamental':'複数県','POR VALIDAR':'確認待ち','🔔 Novedades':'🔔 最新情報','Novedades':'最新情報','NORMATIVA · PRENSA · DOCUMENTOS':'法令 · 報道 · 文書','NORMATIVA':'法令','PRENSA':'報道','DOCUMENTO':'文書','EN SEGUIMIENTO':'フォロー中','NUEVO':'新着','Sin novedades por ahora.':'現在、新着情報はありません。','Abrir en pestaña nueva':'新しいタブで開く','Nuevo Reglamento del SNPMGI — DS 140-2026-EF':'SNPMGI新規則 — DS 140-2026-EF','Publicado en El Peruano el 18/07/2026 · aprueba el nuevo Reglamento del DL 1252 y deroga el DS 284-2018-EF · clic para abrir el PDF':'2026年7月18日エル・ペルアーノ官報に公布 · DL 1252の新規則を承認しDS 284-2018-EFを廃止 · クリックでPDFを開く','Todos los años':'すべての年度','Todos los tipos':'すべての種類',
+'Filtros:':'絞り込み:','FILTROS:':'絞り込み:','Todos los convenios':'すべての協定','Millones S/ · clic = filtrar':'百万S/ · クリックで絞り込み','tamaño = certificación · clic abre la ficha':'大きさ=予算確保 · クリックで帳票を開く','Certificación Acumulada':'累計予算確保','Abrir la ficha de la inversión':'投資帳票を開く','Formato 12B — Banco de Inversiones · clic para abrir la ficha':'様式12B — 投資銀行(MEF) · クリックで帳票を開く','Fotografía de obra':'工事写真','en preparación':'準備中','Por validar':'確認待ち','Sin convenio':'協定なし','Devengado por Tipo de inversión':'投資タイプ別支出実績','Cartera: Avance físico vs Devengado':'ポートフォリオ: 物理的進捗×支出実績','tamaño = certificación':'バブルの大きさ = 予算確保額','% avance físico':'物理的進捗率(%)','Devengado (M S/)':'支出実績(百万S/)','Avance físico':'物理的進捗','N° Inversiones':'投資件数','con ejecución en el período':'対象期間に執行実績あり','Acumulado histórico UE003':'UE003歴代累計','Vista actual:':'現在の表示:','Todo el período':'全期間','Limpiar filtros':'フィルター解除','El detalle mensual con filtros está disponible solo para 2026':'フィルター適用時の月次詳細は2026年のみ表示できます','Certificación vs Devengado por Convenio':'協定別 予算確保対支出実績','N° de inversiones':'投資件数','Norte/Oriente':'北部/東部','Sur/Oriente':'南部/東部','Multidepartamental':'複数県','POR VALIDAR':'確認待ち','🔔 Novedades':'🔔 最新情報','Novedades':'最新情報','NORMATIVA · PRENSA · DOCUMENTOS':'法令 · 報道 · 文書','NORMATIVA':'法令','PRENSA':'報道','DOCUMENTO':'文書','EN SEGUIMIENTO':'フォロー中','NUEVO':'新着','Sin novedades por ahora.':'現在、新着情報はありません。','Abrir en pestaña nueva':'新しいタブで開く','Nuevo Reglamento del SNPMGI — DS 140-2026-EF':'SNPMGI新規則 — DS 140-2026-EF','Publicado en El Peruano el 18/07/2026 · aprueba el nuevo Reglamento del DL 1252 y deroga el DS 284-2018-EF · clic para abrir el PDF':'2026年7月18日エル・ペルアーノ官報に公布 · DL 1252の新規則を承認しDS 284-2018-EFを廃止 · クリックでPDFを開く','Todos los años':'すべての年度','Todos los tipos':'すべての種類',
 'Convenios':'協定','Años':'年度','Tipos':'種類','✕ Limpiar':'✕ クリア','IR':'検索','Nombre':'名称',
 'Gestión integral de residuos sólidos':'廃棄物総合管理','Infraestructura de disposición final':'最終処分インフラ','Recuperación de áreas degradadas':'劣化地域の回復','Limpieza pública':'公共清掃','Fortalecimiento institucional':'組織能力強化',
 /* Impacto Nacional */
@@ -3425,6 +3427,17 @@ return 'suspendida';                                        // con historia, sin
 window._renderImpacto=function(){
 var root=document.getElementById('impacto-root');
 if(!root)return;
+setTimeout(function(){try{
+var mn=document.getElementById('mapa-nacional');
+if(!mn||window.innerWidth<=1000)return;
+var col=mn.parentElement, row=col?col.parentElement:null;
+if(!row)return;
+var top=row.getBoundingClientRect().top;
+row.style.minHeight=Math.max(480,window.innerHeight-top-96)+'px';
+row.style.alignItems='stretch';
+if(window._mapaNac){setTimeout(function(){try{window._mapaNac.invalidateSize();}catch(_){}},250);}
+if(!window._impFitBound){window._impFitBound=1;window.addEventListener('resize',function(){clearTimeout(window._impFitT);window._impFitT=setTimeout(function(){var pi=document.getElementById('page-impacto');if(pi&&pi.classList.contains('active')&&window._renderImpacto)_renderImpacto();},200);});}
+}catch(_){}},60);
 var lista=(typeof getFiltered==='function')?getFiltered():proyectos;
 var anioSel=(document.getElementById('fAño')&&document.getElementById('fAño').value)||'';
 var anio=anioSel||'2026';
