@@ -336,7 +336,7 @@ if(e.key==='F12'){e.preventDefault();return false;}
 
 <div class="fb">
   <span class="fl">Filtros:</span>
-  <select class="fs" id="fConv" onchange="applyF()"><option value="">Todos los convenios</option><option>BID 1</option><option>BID 2</option><option>JICA 1</option><option>JICA 2</option><option>KFW</option><option>Reactiva Perú 1</option></select>
+  <select class="fs" id="fConv" onchange="applyF()"><option value="">Todos los convenios</option><option>BID 1</option><option>BID 2</option><option>JICA 1</option><option>JICA 2</option><option>KFW</option><option>Reactiva Perú 1</option><option>Sin convenio</option></select>
   <select class="fs" <select class="fs" id="fAño" onchange="applyF()"><option value="">Todos los años</option><option>2014</option><option>2015</option><option>2016</option><option>2017</option><option>2018</option><option>2019</option><option>2020</option><option>2021</option><option>2022</option><option>2023</option><option>2024</option><option>2025</option><option>2026</option></select>
   <select class="fs" id="fTipo" onchange="applyF()"><option value="">Todos los tipos</option><option>Gestión integral de residuos sólidos</option><option>Infraestructura de disposición final</option><option>Limpieza pública</option><option>Recuperación de áreas degradadas</option></select>
   <span class="ftag" onclick="resetF()">✕ Limpiar</span>
@@ -598,6 +598,8 @@ const fAñoEl=document.getElementById('fAño');
 if(fAñoEl) fAñoEl.style.display=id==='geografico'?'none':'';
 setTimeout(()=>initPage(id),60);
 }
+const _CONVOFI=['BID 1','BID 2','JICA 1','JICA 2','KFW','Reactiva Perú 1'];
+function _convON(c){return _CONVOFI.indexOf(c)>=0?c:'Sin convenio';}
 function getFiltered(){
 const cv =document.getElementById('fConv').value;
 const anio=document.getElementById('fAño').value;
@@ -605,7 +607,7 @@ const tp =document.getElementById('fTipo').value;
 const yCUIs=anio?(yearCUIs[anio]||[]):null;
 return proyectos.filter(p=>
 (!yCUIs||yCUIs.includes(p.CUI))&&
-(!cv||p.Convenio===cv)&&
+(!cv||_convON(p.Convenio)===cv)&&
 (!tp||p.Tipo_Proyecto===tp)
 );
 }
@@ -669,7 +671,7 @@ const anio=document.getElementById('fAño').value;
 const tp=document.getElementById('fTipo').value;
 document.querySelectorAll('#ptbody tr').forEach(tr=>{
 const d=tr.dataset;
-tr.style.display=(!cv||d.conv===cv)&&(!anio||d.anio===anio)&&(!tp||d.tipo===tp)?'':'none';
+tr.style.display=(!cv||_convON(d.conv)===cv)&&(!anio||d.anio===anio)&&(!tp||d.tipo===tp)?'':'none';
 });
 const filtered=getFiltered();
 filtered_cache=filtered;
@@ -890,6 +892,7 @@ const convColor={
 'KFW': '#48B267',
 'Reactiva Perú 1': '#66CB00',
 'SIN CARTERA': '#44546A',
+'Sin convenio': '#607D8B',
 'Celdas transitorias': '#52BA45'
 };
 function renderKPIs(dept){
@@ -899,7 +902,7 @@ const cv =document.getElementById('fConv') ?document.getElementById('fConv').val
 const anio=document.getElementById('fAño') ?document.getElementById('fAño').value :'';
 const tp =document.getElementById('fTipo') ?document.getElementById('fTipo').value :'';
 const portfolio=dept
-? proyectos.filter(p=>p.Departamento===dept&&(!cv||p.Convenio===cv)&&(!tp||p.Tipo_Proyecto===tp))
+? proyectos.filter(p=>p.Departamento===dept&&(!cv||_convON(p.Convenio)===cv)&&(!tp||p.Tipo_Proyecto===tp))
 : getFiltered();
 const nProj=portfolio.length;
 let pim,dev,gir,label,sublabel;
@@ -1153,7 +1156,7 @@ var cv=document.getElementById('fConv')?document.getElementById('fConv').value:'
 var anio=document.getElementById('fAño')?document.getElementById('fAño').value:'';
 var tp=document.getElementById('fTipo')?document.getElementById('fTipo').value:'';
 var T=window._trTxt||function(x){return x;};
-var atoms=proyectos.filter(function(p){return (!cv||p.Convenio===cv)&&(!tp||p.Tipo_Proyecto===tp);});
+var atoms=proyectos.filter(function(p){return (!cv||_convON(p.Convenio)===cv)&&(!tp||p.Tipo_Proyecto===tp);});
 var perAll={},cert=0,dev=0,gir=0,nEj=0;
 atoms.forEach(function(p){
 var yf=cuiYearFin[String(p.CUI)]||{},tuvo=false;
@@ -1183,7 +1186,7 @@ var ctx=document.getElementById('ej-ctx');
 if(ctx){
 ctx.innerHTML='<span class="ejc-lbl">'+T('Vista actual:')+'</span>'
 +'<span class="ejc-chip'+(anio?' on':'')+'">📅 '+(anio?T('Año '+anio):T('Todo el período'))+'</span>'
-+'<span class="ejc-chip'+(cv?' on':'')+'">🤝 '+(cv||T('Todos los convenios'))+'</span>'
++'<span class="ejc-chip'+(cv?' on':'')+'">🤝 '+(cv?T(cv):T('Todos los convenios'))+'</span>'
 +'<span class="ejc-chip'+(tp?' on':'')+'">🏷️ '+(tp?T(tp):T('Todos los tipos'))+'</span>'
 +((cv||anio||tp)?'<span class="ejc-x" onclick="resetF()">✕ '+T('Limpiar filtros')+'</span>':'');
 }
@@ -1248,7 +1251,7 @@ var cvAgg={};
 atoms.forEach(function(p){
 var yf=cuiYearFin[String(p.CUI)]||{},c4=0,d4=0;
 yearsExt.forEach(function(y){if(anio&&y!==anio)return;var r=yf[y];if(r){c4+=r.Cert||0;d4+=r.Dev||0;}});
-if(c4>0||d4>0){var q2=cvAgg[p.Convenio]||(cvAgg[p.Convenio]={c:0,d:0});q2.c+=c4;q2.d+=d4;}
+if(c4>0||d4>0){var k4=_convON(p.Convenio);var q2=cvAgg[k4]||(cvAgg[k4]={c:0,d:0});q2.c+=c4;q2.d+=d4;}
 });
 var cks=Object.keys(cvAgg).sort(function(a,b){return cvAgg[b].c-cvAgg[a].c;});
 CH['cConv2'].data.labels=cks.map(function(x){return T(x);});
@@ -1275,7 +1278,7 @@ var yf=cuiYearFin[String(p.CUI)]||{},c6=0,d6=0;
 yearsExt.forEach(function(y){if(anio&&y!==anio)return;var r=yf[y];if(r){c6+=r.Cert||0;d6+=r.Dev||0;}});
 if(d6<=0&&c6<=0)return;
 var av=AV[String(p.CUI)];if(av==null)av=0;
-bubs.push({x:+(+av).toFixed(1),y:+Mm(d6).toFixed(2),r:Math.max(4,Math.min(15,Math.sqrt(Mm(c6)||0)*2.1)),n:(typeof cuiShortName!=='undefined'&&cuiShortName[String(p.CUI)])||('CUI '+p.CUI),cv:p.Convenio});
+bubs.push({x:+(+av).toFixed(1),y:+Mm(d6).toFixed(2),r:Math.max(4,Math.min(15,Math.sqrt(Mm(c6)||0)*2.1)),n:(typeof cuiShortName!=='undefined'&&cuiShortName[String(p.CUI)])||('CUI '+p.CUI),cv:_convON(p.Convenio)});
 });
 CH['cBurb'].data.datasets[0].data=bubs;
 CH['cBurb'].data.datasets[0].backgroundColor=bubs.map(function(b){return (CC[b.cv]||'#607D8B')+'b3';});
@@ -1442,7 +1445,7 @@ return `<div data-proj-card data-proj-cui="${p.CUI}" onclick="showProjectDetail(
 <!-- Tags -->
 <div style="padding:6px 10px;display:flex;flex-wrap:wrap;gap:4px;border-bottom:1px solid #f0f0f0">
 ${_tiTag}
-<span style="font-size:9px;background:#e8f5e9;color:#105000;padding:2px 7px;border-radius:8px;font-weight:600">${p.Convenio}</span>
+<span style="font-size:9px;background:#e8f5e9;color:#105000;padding:2px 7px;border-radius:8px;font-weight:600">${_convON(p.Convenio)}</span>
 <span style="font-size:9px;background:#e3f2fd;color:#2191F1;padding:2px 7px;border-radius:8px">${p.Tipo_Brecha||p.Tipo_Proyecto.replace('Gestión integral de residuos sólidos','GIRS').replace('Infraestructura de disposición final','Inf. DF')}</span>
 <span style="font-size:9px;background:#f3e5f5;color:#6A1B9A;padding:2px 7px;border-radius:8px">Desde ${p.Año}</span>
 </div>
@@ -1562,9 +1565,9 @@ if(!filtered.length){
 body.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#bbb;font-size:13px">Sin proyectos con los filtros aplicados</div>';
 return;
 }
-const convOrder=['BID 1','BID 2','JICA 1','JICA 2','KFW','Reactiva Perú 1','SIN CARTERA','Celdas transitorias'];
+const convOrder=['BID 1','BID 2','JICA 1','JICA 2','KFW','Reactiva Perú 1','Sin convenio'];
 const byConv={};
-filtered.forEach(p=>{const c=p.Convenio||'SIN CARTERA';(byConv[c]=byConv[c]||[]).push(p);});
+filtered.forEach(p=>{const c=_convON(p.Convenio);(byConv[c]=byConv[c]||[]).push(p);});
 const orderedConvs=[...convOrder.filter(c=>byConv[c]),...Object.keys(byConv).filter(c=>!convOrder.includes(c))];
 let out='';
 orderedConvs.forEach((conv,ci)=>{
@@ -1608,7 +1611,7 @@ const _fTp=document.getElementById('fTipo')?document.getElementById('fTipo').val
 const _fCUIs=_fAnio?(yearCUIs[_fAnio]||[]):null;
 const dProjs=proyectos.filter(p=>p.Departamento===dept
 &&(!_fCUIs||_fCUIs.includes(p.CUI))
-&&(!_fCv||p.Convenio===_fCv)
+&&(!_fCv||_convON(p.Convenio)===_fCv)
 &&(!_fTp||p.Tipo_Proyecto===_fTp));
 const agg=dept2026[dept]||{};
 const totalDev=agg.Dev||0;
@@ -2481,7 +2484,7 @@ var D={
 'Impacto Nacional':'全国インパクト','Detalle de Inversiones':'投資の詳細','Ejecución Presupuestal':'予算執行',
 'Volver':'戻る','← Volver':'← 戻る','Regresar':'戻る','← Regresar':'← 戻る',
 /* filtros y buscadores */
-'Filtros:':'絞り込み:','FILTROS:':'絞り込み:','Todos los convenios':'すべての協定','Devengado por Tipo de inversión':'投資タイプ別支出実績','Cartera: Avance físico vs Devengado':'ポートフォリオ: 物理的進捗×支出実績','tamaño = certificación':'バブルの大きさ = 予算確保額','% avance físico':'物理的進捗率(%)','Devengado (M S/)':'支出実績(百万S/)','Avance físico':'物理的進捗','N° Inversiones':'投資件数','con ejecución en el período':'対象期間に執行実績あり','Acumulado histórico UE003':'UE003歴代累計','Vista actual:':'現在の表示:','Todo el período':'全期間','Limpiar filtros':'フィルター解除','El detalle mensual con filtros está disponible solo para 2026':'フィルター適用時の月次詳細は2026年のみ表示できます','Certificación vs Devengado por Convenio':'協定別 予算確保対支出実績','N° de inversiones':'投資件数','Norte/Oriente':'北部/東部','Sur/Oriente':'南部/東部','Multidepartamental':'複数県','POR VALIDAR':'確認待ち','🔔 Novedades':'🔔 最新情報','Novedades':'最新情報','NORMATIVA · PRENSA · DOCUMENTOS':'法令 · 報道 · 文書','NORMATIVA':'法令','PRENSA':'報道','DOCUMENTO':'文書','EN SEGUIMIENTO':'フォロー中','NUEVO':'新着','Sin novedades por ahora.':'現在、新着情報はありません。','Abrir en pestaña nueva':'新しいタブで開く','Nuevo Reglamento del SNPMGI — DS 140-2026-EF':'SNPMGI新規則 — DS 140-2026-EF','Publicado en El Peruano el 18/07/2026 · aprueba el nuevo Reglamento del DL 1252 y deroga el DS 284-2018-EF · clic para abrir el PDF':'2026年7月18日エル・ペルアーノ官報に公布 · DL 1252の新規則を承認しDS 284-2018-EFを廃止 · クリックでPDFを開く','Todos los años':'すべての年度','Todos los tipos':'すべての種類',
+'Filtros:':'絞り込み:','FILTROS:':'絞り込み:','Todos los convenios':'すべての協定','Sin convenio':'協定なし','Devengado por Tipo de inversión':'投資タイプ別支出実績','Cartera: Avance físico vs Devengado':'ポートフォリオ: 物理的進捗×支出実績','tamaño = certificación':'バブルの大きさ = 予算確保額','% avance físico':'物理的進捗率(%)','Devengado (M S/)':'支出実績(百万S/)','Avance físico':'物理的進捗','N° Inversiones':'投資件数','con ejecución en el período':'対象期間に執行実績あり','Acumulado histórico UE003':'UE003歴代累計','Vista actual:':'現在の表示:','Todo el período':'全期間','Limpiar filtros':'フィルター解除','El detalle mensual con filtros está disponible solo para 2026':'フィルター適用時の月次詳細は2026年のみ表示できます','Certificación vs Devengado por Convenio':'協定別 予算確保対支出実績','N° de inversiones':'投資件数','Norte/Oriente':'北部/東部','Sur/Oriente':'南部/東部','Multidepartamental':'複数県','POR VALIDAR':'確認待ち','🔔 Novedades':'🔔 最新情報','Novedades':'最新情報','NORMATIVA · PRENSA · DOCUMENTOS':'法令 · 報道 · 文書','NORMATIVA':'法令','PRENSA':'報道','DOCUMENTO':'文書','EN SEGUIMIENTO':'フォロー中','NUEVO':'新着','Sin novedades por ahora.':'現在、新着情報はありません。','Abrir en pestaña nueva':'新しいタブで開く','Nuevo Reglamento del SNPMGI — DS 140-2026-EF':'SNPMGI新規則 — DS 140-2026-EF','Publicado en El Peruano el 18/07/2026 · aprueba el nuevo Reglamento del DL 1252 y deroga el DS 284-2018-EF · clic para abrir el PDF':'2026年7月18日エル・ペルアーノ官報に公布 · DL 1252の新規則を承認しDS 284-2018-EFを廃止 · クリックでPDFを開く','Todos los años':'すべての年度','Todos los tipos':'すべての種類',
 'Convenios':'協定','Años':'年度','Tipos':'種類','✕ Limpiar':'✕ クリア','IR':'検索','Nombre':'名称',
 'Gestión integral de residuos sólidos':'廃棄物総合管理','Infraestructura de disposición final':'最終処分インフラ','Recuperación de áreas degradadas':'劣化地域の回復','Limpieza pública':'公共清掃','Fortalecimiento institucional':'組織能力強化',
 /* Impacto Nacional */
