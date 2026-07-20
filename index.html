@@ -861,19 +861,7 @@ const NOVEDADES=[
 window._novHTML=function(){
 var M={NORMA:['NORMATIVA','#6A1B9A'],PRENSA:['PRENSA','#1565C0'],DOC:['DOCUMENTO','#2E7D32'],SEG:['EN SEGUIMIENTO','#E65100']};
 var hoy=new Date();
-var items=NOVEDADES.slice();
-try{
-var _su=(window._datosActualizados||{}).situacionUpdate||{};
-var _autos=[];
-Object.keys(_su).forEach(function(cui){
-var m=String(_su[cui]).match(/^\[(\d{2})\/(\d{2})\/(\d{4})\]/);
-if(!m)return;
-_autos.push({f:m[3]+'-'+m[2]+'-'+m[1],t:'SEG',ti:((typeof cuiShortName!=='undefined'&&cuiShortName[cui])||('CUI '+cui))+' — Estado situacional actualizado',d:'Formato 12B — Banco de Inversiones · clic para abrir la ficha',cui:cui});
-});
-_autos.sort(function(a,b){return b.f.localeCompare(a.f);});
-items=items.concat(_autos.slice(0,3));
-}catch(_){}
-items=items.sort(function(a,b){return ((a.pin?1:0)-(b.pin?1:0))||b.f.localeCompare(a.f);});
+var items=NOVEDADES.slice().sort(function(a,b){return ((a.pin?1:0)-(b.pin?1:0))||b.f.localeCompare(a.f);});
 if(!items.length)return '<div style="font-size:11px;color:#90A4AE;padding:8px 4px">Sin novedades por ahora.</div>';
 var h='';
 items.forEach(function(n){
