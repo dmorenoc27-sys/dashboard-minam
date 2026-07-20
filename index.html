@@ -454,19 +454,32 @@ if(e.key==='F12'){e.preventDefault();return false;}
 
 <!-- PAGE 2: EJECUCIÓN -->
 <div class="page" id="page-ejecucion">
+<style>
+#page-ejecucion .cw,#page-ejecucion .cwlg{height:295px}
+#ej-ctx{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:2px 0 12px;padding:9px 14px;background:#fff;border:1px solid #E5E9EF;border-radius:12px;box-shadow:0 1px 4px rgba(16,24,40,.05)}
+.ejc-lbl{font-size:10px;font-weight:900;color:#90A4AE;text-transform:uppercase;letter-spacing:.7px}
+.ejc-chip{font-size:11px;font-weight:800;border-radius:9px;padding:3px 10px;background:#F1F6F1;color:#105000;border:1px solid #DCE9DC}
+.ejc-chip.on{background:#105000;color:#fff;border-color:#105000}
+.ejc-x{margin-left:auto;font-size:10.5px;font-weight:900;color:#C62828;cursor:pointer;background:#FDECEA;border-radius:9px;padding:3px 10px}
+#page-ejecucion .card{transition:box-shadow .18s}
+#page-ejecucion .card:hover{box-shadow:0 4px 14px rgba(16,24,40,.10)}
+#ej-mens-empty{position:absolute;inset:0;display:none;align-items:center;justify-content:center;text-align:center;font-size:12px;font-weight:700;color:#90A4AE;padding:0 30px}
+@media(max-width:900px){#page-ejecucion .cw,#page-ejecucion .cwlg{height:235px}}
+</style>
+  <div id="ej-ctx"></div>
   <div class="kg" style="grid-template-columns:repeat(4,1fr)">
-    <div class="kc"><span class="ki">📋</span><div class="kl" id="ej-pia-lbl">Certificación 2025</div><div class="kv" id="ej-pia">S/ 297.45M</div><div class="ks">Pres. Institucional de Apertura</div></div>
-    <div class="kc gold"><span class="ki">📌</span><div class="kl">PIM 2025</div><div class="kv">S/ 612.7M</div><div class="ks" id="ej-pim-sub">Variación vs 2024: +-100.0%</div></div>
-    <div class="kc"><span class="ki">✅</span><div class="kl" id="ej-dev-lbl">Girado 2025</div><div class="kv" id="ej-dev">S/ 294.58M</div><div class="ks" id="ej-dev-sub">Avance: 100.0% del devengado</div></div>
-    <div class="kc"><span class="ki">💸</span><div class="kl" id="ej-gir-lbl">N° Proyectos 2025</div><div class="kv" id="ej-gir">36</div><div class="ks" id="ej-gir-sub">Proyectos con ejecución en 2025</div></div>
+    <div class="kc"><span class="ki">💰</span><div class="kl" id="ej-k1l">Certificación</div><div class="kv" id="ej-k1v">—</div><div class="ks" id="ej-k1s"></div></div>
+    <div class="kc"><span class="ki">✅</span><div class="kl" id="ej-k2l">Devengado</div><div class="kv" id="ej-k2v">—</div><div class="ks" id="ej-k2s"></div><div class="pb"><div class="pf" id="ej-k2p" style="width:0%"></div></div></div>
+    <div class="kc"><span class="ki">🏦</span><div class="kl" id="ej-k3l">Girado</div><div class="kv" id="ej-k3v">—</div><div class="ks" id="ej-k3s"></div><div class="pb"><div class="pf" id="ej-k3p" style="width:0%"></div></div></div>
+    <div class="kc gold"><span class="ki">📁</span><div class="kl" id="ej-k4l">N° Inversiones</div><div class="kv" id="ej-k4v">—</div><div class="ks" id="ej-k4s"></div></div>
   </div>
   <div class="row r2">
-    <div class="card"><div class="ch"><div class="ct"><span class="dot"></span>Ejecución Mensual vs Acumulada 2025</div><span class="csub">Millones S/</span></div><div class="cb"><div class="cwlg"><canvas id="cMens2"></canvas></div></div></div>
-    <div class="card"><div class="ch"><div class="ct"><span class="dot"></span>PIM – Devengado – Girado (2013–2025)</div><span class="csub">Millones S/</span></div><div class="cb"><div class="cwlg"><canvas id="cTend2"></canvas></div></div></div>
+    <div class="card"><div class="ch"><div class="ct"><span class="dot"></span><span id="ej-t-mens">Ejecución Mensual vs Acumulada 2026</span></div><span class="csub">Millones S/</span></div><div class="cb"><div class="cwlg" style="position:relative"><canvas id="cMens2"></canvas><div id="ej-mens-empty"></div></div></div></div>
+    <div class="card"><div class="ch"><div class="ct"><span class="dot"></span><span id="ej-t-tend">Certificación – Devengado – Girado (2013–2026)</span></div><span class="csub">Millones S/</span></div><div class="cb"><div class="cwlg"><canvas id="cTend2"></canvas></div></div></div>
   </div>
   <div class="row r2">
-    <div class="card"><div class="ch"><div class="ct"><span class="dot"></span>Distribución por Macrorregión</div></div><div class="cb"><div class="cw"><canvas id="cMacro"></canvas></div></div></div>
-    <div class="card"><div class="ch"><div class="ct"><span class="dot"></span>PIM vs Devengado por Convenio</div></div><div class="cb"><div class="cw"><canvas id="cConv2"></canvas></div></div></div>
+    <div class="card"><div class="ch"><div class="ct"><span class="dot"></span><span id="ej-t-macro">Distribución por Macrorregión</span></div><span class="csub">N° de inversiones</span></div><div class="cb"><div class="cw"><canvas id="cMacro"></canvas></div></div></div>
+    <div class="card"><div class="ch"><div class="ct"><span class="dot"></span><span id="ej-t-conv">Certificación vs Devengado por Convenio</span></div><span class="csub">Millones S/</span></div><div class="cb"><div class="cw"><canvas id="cConv2"></canvas></div></div></div>
   </div>
 </div>
 
@@ -780,12 +793,11 @@ mk('cTend',{type:'line',data:{labels:yearsExt,datasets:[{label:'Certificación',
 initMensual2026();
 }
 if(id==='ejecucion'){
-const acum=devM.map((v,i,a)=>a.slice(0,i+1).reduce((s,x)=>s+x,0));
-mk('cMens2',{type:'bar',data:{labels:mnames,datasets:[{label:'Mensual',data:devM,backgroundColor:'#66CB00cc',borderRadius:4},{label:'Acumulado',data:acum,type:'line',borderColor:'#105000',borderWidth:2.5,tension:.4,pointRadius:4,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top'}},scales:{y:{ticks:{callback:yFmt},grid:{color:'#f5f5f5'}},x:{grid:{display:false}}}}});
-mk('cTend2',{type:'line',data:{labels:yearsExt,datasets:[{label:'Certificación',data:pimExt,borderColor:'#2191F1',backgroundColor:'rgba(13,71,161,.07)',fill:true,tension:.4,pointRadius:3},{label:'Devengado',data:devExt,borderColor:'#105000',backgroundColor:'rgba(16,80,0,.08)',fill:true,tension:.4,pointRadius:3},{label:'Girado',data:girExt,borderColor:'#F9A825',tension:.4,pointRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top'}},scales:{y:{ticks:{callback:yFmt}},x:{grid:{display:false}}}}});
-const mac={};proyectos.forEach(p=>{if(!mac[p.Macroregion])mac[p.Macroregion]=0;mac[p.Macroregion]++;});
-mk('cMacro',{type:'polarArea',data:{labels:Object.keys(mac),datasets:[{data:Object.values(mac),backgroundColor:MU.map(c=>c+'bb')}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:10}}}}}});
-mk('cConv2',{type:'bar',data:{labels:cLabels,datasets:[{label:'Certificación (M S/)',data:cPim,backgroundColor:'#105000cc',borderRadius:4},{label:'Devengado (M S/)',data:cDev,backgroundColor:'#66CB00cc',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top'}},scales:{y:{ticks:{callback:yFmt}},x:{grid:{display:false}}}}});
+mk('cMens2',{type:'bar',data:{labels:[],datasets:[{label:'Mensual',data:[],backgroundColor:'#66CB00cc',borderRadius:5,maxBarThickness:26},{label:'Acumulado',data:[],type:'line',borderColor:'#105000',borderWidth:2.5,tension:.35,pointRadius:3,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top'}},scales:{y:{ticks:{callback:yFmt},grid:{color:'#f2f4f2'}},x:{grid:{display:false}}}}});
+mk('cTend2',{type:'line',data:{labels:yearsExt,datasets:[{label:'Certificación',data:[],borderColor:'#2191F1',backgroundColor:'rgba(13,71,161,.07)',fill:true,tension:.4,pointRadius:3},{label:'Devengado',data:[],borderColor:'#105000',backgroundColor:'rgba(16,80,0,.08)',fill:true,tension:.4,pointRadius:3},{label:'Girado',data:[],borderColor:'#F9A825',tension:.4,pointRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top'}},scales:{y:{ticks:{callback:yFmt},grid:{color:'#f2f4f2'}},x:{grid:{display:false}}}}});
+mk('cMacro',{type:'polarArea',data:{labels:[],datasets:[{data:[],backgroundColor:MU.map(c=>c+'bb'),borderWidth:2,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:10}}}}}});
+mk('cConv2',{type:'bar',data:{labels:[],datasets:[{label:'Certificación (M S/)',data:[],backgroundColor:'#105000cc',borderRadius:5,maxBarThickness:30},{label:'Devengado (M S/)',data:[],backgroundColor:'#66CB00cc',borderRadius:5,maxBarThickness:30}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top'}},scales:{y:{ticks:{callback:yFmt},grid:{color:'#f2f4f2'}},x:{grid:{display:false}}}}});
+if(window._renderEjec)_renderEjec();
 }
 if(id==='cartera'){
 mk('cTipoBar',{type:'bar',data:{labels:tLabels.map(sT),datasets:[{label:'Certificación (M S/)',data:tPim,backgroundColor:'#105000cc',borderRadius:4},{label:'Devengado (M S/)',data:tDev,backgroundColor:'#66CB00cc',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top'}},scales:{y:{ticks:{callback:yFmt},grid:{color:'#f5f5f5'}},x:{grid:{display:false}}}}});
@@ -1103,35 +1115,119 @@ const conv2025={"BID 1": {"PIA": 26.1, "Dev": 25.85, "Gir": 25.85, "N": 3}, "BID
 const tipo2025={"Gestión integral de residuos sólidos": {"PIA": 107.37, "Dev": 106.34, "Gir": 106.33, "N": 11}, "Infraestructura de disposición final": {"PIA": 77.77, "Dev": 77.03, "Gir": 77.02, "N": 6}, "Limpieza pública": {"PIA": 44.87, "Dev": 44.44, "Gir": 44.44, "N": 4}, "Recuperación de áreas degradadas": {"PIA": 67.44, "Dev": 66.8, "Gir": 66.79, "N": 6}};
 const ejGlobal={PIA:297.45,PIM:297.45,Dev:294.61,Gir:294.58,N:30};
 function fmtEj(v){return'S/ '+Number(v).toLocaleString('es-PE',{minimumFractionDigits:1,maximumFractionDigits:1})+'M';}
-function updateEjecKPIs(cv,anio,tp){
-const setLbl=(id,val)=>{const el=document.getElementById(id);if(el)el.textContent=val;};
-const yr=anio||'2025';
-setLbl('ej-pia-lbl','Certificación '+yr);
-setLbl('ej-pim-lbl','Devengado '+yr);
-setLbl('ej-dev-lbl','Girado '+yr);
-setLbl('ej-gir-lbl','N° Proyectos '+yr);
-let cert,dev,gir,nProj;
-if(anio&&yearData[anio]){
-const yd=yearData[anio];
-cert=yd.PIM; dev=yd.Dev; gir=yd.Gir; nProj=yd.N;
-} else if(cv&&conv2025[cv]){
-const c=conv2025[cv]; cert=c.PIA; dev=c.Dev; gir=c.Gir; nProj=c.N||'—';
-} else if(tp&&tipo2025[tp]){
-const t=tipo2025[tp]; cert=t.PIA; dev=t.Dev; gir=t.Gir; nProj=t.N||'—';
-} else {
-cert=ejGlobal.PIA; dev=ejGlobal.Dev; gir=ejGlobal.Gir; nProj=ejGlobal.N||30;
+function updateEjecKPIs(cv,anio,tp){if(window._renderEjec)_renderEjec();}
+/* ═══ EJECUCIÓN PRESUPUESTAL REACTIVA A FILTROS — ARKA 19-07-2026 ═══
+   Fuente única: cuiYearFin (por inversión y año, ya fusionado con cuiYearFinUpdate del corte diario)
+   + proyectos (convenio/tipo) + mensualUpdate (devengado mensual 2026 por CUI). */
+window._renderEjec=function(){
+if(!document.getElementById('ej-k1v'))return;
+var cv=document.getElementById('fConv')?document.getElementById('fConv').value:'';
+var anio=document.getElementById('fAño')?document.getElementById('fAño').value:'';
+var tp=document.getElementById('fTipo')?document.getElementById('fTipo').value:'';
+var T=window._trTxt||function(x){return x;};
+var atoms=proyectos.filter(function(p){return (!cv||p.Convenio===cv)&&(!tp||p.Tipo_Proyecto===tp);});
+var perAll={},cert=0,dev=0,gir=0,nEj=0;
+atoms.forEach(function(p){
+var yf=cuiYearFin[String(p.CUI)]||{},tuvo=false;
+yearsExt.forEach(function(y){
+var r=yf[y];if(!r)return;
+var c=r.Cert||0,d=r.Dev||0,g=r.Gir||0;
+var q=perAll[y]||(perAll[y]={c:0,d:0,g:0});q.c+=c;q.d+=d;q.g+=g;
+if(!anio||y===anio){cert+=c;dev+=d;gir+=g;if(c>0||d>0)tuvo=true;}
+});
+if(tuvo)nEj++;
+});
+var Mm=function(v){return v/1e6;};
+var periodo=anio||'2013–2026';
+function set(id,t){var e=document.getElementById(id);if(e)e.textContent=t;}
+var avD=cert>0?(dev/cert*100):0, avG=cert>0?(gir/cert*100):0;
+set('ej-k1l',T('Certificación '+periodo));set('ej-k1v',fmtEj(Mm(cert)));
+set('ej-k1s',T(anio?('Presupuesto certificado '+anio):'Acumulado histórico UE003'));
+set('ej-k2l',T('Devengado '+periodo));set('ej-k2v',fmtEj(Mm(dev)));
+set('ej-k2s',T('Avance: '+avD.toFixed(1)+'% de la Certificación'));
+set('ej-k3l',T('Girado '+periodo));set('ej-k3v',fmtEj(Mm(gir)));
+set('ej-k3s',T('Avance: '+avG.toFixed(1)+'% de la Certificación'));
+set('ej-k4l',T('N° Inversiones'));set('ej-k4v',String(nEj));
+set('ej-k4s',T('con ejecución en el período'));
+var p2=document.getElementById('ej-k2p');if(p2)p2.style.width=Math.min(100,avD).toFixed(1)+'%';
+var p3=document.getElementById('ej-k3p');if(p3)p3.style.width=Math.min(100,avG).toFixed(1)+'%';
+var ctx=document.getElementById('ej-ctx');
+if(ctx){
+ctx.innerHTML='<span class="ejc-lbl">'+T('Vista actual:')+'</span>'
++'<span class="ejc-chip'+(anio?' on':'')+'">📅 '+(anio?T('Año '+anio):T('Todo el período'))+'</span>'
++'<span class="ejc-chip'+(cv?' on':'')+'">🤝 '+(cv||T('Todos los convenios'))+'</span>'
++'<span class="ejc-chip'+(tp?' on':'')+'">🏷️ '+(tp?T(tp):T('Todos los tipos'))+'</span>'
++((cv||anio||tp)?'<span class="ejc-x" onclick="resetF()">✕ '+T('Limpiar filtros')+'</span>':'');
 }
-const avDev=cert>0?(dev/cert*100).toFixed(1):0;
-const avGir=cert>0?(gir/cert*100).toFixed(1):0;
-const set2=(id,val)=>{const el=document.getElementById(id);if(el)el.textContent=val;};
-set2('ej-pia',fmtEj(cert));
-set2('ej-pim',fmtEj(dev));
-set2('ej-dev',fmtEj(gir));
-set2('ej-gir',typeof nProj==='number'?nProj:nProj);
-set2('ej-pim-sub','Avance: '+avDev+'% de Certif.');
-set2('ej-dev-sub','Avance: '+avGir+'% de Certif.');
-set2('ej-gir-sub','proyectos con ejecución');
+if(typeof CH==='undefined'||!CH['cTend2']||!CH['cMens2']||!CH['cMacro']||!CH['cConv2'])return;
+/* tendencia anual 2013–2026 (siempre la serie completa con cv/tp aplicados; el año filtrado se resalta) */
+var labs=yearsExt.slice();
+var dsT=CH['cTend2'].data.datasets;
+dsT[0].data=labs.map(function(y){return perAll[y]?+Mm(perAll[y].c).toFixed(2):0;});
+dsT[1].data=labs.map(function(y){return perAll[y]?+Mm(perAll[y].d).toFixed(2):0;});
+dsT[2].data=labs.map(function(y){return perAll[y]?+Mm(perAll[y].g).toFixed(2):0;});
+for(var di=0;di<3;di++){
+dsT[di].pointRadius=labs.map(function(y){return anio&&y===anio?6:3;});
+dsT[di].pointBorderWidth=labs.map(function(y){return anio&&y===anio?2.5:1;});
 }
+CH['cTend2'].data.labels=(window._trTxt?labs.map(_trTxt):labs);
+CH['cTend2'].update();
+set('ej-t-tend',T('Certificación – Devengado – Girado ('+(anio?anio:'2013–2026')+')'));
+/* mensual: 2026 desde mensualUpdate por CUI (permite cualquier filtro); años previos solo sin filtros */
+var mu=(window._datosActualizados||{}).mensualUpdate;
+var my=anio||String((mu&&mu.anio)||2026);
+var MN=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+var mvals=null;
+if(mu&&String(mu.anio)===my){
+var cuiSet={};atoms.forEach(function(p){cuiSet[String(p.CUI)]=1;});
+var mm=[];for(var i1=0;i1<(mu.mesUltimo||0);i1++)mm.push(0);
+Object.keys(mu.devPorCui||{}).forEach(function(c2){
+if(!cuiSet[c2])return;
+var o=mu.devPorCui[c2];
+Object.keys(o).forEach(function(mes){var mi=+mes-1;if(mi>=0&&mi<mm.length)mm[mi]+=o[mes]||0;});
+});
+mvals=mm.map(function(v){return +(v/1e6).toFixed(2);});
+}else if(!cv&&!tp&&typeof yearMonthly!=='undefined'&&yearMonthly[my]){
+var ym=yearMonthly[my],mm2=[];
+for(var i2=1;i2<=12;i2++)mm2.push(ym[String(i2)]?+((ym[String(i2)].d||0)).toFixed(2):0);
+while(mm2.length&&mm2[mm2.length-1]===0)mm2.pop();
+mvals=mm2;
+}
+var emp=document.getElementById('ej-mens-empty');
+if(mvals&&mvals.length){
+if(emp)emp.style.display='none';
+var ac=0;
+CH['cMens2'].data.labels=MN.slice(0,mvals.length).map(function(x){return T(x);});
+CH['cMens2'].data.datasets[0].data=mvals;
+CH['cMens2'].data.datasets[1].data=mvals.map(function(v){ac+=v;return +ac.toFixed(2);});
+}else{
+CH['cMens2'].data.labels=[];
+CH['cMens2'].data.datasets[0].data=[];
+CH['cMens2'].data.datasets[1].data=[];
+if(emp){emp.style.display='flex';emp.textContent=T('El detalle mensual con filtros está disponible solo para 2026');}
+}
+CH['cMens2'].update();
+set('ej-t-mens',T('Ejecución Mensual vs Acumulada '+my));
+/* macrorregión: n° de inversiones del filtro (con año: solo las que ejecutaron ese año) */
+var atomsY=anio?atoms.filter(function(p){var r=(cuiYearFin[String(p.CUI)]||{})[anio];return r&&((r.Cert||0)>0||(r.Dev||0)>0);}):atoms;
+var mac={};atomsY.forEach(function(p){var k=p.Macroregion||'—';mac[k]=(mac[k]||0)+1;});
+var mks=Object.keys(mac).sort(function(a,b){return mac[b]-mac[a];});
+CH['cMacro'].data.labels=mks.map(function(x){return T(x);});
+CH['cMacro'].data.datasets[0].data=mks.map(function(k){return mac[k];});
+CH['cMacro'].update();
+/* convenios: certificación vs devengado del periodo filtrado */
+var cvAgg={};
+atoms.forEach(function(p){
+var yf=cuiYearFin[String(p.CUI)]||{},c4=0,d4=0;
+yearsExt.forEach(function(y){if(anio&&y!==anio)return;var r=yf[y];if(r){c4+=r.Cert||0;d4+=r.Dev||0;}});
+if(c4>0||d4>0){var q2=cvAgg[p.Convenio]||(cvAgg[p.Convenio]={c:0,d:0});q2.c+=c4;q2.d+=d4;}
+});
+var cks=Object.keys(cvAgg).sort(function(a,b){return cvAgg[b].c-cvAgg[a].c;});
+CH['cConv2'].data.labels=cks.map(function(x){return T(x);});
+CH['cConv2'].data.datasets[0].data=cks.map(function(k){return +Mm(cvAgg[k].c).toFixed(2);});
+CH['cConv2'].data.datasets[1].data=cks.map(function(k){return +Mm(cvAgg[k].d).toFixed(2);});
+CH['cConv2'].update();
+};
 const yearData={
 "2013":{"PIA":6.33,"PIM":6.33,"Dev":6.33,"Gir":6.32,"Av":100.0,"N":9,"Obra":0.0,"Gestion":5.68,"Expediente":0.65,"Supervision":0.0,"Adquisicion":0.0},
 "2014":{"PIA":28.14,"PIM":28.14,"Dev":28.11,"Gir":25.5,"Av":99.9,"N":27,"Obra":0.0,"Gestion":23.59,"Expediente":4.52,"Supervision":0.0,"Adquisicion":0.0},
@@ -2330,7 +2426,7 @@ var D={
 'Impacto Nacional':'全国インパクト','Detalle de Inversiones':'投資の詳細','Ejecución Presupuestal':'予算執行',
 'Volver':'戻る','← Volver':'← 戻る','Regresar':'戻る','← Regresar':'← 戻る',
 /* filtros y buscadores */
-'Filtros:':'絞り込み:','FILTROS:':'絞り込み:','Todos los convenios':'すべての協定','🔔 Novedades':'🔔 最新情報','Novedades':'最新情報','NORMATIVA · PRENSA · DOCUMENTOS':'法令 · 報道 · 文書','NORMATIVA':'法令','PRENSA':'報道','DOCUMENTO':'文書','EN SEGUIMIENTO':'フォロー中','NUEVO':'新着','Sin novedades por ahora.':'現在、新着情報はありません。','Abrir en pestaña nueva':'新しいタブで開く','Nuevo Reglamento del SNPMGI — DS 140-2026-EF':'SNPMGI新規則 — DS 140-2026-EF','Publicado en El Peruano el 18/07/2026 · aprueba el nuevo Reglamento del DL 1252 y deroga el DS 284-2018-EF · clic para abrir el PDF':'2026年7月18日エル・ペルアーノ官報に公布 · DL 1252の新規則を承認しDS 284-2018-EFを廃止 · クリックでPDFを開く','Todos los años':'すべての年度','Todos los tipos':'すべての種類',
+'Filtros:':'絞り込み:','FILTROS:':'絞り込み:','Todos los convenios':'すべての協定','N° Inversiones':'投資件数','con ejecución en el período':'対象期間に執行実績あり','Acumulado histórico UE003':'UE003歴代累計','Vista actual:':'現在の表示:','Todo el período':'全期間','Limpiar filtros':'フィルター解除','El detalle mensual con filtros está disponible solo para 2026':'フィルター適用時の月次詳細は2026年のみ表示できます','Certificación vs Devengado por Convenio':'協定別 予算確保対支出実績','N° de inversiones':'投資件数','Norte/Oriente':'北部/東部','Sur/Oriente':'南部/東部','Multidepartamental':'複数県','POR VALIDAR':'確認待ち','🔔 Novedades':'🔔 最新情報','Novedades':'最新情報','NORMATIVA · PRENSA · DOCUMENTOS':'法令 · 報道 · 文書','NORMATIVA':'法令','PRENSA':'報道','DOCUMENTO':'文書','EN SEGUIMIENTO':'フォロー中','NUEVO':'新着','Sin novedades por ahora.':'現在、新着情報はありません。','Abrir en pestaña nueva':'新しいタブで開く','Nuevo Reglamento del SNPMGI — DS 140-2026-EF':'SNPMGI新規則 — DS 140-2026-EF','Publicado en El Peruano el 18/07/2026 · aprueba el nuevo Reglamento del DL 1252 y deroga el DS 284-2018-EF · clic para abrir el PDF':'2026年7月18日エル・ペルアーノ官報に公布 · DL 1252の新規則を承認しDS 284-2018-EFを廃止 · クリックでPDFを開く','Todos los años':'すべての年度','Todos los tipos':'すべての種類',
 'Convenios':'協定','Años':'年度','Tipos':'種類','✕ Limpiar':'✕ クリア','IR':'検索','Nombre':'名称',
 'Gestión integral de residuos sólidos':'廃棄物総合管理','Infraestructura de disposición final':'最終処分インフラ','Recuperación de áreas degradadas':'劣化地域の回復','Limpieza pública':'公共清掃','Fortalecimiento institucional':'組織能力強化',
 /* Impacto Nacional */
@@ -2482,7 +2578,7 @@ var RX=[
 [/^(\d+)\+ proy\.$/,'$1件以上'],[/^(\d+) proy\.$/,'$1件'],
 [/^🌿 Inversiones con hectáreas a recuperar · (\d{4}) \((\d+)\)$/i,'🌿 ヘクタール回復投資 · $1年 ($2件)'],
 [/^🚛 Vehículos de limpieza pública · (\d{4}) \((\d+) inversiones\)$/i,'🚛 公共清掃車両 · $1年 (投資$2件)'],
-[/^([\d\.,]+)\s*N[ÚU]MERO DE EQUIPAMIENTO$/i,'機材 $1台'],[/^([\d\.,]+)\s*N[ÚU]MERO DE ESTRUCTURAS F[ÍI]SICAS$/i,'構造物 $1基'],[/^([\d\.,]+)\s*ESTUDIOS$/i,'調査 $1件'],[/^([\d\.,]+)\s*MODULOS? DE MOBILIARIO$/i,'家具モジュール $1式'],[/^([\d\.,]+)\s*KIT DE MOBILIARIO$/i,'家具キット $1式'],[/^([\d\.,]+)\s*HA$/i,'$1ヘクタール'],[/^M2 ?\/ ?([\d\.,]+)$/i,'面積 $1 m²'],[/^M3 ?\/ ?([\d\.,]+)$/i,'容量 $1 m³'],[/^KM ?\/ ?([\d\.,]+)$/i,'延長 $1 km'],[/^KIT DE EQUIPAMIENTO ?\/ ?([\d\.,]+)$/i,'機材キット $1式'],[/^([\d\.,]+)\s*N[ÚU]MERO DE EQUIPOS$/i,'機器 $1台'],
+[/^([\d\.,]+)\s*N[ÚU]MERO DE EQUIPAMIENTO$/i,'機材 $1台'],[/^Certificación (\d{4}(?:–\d{4})?)$/,'予算確保 $1'],[/^Devengado (\d{4}(?:–\d{4})?)$/,'支出実績 $1'],[/^Girado (\d{4}(?:–\d{4})?)$/,'支払額 $1'],[/^Presupuesto certificado (\d{4})$/,'$1年の予算確保額'],[/^Avance: ([\d\.,]+)% de la Certificación$/,'進捗率: $1%(予算確保比)'],[/^Certificación – Devengado – Girado \((\d{4}(?:–\d{4})?)\)$/,'予算確保・支出実績・支払額($1)'],[/^Año (\d{4})$/,'$1年'],[/^([\d\.,]+)\s*N[ÚU]MERO DE ESTRUCTURAS F[ÍI]SICAS$/i,'構造物 $1基'],[/^([\d\.,]+)\s*ESTUDIOS$/i,'調査 $1件'],[/^([\d\.,]+)\s*MODULOS? DE MOBILIARIO$/i,'家具モジュール $1式'],[/^([\d\.,]+)\s*KIT DE MOBILIARIO$/i,'家具キット $1式'],[/^([\d\.,]+)\s*HA$/i,'$1ヘクタール'],[/^M2 ?\/ ?([\d\.,]+)$/i,'面積 $1 m²'],[/^M3 ?\/ ?([\d\.,]+)$/i,'容量 $1 m³'],[/^KM ?\/ ?([\d\.,]+)$/i,'延長 $1 km'],[/^KIT DE EQUIPAMIENTO ?\/ ?([\d\.,]+)$/i,'機材キット $1式'],[/^([\d\.,]+)\s*N[ÚU]MERO DE EQUIPOS$/i,'機器 $1台'],
 [/^([\d\.,]+)\s*N[ÚU]MERO DE VEH[ÍI]CULOS$/i,'車両 $1台'],
 [/^([\d\.,]+)\s*KIT DE EQUIPAMIENTO$/i,'機材キット $1式'],[/^([\d\.,]+)\s*KIT DE HERRAMIENTAS$/i,'工具キット $1式'],
 [/^([\d\.,]+)\s*N° DE DOCUMENTOS$/i,'文書 $1件'],
