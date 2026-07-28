@@ -4146,3 +4146,24 @@ if(b&&typeof showPage==='function')showPage('impacto',b);
 }catch(_){}
 })();
 </script>
+<script>
+/* Medicion anonima de uso de pestanas (Umami) — id: umami-pestanas.
+   Envuelve showPage() para registrar que pestaña se abrio. No altera el
+   comportamiento del dashboard: si Umami falla o esta bloqueado, se ignora. */
+(function(){
+try{
+  if(typeof window.showPage!=='function')return;
+  var _origShowPage=window.showPage;
+  window.showPage=function(id,btn){
+    var r=_origShowPage.apply(this,arguments);
+    try{
+      if(window.umami&&typeof window.umami.track==='function'){
+        var nombre=(btn&&btn.textContent?btn.textContent:'').replace(/\s+/g,' ').trim().replace(/^[^\p{L}\p{N}]+/u,'');
+        window.umami.track('pestana: '+(nombre||String(id)),{pestana:String(id)});
+      }
+    }catch(_){}
+    return r;
+  };
+}catch(_){}
+})();
+</script>
