@@ -1911,7 +1911,13 @@ const MULTI_UEI_CUIS=new Set(["2338187","2225760","2343091","2071893","2308546",
    corte diario todavia no trae uepUpdate. */
 const _uepCui=(typeof uepData!=='undefined'&&uepData[cui])?uepData[cui]:null;
 const SEC_GICA='1492';
-const isMultiUEI=_uepCui?(Object.keys(_uepCui).length>1):MULTI_UEI_CUIS.has(cui);
+/* OJO: multi-UEI NO es "tiene mas de una fila". El MEF lista UEs con
+   devengado 0 (14 CUIs el 31-07-2026); contarlas encendia el banner sin
+   ejecucion de terceros. El criterio es: alguna UE distinta de GICA con
+   devengado > 0. Verificado: da los 13 de la lista fija + 3 reales. */
+const isMultiUEI=_uepCui
+  ?Object.keys(_uepCui).some(k=>k!==SEC_GICA&&(_uepCui[k][0]||0)>0)
+  :MULTI_UEI_CUIS.has(cui);
 const ssiDevAcum=(typeof devAcumData!=='undefined'&&devAcumData[cui]!=null)?devAcumData[cui]:0;
 const excelDevTot=ACT_DEFS.reduce((s,x)=>s+(f[x.k]||0),0);
 const gicaSSI=_uepCui&&_uepCui[SEC_GICA]?_uepCui[SEC_GICA][0]:null;
@@ -1919,7 +1925,8 @@ const diffMU=_uepCui
   ?Object.keys(_uepCui).reduce((s,k)=>k===SEC_GICA?s:s+(_uepCui[k][0]||0),0)
   :ssiDevAcum-excelDevTot;
 const otrasUEINom=_uepCui
-  ?Object.keys(_uepCui).filter(k=>k!==SEC_GICA).map(k=>_uepCui[k][1]).filter(Boolean)
+  ?Object.keys(_uepCui).filter(k=>k!==SEC_GICA&&(_uepCui[k][0]||0)>0)
+     .map(k=>_uepCui[k][1]).filter(Boolean)
   :[];
 const fmtSolFt=n=>'S/ '+Number(n||0).toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2});
 const _muTot=isMultiUEI?ssiDevAcum:excelDevTot;
