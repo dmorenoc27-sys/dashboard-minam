@@ -1768,6 +1768,11 @@ var _fan=window._datosActualizados.finAnoUpdate||{};
 Object.keys(_fan).forEach(function(k){finAno[k]=Object.assign(finAno[k]||{},_fan[k]);});
 var _dac=window._datosActualizados.devAcumUpdate||{};
 proyectos.forEach(function(p){if(_dac[p.CUI]!=null&&p.fin)p.fin.Dev=_dac[p.CUI];});
+/* FIX 31-07-2026: devAcumUpdate solo entraba a p.fin.Dev; devAcumData quedaba
+   congelado en lo incrustado al regenerar el HTML, y el desglose Multi-UEI
+   ("Ejecutado por otras UEIs") restaba un total viejo. CUI 2225760: mostraba
+   9,320,653.43 en vez de 9,723,359.52. */
+Object.keys(_dac).forEach(function(k){if(_dac[k]!=null)devAcumData[k]=_dac[k];});
 /* FIX 2026-07-06 (2): cuiYearFinUpdate y costoUpdate tampoco se aplicaban.
    Merge campo a campo saltando null para no pisar Cert/PIM embebidos con null. */
 var _cyu=window._datosActualizados.cuiYearFinUpdate||{};
@@ -3814,6 +3819,8 @@ s.onload = function() {
     Object.keys(_fan).forEach(function(k){ finAno[k] = Object.assign(finAno[k]||{}, _fan[k]); });
     var _dac = d.devAcumUpdate || {};
     proyectos.forEach(function(p){ if (_dac[p.CUI] != null && p.fin) p.fin.Dev = _dac[p.CUI]; });
+    // FIX 31-07-2026: idem que arriba, devAcumData tambien debe refrescarse.
+    Object.keys(_dac).forEach(function(k){ if (_dac[k] != null) devAcumData[k] = _dac[k]; });
     var _cyu = d.cuiYearFinUpdate || {};
     Object.keys(_cyu).forEach(function(c){
       if (!cuiYearFin[c]) cuiYearFin[c] = {};
