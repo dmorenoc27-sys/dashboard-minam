@@ -3024,8 +3024,7 @@ return null;
 /* ══════════════════════════════════════════════════════════════════════
    PANELES DE CARTERA ANUAL (07-08-2026, pedido de David)
    Pestaña "Detalle de Inversiones", al seleccionar un año:
-   · Izquierda: Resumen Ejecutivo de la cartera del año (estilo PPT oficial)
-   · Derecha:   Línea de Vida de la cartera (cronograma por cooperante)
+   · Resumen Ejecutivo de la cartera del año (estilo PPT oficial)
    Fuente: carteraAnualUpdate (Consulta Amigable MEF) — incluye TODAS las
    inversiones con PIA o PIM del año (aunque PIM=0) y Estudios de
    Pre-inversión (CUI 2001621, solo en estos paneles).
@@ -3055,7 +3054,7 @@ if(tp&&(!p||p.Tipo_Proyecto!==tp))return; // filtro tipo
 rows.push({cui:cui,conv:conv,pia:v[0]||0,pim:v[1]||0,cert:v[2]||0,dev:v[3]||0,gir:v[4]||0,p:p});
 });
 if(!rows.length)return;
-var fmtS=function(n){return 'S/ '+Number(n||0).toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2});};
+var fmtS=function(n){return 'S/ '+Number(n||0).toLocaleString('es-PE',{minimumFractionDigits:0,maximumFractionDigits:2});};
 var fmtM=function(n){return 'S/ '+(n/1e6).toLocaleString('es-PE',{minimumFractionDigits:1,maximumFractionDigits:1})+' M';};
 /* ── agregados por cooperante ── */
 var ORDER=['BID 1','BID 2','JICA 1','JICA 2','KFW','Reactiva Perú 1','Sin convenio','__PRE__'];
@@ -3086,7 +3085,7 @@ L+='<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">'
 +kpi('Avance',avTot.toFixed(1)+' %','Devengado / PIM',avTot>=50?'#105000':'#E65100')
 +(tot.benef>0?kpi('Beneficiarios',(tot.benef/1e6).toLocaleString('es-PE',{maximumFractionDigits:2})+' M',Number(tot.benef).toLocaleString('es-PE')+' personas','#4527A0'):'')
 +'</div>';
-L+='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:8px">';
+L+='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(228px,1fr));gap:8px">';
 ORDER.forEach(function(cv2){
 var g=G[cv2];if(!g||cv2==='__PRE__')return;
 var col=convColor[cv2]||'#607D8B';
@@ -3117,86 +3116,9 @@ L+='<div title="Asignación presupuestal para estudios de pre-inversión (CUI 20
 +'<span style="color:#78909C">PIM <b style="color:#263238">'+fmtS(gp.pim)+'</b></span>'
 +'<span style="color:#78909C">Devengado <b style="color:#105000">'+fmtS(gp.dev)+'</b></span></div>';
 }
-/* ── PANEL DERECHO: Línea de Vida ── */
-var FX=DU.fechasUpdate||{};
-var eCols={culminada:'#2E7D32',ejecucion:'#1565C0',suspendida:'#E65100',por_iniciar:'#F9A825'};
-var eNom={culminada:'Culminada',ejecucion:'En ejecución',suspendida:'Suspendida',por_iniciar:'Por iniciar'};
-var tRows=[],sinCrono=[];
-rows.forEach(function(r){
-if(r.conv==='__PRE__'){return;}
-var fx=FX[r.cui];
-if(fx&&fx.i&&fx.f){tRows.push(r);}else{sinCrono.push(r);}
-});
-var R='';
-R+='<div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:6px"><span style="font-size:13px;font-weight:900;color:#105000">📅 Línea de Vida de la Cartera — '+anio+'</span>'
-+'<span style="font-size:9.5px;color:#90A4AE;font-weight:600">Cronograma inicio→fin (SSI) · clic abre la ficha</span></div>';
-R+='<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:7px;font-size:9.5px;font-weight:700;color:#546E7A">';
-Object.keys(eNom).forEach(function(k){R+='<span style="display:inline-flex;align-items:center;gap:4px"><span style="width:9px;height:9px;border-radius:3px;background:'+eCols[k]+'"></span>'+eNom[k]+'</span>';});
-R+='</div>';
-if(tRows.length){
-var minT=Infinity,maxT=-Infinity;
-tRows.forEach(function(r){var fx=FX[r.cui];
-var a=new Date(fx.i).getTime(),b=new Date(fx.f).getTime();
-if(a<minT)minT=a;if(b>maxT)maxT=b;});
-var y0=new Date(minT).getFullYear(),y1=new Date(maxT).getFullYear()+1;
-minT=new Date(y0,0,1).getTime();maxT=new Date(y1,0,1).getTime();
-var span=maxT-minT||1;
-var pct=function(t){return Math.max(0,Math.min(100,(t-minT)/span*100));};
-var LBL=112;
-/* orden: cooperante → fecha inicio */
-tRows.sort(function(a,b){
-var oa=ORDER.indexOf(a.conv),ob=ORDER.indexOf(b.conv);
-if(oa!==ob)return oa-ob;
-return new Date(FX[a.cui].i)-new Date(FX[b.cui].i);});
-var hoy=Date.now();
-R+='<div style="position:relative;background:#fff;border:1.5px solid #E0E0E0;border-radius:11px;padding:8px 10px 4px">';
-/* eje de años */
-R+='<div style="position:relative;height:14px;margin-left:'+LBL+'px;font-size:8.5px;color:#90A4AE;font-weight:700">';
-var nY=y1-y0,step=nY>10?2:1;
-for(var y=y0;y<=y1;y+=step){var px=pct(new Date(y,0,1).getTime());
-R+='<span style="position:absolute;left:'+px+'%;transform:translateX(-50%)">'+y+'</span>';}
-R+='</div>';
-R+='<div style="position:relative;max-height:530px;overflow-y:auto;overflow-x:hidden">';
-/* rejilla vertical de años + línea HOY */
-var grid='';
-for(var y2=y0;y2<=y1;y2+=step){var px2=pct(new Date(y2,0,1).getTime());
-grid+='<div style="position:absolute;top:0;bottom:0;left:calc('+LBL+'px + (100% - '+LBL+'px)*'+(px2/100)+');width:1px;background:#F0F0F0"></div>';}
-if(hoy>minT&&hoy<maxT){
-grid+='<div title="Hoy" style="position:absolute;top:0;bottom:0;left:calc('+LBL+'px + (100% - '+LBL+'px)*'+(pct(hoy)/100)+');width:2px;background:#C62828;opacity:.65;z-index:2"></div>';}
-R+=grid;
-var lastConv=null;
-tRows.forEach(function(r){
-var fx=FX[r.cui];
-var a=new Date(fx.i).getTime(),b=new Date(fx.f).getTime();
-var lft=pct(a),wd=Math.max(1.2,pct(b)-pct(a));
-var est=(typeof _estadoObra==='function')?_estadoObra(r.cui):'ejecucion';
-var col=eCols[est]||'#607D8B';
-var cc=convColor[r.conv]||'#607D8B';
-if(r.conv!==lastConv){lastConv=r.conv;
-R+='<div style="display:flex;align-items:center;gap:5px;margin:5px 0 2px;position:relative;z-index:1"><span style="width:8px;height:8px;border-radius:50%;background:'+cc+'"></span><span style="font-size:9.5px;font-weight:900;color:'+cc+';letter-spacing:.4px">'+r.conv+'</span></div>';}
-var nm=(typeof cuiShortName!=='undefined'&&cuiShortName[r.cui])||(r.p?_dNm(r.p.Departamento||''):r.cui);
-R+='<div onclick="showProjectDetail(\''+r.cui+'\')" title="'+((r.p?r.p.Proyecto.slice(0,90).replace(/"/g,'&quot;'):nm))+' — '+eNom[est]+' ('+fx.i+' → '+fx.f+')" '
-+'style="display:flex;align-items:center;height:17px;cursor:pointer;position:relative;z-index:1" '
-+'onmouseover="this.style.background=\'#F5F9FF\'" onmouseout="this.style.background=\'\'">'
-+'<span style="flex:none;width:'+(LBL-8)+'px;padding-right:8px;font-size:9.5px;font-weight:700;color:#455A64;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+nm+'</span>'
-+'<span style="flex:1;position:relative;height:100%">'
-+'<span style="position:absolute;top:4px;height:9px;left:'+lft+'%;width:'+wd+'%;background:'+col+';border-radius:5px;box-shadow:0 1px 2px rgba(0,0,0,.18)"></span>'
-+'</span></div>';
-});
-R+='</div></div>';
-}
-if(sinCrono.length){
-R+='<div style="margin-top:7px;font-size:9.5px;color:#78909C;font-weight:600"><span style="font-weight:800;color:#546E7A">Sin cronograma SSI:</span> ';
-R+=sinCrono.map(function(r){
-var nm=(typeof cuiShortName!=='undefined'&&cuiShortName[r.cui])||r.cui;
-return '<span onclick="showProjectDetail(\''+r.cui+'\')" style="cursor:pointer;text-decoration:underline dotted" title="CUI '+r.cui+'">'+nm+'</span>';
-}).join(' · ');
-R+='</div>';
-}
 /* ── contenedor ── */
-var html='<div id="cartAnualPan" style="display:flex;flex-wrap:wrap;gap:12px;margin-top:10px;align-items:flex-start">'
-+'<div style="flex:1 1 440px;min-width:0;background:#FBFDFB;border:1.5px solid #C8E6C9;border-radius:13px;padding:11px 13px">'+L+'</div>'
-+'<div style="flex:1 1 440px;min-width:0;background:#FBFDFB;border:1.5px solid #C8E6C9;border-radius:13px;padding:11px 13px">'+R+'</div>'
+var html='<div id="cartAnualPan" style="margin-top:10px">'
++'<div style="background:#FBFDFB;border:1.5px solid #C8E6C9;border-radius:13px;padding:11px 13px">'+L+'</div>'
 +'</div>';
 var old=document.getElementById('cartAnualPan');if(old)old.remove();
 bodyEl.insertAdjacentHTML('beforeend',html);
