@@ -3121,7 +3121,13 @@ var html='<div id="cartAnualPan" style="margin-top:10px">'
 +'<div style="background:#FBFDFB;border:1.5px solid #C8E6C9;border-radius:13px;padding:11px 13px">'+L+'</div>'
 +'</div>';
 var old=document.getElementById('cartAnualPan');if(old)old.remove();
+/* FIX laptop (07-08-2026): el contenedor es flex-column con altura limitada;
+   sin esto los acordeones se APLASTAN (2px) en pantallas bajas para hacerle
+   sitio al panel. Con flexShrink=0 el contenedor hace scroll, no aplasta. */
+Array.prototype.forEach.call(bodyEl.children,function(c){c.style.flexShrink='0';});
+bodyEl.style.overflowY='auto';
 bodyEl.insertAdjacentHTML('beforeend',html);
+var pan=document.getElementById('cartAnualPan');if(pan)pan.style.flexShrink='0';
 }catch(_e){if(window.console)console.warn('cartAnualPan:',_e);}
 };
 
