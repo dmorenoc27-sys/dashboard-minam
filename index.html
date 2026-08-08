@@ -439,10 +439,11 @@ if(e.key==='F12'){e.preventDefault();return false;}
       <div id="resumen-panel-body" style="padding:10px 12px;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px;"></div>
     </div>
 
-    <!-- CHARTS: Tendencia + Mensual stacked right -->
+    <!-- 08-08-2026 (David): columna derecha = Cartera por Convenio; los 2 gráficos quedan ocultos (no borrar: sus funciones siguen pintándolos) -->
     <div style="flex-shrink:0;width:290px;display:flex;flex-direction:column;gap:8px">
-      <div class="card" style="flex:1;min-height:220px"><div class="ch"><div class="ct"><span class="dot"></span>Tendencia Histórica de Ejecución 2013–2026</div><span class="csub">Millones de soles</span></div><div class="cb"><div class="cw"><canvas id="cTend"></canvas></div></div></div>
-      <div class="card" style="flex:1;min-height:220px"><div class="ch"><div class="ct"><span class="dot"></span>Devengado Mensual 2026</div><span class="csub">Millones S/</span></div><div class="cb"><div class="cw"><canvas id="cMens"></canvas></div></div></div>
+      <div class="card" id="conv-bars-card" style="flex:1;display:flex;flex-direction:column;min-height:0"><div class="ch"><div class="ct"><span class="dot"></span><span id="conv-bars-title">Cartera por Convenio</span></div><span class="csub" id="conv-bars-sub">clic = ver proyectos</span></div><div class="cb" style="flex:1;overflow-y:auto"><div id="conv-bars-body" style="display:flex;flex-direction:column;gap:8px;padding:3px 2px"></div></div></div>
+      <div class="card" style="flex:1;min-height:220px;display:none"><div class="ch"><div class="ct"><span class="dot"></span>Tendencia Histórica de Ejecución 2013–2026</div><span class="csub">Millones de soles</span></div><div class="cb"><div class="cw"><canvas id="cTend"></canvas></div></div></div>
+      <div class="card" style="flex:1;min-height:220px;display:none"><div class="ch"><div class="ct"><span class="dot"></span>Devengado Mensual 2026</div><span class="csub">Millones S/</span></div><div class="cb"><div class="cw"><canvas id="cMens"></canvas></div></div></div>
     </div>
     </div><!-- /resumen-right-area -->
     <div id="proj-detail-panel" style="flex:1;min-width:0;display:none;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.12);background:#fff;overflow:hidden"></div>
@@ -684,6 +685,7 @@ tr.style.display=(!cv||_convON(d.conv)===cv)&&(!anio||d.anio===anio)&&(!tp||d.ti
 });
 const filtered=getFiltered();
 filtered_cache=filtered;
+if(window._renderConvBars)_renderConvBars(filtered);
 const hasFilter=cv||anio||tp;
 if(anio&&!cv&&!tp){
 const deptCnt={};
@@ -1577,7 +1579,7 @@ out+='<span title="'+p.Proyecto.replace(/"/g,"'").slice(0,110)+'" '
 });
 out+='</div></div>';
 });
-body.innerHTML=out;
+body.innerHTML=anio?'':out;
 if(window._renderCarteraPaneles)_renderCarteraPaneles(body);
 }
 function renderResumenDeptPanel(dept){
@@ -3146,6 +3148,56 @@ bodyEl.insertAdjacentHTML('afterbegin',html);  /* arriba de las barras de conven
 var pan=document.getElementById('cartAnualPan');if(pan)pan.style.flexShrink='0';
 }catch(_e){if(window.console)console.warn('cartAnualPan:',_e);}
 };
+
+/* ══════════════════════════════════════════════════════════════════════
+   CARTERA POR CONVENIO (08-08-2026, pedido de David)
+   Botones elegantes en la columna derecha de "Detalle de Inversiones",
+   en lugar de los gráficos de Ejecución/Devengado mensual (ocultos).
+   Reaccionan a los filtros; clic despliega los proyectos del convenio.
+   ══════════════════════════════════════════════════════════════════════ */
+window._renderConvBars=function(filtered){
+try{
+var box=document.getElementById('conv-bars-body');
+if(!box)return;
+if(!filtered)filtered=(typeof getFiltered==='function')?getFiltered():[];
+var anio=document.getElementById('fAño')?document.getElementById('fAño').value:'';
+var sub=document.getElementById('conv-bars-sub');
+if(sub)sub.textContent=(anio?anio+' · ':'')+'clic = ver proyectos';
+var ORDER=['BID 1','BID 2','JICA 1','JICA 2','KFW','Reactiva Perú 1','Sin convenio'];
+var by={};
+filtered.forEach(function(p){var c=_convON(p.Convenio);(by[c]=by[c]||[]).push(p);});
+var keys=ORDER.filter(function(c){return by[c];}).concat(Object.keys(by).filter(function(c){return ORDER.indexOf(c)<0;}));
+if(!keys.length){box.innerHTML='<div style="padding:14px 6px;text-align:center;color:#B0BEC5;font-size:11px;font-weight:700">Sin proyectos con los filtros aplicados</div>';return;}
+var h='';
+keys.forEach(function(conv,ci){
+var projs=by[conv];
+var col=convColor[conv]||'#607D8B';
+h+='<div style="border-radius:12px;overflow:hidden;border:1.5px solid '+col+'33;box-shadow:0 2px 7px '+col+'2e;transition:box-shadow .18s,transform .12s" '
++'onmouseover="this.style.boxShadow=\'0 5px 15px '+col+'55\';this.style.transform=\'translateY(-1px)\'" '
++'onmouseout="this.style.boxShadow=\'0 2px 7px '+col+'2e\';this.style.transform=\'\'">'
++'<div onclick="(function(el){var pnl=el.nextElementSibling;var ar=el.querySelector(\'.cvb-arr\');var open=pnl.style.display!==\'none\';pnl.style.display=open?\'none\':\'flex\';ar.style.transform=open?\'rotate(0deg)\':\'rotate(90deg)\';})(this)" '
++'style="display:flex;align-items:center;gap:8px;padding:10px 12px;cursor:pointer;user-select:none;background:linear-gradient(135deg,rgba(255,255,255,.16),rgba(0,0,0,.07)),'+col+'">'
++'<span style="flex:1;color:#fff;font-size:12px;font-weight:900;letter-spacing:.3px;text-shadow:0 1px 2px rgba(0,0,0,.18);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+(window._convDisp?_convDisp(conv):conv)+'</span>'
++'<span style="background:rgba(255,255,255,.28);color:#fff;font-size:10px;font-weight:900;padding:2px 9px;border-radius:11px;white-space:nowrap">'+projs.length+'</span>'
++'<span class="cvb-arr" style="color:#fff;font-size:11px;transition:transform .2s;line-height:1">&#9654;</span>'
++'</div>'
++'<div style="display:none;flex-direction:column;gap:4px;padding:8px 9px;background:#FBFDFF;border-top:2px solid '+col+'22">';
+projs.forEach(function(pp){
+var sn=(typeof cuiShortName!=='undefined'&&cuiShortName[pp.CUI])||pp.Departamento||String(pp.CUI);
+h+='<span onclick="showProjectDetail(\''+pp.CUI+'\')" title="'+String(pp.Proyecto||'').replace(/"/g,"'").slice(0,110)+'" '
++'style="display:flex;align-items:stretch;border-radius:7px;overflow:hidden;border:1px solid '+col+'55;cursor:pointer;background:#fff;transition:box-shadow .15s" '
++'onmouseover="this.style.boxShadow=\'0 2px 8px rgba(0,0,0,.16)\'" onmouseout="this.style.boxShadow=\'\'">'
++'<span style="background:'+col+';color:#fff;font-size:9.5px;font-weight:800;padding:4px 6px;display:flex;align-items:center">'+pp.CUI+'</span>'
++'<span style="flex:1;color:#263238;font-size:10.5px;font-weight:700;padding:4px 8px;display:flex;align-items:center;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+sn+'</span>'
++'</span>';
+});
+h+='</div></div>';
+});
+box.innerHTML=h;
+}catch(_e){if(window.console)console.warn('convBars:',_e);}
+};
+/* primer pintado al cargar (sin filtros) */
+setTimeout(function(){try{if(typeof getFiltered==='function')_renderConvBars(getFiltered());}catch(_e){}},400);
 
 </script></body>
 </html>
