@@ -386,8 +386,11 @@ if(e.key==='F12'){e.preventDefault();return false;}
 
   <div class="row rmap" style="display:flex;align-items:stretch;gap:12px">
 
+    <!-- 08-08-2026 (David): mapa cerrado (display:none, código intacto) y en su lugar el CALENDARIO de cortes -->
+    <div style="width:210px;flex-shrink:0;display:flex;flex-direction:column;gap:8px">
+    <div class="card" id="cal-corte-card" style="flex-shrink:0"><div class="ch"><div class="ct"><span class="dot"></span><span>Corte por fecha</span></div><span class="csub" id="cal-corte-sub">datos diarios MEF</span></div><div class="cb" style="padding:8px 9px"><div id="cal-corte-body"></div></div></div>
     <!-- MAP CARD -->
-    <div class="card" style="width:210px;flex-shrink:0;">
+    <div class="card" style="width:210px;flex-shrink:0;display:none">
       <div class="ch">
         <div class="ct"><span class="dot"></span>Distribución Geográfica</div>
         <span class="csub" id="map1-sub">Haz clic en un departamento</span>
@@ -423,6 +426,7 @@ if(e.key==='F12'){e.preventDefault();return false;}
         <div class="mleg"><span>1 proy.</span><div class="mlbar"></div><span>10+ proy.</span></div>
       </div>
     </div>
+    </div><!-- /col izquierda calendario+mapa -->
 
     <div id="resumen-right-area">
     <!-- PROJECT PANELS (center, flex:1) -->
@@ -1539,7 +1543,7 @@ const anio=document.getElementById('fAño') ?document.getElementById('fAño').va
 const tp =document.getElementById('fTipo') ?document.getElementById('fTipo').value :'';
 const label=[_convDisp(cv),anio,tp].filter(Boolean).join(' · ');
 if(back) back.style.display='none';
-if(title) title.textContent='Cartera de Proyectos — '+label;
+if(title) title.textContent=(anio?'Resumen Ejecutivo — ':'Cartera de Proyectos — ')+label;
 if(deptSum) deptSum.textContent='';
 if(sub) sub.textContent='Haz clic en un departamento';
 if(!body) return;
@@ -3046,6 +3050,11 @@ var tp=document.getElementById('fTipo')?document.getElementById('fTipo').value:'
 if(!anio||!bodyEl)return;
 var DU=window._datosActualizados||{};
 var CA=(DU.carteraAnualUpdate||{})[anio];
+/* corte por fecha (calendario): usa la foto diaria si corresponde al año */
+var SD=DU.serieDiariaUpdate||{};
+var fsel=window._fechaCorte||null;
+var usingDia=false;
+if(fsel&&SD[fsel]&&String(fsel).slice(0,4)===String(anio)){CA=SD[fsel];usingDia=true;}
 if(!CA){
 bodyEl.insertAdjacentHTML('beforeend','<div style="margin-top:8px;padding:10px 14px;background:#FFF8E1;border:1.5px solid #FFE082;border-radius:10px;font-size:11.5px;color:#8D6E63;font-weight:600">Los paneles de cartera anual estarán disponibles tras la próxima actualización de datos.</div>');
 return;}
@@ -3088,8 +3097,12 @@ var kpi=function(lbl,val,tt,col,ico,bg,br){return '<div title="'+(tt||'')+'" sty
 +'<span style="display:block;font-size:8.5px;font-weight:700;color:#90A4AE;text-transform:uppercase;letter-spacing:.4px">'+lbl+'</span>'
 +'</span></div>';};
 var L='';
-L+='<div style="display:flex;align-items:baseline;gap:8px;margin-bottom:8px"><span style="font-size:13px;font-weight:900;color:#105000">📊 Resumen Ejecutivo — '+anio+'</span>'
-+'<span style="font-size:9.5px;color:#90A4AE;font-weight:600">Consulta Amigable MEF · incluye inversiones con PIM 0 y pre-inversión</span></div>';
+var _fFmt=function(f){var pt=f.split('-');return pt[2]+'/'+pt[1]+'/'+pt[0];};
+L+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:9.5px;color:#90A4AE;font-weight:600">'
++(usingDia
+? '<span style="background:#E8F5E9;border:1px solid #A5D6A7;color:#1B5E20;font-weight:800;border-radius:9px;padding:2px 9px">📅 Corte: '+_fFmt(fsel)+'</span><span>Consulta Amigable MEF</span><span onclick="if(window._setFechaCorte)_setFechaCorte(null)" title="Quitar el corte y volver al último dato" style="cursor:pointer;color:#C62828;font-weight:900">✕ quitar corte</span>'
+: '<span>Consulta Amigable MEF · incluye inversiones con PIM 0 y pre-inversión'+((SD&&Object.keys(SD).length)?' · elige una fecha en el calendario para ver un corte':'')+'</span>')
++'</div>';
 L+='<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">'
 +kpi('Inversiones',tot.n,'Todas las que registran PIA o PIM en '+anio,'#1C1917','🗂️','#EEF4FF','#90CAF9')
 +kpi('PIM '+anio,fmtM(tot.pim),fmtS(tot.pim),'#1C1917','💰','#FFF8E1','#FFD54F')
@@ -3198,6 +3211,76 @@ box.innerHTML=h;
 };
 /* primer pintado al cargar (sin filtros) */
 setTimeout(function(){try{if(typeof getFiltered==='function')_renderConvBars(getFiltered());}catch(_e){}},400);
+
+/* ══════════════════════════════════════════════════════════════════════
+   CALENDARIO DE CORTES POR FECHA (08-08-2026, pedido de David)
+   Columna izquierda de "Detalle de Inversiones" (en lugar del mapa).
+   Días habilitados = fechas con captura en serieDiariaUpdate
+   (serie diaria de Consulta Amigable, desde 02-07-2026).
+   Al elegir un día: fija el año del filtro y recalcula el Resumen
+   Ejecutivo con la foto de ese día.
+   ══════════════════════════════════════════════════════════════════════ */
+window._fechaCorte=null;
+window._setFechaCorte=function(f){
+window._fechaCorte=f||null;
+if(f){var y=f.slice(0,4);var sel=document.getElementById('fAño');
+if(sel&&sel.value!==y){sel.value=y;}}
+if(typeof applyF==='function')applyF();
+if(window._renderCalCorte)_renderCalCorte();
+};
+window._renderCalCorte=function(){
+try{
+var box=document.getElementById('cal-corte-body');
+if(!box)return;
+var SD=(window._datosActualizados||{}).serieDiariaUpdate||{};
+var fechas=Object.keys(SD).sort();
+var sub=document.getElementById('cal-corte-sub');
+if(!fechas.length){
+box.innerHTML='<div style="font-size:10px;color:#B0BEC5;font-weight:700;text-align:center;padding:10px 4px">Los cortes diarios estarán disponibles tras la próxima actualización.</div>';
+if(sub)sub.textContent='datos diarios MEF';
+return;}
+var _f=function(s){var t=s.split('-');return new Date(+t[0],+t[1]-1,+t[2]);};
+var ult=fechas[fechas.length-1];
+if(sub)sub.textContent='desde '+fechas[0].split('-').reverse().join('/');
+if(!window._calMes)window._calMes=ult.slice(0,7);
+var ym=window._calMes, y=+ym.slice(0,4), m=+ym.slice(5,7);
+var MES=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+var setSet={};fechas.forEach(function(f){setSet[f]=1;});
+var mesesCon={};fechas.forEach(function(f){mesesCon[f.slice(0,7)]=1;});
+var mPrev=(m===1?(y-1)+'-12':y+'-'+String(m-1).padStart(2,'0'));
+var mNext=(m===12?(y+1)+'-01':y+'-'+String(m+1).padStart(2,'0'));
+var h='';
+h+='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">'
++'<span onclick="window._calMes=\''+mPrev+'\';_renderCalCorte()" style="cursor:pointer;font-weight:900;color:'+(mesesCon[mPrev]?'#105000':'#CFD8DC')+';font-size:13px;padding:0 6px;user-select:none">&#8249;</span>'
++'<span style="font-size:11px;font-weight:900;color:#263238">'+MES[m-1]+' '+y+'</span>'
++'<span onclick="window._calMes=\''+mNext+'\';_renderCalCorte()" style="cursor:pointer;font-weight:900;color:'+(mesesCon[mNext]?'#105000':'#CFD8DC')+';font-size:13px;padding:0 6px;user-select:none">&#8250;</span>'
++'</div>';
+h+='<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;font-size:8.5px;font-weight:800;color:#90A4AE;text-align:center;margin-bottom:2px"><span>L</span><span>M</span><span>X</span><span>J</span><span>V</span><span>S</span><span>D</span></div>';
+var first=new Date(y,m-1,1);
+var startCol=(first.getDay()+6)%7;   // lunes=0
+var nDias=new Date(y,m,0).getDate();
+h+='<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px">';
+for(var i=0;i<startCol;i++)h+='<span></span>';
+for(var d=1;d<=nDias;d++){
+var f=y+'-'+String(m).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+var on=!!setSet[f], sel2=(window._fechaCorte===f);
+var st='display:flex;align-items:center;justify-content:center;height:22px;border-radius:6px;font-size:10px;font-weight:800;';
+if(sel2)st+='background:#105000;color:#fff;box-shadow:0 2px 6px rgba(16,80,0,.4);cursor:pointer;';
+else if(on)st+='background:#E8F5E9;color:#1B5E20;border:1px solid #A5D6A7;cursor:pointer;';
+else st+='color:#CFD8DC;';
+h+='<span '+(on?'onclick="_setFechaCorte(\''+f+'\')" title="Ver la cartera al '+f.split('-').reverse().join('/')+'"':'')+' style="'+st+'"'
++(on&&!sel2?' onmouseover="this.style.background=\'#C8E6C9\'" onmouseout="this.style.background=\'#E8F5E9\'"':'')
++'>'+d+'</span>';
+}
+h+='</div>';
+h+='<div style="margin-top:7px;display:flex;gap:5px;flex-wrap:wrap">'
++'<span onclick="window._calMes=\''+ult.slice(0,7)+'\';_setFechaCorte(\''+ult+'\')" style="flex:1;text-align:center;cursor:pointer;background:#F1F8E9;border:1px solid #C5E1A5;color:#33691E;font-size:9px;font-weight:800;border-radius:8px;padding:3px 6px">Último dato</span>'
++(window._fechaCorte?'<span onclick="_setFechaCorte(null)" style="flex:1;text-align:center;cursor:pointer;background:#FFF3F0;border:1px solid #FFAB91;color:#C62828;font-size:9px;font-weight:800;border-radius:8px;padding:3px 6px">✕ Quitar</span>':'')
++'</div>';
+box.innerHTML=h;
+}catch(_e){if(window.console)console.warn('calCorte:',_e);}
+};
+setTimeout(function(){if(window._renderCalCorte)_renderCalCorte();},500);
 
 </script></body>
 </html>
