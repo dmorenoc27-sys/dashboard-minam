@@ -375,8 +375,8 @@ if(e.key==='F12'){e.preventDefault();return false;}
 
 <!-- PAGE 1: RESUMEN -->
 <div class="page" id="page-resumen">
-  <!-- 08-08-2026 (David): fila de 4 paneles KPI oculta a pedido — no borrar, renderKPIs sigue pintándola -->
-  <div class="kg" id="kpi-grid" style="display:none">
+  <!-- 08-08-2026 (David): la fila de 4 paneles KPI se oculta SOLO al seleccionar un año (ver applyF) -->
+  <div class="kg" id="kpi-grid">
     <div class="kc"><span class="ki">💰</span><div class="kl" id="ej-pim-lbl">Devengado 2025</div><div class="kv" id="ej-pim">S/ 294.61M</div><div class="ks">Presupuesto Institucional Modificado</div><div class="pb"><div class="pf" style="width:100%"></div></div></div>
     <div class="kc"><span class="ki">✅</span><div class="kl">Devengado 2025</div><div class="kv">S/ 340.5M</div><div class="ks">Gasto ejecutado acumulado</div><div class="pb"><div class="pf" style="width:55.6%"></div></div></div>
     <div class="kc gold"><span class="ki">📊</span><div class="kl">% Avance Ejecución</div><div class="kv" style="color:var(--v1)">55.6%</div><div class="ks">Devengado / PIM</div><span class="kb warn">⚠ Por debajo de meta</span></div>
@@ -677,6 +677,7 @@ if(document.getElementById('page-impacto')&&document.getElementById('page-impact
 const cv=document.getElementById('fConv').value;
 const anio=document.getElementById('fAño').value;
 const tp=document.getElementById('fTipo').value;
+var _kg=document.getElementById('kpi-grid');if(_kg)_kg.style.display=anio?'none':'';
 document.querySelectorAll('#ptbody tr').forEach(tr=>{
 const d=tr.dataset;
 tr.style.display=(!cv||_convON(d.conv)===cv)&&(!anio||d.anio===anio)&&(!tp||d.tipo===tp)?'':'none';
@@ -1557,10 +1558,10 @@ const col=convColor[conv]||'#44546A';
 const uid='acc_'+ci;
 out+='<div style="border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.10);border:1.5px solid '+col+'33">';
 out+='<div onclick="(function(el){var p=el.nextElementSibling;var arr=el.querySelector(\'.acc-arr\');if(p.style.display===\'none\'){p.style.display=\'flex\';arr.style.transform=\'rotate(90deg)\'}else{p.style.display=\'none\';arr.style.transform=\'rotate(0deg)\'}})(this)" '
-+'style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:'+col+';cursor:pointer;user-select:none">';
-out+='<span style="flex:1;color:#fff;font-size:15px;font-weight:800;letter-spacing:.4px">'+_convDisp(conv)+'</span>';
-out+='<span style="background:rgba(255,255,255,.22);color:#fff;font-size:13px;font-weight:700;padding:4px 13px;border-radius:20px;white-space:nowrap">'+projs.length+' proyecto'+(projs.length===1?'':'s')+'</span>';
-out+='<span class="acc-arr" style="color:#fff;font-size:18px;font-weight:700;transition:transform .2s;line-height:1">&#9654;</span>';
++'style="display:flex;align-items:center;gap:10px;padding:7px 14px;background:'+col+';cursor:pointer;user-select:none">';
+out+='<span style="flex:1;color:#fff;font-size:13px;font-weight:800;letter-spacing:.4px">'+_convDisp(conv)+'</span>';
+out+='<span style="background:rgba(255,255,255,.22);color:#fff;font-size:11px;font-weight:700;padding:2px 10px;border-radius:20px;white-space:nowrap">'+projs.length+' proyecto'+(projs.length===1?'':'s')+'</span>';
+out+='<span class="acc-arr" style="color:#fff;font-size:13px;font-weight:700;transition:transform .2s;line-height:1">&#9654;</span>';
 out+='</div>';
 out+='<div style="display:none;flex-wrap:wrap;gap:6px;padding:12px 14px;background:#fafeff;border-top:2px solid '+col+'22">';
 projs.forEach(p=>{
@@ -3132,7 +3133,7 @@ L+='<div title="Asignación presupuestal para estudios de pre-inversión (CUI 20
 +'<span style="color:#78909C">Devengado <b style="color:#105000">'+fmtS(gp.dev)+'</b></span></div>';
 }
 /* ── contenedor ── */
-var html='<div id="cartAnualPan" style="margin-top:10px">'
+var html='<div id="cartAnualPan" style="margin-bottom:4px">'
 +'<div style="background:#FBFDFB;border:1.5px solid #C8E6C9;border-radius:13px;padding:11px 13px">'+L+'</div>'
 +'</div>';
 var old=document.getElementById('cartAnualPan');if(old)old.remove();
@@ -3141,7 +3142,7 @@ var old=document.getElementById('cartAnualPan');if(old)old.remove();
    sitio al panel. Con flexShrink=0 el contenedor hace scroll, no aplasta. */
 Array.prototype.forEach.call(bodyEl.children,function(c){c.style.flexShrink='0';});
 bodyEl.style.overflowY='auto';
-bodyEl.insertAdjacentHTML('beforeend',html);
+bodyEl.insertAdjacentHTML('afterbegin',html);  /* arriba de las barras de convenios */
 var pan=document.getElementById('cartAnualPan');if(pan)pan.style.flexShrink='0';
 }catch(_e){if(window.console)console.warn('cartAnualPan:',_e);}
 };
