@@ -386,11 +386,10 @@ if(e.key==='F12'){e.preventDefault();return false;}
 
   <div class="row rmap" style="display:flex;align-items:stretch;gap:12px">
 
-    <!-- 08-08-2026 (David): mapa cerrado (display:none, código intacto) y en su lugar el CALENDARIO de cortes -->
+    <!-- 08-08-2026 (David): el CALENDARIO de cortes aparece DEBAJO del mapa solo al seleccionar un año -->
     <div style="width:210px;flex-shrink:0;display:flex;flex-direction:column;gap:8px">
-    <div class="card" id="cal-corte-card" style="flex-shrink:0"><div class="ch"><div class="ct"><span class="dot"></span><span>Corte por fecha</span></div><span class="csub" id="cal-corte-sub">datos diarios MEF</span></div><div class="cb" style="padding:8px 9px"><div id="cal-corte-body"></div></div></div>
     <!-- MAP CARD -->
-    <div class="card" style="width:210px;flex-shrink:0;display:none">
+    <div class="card" style="width:210px;flex-shrink:0;">
       <div class="ch">
         <div class="ct"><span class="dot"></span>Distribución Geográfica</div>
         <span class="csub" id="map1-sub">Haz clic en un departamento</span>
@@ -426,7 +425,8 @@ if(e.key==='F12'){e.preventDefault();return false;}
         <div class="mleg"><span>1 proy.</span><div class="mlbar"></div><span>10+ proy.</span></div>
       </div>
     </div>
-    </div><!-- /col izquierda calendario+mapa -->
+    <div class="card" id="cal-corte-card" style="flex-shrink:0;display:none"><div class="ch"><div class="ct"><span class="dot"></span><span>Corte por fecha</span></div><span class="csub" id="cal-corte-sub">datos diarios MEF</span></div><div class="cb" style="padding:8px 9px"><div id="cal-corte-body"></div></div></div>
+    </div><!-- /col izquierda mapa+calendario -->
 
     <div id="resumen-right-area">
     <!-- PROJECT PANELS (center, flex:1) -->
@@ -683,6 +683,8 @@ const cv=document.getElementById('fConv').value;
 const anio=document.getElementById('fAño').value;
 const tp=document.getElementById('fTipo').value;
 var _kg=document.getElementById('kpi-grid');if(_kg)_kg.style.display=anio?'none':'';
+var _cc=document.getElementById('cal-corte-card');if(_cc)_cc.style.display=anio?'':'none';
+if(!anio&&window._fechaCorte){window._fechaCorte=null;if(window._renderCalCorte)setTimeout(_renderCalCorte,50);}
 document.querySelectorAll('#ptbody tr').forEach(tr=>{
 const d=tr.dataset;
 tr.style.display=(!cv||_convON(d.conv)===cv)&&(!anio||d.anio===anio)&&(!tp||d.tipo===tp)?'':'none';
