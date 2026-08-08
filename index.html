@@ -375,7 +375,8 @@ if(e.key==='F12'){e.preventDefault();return false;}
 
 <!-- PAGE 1: RESUMEN -->
 <div class="page" id="page-resumen">
-  <div class="kg" id="kpi-grid">
+  <!-- 08-08-2026 (David): fila de 4 paneles KPI oculta a pedido — no borrar, renderKPIs sigue pintándola -->
+  <div class="kg" id="kpi-grid" style="display:none">
     <div class="kc"><span class="ki">💰</span><div class="kl" id="ej-pim-lbl">Devengado 2025</div><div class="kv" id="ej-pim">S/ 294.61M</div><div class="ks">Presupuesto Institucional Modificado</div><div class="pb"><div class="pf" style="width:100%"></div></div></div>
     <div class="kc"><span class="ki">✅</span><div class="kl">Devengado 2025</div><div class="kv">S/ 340.5M</div><div class="ks">Gasto ejecutado acumulado</div><div class="pb"><div class="pf" style="width:55.6%"></div></div></div>
     <div class="kc gold"><span class="ki">📊</span><div class="kl">% Avance Ejecución</div><div class="kv" style="color:var(--v1)">55.6%</div><div class="ks">Devengado / PIM</div><span class="kb warn">⚠ Por debajo de meta</span></div>
