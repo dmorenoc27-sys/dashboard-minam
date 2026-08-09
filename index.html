@@ -4536,12 +4536,10 @@ t2.value='SEGUIMIENTO DE LA INVERSIÓN — FORMATO 12-B';
 t2.font={bold:true,size:14,color:{argb:C.blanco}};t2.alignment={horizontal:'center',vertical:'middle'};
 t2.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF0B3D0B'}};ws2.getRow(r2).height=25;r2++;
 _mrg(r2);t2=c2(r2,COLI);
-t2.value='CUI '+cui+' · '+String(_nomFicha).slice(0,180);
+t2.value='CUI '+cui+' · '+String(_nomFicha);
 t2.font={bold:true,size:9.5,color:{argb:C.blanco}};t2.alignment={horizontal:'center',vertical:'middle',wrapText:true};
-t2.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF2E7D32'}};ws2.getRow(r2).height=22;r2++;
-_mrg(r2);t2=c2(r2,COLI);
-t2.value='Fuente: MEF — Invierte.pe (Formato 12-B)'+(SGD.f?' · Capturado: '+SGD.f.split('-').reverse().join('/'):'')+' · Generado: '+fGen;
-t2.font={italic:true,size:8.5,color:{argb:C.gris}};t2.alignment={horizontal:'center'};r2+=2;
+t2.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF2E7D32'}};
+ws2.getRow(r2).height=Math.min(80,15*Math.ceil((String(_nomFicha).length+12)/125)+8);r2+=2;
 
 var banner=function(num,titulo){
 var P=MODPAL[num];
@@ -4694,7 +4692,7 @@ if(r2===_r0){notaVacia();r2++;}
 
 /* pie */
 _mrg(r2);t2=c2(r2,COLI);
-t2.value='Generado: '+fGen+' · Fuente: MEF — Invierte.pe Formato 12-B · gica003.pe · © 2024-2026 ARKA PROYECTOS';
+t2.value='Generado: '+fGen+(SGD.f?' · Capturado del F12B: '+SGD.f.split('-').reverse().join('/'):'')+' · Fuente: MEF — Invierte.pe Formato 12-B · gica003.pe · © 2024-2026 ARKA PROYECTOS';
 t2.font={italic:true,size:8,color:{argb:'FF90A4AE'}};t2.alignment={horizontal:'center'};
 }
 
