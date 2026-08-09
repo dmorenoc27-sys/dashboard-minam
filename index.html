@@ -3059,6 +3059,10 @@ if(window._lang==='ja'){
 if(window._trNombre){var tn=window._trNombre(s);if(tn!=null)return tn;}
 if(window._trSSI){var t=window._trSSI(s);if(t!=null)return t;}
 }
+if(window._lang==='de'){
+if(window._trNombreDE){var tn2=window._trNombreDE(s);if(tn2!=null)return tn2;}
+if(window._trSSIDE){var t3=window._trSSIDE(s);if(t3!=null)return t3;}
+}
 return null;
 }
 window._trTxt=function(s){if((window._lang||'es')==='es')return s;var t=trStr(String(s).trim());return t!=null?t:s;};
@@ -3415,7 +3419,357 @@ return null;
 }
 })();
 </script>
-
+<script>
+/* ═══ TRADUCTOR SSI + NOMBRES EN ALEMÁN — ARKA 09-08-2026 ═══
+   Espejo del traductor japonés: componentes con diccionario exacto,
+   acciones con glosario + patrones, nombres oficiales con patrones de
+   encabezado + cadena de localidades. Política: todo-o-nada por segmento
+   (si no se puede traducir completo, se queda en español). */
+(function(){
+function N(s){return String(s).normalize('NFD').replace(/[̀-ͯ]/g,'').toUpperCase().replace(/\s+/g,' ').trim();}
+function N2(s){return String(s).normalize('NFD').replace(/[̀-ͯ]/g,'').toUpperCase().replace(/[^A-Z0-9]+/g,' ').replace(/\s+/g,' ').trim();}
+var COMPDE={
+'ADECUADA CAPACIDAD DE RECOLECCION Y TRANSPORTE':'Angemessene Sammel- und Transportkapazität',
+'ADECUADA CAPACIDAD OPERATIVA DE RECOLECCION Y TRANSPORTE':'Angemessene operative Sammel- und Transportkapazität',
+'ADECUADA CAPACIDAD PARA LA RECOLECCION Y TRANSPORTE':'Angemessene Sammel- und Transportkapazität',
+'ADECUADA DISPOSICION DE LOS RESIDUOS SOLIDOS':'Angemessene Entsorgung der Abfälle',
+'ADECUADA DISPOSICION FINAL':'Angemessene Endablagerung',
+'ADECUADA DISPOSICION FINAL DE LOS RESIDUOS SOLIDOS':'Angemessene Endablagerung der Abfälle',
+'ADECUADA DISPOSICION FINAL DE RESIDUOS SOLIDOS':'Angemessene Endablagerung der Abfälle',
+'ADECUADA EDUCACION Y CULTURA AMBIENTAL DE LA POBLACION':'Angemessene Umweltbildung und -kultur der Bevölkerung',
+'ADECUADA GESTION ADMINISTRATIVA FINANCIERA Y TECNICA':'Angemessenes Verwaltungs-, Finanz- und Technikmanagement',
+'ADECUADA GESTION ADMINISTRATIVA, FINANCIERA Y TECNICA':'Angemessenes Verwaltungs-, Finanz- und Technikmanagement',
+'ADECUADA GESTION ADMINISTRATIVA. FINANCIERA Y TECNICA':'Angemessenes Verwaltungs-, Finanz- und Technikmanagement',
+'ADECUADA GESTION TECNICA, ADMINISTRATIVA, ECONOMICA Y FINANCIERA':'Angemessenes technisches, administratives, wirtschaftliches und finanzielles Management',
+'ADECUADA RECOLECCION Y TRANSPORTE DE RESIDUOS SOLIDOS':'Angemessene Sammlung und Transport der Abfälle',
+'ADECUADA VALORIZACION DE LOS RESIDUOS SOLIDOS':'Angemessene Verwertung der Abfälle',
+'ADECUADA VALORIZACION DE RESIDUOS INORGANICOS':'Angemessene Verwertung anorganischer Abfälle',
+'ADECUADA VALORIZACION DE RESIDUOS ORGANICOS':'Angemessene Verwertung organischer Abfälle',
+'ADECUADAS PRACTICAS DE LA POBLACION':'Angemessene Praktiken der Bevölkerung',
+'ADECUADAS PRACTICAS DE LA POBLACION EN EL MANEJO DE RESIDUOS SOLIDOS':'Angemessene Praktiken der Bevölkerung in der Abfallbewirtschaftung',
+'ADECUADO ALMACENAMIENTO':'Angemessene Lagerung',
+'ADECUADO ALMACENAMIENTO DE RESIDUOS SOLIDOS Y BARRIDO DE CALLES':'Angemessene Abfalllagerung und Straßenreinigung',
+'ADECUADO ALMACENAMIENTO EN VIAS URBANAS Y AREAS PUBLICAS':'Angemessene Lagerung an Straßen und öffentlichen Flächen',
+'ADECUADO ALMACENAMIENTO Y BARRIDO':'Angemessene Lagerung und Straßenreinigung',
+'ADECUADO ALMACENAMIENTO Y BARRIDO DE CALLES Y PLAZAS':'Angemessene Lagerung und Reinigung von Straßen und Plätzen',
+'ADECUADO ALMACENAMIENTO Y BARRIDO DE RESIDUOS SOLIDOS':'Angemessene Abfalllagerung und Straßenreinigung',
+'ADECUADO ALMACENAMIENTO Y BARRIDO DE RRSS':'Angemessene Abfalllagerung und Straßenreinigung',
+'ADECUADO APROVECHAMIENTO DE LOS RESIDUOS SOLIDOS':'Angemessene Nutzung der Abfälle',
+'ADECUADO BARRIDO':'Angemessene Straßenreinigung',
+'ADECUADO BARRIDO DE VIAS URBANAS Y AREAS PUBLICAS':'Angemessene Reinigung von Straßen und öffentlichen Flächen',
+'ADECUADO MANEJO DE RESIDUOS SOLIDOS EN EL AREA DEGRADADA':'Angemessene Abfallbewirtschaftung im degradierten Gebiet',
+'ADECUADO RECOLECCION Y TRANSPORTE':'Angemessene Sammlung und Transport',
+'ADECUADO RECOLECCION Y TRANSPORTE DE RESIDUOS SOLIDOS':'Angemessene Sammlung und Transport der Abfälle',
+'ADECUADO RECOLECCION Y TRANSPORTE DE RRSS':'Angemessene Sammlung und Transport der Abfälle',
+'ADQUISICION DE ACTIVOS':'Erwerb von Vermögenswerten',
+'APROPIADA DISPOSICION FINAL DE LOS RESIDUOS SOLIDOS MUNICIPALES':'Angemessene Endablagerung der Siedlungsabfälle',
+'APROPIADA DISPOSICION FINAL DE RESIDUOS SOLIDOS':'Angemessene Endablagerung der Abfälle',
+'APROPIADA DISPOSICION FINAL DE RESIDUOS SOLIDOS MUNICIPALES':'Angemessene Endablagerung der Siedlungsabfälle',
+'APROPIADA DISPOSICION FINAL DE RESISUOS SOLIDOS MUNICIPALES':'Angemessene Endablagerung der Siedlungsabfälle',
+'APROPIADA DISPOSICION FINAL DE RRSS':'Angemessene Endablagerung der Abfälle',
+'PROPIADA DISPOSICION FINAL DE RESIDUOS SOLIDOS MUNICIPALES':'Angemessene Endablagerung der Siedlungsabfälle',
+'APROPIADAS PRACTICAS DE LA POBLACION INVOLUCRADA':'Angemessene Praktiken der beteiligten Bevölkerung',
+'APROPIADO RE APROVECHAMIENTO DE RESIDUOS SOLIDOS ORGANICOS E INORGANICOS':'Angemessene Wiederverwertung organischer und anorganischer Abfälle',
+'APROPIADO REAPROVECHAMIENTO DE RESIDUOS SOLIDOS':'Angemessene Wiederverwertung der Abfälle',
+'APROPIADO REAPROVECHAMIENTO DE RESIDUOS SOLIDOS ORGANICOS E INORGANICO':'Angemessene Wiederverwertung organischer und anorganischer Abfälle',
+'APROPIADO REAPROVECHAMIENTO DE RESIDUOS SOLIDOS ORGANICOS E INORGANICOS':'Angemessene Wiederverwertung organischer und anorganischer Abfälle',
+'APROPIADO REAPROVECHAMIENTO DE RRSS ORGANICOS E INORGANICOS':'Angemessene Wiederverwertung organischer und anorganischer Abfälle',
+'APROPIADO REAPROVECHAMIENTO DE RRSS ORGANICOS Y INORGANICOS':'Angemessene Wiederverwertung organischer und anorganischer Abfälle',
+'APROPIADO REAPROVECHAMIENTO E RESIDUOS SOLIDOS ORGANICOS E INORGANICO':'Angemessene Wiederverwertung organischer und anorganischer Abfälle',
+'AREA OPERATIVA':'Betriebsbereich',
+'BUENAS PRACTICAS A LA POBLACION':'Gute Praktiken für die Bevölkerung',
+'CAPACIDAD OPERATIVA DE RECOLECCION Y DE TRANSPORTE':'Operative Sammel- und Transportkapazität',
+'CAPACITACION Y SENSIBILIZACION A LA POBLACION':'Schulung und Sensibilisierung der Bevölkerung',
+'COMPONENTE 01: ALMACENAMIENTO Y BARRIDO':'Komponente 01: Lagerung und Straßenreinigung',
+'COMPONENTE 02: CAPACITACION OPERATIVA RECOLECCION Y TRANSPORTE DE RESIDUOS SOLIDOS':'Komponente 02: Operative Schulung Abfallsammlung und -transport',
+'COMPONENTE 03: SISTEMA DE TRATAMIENTO DE RESIDUOS SOLIDOS':'Komponente 03: Abfallbehandlungssystem',
+'COMPONENTE 05: GESTION TECNICA, ADMINISTRATIVA Y TECNICA':'Komponente 05: Technisches und administratives Management',
+'COMPONENTE 06: PLAN DE SENSIBILIZACION Y CAPACITACION PARA EDUCACION AMBIENTAL':'Komponente 06: Sensibilisierungs- und Schulungsplan für Umweltbildung',
+'COMPONENTE 4: DISPOSICION FINAL DE RESIDUOS SOLIDOS':'Komponente 4: Endablagerung der Abfälle',
+'CONSTRUCCION DE OBRAS CIVILES':'Bau von Ingenieurbauwerken',
+'EDIFICACION':'Gebäude',
+'EFICIENTE CAPACIDAD OPERATIVA DE RECOLECCION DE RESIDUOS SOLIDOS':'Effiziente operative Abfallsammelkapazität',
+'EFICIENTE CAPACIDAD OPERATIVA DE TRANSFERENCIA DE RESIDUOS SOLIDOS AL LUGAR DE DISPOSICION FINAL':'Effiziente operative Umschlagkapazität zur Endablagerungsstätte',
+'EFICIENTE GESTION MUNICIPAL EN EL AREA DEGRADADA':'Effizientes kommunales Management im degradierten Gebiet',
+'EFICIENTE GESTION TECNICA, ADMINISTRATIVA, ECONOMICA Y FINANCIERA DEL SERVICIO':'Effizientes technisches, administratives, wirtschaftliches und finanzielles Management des Dienstes',
+'EFICIENTE GESTION TECNICA, ADMINISTRATIVA, ECONOMICA Y FINANCIERA DEL SERVICIO DE LIMPIEZA PUBLICA':'Effizientes technisches, administratives, wirtschaftliches und finanzielles Management des öffentlichen Reinigungsdienstes',
+'EFICIENTE GESTION TECNICA, ADMINISTRATIVA, ECONOMICA, FINANCIERA DEL SERVICIO DE LIMPIEZA PUBLICA':'Effizientes technisches, administratives, wirtschaftliches und finanzielles Management des öffentlichen Reinigungsdienstes',
+'EFICIENTE GESTION TECNICA, LEGAL, ADMINISTRATIVA, ECONOMICA Y FINANCIERA DEL SERVICIO DE LIMPIEZA PUBLICA':'Effizientes technisches, rechtliches, administratives, wirtschaftliches und finanzielles Management des öffentlichen Reinigungsdienstes',
+'EQUIPAMIENTO':'Ausstattung',
+'EQUIPAMIENTO PARA FASES DE OPERACIONES Y MEDIA TENSION':'Ausstattung für Betriebsphasen und Mittelspannung',
+'ESTUDIO BASE':'Grundlagenstudie',
+'EVALUACION EX - POST':'Ex-post-Evaluierung','EVALUACION EX POST':'Ex-post-Evaluierung','EVALUACION EX-POST':'Ex-post-Evaluierung','EVALUACION EXPOST':'Ex-post-Evaluierung',
+'GESTION ADMINISTRATIVA Y FINANCIERA':'Verwaltungs- und Finanzmanagement',
+'GESTION DEL PROGRAMA':'Programmmanagement',
+'INFRAESTRUCTURA':'Infrastruktur',
+'INTANGIBLES':'Immaterielle Güter',
+'MOBILIARIO Y EQUIPAMIENTO':'Mobiliar und Ausstattung',
+'OBRAS PROVISIONALES Y SEGURIDAD OCUPACIONAL':'Provisorische Bauten und Arbeitssicherheit',
+'OTRA INTERVENCION':'Sonstige Intervention',
+'PLAN DE MANEJO AMBIENTAL':'Umweltmanagementplan',
+'PLANES DE BARRIDO Y RECOLECCION, FORTALECIMIENTO DE CAPACIDADES DE LA URS Y PRACTICAS DIRIGIDAS A LA POBLACION':'Reinigungs- und Sammelpläne, Kapazitätsaufbau der Abfalleinheit (URS) und Praktiken für die Bevölkerung',
+'PLANES DE BARRIDO Y RECOLECCION, FORTALECIMIENTO DE CAPACIDADES DE LA URS Y PRACTICAS DIRIGUIDAS A LA POBLACION':'Reinigungs- und Sammelpläne, Kapazitätsaufbau der Abfalleinheit (URS) und Praktiken für die Bevölkerung',
+'PLANES DE BARRIDO Y RECOLECCION, FORTALECIMIENTO DE CAPCIDADES DE LA URS Y PRACTICAS DIRIGIDAS A LA POBLACION':'Reinigungs- und Sammelpläne, Kapazitätsaufbau der Abfalleinheit (URS) und Praktiken für die Bevölkerung',
+'ADECUADO ALMACENAMIENTO Y BARRIDO; ADECUADA RECOLECCION Y TRANSPORTE; VALORIZACION DE RESIDUOS SOLIDOS INORGANICOS Y ORGANICOS; DISPOSICION FINAL;GESTION ADMINISTIVA, TECNICA Y FINANCIERA; BUENAS PRACTICAS DE LA POBLACIONP':'Angemessene Lagerung und Reinigung; Sammlung und Transport; Verwertung organischer und anorganischer Abfälle; Endablagerung; Verwaltungs-, Technik- und Finanzmanagement; gute Praktiken der Bevölkerung',
+'PROYECTOS DEL PROGRAMA':'Projekte des Programms',
+'REAPROVECHAMIENTO MANUAL DE RESIDUOS SOLIDOS':'Manuelle Wiederverwertung der Abfälle',
+'SUFICIENTE CAPACIDAD OPERATIVA DE RECOLECCION Y TRANSPORTE':'Ausreichende operative Sammel- und Transportkapazität',
+'VEHICULOS':'Fahrzeuge',
+'VIAS DE ACCESO INTERIOR':'Innere Zufahrtswege',
+'GASTOS GENERALES POR COVID - 19':'Gemeinkosten COVID-19','INVENTARIO FISICO COVID - 19':'Physische Inventur COVID-19',
+'SUPERVISION':'Bauüberwachung','AMBIENTE ADMINISTRATIVO':'Verwaltungsraum',
+'ACCIONES PREOPERATIVAS PARA LA PUESTA EN MARCHA EL RELLENO SANITARIO':'Vorbereitende Maßnahmen zur Inbetriebnahme der Deponie',
+'ACCIONES PREOPERATIVAS PARA LA PUESTA EN MARCHA DEL RELLENO SANITARIO':'Vorbereitende Maßnahmen zur Inbetriebnahme der Deponie',
+'ACCIONES COMPLEMENTARIAS PARA LA PUESTA EN MARCHA DEL RELLENO SANITARIOS':'Ergänzende Maßnahmen zur Inbetriebnahme der Deponie',
+'ACCIONES COMPLEMENTARIAS PARA LA PUESTA EN MARCHA DEL RELLENO SANITARIO':'Ergänzende Maßnahmen zur Inbetriebnahme der Deponie',
+'IMPLEMENTACION DE ACCIONES COMPLEMENTARIAS PARA UNA ADECUADA OPERACION DEL RELLENO SANITARIO':'Umsetzung ergänzender Maßnahmen für einen ordnungsgemäßen Deponiebetrieb',
+'ADMINISTRACION DEL CONTRATO PARA LA EJECUCION DE LA OBRA':'Vertragsmanagement für die Bauausführung',
+'CONTRATACION DEL SERVICIO DE CONSULTORIA PARA ELABORAR PLANES, FORTALECIMIENTO DE CAPACIDADES Y PRACTICAS DIRIGIDAS A LA POBLACION':'Beauftragung von Beratungsleistungen zur Erstellung von Plänen, Kapazitätsaufbau und Praktiken für die Bevölkerung',
+'CONTRATACION DEL SERVICIO DE CONSULTORIA PARA ELEBORAR PLANES, FORTALECIMIENTO DE CAPACIDADES Y PRACTICAS DIRIGIDAS A LA POBLACION':'Beauftragung von Beratungsleistungen zur Erstellung von Plänen, Kapazitätsaufbau und Praktiken für die Bevölkerung'
+};
+var OBJDE={
+'TALLER':'Werkstatt','TALLERES':'Werkstätten',
+'EQUIPO DE ALMACENAMIENTO':'Lagerungsausrüstung','EQUIPO':'Ausrüstung','EQUIPOS':'Ausrüstung',
+'EQUIPAMIENTO':'Ausstattung','QUIPAMIENDO':'Ausstattung','EQUIPAMIENDO':'Ausstattung',
+'VEHICULO':'Fahrzeug','VEHICULOS':'Fahrzeuge',
+'CAMION COMPACTADOR':'Pressmüllwagen',
+'CAMIONES COMPACTADORES Y CAMIONES BARANDAS':'Pressmüllwagen und Pritschenwagen',
+'CAMIONES COMPACTADORAS Y CAMIONES BARANDA PARA RECOLECCION DE RESIDUOS SOLIDOS':'Pressmüllwagen und Pritschenwagen für die Abfallsammlung',
+'CAMIONES COMPACTADORES Y CAMIONES BARANDA PARA RECOLECCION DE RESIDUOS SOLIDOS':'Pressmüllwagen und Pritschenwagen für die Abfallsammlung',
+'CAMION BARANDA':'Pritschenwagen','CAMION CISTERNA':'Tankwagen','CAMION MADRINA':'Sattelzug',
+'CAMION PLATAFORMA':'Plattformwagen','CAMION AMPLIROLL':'Abrollkipper','CAMION':'Lastwagen',
+'CAMIONETA':'Pick-up','CAMIONETA 4 X 4':'Pick-up 4x4','CAMIONETA SUV (UGP)':'SUV (UGP)',
+'CARGADOR FRONTAL':'Radlader','MINICARGADOR':'Kompaktlader','MINI CARGADOR':'Kompaktlader',
+'MINICARGADOR SOBRE ORUGAS':'Kompakt-Raupenlader','TRACTOR DE ORUGAS':'Raupentraktor','VOLQUETE':'Kipper',
+'TRIMOVIL':'Lastendreirad','TRIMOVILES':'Lastendreiräder',
+'TRIMOVILES PARA RECOLECCION DE RESIDUOS SOLIDOS':'Lastendreiräder für die Abfallsammlung',
+'MOTOCICLETA':'Motorrad','MOTO LINEAL':'Motorrad',
+'EXCAVADORA HIDRAULICA':'Hydraulikbagger','RODILLO LISO VIBRATORIO':'Vibrationswalze','GENERADOR ELECTRICO':'Stromerzeuger',
+'COMPUTADORA (LABORATORIO)':'Computer (Labor)','COMPUTADORAS':'Computer','COMPUTADORA':'Computer',
+'COMPUTADORAS PARA LA UNIDAD DE RESIDUOS SOLIDOS':'Computer für die Abfalleinheit',
+'TELEVISOR':'Fernseher','PAPELERA':'Abfallbehälter','PAPELERAS':'Abfallbehälter',
+'CONTENEDOR':'Container','CONTENEDORES':'Container','COCHE DE BARRIDO':'Kehrwagen','COCHES DE BARRIDO':'Kehrwagen',
+'HERRAMIENTA':'Werkzeug','HERRAMIENTAS':'Werkzeuge',
+'MOBILIARIO':'Mobiliar','MOBILIARIO DE OFICINA':'Büromobiliar',
+'MOBILIARIO DE AMBIENTES COMPLEMENTARIOS':'Mobiliar für Nebenräume',
+'MOBILIARIO DE CENTRO Y/O CAMPO EXPERIMENTAL':'Mobiliar für Zentrum und/oder Versuchsfeld',
+'TERRENO':'Grundstück','TERRENOS':'Grundstücke',
+'RELLENO SANITARIO':'Deponie','RELLENO SANITARIOS':'Deponie','EL RELLENO SANITARIO':'Deponie',
+'CELDAS PARA RESIDUOS':'Deponiezellen',
+'PLANTA DE VALORIZACION':'Verwertungsanlage','PLANTA DE TRANSFERENCIA':'Umschlaganlage',
+'PLANTA DE REAPROVECHAMIENTO':'Wiederverwertungsanlage','LA PLANTA DE REAPROVECHAMIENTO':'Wiederverwertungsanlage',
+'ESTACION DE TRANSFERENCIA':'Umschlagstation','CENTRO DE ACOPIO':'Sammelzentrum',
+'CERCO PERIMETRICO':'Umzäunung','CHIMENEA':'Entgasungskamin','CUNETA':'Entwässerungsrinne','DEPOSITO':'Lager',
+'EDIFICACION':'Gebäude','ESTRUCTURA DE PROTECCION':'Schutzstruktur',
+'INFRAESTRUCTURA DE ALMACENAMIENTO':'Lagerinfrastruktur','INFRAESTRUCTURA DE REAPROVECHAMIENTO':'Wiederverwertungsinfrastruktur',
+'INFRAESTRUCTURA PARA DISPOSICION FINAL DE RRSS':'Infrastruktur zur Endablagerung der Abfälle',
+'MURO DE CONTENCION':'Stützmauer','OBRAS EXTERIORES':'Außenanlagen','PAVIMENTO':'Fahrbahnbelag','PLATAFORMA':'Plattform',
+'POZA DE ALMACENAMIENTO':'Speicherbecken','POZO DE MONITOREO':'Monitoringbrunnen','PTAR':'Kläranlage (PTAR)',
+'SISTEMA DE DRENAJE':'Entwässerungssystem','SISTEMA DE MANEJO DE GASES':'Deponiegassystem',
+'SISTEMA DE MANEJO DE LIXIVIADOS':'Sickerwassersystem','SISTEMA':'System','SISTEMA DE INFORMACION':'Informationssystem',
+'SISTEMA DE FAJA TRANSPORTADORA':'Förderbandsystem','SISTEMA INTEGRADO DE GESTION DE CALIDAD':'Integriertes Qualitätsmanagementsystem',
+'SISTEMA DE IZADORA (CONTENEDORES)':'Hebesystem (Container)',
+'VIAS DE ACCESO':'Zufahrtswege','VIAS DE ACCESO EXTERIOR':'Äußere Zufahrtswege',
+'AMBIENTE ADMINISTRATIVO':'Verwaltungsraum','AMBIENTE COMPLEMENTARIO':'Nebenraum','AMBIENTES COMPLEMENTARIOS':'Nebenräume',
+'AMBIENTE U OFICINA DE SEDE ADMINISTRATIVA':'Raum bzw. Büro des Verwaltungssitzes',
+'AMBIENTE DE GESTION ADMINISTRATIVA':'Verwaltungsraum',
+'AMBIENTE DE MANEJO DE RESIDUOS SOLIDOS Y SSHH':'Abfallwirtschaftsraum und Sanitäranlagen',
+'EQUIPOS COMPLEMENTARIOS':'Zusatzausrüstung',
+'EQUIPOS DE PROTECCION DE PERSONAL':'Persönliche Schutzausrüstung (PSA)',
+'EQUIPOS DE PROTECCION DE PERSONAL (EPP)':'Persönliche Schutzausrüstung (PSA)',
+'EQUIPOS DE PROTECCION PERSONAL':'Persönliche Schutzausrüstung (PSA)',
+'EQUIPOS DE PROTECTOS DE PERSONAL':'Persönliche Schutzausrüstung (PSA)',
+'EPP':'PSA',
+'EQUIPO DE SEGURIDAD PARA EL SERVICIO DE CONTROL':'Sicherheitsausrüstung für den Kontrolldienst',
+'EQUIPO TACTICO DE SEGURIDAD PERSONAL':'Taktische persönliche Sicherheitsausrüstung',
+'EQUIPO DE CENTRO DE CONTROL Y MONITOREO':'Ausrüstung für Kontroll- und Monitoringzentrum',
+'EQUIPO DE AMBIENTE COMPLEMENTARIO':'Ausstattung der Nebenräume',
+'EQUIPAMIENTO DE AMBIENTES COMPLEMENTARIOS':'Ausstattung der Nebenräume',
+'EQUIPAMIENTO DE AMBIENTES DE BIENESTAR Y SERVICIOS GENERALES':'Ausstattung der Sozial- und Serviceräume',
+'EQUIPAMIENTO DE INGENIERIA':'Ingenieurtechnische Ausstattung',
+'EQUIPAMIENTO (PAPELERAS, COCHES DE BARRIDO, CONTENEDORES, ETC.)':'Ausstattung (Abfallbehälter, Kehrwagen, Container usw.)',
+'EQUIPAMIENTO (PAPELERAS, COCHES DE BARRIDO, CONTENEDORES, ETC)':'Ausstattung (Abfallbehälter, Kehrwagen, Container usw.)',
+'EQUIPAMIENTO (PAPELERAS, COCHES DE BARRIDO, CONTENEDORES':'Ausstattung (Abfallbehälter, Kehrwagen, Container)',
+'QUIPAMIENTO (PAPELERAS, COCHES DE BARRIDO, CONTENEDORES, ETC)':'Ausstattung (Abfallbehälter, Kehrwagen, Container usw.)',
+'DOCUMENTO DE GESTION':'Managementdokument','EXPEDIENTE TECNICO':'Technische Unterlagen',
+'LA EVALUACION EX-POST':'Ex-post-Evaluierung',
+'CAPACIDAD ORGANIZACIONAL':'Organisationskapazität','CAPACIDAD HUMANA':'Personalkapazität','RECURSO HUMANO':'Personal',
+'INFORMACION':'Information','CONOCIMIENTO':'Wissen','ORGANIZACION':'Organisation',
+'PANEL INFORMATIVO':'Informationstafel','COBERTURA':'Abdeckung','CONEXIONES DOMICILIARIAS':'Hausanschlüsse',
+'AREA DE CONTROL DE CALIDAD':'Qualitätskontrollbereich','KIT AGENTE COMUNITARIO':'Kit für Gemeindehelfer',
+'MAQUINARIA Y VEHICULOS':'Maschinen und Fahrzeuge','MAQUINARIAS Y EQUIPOS':'Maschinen und Geräte',
+'BASCULAS DE PISO O DE PLATAFORMA':'Boden- bzw. Plattformwaagen',
+'COMPACTADOR':'Verdichter',
+'COMPACTADOR DE RESIDUOS SOLIDOS EN RELLENO SANITARIO':'Müllverdichter für die Deponie',
+'COMPACTADOR DE RESIDUOS SOLIDOS EN EL RELLENO SANITARIO':'Müllverdichter für die Deponie',
+'COMPACTADORA DE RESIDUOS':'Müllverdichter','TRITURADOR DE RESIDUOS':'Abfallzerkleinerer',
+'VEHICULO PARA ALZA DE CONTENEDORES':'Containerhubfahrzeug','VEHICULO PARA SUPERVISION':'Aufsichtsfahrzeug',
+'ACTIVOS':'Vermögenswerte',
+'PLAN DE BARRIDO Y RECOLECCION':'Reinigungs- und Sammelplan','PLAN DE BARRIDO Y RECOELCCION':'Reinigungs- und Sammelplan',
+'PLAN DE GESTION DE LA URS':'Managementplan der Abfalleinheit (URS)',
+'PLAN DE GESTION DE LA UNIDAD DE RESIDUOS SOLIDOS':'Managementplan der Abfalleinheit (URS)',
+'PLAN DE BUENAS PRACTICAS A LA POBLACION':'Plan guter Praktiken für die Bevölkerung',
+'UNIDAD DE RESIDUOS SOLIDOS':'Abfalleinheit (URS)','LA UNIDAD DE RESIDUOS SOLIDOS':'Abfalleinheit (URS)',
+'GESTION DE LA UNIDAD DE RESIDUOS SOLIDOS':'Management der Abfalleinheit','GESTION DE UNIDAD DE RESIDUOS SOLIDOS':'Management der Abfalleinheit',
+'ALCOHOLIMETROS':'Alkoholtester','EQUIPOS DE COMPUTO':'Computerausstattung','MINIBUS':'Minibus',
+'SEDE ADMINISTRATIVA':'Verwaltungssitz','SUBDRENAJE':'Dränage','VIGILANCIA':'Bewachung',
+'RECOLECCION DE RESIDUOS SOLIDOS':'Abfallsammlung','RESIDUOS SOLIDOS':'Abfälle','LABORATORIO':'Labor',
+'PARA PLANTA DE TRANSFERENCIA: CAMIONES MADRINA (SEMIRREMOLQUE Y TRACTO REMOLCADOR)':'Für Umschlaganlage: Sattelzüge (Auflieger und Zugmaschine)',
+'CAMIONES MADRINA':'Sattelzüge','SEMIRREMOLQUE Y TRACTO REMOLCADOR':'Auflieger und Zugmaschine',
+'INFRAESTRUCTURA':'Infrastruktur','INTANGIBLES':'Immaterielle Güter',
+'ALMACEN':'Lagerhalle','SERVICIOS HIGIENICOS':'Sanitäranlagen','PLANTA TMB':'MBA-Anlage (TMB)',
+'CARTELES EDUCATIVOS':'Bildungsplakate','DIFUSION EN MEDIOS LOCALES':'Verbreitung in lokalen Medien',
+'SALDOS DE OBRA':'Restarbeiten','POZA DE LIXIVIADOS':'Sickerwasserbecken'
+};
+var VERBDE={'ADQUISICION':'Beschaffung','ADQUISISCION':'Beschaffung','ADQUISICIOON':'Beschaffung','ADUISICION':'Beschaffung','ADQUISICON':'Beschaffung',
+'CONSTRUCCION':'Bau','IMPLEMENTACION':'Einrichtung','CAPACITACION':'Schulung','ELABORACION':'Erstellung','INSTALACION':'Installation',
+'CONTRATACION':'Beauftragung','REPARACION':'Reparatur','MEJORAMIENTO':'Verbesserung','AMPLIACION':'Erweiterung','REHABILITACION':'Sanierung'};
+function trObjDE(o){
+o=o.replace(/\s+/g,' ').trim();
+if(OBJDE.hasOwnProperty(o))return OBJDE[o];
+var m=o.match(/^(.+?)\s+(1ERA ETAPA|PRIMERA ETAPA|1 ETAPA)\s*(\(INCLUYE EQUIPAMIENTO\))?$/);
+if(m){var b=trObjDE(m[1]);if(b!=null)return b+' (1. Bauabschnitt'+(m[3]?', inkl. Ausstattung':'')+')';}
+m=o.match(/^(.+?)\s*\(INCLUYE EQUIPAMIENTO\)$/);
+if(m){var b2=trObjDE(m[1]);if(b2!=null)return b2+' (inkl. Ausstattung)';}
+m=o.match(/^(.+?) PARA (?:EL |LA |LOS |LAS )?(.+)$/);
+if(m){var x=trObjDE(m[1]),y=trObjDE(m[2]);if(x!=null&&y!=null)return x+' für '+y;}
+m=o.match(/^(.+?) EN (?:EL |LA )?(.+)$/);
+if(m){var x2=trObjDE(m[1]),y2=trObjDE(m[2]);if(x2!=null&&y2!=null)return x2+' in '+y2;}
+m=o.match(/^(.+?) Y (.+)$/);
+if(m){var a=trObjDE(m[1]),b3=trObjDE(m[2]);if(a!=null&&b3!=null)return a+' und '+b3;}
+m=o.match(/^(?:DEL?|DE LA|DE LOS|DE LAS)\s+(.+)$/);
+if(m)return trObjDE(m[1]);
+return null;
+}
+function trParteDE(p){
+var n=N(p).replace(/^\d+[\d\.]*[\.\-\s]*/,'').replace(/[\s\.:]+$/,'').trim();
+if(!n)return null;
+if(COMPDE.hasOwnProperty(n))return COMPDE[n];
+if(OBJDE.hasOwnProperty(n))return OBJDE[n];
+var mf=n.match(/^(.+?)\s*\((VEHICULOS|EQUIPAMIENTO|INFRAESTRUCTURA|INTANGIBLES)\)$/);
+if(mf){var base=trParteDE(mf[1]);if(base!=null)return base+' ('+({VEHICULOS:'Fahrzeuge',EQUIPAMIENTO:'Ausstattung',INFRAESTRUCTURA:'Infrastruktur',INTANGIBLES:'Immaterielle Güter'})[mf[2]]+')';}
+var ma=n.match(/^(.*?)\(ADMINISTRACION (DIRECTA|INDIRECTA - POR CONTRATA)\)$/);
+if(ma)return (ma[1]?ma[1].trim()+' ':'')+'('+(ma[2]==='DIRECTA'?'Direkte Ausführung':'Indirekte Ausführung – Vergabe')+')';
+var mo=n.match(/^OTRAS ACCIONES DE (.+)$/);
+if(mo){var ox=trObjDE(mo[1]);if(ox!=null)return 'Sonstige Maßnahmen: '+ox;}
+var me=n.match(/^ELABORACION E IMPLEMENTACION DE(?:L|E)? ?(.+)$/);
+if(me){var ex=trObjDE(me[1]);if(ex!=null)return 'Erstellung und Einrichtung von '+ex;}
+var mv=n.match(/^([A-Z]+) DE(?:L|E)? ?(.+)$/);
+if(mv&&VERBDE.hasOwnProperty(mv[1])){var vx=trObjDE(mv[2]);if(vx!=null)return VERBDE[mv[1]]+' von '+vx;}
+var ml=n.match(/^OTROS (\d+) DOCUMENTOS$/);
+if(ml)return 'Weitere '+ml[1]+' Dokumente';
+ml=n.match(/^OTROS (\d+) INFORMES$/);
+if(ml)return 'Weitere '+ml[1]+' Berichte';
+ml=n.match(/^CONTRATACION DEL SERVICIO DE CONSULTORIA PARA EL[AE]BORAR PLANES.*$/);
+if(ml)return 'Beauftragung von Beratungsleistungen zur Erstellung von Plänen, Kapazitätsaufbau und Praktiken für die Bevölkerung';
+ml=n.match(/^DISENO PLAN DE (?:RE)?INSERCION Y FORMALIZACION DE RECICLADORES.*$/);
+if(ml)return 'Planung der Wiedereingliederung und Formalisierung der Recycler sowie getrennter Sammlung an der Quelle';
+ml=n.match(/^INSTALACION DE SUBDRENES.*$/);
+if(ml)return 'Einbau von Dränagen im Sickerwasserbecken, Neuprofilierung von Beckensohle und Böschungsfuß';
+var nomb=window._trNombreDE?_trNombreDE(n):null;
+if(nomb!=null)return nomb;
+var mp=n.match(/^PARA (.+)$/);
+if(mp){var ppx=trObjDE(mp[1]);if(ppx!=null)return 'Für '+ppx;}
+var od=trObjDE(n);
+if(od!=null)return od;
+return null;
+}
+var cacheDE={};
+window._trSSIDE=function(s0){
+var s=String(s0).replace(/\s+/g,' ').trim();
+if(!s)return null;
+if(cacheDE.hasOwnProperty(s))return cacheDE[s];
+var out=(function(){
+var pref='';
+var mnum=s.match(/^(\d+[\d\.]*[\.\-]?\s*)(.*)$/);
+var cuerpo=s;
+if(mnum&&mnum[2]){pref=mnum[1];cuerpo=mnum[2];}
+var todo=trParteDE(cuerpo);
+if(todo!=null)return pref+todo;
+var head=cuerpo, det=null;
+var ci=cuerpo.indexOf(':');
+if(ci>=0){head=cuerpo.slice(0,ci).trim();det=cuerpo.slice(ci+1).trim();}
+if(head===''&&det){var dsolo=trParteDE(det);return dsolo!=null?pref+': '+dsolo:null;}
+var hj=trParteDE(head);
+if(hj==null)return null;
+if(det==null||det==='')return pref+hj+(ci>=0?' :':'');
+var dj=trParteDE(det);
+return pref+hj+': '+(dj!=null?dj:det);
+})();
+cacheDE[s]=out;
+return out;
+};
+/* ── nombres oficiales de inversiones ── */
+var HEADSDE=[
+[/MEJORAMIENTO Y AMPLIACI[O0]N DE LA GESTION INTEGRAL DE (?:LOS )?RESIDUOS SOLIDOS(?: MUNICIPALES)?/,'Verbesserung und Erweiterung der integralen Siedlungsabfallwirtschaft'],
+[/AMPLIACI[O0]N Y MEJORAMIENTO DE LA GESTION INTEGRAL DE (?:LOS )?RESIDUOS SOLIDOS(?: MUNICIPALES)?/,'Erweiterung und Verbesserung der integralen Siedlungsabfallwirtschaft'],
+[/MEJORAMIENTO DE LA GESTION INTEGRAL DE (?:LOS )?RESIDUOS SOLIDOS(?: MUNICIPALES| URBANOS)?/,'Verbesserung der integralen Siedlungsabfallwirtschaft'],
+[/PROGRAMA DE DESARROLLO DE SISTEMAS DE GESTION DE RESIDUOS SOLIDOS EN ZONAS PRIORITARIAS DE/,'Programm zur Entwicklung von Abfallwirtschaftssystemen in prioritären Gebieten:'],
+[/PROGRAMA DE RECUPERACION DE AREAS DEGRADADAS POR RESIDUOS SOLIDOS EN ZONAS PRIORITARIAS/,'Programm zur Sanierung der durch Abfälle degradierten Flächen in prioritären Gebieten'],
+[/GESTION DEL PROGRAMA Y OTROS/,'Programmmanagement und Sonstiges –'],
+[/RECUPERACION DE(?:L)? AREAS? DEGRADA(?:DAS?)?(?: POR (?:LOS )?RESIDUOS SOLIDOS)?/,'Sanierung der durch Abfälle degradierten Flächen'],
+[/MEJORAMIENTO Y AMPLIACI[O0]N DEL SERVICIO DE LIMPIEZA PUBLICA/,'Verbesserung und Erweiterung des öffentlichen Reinigungsdienstes'],
+[/MEJORAMIENTO DEL SERVICIO DE LIMPIEZA PUBLICA/,'Verbesserung des öffentlichen Reinigungsdienstes'],
+[/MEJORAMIENTO DEL SISTEMA DE RECUPERACION TRATAMIENTO Y DISPOSICION FINAL DE RESIDUOS SOLIDOS/,'Verbesserung des Systems für Rückgewinnung, Behandlung und Endablagerung der Abfälle'],
+[/CONSTRUCCION DE CELDAS PARA RESIDUOS Y SISTEMA DE MANEJO DE LIXIVIADOS ADQUISICION DE TRACTOR DE ORUGAS Y CARGADOR FRONTAL EN EL LA RELLENO SANITARIO/,'Bau von Deponiezellen und Sickerwassersystem, Beschaffung von Raupentraktor und Radlader für die Deponie –'],
+[/CONSTRUCCION DE CELDAS PARA RESIDUOS EN EL LA SISTEMA DE ALMACENAMIENTO Y BARRIDO RECOLECCION Y TRANSPORTE VALORIZACION Y DISPOSICION FINAL DE RESIDUOS SOLIDOS/,'Bau von Deponiezellen im System für Lagerung, Reinigung, Sammlung, Transport, Verwertung und Endablagerung der Abfälle –'],
+[/REPARACION DE CELDAS PARA RESIDUOS CONSTRUCCION DE VIAS DE ACCESO Y SISTEMA DE MANEJO DE LIXIVIADOS EN EL LA RELLENO SANITARIO/,'Reparatur von Deponiezellen, Bau von Zufahrtswegen und Sickerwassersystem für die Deponie –'],
+[/ADQUISICION DE MINICARGADOR VOLQUETE Y TRACTOR DE ORUGAS EN EL LA UNIDAD DE RESIDUOS SOLIDOS URSS DE LA MUNICIPALIDAD PROVINCIAL DE/,'Beschaffung von Kompaktlader, Kipper und Raupentraktor für die Abfalleinheit (URS) der Provinzgemeinde'],
+[/ADQUISICION DE CAMION COMPACTADOR CAMION BARANDA CONTENEDOR Y PAPELERA EN EL LA URS DE LA MUNICIPALIDAD DISTRITAL DE/,'Beschaffung von Pressmüllwagen, Pritschenwagen, Container und Abfallbehältern für die URS der Distriktgemeinde'],
+[/CONSTRUCCION DE AMBIENTE ADMINISTRATIVO(?: Y AMBIENTES? COMPLEMENTARIOS)?(?: Y EQUIPOS COMPLEMENTARIOS)?/,'Bau von Verwaltungsraum und Nebenräumen']
+];
+var TAILDE=[
+[/ EN LAS CIUDADES DE /g,' in den Städten '],
+[/ DE LAS CIUDADES DE /g,' der Städte '],
+[/ EN LA CIUDAD DE /g,' in der Stadt '],
+[/ DE LA CIUDAD DE /g,' der Stadt '],
+[/ EN LA LOCALIDAD DE /g,' in der Ortschaft '],
+[/ EN LA LOCALIDAD /g,' in der Ortschaft '],
+[/ DE LA LOCALIDAD DE /g,' der Ortschaft '],
+[/ EN LOS DISTRITOS DE /g,' in den Distrikten '],
+[/ PARA LOS DISTRITOS DE /g,' für die Distrikte '],
+[/ PARA LAS CIUDADES DE /g,' für die Städte '],
+[/ EN EL DISTRITO DE /g,' im Distrikt '],
+[/ DEL DISTRITO DE /g,' des Distrikts '],
+[/ DISTRITO DE /g,' Distrikt '],
+[/ DISTRITOS DE /g,' Distrikte '],
+[/ DISTRITO /g,' Distrikt '],
+[/ PROVINCIAS DE /g,' Provinzen '],
+[/ PROVINCIA DE /g,' Provinz '],
+[/ PROVINCIA /g,' Provinz '],
+[/ DEPARTAMENTO DE /g,' Departement '],
+[/ DEPARTAMENTO /g,' Departement '],
+[/ REGION /g,' Region '],
+[/ COMUNIDAD CAMPESINA DE /g,' Bauerngemeinde '],
+[/ EN EL PROCESO DE RECOLECCION Y TRANSPORTE DE RESIDUOS SOLIDOS MUNICIPALES/g,' im Prozess der Sammlung und des Transports der Siedlungsabfälle'],
+[/ EN LAS ETAPAS DE RECOLECCION TRANSPORTE Y DISPOSICION FINAL/g,' in den Phasen Sammlung, Transport und Endablagerung'],
+[/ EN LA ZONA URBANA/g,' im Stadtgebiet'],
+[/ ZONA URBANA/g,' Stadtgebiet'],
+[/ UBICADO EN /g,' gelegen in '],
+[/ EN EL AMBITO DE /g,' im Bereich '],
+[/ EL SECTOR /g,' Sektor '],
+[/ SECTOR /g,' Sektor '],
+[/ EN EL CENTRO POBLADO(?: MENOR)?(?: DE)? /g,' im Ort '],
+[/ ASOC /g,' Siedlung '],
+[/ EN /g,' in '],
+[/ Y /g,' und ']
+];
+window._trNombreDE=function(s){
+var n=N2(s);
+if(!n)return null;
+/* debe EMPEZAR con un encabezado conocido (evita falsos positivos en textos narrativos) */
+var first=-1;
+for(var i=0;i<HEADSDE.length;i++){var mm=n.match(HEADSDE[i][0]);if(mm&&mm.index===0){first=i;break;}}
+if(first<0)return null;
+var out=n;
+for(var k=0;k<HEADSDE.length;k++){out=out.replace(HEADSDE[k][0],''+k+'');}
+out=' '+out+' ';
+for(var j=0;j<TAILDE.length;j++)out=out.replace(TAILDE[j][0],TAILDE[j][1]);
+out=out.replace(/(\d+)/g,function(_,x){return HEADSDE[+x][1];});
+return out.replace(/\s+/g,' ').trim();
+};
+})();
+</script>
 
 <div id="ftr-legal" style="position:fixed;bottom:0;left:0;right:0;background:rgba(10,25,47,0.9);color:rgba(255,255,255,0.5);text-align:center;font-size:10px;padding:3px 8px;z-index:99999;pointer-events:none;user-select:none;"><span id="ftr-full">© 2024-2026 <b style="color:rgba(255,255,255,0.75);">ARKA PROYECTOS / Corporación DMC</b> &nbsp;·&nbsp; <span style="white-space:nowrap">📧 dmoreno.c@hotmail.com</span> &nbsp;·&nbsp; <span style="white-space:nowrap">📱 966 614 682</span> &nbsp;—&nbsp; Dashboard Ejecutivo UE003 MINAM &nbsp;—&nbsp; Todos los derechos reservados. Prohibida la reproducción sin autorización.</span><span id="ftr-mini" style="display:none">© ARKA PROYECTOS &nbsp;·&nbsp; <span onclick="var d=document.createElement('div');d.style.cssText='position:fixed;inset:0;z-index:999999;background:rgba(8,28,12,.55);display:flex;align-items:center;justify-content:center;padding:24px';d.innerHTML='&lt;div style=&quot;background:#fff;border-radius:14px;padding:18px 20px;max-width:420px;text-align:center;box-shadow:0 12px 44px rgba(0,0,0,.35)&quot;&gt;&lt;div style=&quot;font-size:14px;font-weight:900;color:#105000;margin-bottom:8px&quot;&gt;ARKA PROYECTOS / Corporación DMC&lt;/div&gt;&lt;div style=&quot;font-size:12px;color:#37474F;font-weight:600;line-height:1.9&quot;&gt;© 2024-2026 · Dashboard Ejecutivo UE003 MINAM&lt;br&gt;📧 dmoreno.c@hotmail.com&lt;br&gt;📱 966 614 682&lt;br&gt;&lt;span style=&quot;font-size:10px;color:#90A4AE&quot;&gt;Todos los derechos reservados. Prohibida la reproducción sin autorización.&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;';d.onclick=function(){d.remove();};document.body.appendChild(d);" style="pointer-events:auto;cursor:pointer;color:rgba(255,255,255,0.85);font-weight:800;text-decoration:underline">Contacto</span></span></div><script>
 /* ══════════════════════════════════════════════════════════════════════
@@ -4717,6 +5071,7 @@ t.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF2E7D32'}};ws.getRow(r).h
 /* Identificación (12-07-2026: nombre oficial completo) */
 var _nomFicha=(window._nombreCompleto&&_nombreCompleto[cui])||p.Proyecto||('CUI '+cui);
 if(window._lang==='ja'&&window._trNombre){var _njx=_trNombre(_nomFicha);if(_njx)_nomFicha=_njx;}
+else if(window._lang==='de'&&window._trNombreDE){var _ndx=_trNombreDE(_nomFicha);if(_ndx)_nomFicha=_ndx;}
 ws.mergeCells(r,2,r,7);
 t=celda(r,2);t.value=_nomFicha;
 t.font={bold:true,size:11,color:{argb:'FF1E293B'}};t.alignment={wrapText:true,vertical:'middle'};
