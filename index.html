@@ -3086,7 +3086,7 @@ var raw=n.nodeValue,s=raw.trim();
 if(!s)return;
 var p=n.parentNode;
 if(p&&(p.nodeName==='SCRIPT'||p.nodeName==='STYLE'))return;
-if(p&&p.closest&&p.closest('#lang-sw'))return;
+if(p&&p.closest&&p.closest('#lang-sw,#lamina-ppt'))return;
 if(window._lang!=='es'){
 var src=orig.has(n)?orig.get(n):raw,s2=src.trim();
 var t=trStr(s2);
@@ -3098,7 +3098,7 @@ function trAttrs(root){
 if(!root.querySelectorAll)return;
 ['title','placeholder'].forEach(function(at){
 root.querySelectorAll('['+at+']').forEach(function(el){
-if(el.closest&&el.closest('#lang-sw'))return;
+if(el.closest&&el.closest('#lang-sw,#lamina-ppt'))return;
 var key='_es_'+at;
 if(window._lang!=='es'){
 var cur=el.getAttribute(at)||'';var src=el.dataset[key]||cur;var t=trStr(src.trim());
@@ -3830,6 +3830,7 @@ if(r.p)tot.benef+=(typeof benefiData!=='undefined'?(benefiData[r.cui]||0):0);});
 var avTot=tot.pim>0?(tot.dev/tot.pim*100):0;
 var _dNm=function(d){var M={'HUANUCO':'Huánuco','SAN MARTIN':'San Martín','MADRE DE DIOS':'Madre de Dios','LA LIBERTAD':'La Libertad','MULTIDEPARTAMENTAL':'Multidep.','ANCASH':'Áncash','APURIMAC':'Apurímac','JUNIN':'Junín'};
 return M[d]||(d.charAt(0)+d.slice(1).toLowerCase());};
+window._lamData={anio:anio,fsel:usingDia?fsel:null,G:G,tot:tot,dNm:_dNm};
 /* ── PANEL IZQUIERDO: Resumen Ejecutivo ── */
 /* Colores del PPT institucional (pedido de David 09-08-2026): P1 azul, P2 teal, KfW verde, Reactivación rojo */
 var PPTCOL={'JICA 1':'#1668C7','JICA 2':'#00A5AD','KFW':'#58B32B','Reactiva Perú 1':'#E23A2E'};
@@ -4166,25 +4167,87 @@ h='<div style="text-align:center;padding:30px 10px;color:#90A4AE;font-size:12px;
 document.getElementById('seg-body').innerHTML=h;
 };
 
-/* ── Descargar el Resumen Ejecutivo como imagen PNG (estilo lámina PPT) ── */
+/* ── Descargar como LÁMINA idéntica al PPT institucional (09-08-2026) ── */
 window._descargarPanelImg=function(btn){
-var node=document.getElementById('cartAnualPan');if(!node)return;
+var D=window._lamData;if(!D)return;
 var t0=btn?btn.textContent:'';
 if(btn)btn.textContent='⏳ Generando…';
 var fin=function(ok){if(btn){btn.textContent=ok?t0:'Sin conexión';if(!ok)setTimeout(function(){btn.textContent=t0;},2500);}};
+var PPTCOL={'JICA 1':'#1668C7','JICA 2':'#00A5AD','KFW':'#58B32B','Reactiva Perú 1':'#E23A2E','BID 1':'#2191F1','BID 2':'#2B99CF','Sin convenio':'#607D8B'};
+var NOM={'JICA 1':'Programa 1','JICA 2':'Programa 2','KFW':'KfW','Reactiva Perú 1':'Reactivación Econ.','BID 1':'BID 1','BID 2':'BID 2','Sin convenio':'Sin convenio'};
+var anio=D.anio,G=D.G,tot=D.tot;
+var pre=G['__PRE__']||null;
+var n=tot.n-(pre?pre.n:0), pim=tot.pim-(pre?pre.pim:0), dev=tot.dev-(pre?pre.dev:0);
+var av=pim>0?(dev/pim*100):0;
+var fM=function(x){return 'S/ '+(x/1e6).toLocaleString('es-PE',{minimumFractionDigits:1,maximumFractionDigits:1})+' M';};
+var fB=function(x){return (x/1e6).toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2})+' M';};
+var logo=(document.querySelector('.hdr img')||{}).src||'';
+/* KPIs superiores (estilo PPT) */
+var kpi=function(bg,ico,val,valCol,lbl){return '<div style="flex:1;background:'+bg+';border-radius:16px;padding:22px 18px;text-align:center">'
++'<div style="display:flex;align-items:center;justify-content:center;gap:12px"><span style="font-size:40px;line-height:1">'+ico+'</span>'
++'<span style="font-size:42px;font-weight:900;color:'+valCol+';letter-spacing:-.5px;white-space:nowrap">'+val+'</span></div>'
++'<div style="font-size:21px;font-weight:800;color:#1C1917;margin-top:6px">'+lbl+'</div></div>';};
+var H='<div style="padding:44px 56px 0">'
++'<div style="display:flex;align-items:center;gap:34px;margin-bottom:40px">'
++(logo?'<img src="'+logo+'" style="height:62px;width:auto;object-fit:contain">':'')
++'<div style="flex:1;font-size:58px;font-weight:900;color:#1668C7;letter-spacing:-1px;line-height:1.1">Cartera de Inversiones Públicas '+anio+' UEI GICA003</div>'
++'</div>'
++'<div style="display:flex;gap:22px;margin-bottom:36px">'
++kpi('#E8F0FA','📊',n,'#1668C7','Inversiones Públicas '+anio)
++kpi('#EDEFF1','🐷',fM(pim),'#1C1917',(pre?'* ':'')+'PIM '+anio)
++kpi('#EAF6E4','💰',fM(dev),'#58B32B','Devengado '+anio)
++kpi('#DFF2F0','⚙️',av.toFixed(1)+' %','#00A5AD','Avance de ejecución')
++kpi('#EAF6E4','👥',fB(tot.benef),'#58B32B','Beneficiarios directos')
++'</div>';
+/* tarjetas por programa */
+var ORDER=['JICA 1','JICA 2','KFW','Reactiva Perú 1','BID 1','BID 2','Sin convenio'];
+var cards=ORDER.filter(function(c){return G[c];});
+H+='<div style="display:flex;gap:26px;align-items:stretch">';
+cards.forEach(function(cv){
+var g=G[cv],col=PPTCOL[cv]||'#607D8B';
+var a2=g.pim>0?(g.dev/g.pim*100):0;
+var deps=Object.keys(g.deps).sort().map(D.dNm);
+var fila=function(l,v){return '<div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:7px 0;border-bottom:1px solid #ECEFF1">'
++'<span style="font-size:22px;color:#6B7A87;font-weight:600">'+l+'</span><span style="font-size:24px;font-weight:900;color:#1C1917;white-space:nowrap">'+v+'</span></div>';};
+H+='<div style="flex:1;background:#fff;border:1.5px solid #E3E7EA;border-radius:16px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,.08);display:flex;flex-direction:column">'
++'<div style="background:'+col+';color:#fff;font-size:34px;font-weight:900;text-align:center;padding:16px 10px;letter-spacing:-.3px">'+(NOM[cv]||cv)+'</div>'
++'<div style="padding:26px 26px 22px;display:flex;flex-direction:column;flex:1">'
++'<div style="display:flex;justify-content:center;margin-bottom:22px">'
++'<div style="width:172px;height:172px;border-radius:50%;background:conic-gradient('+col+' '+Math.min(a2,100)*3.6+'deg,#DDE3E8 0);display:flex;align-items:center;justify-content:center">'
++'<div style="width:118px;height:118px;border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center">'
++'<span style="font-size:33px;font-weight:900;color:#37474F">'+a2.toFixed(1)+'%</span>'
++'<span style="font-size:15px;color:#90A4AE;font-weight:600">ejecución</span></div></div></div>'
++fila('PIM '+anio,fM(g.pim))
++fila('Devengado',fM(g.dev))
++fila('Beneficiarios',fB(g.benef))
++fila('Departamentos',deps.length)
++'<div style="margin-top:auto;padding-top:16px;text-align:center">'
++'<div style="font-size:21px;font-weight:800;color:'+col+';margin-bottom:8px">Departamentos de intervención</div>'
++'<div style="font-size:21px;font-weight:800;color:#37474F;line-height:1.45">'+(deps.join(' · ')||'—')+'</div></div>'
++'</div></div>';
+});
+H+='</div>';
+/* nota al pie + franja */
+var nota=(pre?'<b>*</b> PIM '+anio+': No incluye Estudios de Pre inversión '+fM(pre.pim):'')
++(D.fsel?(pre?' &nbsp;·&nbsp; ':'')+'Corte al '+D.fsel.split('-').reverse().join('/')+' · Consulta Amigable MEF':'');
+H+='<div style="font-size:19px;color:#37474F;font-weight:600;margin:26px 2px 20px">'+nota+'</div>'
++'</div><div style="height:26px;background:linear-gradient(90deg,#58B32B,#00A5AD,#1668C7)"></div>';
+var wrap=document.createElement('div');
+wrap.id='lamina-ppt';
+wrap.style.cssText='position:fixed;left:-12000px;top:0;width:2100px;background:#fff;z-index:-1;font-family:"Segoe UI",system-ui,Arial,sans-serif';
+wrap.innerHTML=H;
+document.body.appendChild(wrap);
 var go=function(){
 try{
-window.htmlToImage.toPng(node,{pixelRatio:2,backgroundColor:'#ffffff',
-filter:function(n){return !(n.id==='btn-img-pan');}
-}).then(function(url){
-var anio=(document.getElementById('fAño')||{}).value||'cartera';
-var f=new Date(),p2=function(n){return String(n).padStart(2,'0');};
+window.htmlToImage.toPng(wrap,{pixelRatio:1,backgroundColor:'#ffffff',width:2100,height:wrap.offsetHeight,
+style:{position:'static',left:'0',top:'0',zIndex:'auto'}}).then(function(url){
+var f=new Date(),p2=function(x){return String(x).padStart(2,'0');};
 var a=document.createElement('a');
-a.download='Resumen_Ejecutivo_'+anio+'_'+f.getFullYear()+'-'+p2(f.getMonth()+1)+'-'+p2(f.getDate())+'.png';
+a.download='Cartera_Inversiones_Publicas_'+anio+'_UEI_GICA003_'+f.getFullYear()+'-'+p2(f.getMonth()+1)+'-'+p2(f.getDate())+'.png';
 a.href=url;a.click();
-if(btn)btn.textContent=t0;
-}).catch(function(){fin(false);});
-}catch(e){fin(false);}
+wrap.remove();if(btn)btn.textContent=t0;
+}).catch(function(){wrap.remove();fin(false);});
+}catch(e){wrap.remove();fin(false);}
 };
 if(window.htmlToImage)return go();
 var sc=document.createElement('script');
@@ -4193,7 +4256,7 @@ sc.onload=go;
 sc.onerror=function(){
 var sc2=document.createElement('script');
 sc2.src='https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js';
-sc2.onload=go;sc2.onerror=function(){fin(false);};
+sc2.onload=go;sc2.onerror=function(){wrap.remove();fin(false);};
 document.head.appendChild(sc2);
 };
 document.head.appendChild(sc);
