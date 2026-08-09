@@ -2525,6 +2525,7 @@ window.addEventListener('resize',_ubicarLang);
    El español es el idioma canónico del DOM; al volver a ES se restauran los originales. */
 (function(){
 var D={
+'⬇ Imagen (PPT)':'⬇ 画像 (PPT)','Descargar este panel como imagen (estilo PPT)':'このパネルを画像として保存 (PPT風)',
 /* pestañas y navegación */
 '🇵🇪 Impacto Nacional':'🇵🇪 全国インパクト','📊 Detalle de Inversiones':'📊 投資の詳細','📈 Ejecución Presupuestal':'📈 予算執行',
 '🇵🇪 Impacto':'🇵🇪 インパクト','📊 Detalle':'📊 詳細','📈 Presupuesto':'📈 予算',
@@ -2949,6 +2950,8 @@ var DDE={
 'Esta inversión no tiene obras registradas en Ejecución Física del F12B':'Für diese Investition sind keine Bauwerke in der physischen Ausführung des F12B erfasst',
 '📋 Situación':'📋 Sachstand','📏 Avance Físico':'📏 Physischer Fortschritt','🗓️ Cronograma':'🗓️ Zeitplan','📝 Modif. Contractuales':'📝 Vertragsänderungen','⏳ Ampliación de Plazo':'⏳ Fristverlängerung',
 'Haz clic en un departamento':'Klick auf ein Departement',
+'⬇ Imagen (PPT)':'⬇ Bild (PPT)','⏳ Generando…':'⏳ Wird erstellt…','Sin conexión':'Keine Verbindung',
+'Descargar este panel como imagen (estilo PPT)':'Dieses Panel als Bild herunterladen (PPT-Stil)',
 'Consulta Amigable MEF · incluye inversiones con PIM 0 y pre-inversión · elige una fecha en el calendario para ver un corte':'Consulta Amigable MEF · inkl. Investitionen mit PIM 0 und Vorinvestition · Datum im Kalender wählen für einen Stichtag',
 'L':'Mo','M':'Di','X':'Mi','J':'Do','V':'Fr','S':'Sa','D':'So'
 };
@@ -3828,6 +3831,8 @@ var avTot=tot.pim>0?(tot.dev/tot.pim*100):0;
 var _dNm=function(d){var M={'HUANUCO':'Huánuco','SAN MARTIN':'San Martín','MADRE DE DIOS':'Madre de Dios','LA LIBERTAD':'La Libertad','MULTIDEPARTAMENTAL':'Multidep.','ANCASH':'Áncash','APURIMAC':'Apurímac','JUNIN':'Junín'};
 return M[d]||(d.charAt(0)+d.slice(1).toLowerCase());};
 /* ── PANEL IZQUIERDO: Resumen Ejecutivo ── */
+/* Colores del PPT institucional (pedido de David 09-08-2026): P1 azul, P2 teal, KfW verde, Reactivación rojo */
+var PPTCOL={'JICA 1':'#1668C7','JICA 2':'#00A5AD','KFW':'#58B32B','Reactiva Perú 1':'#E23A2E'};
 var kpi=function(lbl,val,tt,col,ico,bg,br){return '<div title="'+(tt||'')+'" style="flex:1 1 132px;min-width:132px;background:#fff;border:1.5px solid #E0E0E0;border-radius:10px;padding:6px 10px;display:flex;align-items:center;gap:8px">'
 +'<span style="flex:none;width:32px;height:32px;border-radius:50%;background:'+(bg||'#F1F8E9')+';border:1.5px solid '+(br||'#C5E1A5')+';display:flex;align-items:center;justify-content:center;font-size:16px;line-height:1">'+(ico||'')+'</span>'
 +'<span style="min-width:0;text-align:left">'
@@ -3840,6 +3845,7 @@ L+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;font-s
 +(usingDia
 ? '<span style="background:#E8F5E9;border:1px solid #A5D6A7;color:#1B5E20;font-weight:800;border-radius:9px;padding:2px 9px">📅 Corte: '+_fFmt(fsel)+'</span><span>Consulta Amigable MEF</span><span onclick="if(window._setFechaCorte)_setFechaCorte(null)" title="Quitar el corte y volver al último dato" style="cursor:pointer;color:#C62828;font-weight:900">✕ quitar corte</span>'
 : '<span>Consulta Amigable MEF · incluye inversiones con PIM 0 y pre-inversión'+((SD&&Object.keys(SD).length)?' · elige una fecha en el calendario para ver un corte':'')+'</span>')
++'<span id="btn-img-pan" onclick="if(window._descargarPanelImg)_descargarPanelImg(this)" title="Descargar este panel como imagen (estilo PPT)" style="margin-left:auto;cursor:pointer;background:#0B3D0B;color:#fff;font-size:9.5px;font-weight:800;border-radius:9px;padding:3px 11px;letter-spacing:.3px;box-shadow:0 1px 4px rgba(16,80,0,.3);white-space:nowrap">⬇ Imagen (PPT)</span>'
 +'</div>';
 L+='<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">'
 +kpi('Inversiones',tot.n,'Todas las que registran PIA o PIM en '+anio,'#1C1917','🗂️','#EEF4FF','#90CAF9')
@@ -3851,7 +3857,7 @@ L+='<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">'
 L+='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(228px,1fr));gap:8px">';
 ORDER.forEach(function(cv2){
 var g=G[cv2];if(!g||cv2==='__PRE__')return;
-var col=convColor[cv2]||'#607D8B';
+var col=PPTCOL[cv2]||convColor[cv2]||'#607D8B';
 var av=g.pim>0?(g.dev/g.pim*100):0;
 var deps=Object.keys(g.deps).sort();
 L+='<div style="background:#fff;border:1.5px solid '+col+'40;border-top:4px solid '+col+';border-radius:11px;padding:9px 11px;box-shadow:0 1px 5px rgba(0,0,0,.07)">'
@@ -4158,6 +4164,39 @@ h+='<div style="background:#fff;border:1.5px solid #E0E0E0;border-radius:11px;ov
 if(!obras.length&&window._segMod>1){
 h='<div style="text-align:center;padding:30px 10px;color:#90A4AE;font-size:12px;font-weight:700">Esta inversión no tiene obras registradas en Ejecución Física del F12B'+(window._segMod===2?'':'')+'.<br><span style="font-size:10px">Los módulos 2-5 aplican a inversiones con obra en ejecución.</span></div>';}
 document.getElementById('seg-body').innerHTML=h;
+};
+
+/* ── Descargar el Resumen Ejecutivo como imagen PNG (estilo lámina PPT) ── */
+window._descargarPanelImg=function(btn){
+var node=document.getElementById('cartAnualPan');if(!node)return;
+var t0=btn?btn.textContent:'';
+if(btn)btn.textContent='⏳ Generando…';
+var fin=function(ok){if(btn){btn.textContent=ok?t0:'Sin conexión';if(!ok)setTimeout(function(){btn.textContent=t0;},2500);}};
+var go=function(){
+try{
+window.htmlToImage.toPng(node,{pixelRatio:2,backgroundColor:'#ffffff',
+filter:function(n){return !(n.id==='btn-img-pan');}
+}).then(function(url){
+var anio=(document.getElementById('fAño')||{}).value||'cartera';
+var f=new Date(),p2=function(n){return String(n).padStart(2,'0');};
+var a=document.createElement('a');
+a.download='Resumen_Ejecutivo_'+anio+'_'+f.getFullYear()+'-'+p2(f.getMonth()+1)+'-'+p2(f.getDate())+'.png';
+a.href=url;a.click();
+if(btn)btn.textContent=t0;
+}).catch(function(){fin(false);});
+}catch(e){fin(false);}
+};
+if(window.htmlToImage)return go();
+var sc=document.createElement('script');
+sc.src='https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.min.js';
+sc.onload=go;
+sc.onerror=function(){
+var sc2=document.createElement('script');
+sc2.src='https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js';
+sc2.onload=go;sc2.onerror=function(){fin(false);};
+document.head.appendChild(sc2);
+};
+document.head.appendChild(sc);
 };
 
 </script>
