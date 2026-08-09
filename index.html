@@ -4461,6 +4461,179 @@ ws.mergeCells(r,2,r,7);
 t=celda(r,2);t.value='© 2024-2026 ARKA PROYECTOS — Dashboard Ejecutivo UE003 MINAM';
 t.font={italic:true,size:8,color:{argb:C.blanco}};t.alignment={horizontal:'center'};
 
+/* ═══ HOJA 2: SEGUIMIENTO (09-08-2026, pedido de David) ═══
+   Los 5 módulos del F12B en una hoja aparte, con paleta propia por módulo
+   para lectura clara: 1 Situación=verde · 2 Avance Físico=azul ·
+   3 Cronograma=teal · 4 Modif. Contractuales=ámbar · 5 Ampliación=morado. */
+var SGD=(((window._datosActualizados||{}).seguimientoUpdate||{}).datos||{})[cui]||null;
+var _situFall=(((window._datosActualizados||{}).situacionUpdate||{})[cui])||null;
+if(SGD||_situFall){
+if(!SGD)SGD={sit:{situ:_situFall},obras:[],f:null};
+var MODPAL={
+1:{b:'FF1B5E20',s:'FF2E7D32',f:'FFE8F5E9',z:'FFF3FBF3'},
+2:{b:'FF0D47A1',s:'FF1565C0',f:'FFE3F2FD',z:'FFF2F8FE'},
+3:{b:'FF00695C',s:'FF00897B',f:'FFE0F2F1',z:'FFF0FAF9'},
+4:{b:'FFBF5B00',s:'FFE65100',f:'FFFFF3E0',z:'FFFFFAF2'},
+5:{b:'FF4A148C',s:'FF6A1B9A',f:'FFEDE7F6',z:'FFF7F4FB'}};
+var ws2=wb.addWorksheet('Seguimiento',{views:[{showGridLines:false}]});
+ws2.columns=[{width:2.5},{width:14},{width:20},{width:20},{width:20},{width:20},{width:20},{width:20},{width:2.5}];
+var r2=2;
+var c2=function(fila,col){return ws2.getRow(fila).getCell(col);};
+var COLI=2,COLF=8;
+var _mrg=function(fila){ws2.mergeCells(fila,COLI,fila,COLF);};
+var _bd2=function(c,col){c.border={top:{style:'thin',color:{argb:col||C.borde}},left:{style:'thin',color:{argb:col||C.borde}},bottom:{style:'thin',color:{argb:col||C.borde}},right:{style:'thin',color:{argb:col||C.borde}}};};
+
+/* cabecera */
+_mrg(r2);var t2=c2(r2,COLI);
+t2.value='SEGUIMIENTO DE LA INVERSIÓN — FORMATO 12-B';
+t2.font={bold:true,size:14,color:{argb:C.blanco}};t2.alignment={horizontal:'center',vertical:'middle'};
+t2.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF0B3D0B'}};ws2.getRow(r2).height=25;r2++;
+_mrg(r2);t2=c2(r2,COLI);
+t2.value='CUI '+cui+' · '+String(_nomFicha).slice(0,180);
+t2.font={bold:true,size:9.5,color:{argb:C.blanco}};t2.alignment={horizontal:'center',vertical:'middle',wrapText:true};
+t2.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF2E7D32'}};ws2.getRow(r2).height=22;r2++;
+_mrg(r2);t2=c2(r2,COLI);
+t2.value='Fuente: MEF — Invierte.pe (Formato 12-B)'+(SGD.f?' · Capturado: '+SGD.f.split('-').reverse().join('/'):'')+' · Generado: '+fGen;
+t2.font={italic:true,size:8.5,color:{argb:C.gris}};t2.alignment={horizontal:'center'};r2+=2;
+
+var banner=function(num,titulo){
+var P=MODPAL[num];
+_mrg(r2);var c=c2(r2,COLI);
+c.value='MÓDULO '+num+' · '+titulo;
+c.font={bold:true,size:11,color:{argb:C.blanco}};
+c.fill={type:'pattern',pattern:'solid',fgColor:{argb:P.b}};
+c.alignment={vertical:'middle'};ws2.getRow(r2).height=20;r2++;
+};
+var subBanda=function(num,txt){
+var P=MODPAL[num];
+_mrg(r2);var c=c2(r2,COLI);
+c.value=txt;
+c.font={bold:true,size:9,color:{argb:P.b}};
+c.fill={type:'pattern',pattern:'solid',fgColor:{argb:P.f}};
+c.alignment={vertical:'middle'};ws2.getRow(r2).height=16;r2++;
+};
+var textoLargo=function(num,txt){
+var P=MODPAL[num];
+_mrg(r2);var c=c2(r2,COLI);
+c.value=txt||'Sin información registrada en el F12B.';
+c.font=txt?{size:9.5,color:{argb:'FF263238'}}:{italic:true,size:9,color:{argb:'FF90A4AE'}};
+c.alignment={wrapText:true,vertical:'top'};
+c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFFFFFFF'}};_bd2(c);
+var lineas=txt?Math.max(2,Math.ceil(txt.length/130)+(txt.split('\n').length-1)):2;
+ws2.getRow(r2).height=Math.min(190,13*lineas+6);r2++;
+};
+var _num=function(sv){var x=parseFloat(String(sv).replace(/,/g,'').replace('%',''));return isNaN(x)?null:x;};
+var notaVacia=function(msj){
+_mrg(r2);var c=c2(r2,COLI);
+c.value=msj||'Sin registros en el F12B para esta inversión.';
+c.font={italic:true,size:9,color:{argb:'FF90A4AE'}};_bd2(c);r2++;
+};
+var tablaGen=function(num,tb){
+var P=MODPAL[num];
+var nCols=Math.min(COLF-COLI+1,Math.max.apply(null,tb.filas.map(function(f){return f.length;})));
+var hdrSet={};(tb.hdr||[]).forEach(function(i){hdrSet[i]=1;});
+var zi=0;
+tb.filas.forEach(function(f,fi){
+var esH=hdrSet[fi];
+if(!esH)zi++;
+for(var k=0;k<nCols;k++){
+var c=c2(r2,COLI+k);
+var val=f[k]!=null?f[k]:'';
+var n=(!esH)?_num(val):null;
+var esPct=/%$/.test(String(val).trim());
+if(!esH&&n!=null&&String(val).trim()!==''&&/^[\d.,%\s-]+$/.test(String(val).trim())){
+c.value=esPct?n/100:n;c.numFmt=esPct?(n%1===0?'0%':'0.00%'):(n%1===0?'#,##0':'#,##0.00');
+}else{c.value=String(val);}
+c.font=esH?{bold:true,size:8.5,color:{argb:C.blanco}}:{size:8.5,color:{argb:'FF263238'}};
+c.fill={type:'pattern',pattern:'solid',fgColor:{argb:esH?P.s:(zi%2?'FFFFFFFF':P.z)}};
+c.alignment={wrapText:true,vertical:'middle',horizontal:esH?'center':((typeof c.value==='number')?'right':'left')};
+_bd2(c,esH?P.s:null);
+}
+/* completar el ancho de la banda si la fila es corta */
+for(var k2=nCols;k2<=COLF-COLI;k2++){var cx=c2(r2,COLI+k2);
+cx.fill={type:'pattern',pattern:'solid',fgColor:{argb:esH?P.s:(zi%2?'FFFFFFFF':P.z)}};_bd2(cx,esH?P.s:null);}
+var mx=Math.max.apply(null,f.map(function(x){return String(x||'').length;}));
+ws2.getRow(r2).height=Math.min(60,Math.max(14,11*Math.ceil(mx/26)));
+r2++;
+});
+r2++;
+};
+var buscaSec2=function(o,pats){
+if(!o||!o.sec)return null;
+var ids=Object.keys(o.sec);
+for(var i=0;i<ids.length;i++){var s=o.sec[ids[i]],tx=(ids[i]+' '+(s.titulo||'')).toUpperCase();
+for(var j=0;j<pats.length;j++)if(tx.indexOf(pats[j])>=0)return s;}
+return null;};
+
+/* MÓDULO 1 — SITUACIÓN */
+banner(1,'SITUACIÓN');
+subBanda(1,'SITUACIÓN ACTUAL DE LA INVERSIÓN');
+textoLargo(1,(SGD.sit&&SGD.sit.situ)||_situFall);
+subBanda(1,'PROBLEMAS O RESTRICCIONES IDENTIFICADAS PARA LA EJECUCIÓN');
+textoLargo(1,SGD.sit&&SGD.sit.prob);
+subBanda(1,'PRÓXIMOS PASOS O ACCIONES PARA IMPLEMENTAR');
+textoLargo(1,SGD.sit&&SGD.sit.acc);
+r2++;
+
+var obras2=SGD.obras||[];
+/* MÓDULO 2 — AVANCE FÍSICO (valorizaciones: periodo + obra principal) */
+banner(2,'AVANCE FÍSICO — RESUMEN DE VALORIZACIONES');
+if(!obras2.length){notaVacia('Inversión sin obras registradas en Ejecución Física del F12B.');r2++;}
+obras2.forEach(function(o,oi){
+if(obras2.length>1)subBanda(2,'OBRA '+(oi+1)+' (registro '+o.nro+')');
+var sec=buscaSec2(o,['AVFI','AVANCE']);
+var tv=null;
+if(sec)for(var i3=0;i3<sec.tablas.length;i3++){
+if(sec.tablas[i3].filas.some(function(f){return /^\d{4}-\d{2}$/.test((f[0]||'').trim());})){tv=sec.tablas[i3];break;}}
+if(!tv){notaVacia();return;}
+/* encabezado propio de dos niveles */
+var P=MODPAL[2];
+ws2.mergeCells(r2,COLI,r2+1,COLI);
+var ch=c2(r2,COLI);ch.value='Periodo (año-mes)';ch.font={bold:true,size:8.5,color:{argb:C.blanco}};ch.fill={type:'pattern',pattern:'solid',fgColor:{argb:P.b}};ch.alignment={horizontal:'center',vertical:'middle',wrapText:true};_bd2(ch,P.b);
+ws2.mergeCells(r2,COLI+1,r2,COLI+2);
+ch=c2(r2,COLI+1);ch.value='PROGRAMADO ACUMULADO';ch.font={bold:true,size:8.5,color:{argb:C.blanco}};ch.fill={type:'pattern',pattern:'solid',fgColor:{argb:P.b}};ch.alignment={horizontal:'center',vertical:'middle'};_bd2(ch,P.b);
+ws2.mergeCells(r2,COLI+3,r2,COLI+4);
+ch=c2(r2,COLI+3);ch.value='REAL ACUMULADO';ch.font={bold:true,size:8.5,color:{argb:C.blanco}};ch.fill={type:'pattern',pattern:'solid',fgColor:{argb:P.b}};ch.alignment={horizontal:'center',vertical:'middle'};_bd2(ch,P.b);
+for(var k4=5;k4<=COLF-COLI;k4++){var cf=c2(r2,COLI+k4);cf.fill={type:'pattern',pattern:'solid',fgColor:{argb:P.b}};_bd2(cf,P.b);ws2.mergeCells(r2,COLI+k4,r2+1,COLI+k4);}
+r2++;
+['(%)','(S/)','(%)','(S/)'].forEach(function(lbl,li){
+var cs=c2(r2,COLI+1+li);cs.value=lbl;cs.font={bold:true,size:8.5,color:{argb:C.blanco}};cs.fill={type:'pattern',pattern:'solid',fgColor:{argb:P.s}};cs.alignment={horizontal:'center',vertical:'middle'};_bd2(cs,P.s);});
+r2++;
+var filasV=tv.filas.filter(function(f){return /^\d{4}-\d{2}$/.test((f[0]||'').trim());});
+filasV.forEach(function(f,fi){
+var cA=c2(r2,COLI);cA.value=f[0];cA.font={bold:true,size:9,color:{argb:'FF263238'}};cA.alignment={horizontal:'center',vertical:'middle'};cA.fill={type:'pattern',pattern:'solid',fgColor:{argb:fi%2?'FFFFFFFF':P.z}};_bd2(cA);
+[1,2,3,4].forEach(function(k,ki){
+var cV=c2(r2,COLI+1+ki);var n=_num(f[k]);
+if(n!=null){cV.value=(ki===0||ki===2)?n/100:n;cV.numFmt=(ki===0||ki===2)?'0.00%':'#,##0.00';}
+else cV.value=f[k]||'—';
+cV.font={size:9,color:{argb:(ki>=2)?'FF105000':'FF37474F'},bold:ki>=2};
+cV.alignment={horizontal:'right',vertical:'middle'};
+cV.fill={type:'pattern',pattern:'solid',fgColor:{argb:fi%2?'FFFFFFFF':P.z}};_bd2(cV);});
+for(var k5=5;k5<=COLF-COLI;k5++){var cz=c2(r2,COLI+k5);cz.fill={type:'pattern',pattern:'solid',fgColor:{argb:fi%2?'FFFFFFFF':P.z}};_bd2(cz);}
+r2++;});
+r2++;
+});
+
+/* MÓDULOS 3-5 — tablas tal cual el F12B */
+[[3,'CRONOGRAMA ACTUALIZADO',['CRON']],
+ [4,'MODIFICACIONES CONTRACTUALES',['MODI','MODIF','ADIC']],
+ [5,'AMPLIACIÓN DE PLAZO',['AMPL']]].forEach(function(mod){
+banner(mod[0],mod[1]);
+if(!obras2.length){notaVacia('Inversión sin obras registradas en Ejecución Física del F12B.');r2++;return;}
+obras2.forEach(function(o,oi){
+if(obras2.length>1)subBanda(mod[0],'OBRA '+(oi+1)+' (registro '+o.nro+')');
+var sec=buscaSec2(o,mod[2]);
+if(sec&&sec.tablas.length){sec.tablas.forEach(function(tb){tablaGen(mod[0],tb);});}
+else{notaVacia();r2++;}
+});
+});
+
+/* pie */
+_mrg(r2);t2=c2(r2,COLI);
+t2.value='Generado: '+fGen+' · Fuente: MEF — Invierte.pe Formato 12-B · gica003.pe · © 2024-2026 ARKA PROYECTOS';
+t2.font={italic:true,size:8,color:{argb:'FF90A4AE'}};t2.alignment={horizontal:'center'};
+}
+
 wb.xlsx.writeBuffer().then(function(buf){
 var blob=new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
 var a=document.createElement('a');
