@@ -2701,6 +2701,7 @@ var RX=[
 [/^Dev\. Acumulado$/,'累計支出'],[/^Dev\. acumulado$/,'累計支出'],
 [/^(\d[\d,\.]*)\s*ha$/,'$1 ha'],
 [/^Corte: (.+)$/,'基準日: $1'],
+[/^📅 Al (.+)$/,'📅 基準日: $1'],
 [/^(\d+) proyectos?$/,'プロジェクト$1件']
 ];
 /* ═══ DEUTSCH (de) — Wörterbuch + Regeln · ARKA 09-08-2026 ═══
@@ -3036,6 +3037,7 @@ var RXDE=[
 [/^(\d[\d,\.]*)\s*ha$/,'$1 ha'],
 [/^Corte: (.+)$/,'Stichtag: $1'],
 [/^📅 Corte: (.+)$/,'📅 Stichtag: $1'],
+[/^📅 Al (.+)$/,'📅 Stand: $1'],
 [/^Resumen Ejecutivo — (.+)$/,'Managementübersicht — $1'],
 [/^Cartera de Proyectos — (.+)$/,'Projektportfolio — $1'],
 [/^([\d\.,]+) personas$/,'$1 Personen'],
@@ -3796,6 +3798,8 @@ var SD=DU.serieDiariaUpdate||{};
 var fsel=window._fechaCorte||null;
 var usingDia=false;
 if(fsel&&SD[fsel]&&String(fsel).slice(0,4)===String(anio)){CA=SD[fsel];usingDia=true;}
+var ultDato=Object.keys(SD).sort().pop()||null;
+var fcorte=usingDia?fsel:ultDato;
 if(!CA){
 bodyEl.insertAdjacentHTML('beforeend','<div style="margin-top:8px;padding:10px 14px;background:#FFF8E1;border:1.5px solid #FFE082;border-radius:10px;font-size:11.5px;color:#8D6E63;font-weight:600">Los paneles de cartera anual estarán disponibles tras la próxima actualización de datos.</div>');
 return;}
@@ -3830,7 +3834,7 @@ if(r.p)tot.benef+=(typeof benefiData!=='undefined'?(benefiData[r.cui]||0):0);});
 var avTot=tot.pim>0?(tot.dev/tot.pim*100):0;
 var _dNm=function(d){var M={'HUANUCO':'Huánuco','SAN MARTIN':'San Martín','MADRE DE DIOS':'Madre de Dios','LA LIBERTAD':'La Libertad','MULTIDEPARTAMENTAL':'Multidep.','ANCASH':'Áncash','APURIMAC':'Apurímac','JUNIN':'Junín'};
 return M[d]||(d.charAt(0)+d.slice(1).toLowerCase());};
-window._lamData={anio:anio,fsel:usingDia?fsel:null,G:G,tot:tot,dNm:_dNm};
+window._lamData={anio:anio,fsel:usingDia?fsel:null,fcorte:fcorte,G:G,tot:tot,dNm:_dNm};
 /* ── PANEL IZQUIERDO: Resumen Ejecutivo ── */
 /* Colores del PPT institucional (pedido de David 09-08-2026): P1 azul, P2 teal, KfW verde, Reactivación rojo */
 var PPTCOL={'JICA 1':'#1668C7','JICA 2':'#00A5AD','KFW':'#58B32B','Reactiva Perú 1':'#E23A2E'};
@@ -3845,7 +3849,8 @@ var _fFmt=function(f){var pt=f.split('-');return pt[2]+'/'+pt[1]+'/'+pt[0];};
 L+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:9.5px;color:#90A4AE;font-weight:600">'
 +(usingDia
 ? '<span style="background:#E8F5E9;border:1px solid #A5D6A7;color:#1B5E20;font-weight:800;border-radius:9px;padding:2px 9px">📅 Corte: '+_fFmt(fsel)+'</span><span>Consulta Amigable MEF</span><span onclick="if(window._setFechaCorte)_setFechaCorte(null)" title="Quitar el corte y volver al último dato" style="cursor:pointer;color:#C62828;font-weight:900">✕ quitar corte</span>'
-: '<span>Consulta Amigable MEF · incluye inversiones con PIM 0 y pre-inversión'+((SD&&Object.keys(SD).length)?' · elige una fecha en el calendario para ver un corte':'')+'</span>')
+: (fcorte?'<span style="background:#E8F5E9;border:1px solid #A5D6A7;color:#1B5E20;font-weight:800;border-radius:9px;padding:2px 9px">📅 Al '+_fFmt(fcorte)+'</span>':'')
++'<span>Consulta Amigable MEF · incluye inversiones con PIM 0 y pre-inversión'+((SD&&Object.keys(SD).length)?' · elige una fecha en el calendario para ver un corte':'')+'</span>')
 +'<span id="btn-img-pan" onclick="if(window._descargarPanelImg)_descargarPanelImg(this)" title="Descargar este panel como imagen (estilo PPT)" style="margin-left:auto;cursor:pointer;background:#0B3D0B;color:#fff;font-size:9.5px;font-weight:800;border-radius:9px;padding:3px 11px;letter-spacing:.3px;box-shadow:0 1px 4px rgba(16,80,0,.3);white-space:nowrap">⬇ Imagen (PPT)</span>'
 +'</div>';
 L+='<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">'
@@ -4197,10 +4202,14 @@ var kpi=function(bg,ico,val,valCol,lbl){return '<div style="flex:1;background:'+
 +'<div style="display:flex;align-items:center;justify-content:center;gap:12px"><span style="display:inline-flex;line-height:1">'+ico+'</span>'
 +'<span style="font-size:42px;font-weight:900;color:'+valCol+';letter-spacing:-.5px;white-space:nowrap">'+val+'</span></div>'
 +'<div style="font-size:21px;font-weight:800;color:#1C1917;margin-top:6px">'+lbl+'</div></div>';};
-var H='<div style="padding:44px 56px 0">'
-+'<div style="display:flex;align-items:center;gap:34px;margin-bottom:40px">'
-+(logo?'<img src="'+logo+'" style="height:62px;width:auto;object-fit:contain">':'')
-+'<div style="flex:1;font-size:58px;font-weight:900;color:#1668C7;letter-spacing:-1px;line-height:1.1">Cartera de Inversiones Públicas '+anio+' UEI GICA003</div>'
+var fAl=D.fcorte?('Al '+D.fcorte.slice(8,10)+'.'+D.fcorte.slice(5,7)+'.'+D.fcorte.slice(2,4)):'';
+var H='<div style="padding:40px 56px 0">'
++'<div style="display:flex;align-items:flex-start;gap:30px;margin-bottom:34px">'
++(logo?'<img src="'+logo+'" style="height:48px;width:auto;object-fit:contain;margin-top:8px">':'')
++'<div style="flex:1;min-width:0">'
++'<div style="font-size:45px;font-weight:900;color:#1668C7;letter-spacing:-1px;line-height:1.15;white-space:nowrap">Cartera de Inversiones Públicas '+anio+' UEI GICA003</div>'
++(fAl?'<div style="text-align:right;font-size:24px;font-weight:900;color:#1668C7;margin-top:3px">'+fAl+'</div>':'')
++'</div>'
 +'</div>'
 +'<div style="display:flex;gap:22px;margin-bottom:36px">'
 +kpi('#E8F0FA',IC.inv,n,'#1668C7','Inversiones Públicas '+anio)
@@ -4238,8 +4247,7 @@ H+='<div style="flex:1;background:#fff;border:1.5px solid #E3E7EA;border-radius:
 });
 H+='</div>';
 /* nota al pie + franja */
-var nota=(pre?'<b>*</b> PIM '+anio+': No incluye Estudios de Pre inversión '+fM(pre.pim):'')
-+(D.fsel?(pre?' &nbsp;·&nbsp; ':'')+'Corte al '+D.fsel.split('-').reverse().join('/')+' · Consulta Amigable MEF':'');
+var nota=(pre?'<b>*</b> PIM '+anio+': No incluye Estudios de Pre inversión '+fM(pre.pim):'');
 H+='<div style="font-size:19px;color:#37474F;font-weight:600;margin:26px 2px 20px">'+nota+'</div>'
 +'</div><div style="height:26px;background:linear-gradient(90deg,#58B32B,#00A5AD,#1668C7)"></div>';
 var wrap=document.createElement('div');
