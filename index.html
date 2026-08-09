@@ -2074,6 +2074,30 @@ const badgeVar = (bIni>0&&bAct>0)
 +'</div>'
 : '';
 /* 11-07-2026: apilados, compactos y SIN badge de variación (pedido de David) */
+/* 09-08-2026 (pedido de David): desglose completo de costos SSI —
+   viable · (a) inversión actualizada · (b) control concurrente ·
+   (c) controversias · (d) carta fianza · TOTAL (a+b+c+d).
+   Compacto para NO aumentar la altura de la barra. */
+const _cx=((window._datosActualizados||{}).costosUpdate||{})[cui]||null;
+if(_cx){
+const vi=_cx[0]||bIni,ca=_cx[1]||0,cb=_cx[2]||0,cc=_cx[3]||0,cd=_cx[4]||0;
+const tot=ca+cb+cc+cd;
+const linea=(lbl,val,suf)=>'<div style="display:flex;justify-content:space-between;align-items:baseline;gap:6px;padding:1.5px 2px">'
++'<span style="font-size:8px;font-weight:800;color:#78909C;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap">'+lbl+(suf?' <span style="color:#B0BEC5">'+suf+'</span>':'')+'</span>'
++'<span style="font-size:9.5px;font-weight:800;color:'+(val>0?'#455A64':'#90A4AE')+';white-space:nowrap">'+(val>0?fmtS(val):'S/ 0.00')+'</span></div>';
+return '<div style="display:flex;flex-direction:column;gap:3px">'
++'<div style="display:flex;justify-content:space-between;align-items:baseline;gap:6px;background:#F8FFFE;border:1px solid #CFD8DC;border-radius:8px;padding:3px 8px">'
++'<span style="font-size:8.5px;font-weight:800;color:#607D8B;text-transform:uppercase;letter-spacing:.4px">● Perfil Viable</span>'
++'<span style="font-size:11px;font-weight:900;color:#37474F;white-space:nowrap">'+fmtS(vi)+'</span></div>'
++linea('Costo inversión act.',ca,'(a)')
++linea('Control concurrente',cb,'(b)')
++linea('Controversias',cc,'(c)')
++linea('Carta fianza',cd,'(d)')
++'<div style="display:flex;justify-content:space-between;align-items:baseline;gap:6px;background:#F0FBF0;border:1.5px solid #A5D6A7;border-radius:8px;padding:4px 8px" title="Costo total de la inversión actualizado = (a)+(b)+(c)+(d)">'
++'<span style="font-size:8.5px;font-weight:900;color:#2E7D32;text-transform:uppercase;letter-spacing:.4px">● Costo Total <span style="color:#81C784">(a+b+c+d)</span></span>'
++'<span style="font-size:'+(tot>=1e8?'10.5px':'12px')+';font-weight:900;color:#105000;white-space:nowrap">'+fmtS(tot)+'</span></div>'
++'</div>';
+}
 return '<div style="display:flex;flex-direction:column;gap:6px">'+bloqueIni+bloqueAct+'</div>';
 })()}
 </div>
@@ -4363,9 +4387,22 @@ r++;
 var SOL='"S/" #,##0';
 
 seccion('PRESUPUESTO DE INVERSIÓN');
+var _cex=((window._datosActualizados||{}).costosUpdate||{})[cui]||null;
+if(_cex){
+var _vi=_cex[0]||bIni,_ca=_cex[1]||0,_cb=_cex[2]||0,_cc=_cex[3]||0,_cd=_cex[4]||0;
+var SOL2='"S/" #,##0.00';
+if(_vi>0)dato('Perfil viable',_vi,SOL2);
+dato('Costo de inversión actualizado (a)',_ca,SOL2,C.verdeMedio);
+dato('Costo de control concurrente (b)',_cb,SOL2);
+dato('Costo de controversias (c)',_cc,SOL2);
+dato('Monto de carta fianza (d)',_cd,SOL2);
+dato('COSTO TOTAL ACTUALIZADO (a+b+c+d)',_ca+_cb+_cc+_cd,SOL2,C.verde);
+if(_vi>0&&(_ca+_cb+_cc+_cd)>0)dato('Variación vs perfil viable',((_ca+_cb+_cc+_cd)-_vi)/_vi,'+0.0%;-0.0%',((_ca+_cb+_cc+_cd)>=_vi?C.verdeMedio:C.naranja));
+}else{
 if(bIni>0)dato('Perfil viable',bIni,SOL);
 if(bAct>0)dato('Costo actualizado',bAct,SOL,C.verdeMedio);
 if(bIni>0&&bAct>0)dato('Variación',(bAct-bIni)/bIni,'+0.0%;-0.0%',(bAct>=bIni?C.verdeMedio:C.naranja));
+}
 r++;
 
 seccion('AVANCES');
