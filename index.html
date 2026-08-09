@@ -4248,7 +4248,10 @@ H+='<div style="flex:1;background:#fff;border:1.5px solid #E3E7EA;border-radius:
 H+='</div>';
 /* nota al pie + franja */
 var nota=(pre?'<b>*</b> PIM '+anio+': No incluye Estudios de Pre inversión '+fM(pre.pim):'');
-H+='<div style="font-size:19px;color:#37474F;font-weight:600;margin:26px 2px 20px">'+nota+'</div>'
+H+='<div style="display:flex;justify-content:space-between;align-items:baseline;gap:20px;margin:26px 2px 20px">'
++'<span style="font-size:19px;color:#37474F;font-weight:600">'+nota+'</span>'
++'<span style="font-size:15px;color:#90A4AE;font-weight:600;white-space:nowrap">Imagen del dashboard www.gica003.pe</span>'
++'</div>'
 +'</div><div style="height:26px;background:linear-gradient(90deg,#58B32B,#00A5AD,#1668C7)"></div>';
 var wrap=document.createElement('div');
 wrap.id='lamina-ppt';
