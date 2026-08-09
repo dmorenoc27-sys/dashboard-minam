@@ -450,7 +450,7 @@ if(e.key==='F12'){e.preventDefault();return false;}
       <div class="card" style="flex:1;min-height:220px;display:none"><div class="ch"><div class="ct"><span class="dot"></span>Devengado Mensual 2026</div><span class="csub">Millones S/</span></div><div class="cb"><div class="cw"><canvas id="cMens"></canvas></div></div></div>
     </div>
     </div><!-- /resumen-right-area -->
-    <div id="proj-detail-panel" style="flex:1;min-width:0;display:none;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.12);background:#fff;overflow:hidden"></div>
+    <div id="proj-detail-panel" class="sel-txt" style="flex:1;min-width:0;display:none;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.12);background:#fff;overflow:hidden"></div>
 
   </div>
 </div>
@@ -3150,7 +3150,7 @@ L+='<div title="Asignación presupuestal para estudios de pre-inversión (CUI 20
 +'<span style="color:#78909C">Devengado <b style="color:#105000">'+fmtS(gp.dev)+'</b></span></div>';
 }
 /* ── contenedor ── */
-var html='<div id="cartAnualPan" style="margin-bottom:4px">'
+var html='<div id="cartAnualPan" class="sel-txt" style="margin-bottom:4px">'
 +'<div style="background:#FBFDFB;border:1.5px solid #C8E6C9;border-radius:13px;padding:11px 13px">'+L+'</div>'
 +'</div>';
 var old=document.getElementById('cartAnualPan');if(old)old.remove();
@@ -3309,7 +3309,7 @@ lb.onclick=function(){lb.style.display='none';};
 document.body.appendChild(lb);}
 var p=(typeof proyectos!=='undefined'&&proyectos.find)?(proyectos.find(function(x){return x.CUI===cui;})||{}):{};
 var nombre=(window._nombreCompleto&&_nombreCompleto[cui])||(p&&p.Proyecto)||('CUI '+cui);
-lb.innerHTML='<div onclick="event.stopPropagation()" style="cursor:default;background:#F7FBF7;border-radius:16px;max-width:1060px;width:100%;max-height:92vh;display:flex;flex-direction:column;box-shadow:0 16px 60px rgba(0,0,0,.4);overflow:hidden">'
+lb.innerHTML='<div class="sel-txt" onclick="event.stopPropagation()" style="cursor:default;background:#F7FBF7;border-radius:16px;max-width:1060px;width:100%;max-height:92vh;display:flex;flex-direction:column;box-shadow:0 16px 60px rgba(0,0,0,.4);overflow:hidden">'
 +'<div style="background:linear-gradient(135deg,#0B3D0B,#2E7D32);padding:13px 18px;display:flex;align-items:center;gap:12px;flex-shrink:0">'
 +'<div style="width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0">📡</div>'
 +'<div style="flex:1;min-width:0">'
@@ -4739,7 +4739,7 @@ setTimeout(function(){lb.style.display='none';},430);
 document.body.appendChild(lb);}
 var p=(typeof proyectos!=='undefined'&&proyectos.find)?(proyectos.find(function(x){return x.CUI===cui;})||{}):{};
 var nombre=(window._nombreCompleto&&_nombreCompleto[cui])||(p&&p.Proyecto)||(typeof cuiShortName!=='undefined'&&cuiShortName[cui])||('CUI '+cui); /* 12-07-2026: nombre oficial completo siempre */
-var html='<div class="situ-card" onclick="event.stopPropagation()" style="cursor:default;background:#fff;border-radius:16px;max-width:560px;width:100%;max-height:80vh;overflow-y:auto;box-shadow:0 12px 44px rgba(0,0,0,.35);padding:16px 20px 14px">'
+var html='<div class="situ-card sel-txt" onclick="event.stopPropagation()" style="cursor:default;background:#fff;border-radius:16px;max-width:560px;width:100%;max-height:80vh;overflow-y:auto;box-shadow:0 12px 44px rgba(0,0,0,.35);padding:16px 20px 14px">'
 +'<div style="display:flex;align-items:center;gap:10px;border-bottom:2px solid #E8F5E9;padding-bottom:10px;margin-bottom:11px">'
 +'<div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#0B3D0B,#2E7D32);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">📋</div>'
 +'<div><div style="font-size:14px;font-weight:900;color:#1B5E20">Situación actual de la inversión</div>'
