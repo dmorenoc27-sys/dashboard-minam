@@ -325,6 +325,7 @@ if(e.key==='F12'){e.preventDefault();return false;}
   <div id="lang-sw" style="margin-left:auto;align-self:center;display:flex;gap:2px;background:#F2F5F3;border:1px solid #DCE4DE;border-radius:999px;padding:2px;flex-shrink:0">
     <button type="button" class="lang-btn active" id="lang-es" onclick="if(window._setLang)_setLang('es')" title="Ver en español"><span class="lang-flag" style="display:inline-flex;border-radius:2.5px;overflow:hidden;box-shadow:0 0 0 .5px rgba(0,0,0,.15)"><svg width="17" height="12" viewBox="0 0 3 2"><rect width="3" height="2" fill="#D91023"/><rect x="1" width="1" height="2" fill="#fff"/></svg></span><span class="lbl">Español</span></button>
     <button type="button" class="lang-btn" id="lang-ja" onclick="if(window._setLang)_setLang('ja')" title="日本語で表示"><span class="lang-flag" style="display:inline-flex;border-radius:2.5px;overflow:hidden;box-shadow:0 0 0 .5px rgba(0,0,0,.15)"><svg width="17" height="12" viewBox="0 0 3 2"><rect width="3" height="2" fill="#fff"/><circle cx="1.5" cy="1" r=".55" fill="#BC002D"/></svg></span><span class="lbl">日本語</span></button>
+    <button type="button" class="lang-btn" id="lang-de" onclick="if(window._setLang)_setLang('de')" title="Auf Deutsch anzeigen"><span class="lang-flag" style="display:inline-flex;border-radius:2.5px;overflow:hidden;box-shadow:0 0 0 .5px rgba(0,0,0,.15)"><svg width="17" height="12" viewBox="0 0 3 2"><rect width="3" height="2" fill="#FFCE00"/><rect width="3" height="1.334" fill="#D00"/><rect width="3" height="0.667" fill="#000"/></svg></span><span class="lbl">Deutsch</span></button>
   </div>
   <style>
     .lang-btn{border:none;background:transparent;border-radius:999px;padding:4px 12px;font-size:11.5px;font-weight:800;color:#5E7266;cursor:pointer;display:flex;align-items:center;gap:6px;letter-spacing:.3px;transition:all .2s;font-family:inherit;white-space:nowrap}
@@ -2701,16 +2702,368 @@ var RX=[
 [/^Corte: (.+)$/,'基準日: $1'],
 [/^(\d+) proyectos?$/,'プロジェクト$1件']
 ];
+/* ═══ DEUTSCH (de) — Wörterbuch + Regeln · ARKA 09-08-2026 ═══
+   Mismo motor que el japonés: claves exactas (DDE) + patrones (RXDE).
+   Los nombres propios (departamentos, "Consulta Amigable", nombres de
+   proyectos SSI) se quedan en español a propósito. */
+var DDE={
+'🇵🇪 Impacto Nacional':'🇵🇪 Nationale Wirkung',
+'📊 Detalle de Inversiones':'📊 Investitionsdetails',
+'📈 Ejecución Presupuestal':'📈 Haushaltsvollzug',
+'🇵🇪 Impacto':'🇵🇪 Wirkung',
+'📊 Detalle':'📊 Details',
+'📈 Presupuesto':'📈 Haushalt',
+'Impacto Nacional':'Nationale Wirkung',
+'Detalle de Inversiones':'Investitionsdetails',
+'Ejecución Presupuestal':'Haushaltsvollzug',
+'Volver':'Zurück','← Volver':'← Zurück','Regresar':'Zurück','← Regresar':'← Zurück',
+'Filtros:':'Filter:','FILTROS:':'FILTER:',
+'Todos los convenios':'Alle Abkommen',
+'⧉ Copiar':'⧉ Kopieren',
+'Millones S/ · clic = filtrar':'Mio. S/ · Klick = filtern',
+'tamaño = certificación · clic abre la ficha':'Größe = Zertifizierung · Klick öffnet das Datenblatt',
+'Certificación Acumulada':'Kumulierte Zertifizierung',
+'Abrir la ficha de la inversión':'Datenblatt der Investition öffnen',
+'Formato 12B — Banco de Inversiones · clic para abrir la ficha':'Format 12B — Investitionsbank (MEF) · Klick öffnet das Datenblatt',
+'Fotografía de obra':'Baustellenfoto',
+'en preparación':'in Vorbereitung',
+'Por validar':'Zu validieren','POR VALIDAR':'ZU VALIDIEREN',
+'Sin convenio':'Ohne Abkommen',
+'Devengado por Tipo de inversión':'Ist-Ausgaben nach Investitionstyp',
+'Cartera: Avance físico vs Devengado':'Portfolio: Physischer Fortschritt vs. Ist-Ausgaben',
+'tamaño = certificación':'Größe = Zertifizierung',
+'% avance físico':'% physischer Fortschritt',
+'Devengado (M S/)':'Ist-Ausgaben (Mio. S/)',
+'Certificación (M S/)':'Zertifizierung (Mio. S/)',
+'Avance físico':'Physischer Fortschritt',
+'N° Inversiones':'Anzahl Investitionen',
+'con ejecución en el período':'mit Ausführung im Zeitraum',
+'Acumulado histórico UE003':'Historisch kumuliert UE003',
+'Vista actual:':'Aktuelle Ansicht:',
+'Todo el período':'Gesamter Zeitraum',
+'Limpiar filtros':'Filter zurücksetzen',
+'El detalle mensual con filtros está disponible solo para 2026':'Die monatliche Detailansicht mit Filtern ist nur für 2026 verfügbar',
+'Certificación vs Devengado por Convenio':'Zertifizierung vs. Ist-Ausgaben nach Abkommen',
+'N° de inversiones':'Anzahl der Investitionen',
+'Norte/Oriente':'Nord/Ost','Sur/Oriente':'Süd/Ost',
+'Multidepartamental':'Mehrere Departements','Multi-departamental':'Mehrere Departements','Multidep.':'Mehrere Dep.',
+'🔔 Novedades':'🔔 Neuigkeiten','Novedades':'Neuigkeiten',
+'NORMATIVA · PRENSA · DOCUMENTOS':'RECHTSNORMEN · PRESSE · DOKUMENTE',
+'NORMATIVA':'RECHTSNORM','PRENSA':'PRESSE','DOCUMENTO':'DOKUMENT',
+'EN SEGUIMIENTO':'IN BEOBACHTUNG','NUEVO':'NEU',
+'Sin novedades por ahora.':'Zurzeit keine Neuigkeiten.',
+'Abrir en pestaña nueva':'In neuem Tab öffnen',
+'Nuevo Reglamento del SNPMGI — DS 140-2026-EF':'Neue SNPMGI-Verordnung — DS 140-2026-EF',
+'Publicado en El Peruano el 18/07/2026 · aprueba el nuevo Reglamento del DL 1252 y deroga el DS 284-2018-EF · clic para abrir el PDF':'Veröffentlicht in El Peruano am 18.07.2026 · genehmigt die neue Verordnung zum DL 1252 und hebt DS 284-2018-EF auf · Klick öffnet das PDF',
+'Todos los años':'Alle Jahre','Todos los tipos':'Alle Typen',
+'Convenios':'Abkommen','Años':'Jahre','Tipos':'Typen',
+'✕ Limpiar':'✕ Zurücksetzen','IR':'LOS','Nombre':'Name',
+'Gestión integral de residuos sólidos':'Integrale Abfallwirtschaft',
+'Infraestructura de disposición final':'Infrastruktur zur Endlagerung',
+'Recuperación de áreas degradadas':'Sanierung degradierter Flächen',
+'Limpieza pública':'Öffentliche Stadtreinigung',
+'Fortalecimiento institucional':'Institutionelle Stärkung',
+'IMPACTO NACIONAL DE LA INVERSIÓN':'NATIONALE WIRKUNG DER INVESTITIONEN',
+'UE 003 — Gestión Integral de la Calidad Ambiental · Ministerio del Ambiente':'UE 003 — Integrales Umweltqualitätsmanagement · Umweltministerium Perus',
+'EJECUTADO ACUMULADO · SIAF 2013-2026 ▾':'KUMULIERTE AUSFÜHRUNG · SIAF 2013-2026 ▾',
+'BENEFICIARIOS DIRECTOS ▾':'DIREKT BEGÜNSTIGTE ▾',
+'HECTÁREAS A RECUPERAR ▾':'ZU SANIERENDE HEKTAR ▾',
+'VEHÍCULOS DE LIMPIEZA PÚBLICA ▾':'STADTREINIGUNGSFAHRZEUGE ▾',
+'INVERSIONES CON OBRAS DE INFRAESTRUCTURA ▾':'INVESTITIONEN MIT INFRASTRUKTURBAUTEN ▾',
+'CULMINADAS':'ABGESCHLOSSEN','EN EJECUCIÓN':'IN AUSFÜHRUNG','SUSPENDIDAS':'AUSGESETZT','POR INICIAR':'VOR BAUBEGINN',
+'MAPA NACIONAL DE INVERSIONES':'NATIONALE INVESTITIONSKARTE',
+'Culminada':'Abgeschlossen','En ejecución':'In Ausführung','Suspendida':'Ausgesetzt','Por iniciar':'Vor Baubeginn',
+'Culminadas':'Abgeschlossen','Suspendidas':'Ausgesetzt',
+'Ejecución presupuestal':'Haushaltsvollzug',
+'Certificación':'Zertifizierung','Devengado':'Ist-Ausgaben','Girado':'Auszahlung','Compromiso':'Verpflichtung','Certificado':'Zertifiziert',
+'Fuente: Transparencia Económica — MEF':'Quelle: Transparencia Económica — MEF',
+'Fuente: MEF — Consulta Amigable · SSI':'Quelle: MEF — Consulta Amigable · SSI',
+'Beneficiarios':'Begünstigte','Vehículos':'Fahrzeuge','Hectáreas':'Hektar',
+'Descargar Ficha':'Datenblatt herunterladen','⬇ Descargar Ficha':'⬇ Datenblatt (Excel)','⏳ Generando…':'⏳ Wird erstellt…',
+'PROYECTO':'PROJEKT','PROGRAMA':'PROGRAMM','ACTIVO':'AKTIV','CERRADO':'GESCHLOSSEN',
+'Obra en ejecución':'Bau in Ausführung','Obra culminada':'Bau abgeschlossen','Obra suspendida':'Bau ausgesetzt','Obra por iniciar':'Bau vor Beginn',
+'PRESUPUESTO DE INVERSIÓN':'INVESTITIONSBUDGET',
+'PERFIL VIABLE':'GENEHMIGTES PROFIL','COSTO ACTUALIZADO':'AKTUALISIERTE KOSTEN',
+'Perfil viable':'Genehmigtes Profil','Costo actualizado':'Aktualisierte Kosten',
+'Perfil Viable':'Genehmigtes Profil','Costo Actualizado':'Aktualisierte Kosten',
+'● Perfil Viable':'● Genehmigtes Profil','● Costo Total':'● Gesamtkosten',
+'Costo inversión act.':'Aktualisierte Kosten','Control concurrente':'Begleitende Kontrolle','Controversias':'Streitverfahren','Carta fianza':'Bankbürgschaft',
+'Variación':'Abweichung',
+'AV. FÍSICO':'PHYS. FORTSCHRITT','AV. FISICO':'PHYS. FORTSCHRITT','AV. FINANCIERO':'FIN. FORTSCHRITT',
+'Av. Físico':'Phys. Fortschritt','Av. Fisico':'Phys. Fortschritt','Av. Financiero':'Fin. Fortschritt',
+'AVANCES':'FORTSCHRITTE',
+'Avance físico (SSI)':'Physischer Fortschritt (SSI)','Avance financiero':'Finanzieller Fortschritt',
+'Programado en el PMI':'Im PMI eingeplant','SÍ':'JA','NO':'NEIN',
+'Inicio de obra (SSI)':'Baubeginn (SSI)','Fin previsto (SSI)':'Geplantes Bauende (SSI)',
+'PIM TOTAL PROYECTO':'PIM GESAMTPROJEKT',
+'ESTADO SITUACIONAL':'SACHSTAND','Estado Situacional':'Sachstand',
+'Clic para ver ⟳ · Formato 12B':'Klick zum Anzeigen ⟳ · Format 12B',
+'PUESTA EN MARCHA':'INBETRIEBNAHME','Puesta en Marcha':'Inbetriebnahme',
+'Información en preparación':'Informationen in Vorbereitung',
+'VISTA DE LA INVERSIÓN':'ANSICHT DER INVESTITION',
+'SITUACIÓN ACTUAL DE LA INVERSIÓN — FORMATO 12B':'AKTUELLER STAND DER INVESTITION — FORMAT 12B',
+'EJECUCIÓN FINANCIERA':'FINANZIELLE AUSFÜHRUNG',
+'Devengado acumulado (desde su creación)':'Kumulierte Ist-Ausgaben (seit Beginn)',
+'EJECUCIÓN ACUMULADA POR ACTIVIDAD':'KUMULIERTE AUSFÜHRUNG NACH TÄTIGKEIT',
+'EJECUCIÓN POR ACTIVIDAD':'AUSFÜHRUNG NACH TÄTIGKEIT',
+'UE003/GICA · ejecución parcial':'UE003/GICA · Teilausführung',
+'Por acción de inversión':'Nach Investitionsmaßnahme',
+'Construcción / Instalación de Obras':'Bau / Errichtung von Anlagen',
+'Construcción / Instalación de obras':'Bau / Errichtung von Anlagen',
+'Supervisión y Liquidación de Obras':'Bauüberwachung und Abrechnung',
+'Supervisión y liquidación de obras':'Bauüberwachung und Abrechnung',
+'Fortalecimiento / Exp. Técnico':'Stärkung / Techn. Unterlagen',
+'Fortalecimiento / Expediente técnico':'Stärkung / Technische Unterlagen',
+'Gestión y Administración':'Management und Verwaltung','Gestión y administración':'Management und Verwaltung',
+'Adquisición de Bienes/Terrenos':'Erwerb von Gütern/Grundstücken',
+'Adquisición de bienes / terrenos':'Erwerb von Gütern / Grundstücken',
+'Adquisicion de bienes / terrenos':'Erwerb von Gütern / Grundstücken',
+'Total Dev. Acumulado (Proyecto)':'Kumulierte Ist-Ausgaben gesamt (Projekt)',
+'Total Dev. Acumulado UE003':'Kumulierte Ist-Ausgaben gesamt UE003',
+'TOTAL DEV. ACUMULADO (PROYECTO)':'KUM. IST-AUSGABEN GESAMT (PROJEKT)',
+'TOTAL DEV. ACUMULADO UE003':'KUM. IST-AUSGABEN GESAMT UE003',
+'Total Dev. Acumulado del Proyecto':'Kumulierte Ist-Ausgaben des Gesamtprojekts',
+'Fuente: SSI-SOSEM · Todas las Unidades Ejecutoras':'Quelle: SSI-SOSEM · Alle Durchführungseinheiten',
+'⚠️ Proyecto Multi-UEI · ver desglose por unidades ejecutoras':'⚠️ Multi-UEI-Projekt · Aufschlüsselung nach Durchführungseinheiten',
+'Dev. acum. UE003/GICA (MEF Transparencia):':'Kum. Ist-Ausgaben UE003/GICA (MEF Transparenz):',
+'Dev. total del proyecto (SSI-SOSEM, todas las UEIs):':'Ist-Ausgaben des Gesamtprojekts (SSI-SOSEM, alle UEIs):',
+'Ejecutado por otras UEIs:':'Von anderen UEIs ausgeführt:',
+'COMPONENTES Y ACCIONES PROGRAMADOS':'GEPLANTE KOMPONENTEN UND MASSNAHMEN',
+'Componentes y Acciones Programados':'Geplante Komponenten und Maßnahmen',
+'IMPACTO DE LA INVERSIÓN':'WIRKUNG DER INVESTITION','Impacto de la Inversión':'Wirkung der Investition',
+'Entregables y población beneficiada':'Leistungen und begünstigte Bevölkerung',
+'Vehículos para limpieza pública a entregar':'Zu liefernde Stadtreinigungsfahrzeuge',
+'Obra de infraestructura de manejo de residuos sólidos':'Infrastrukturbau für Abfallwirtschaft',
+'Obras de infraestructura de manejo de residuos sólidos':'Infrastrukturbauten für Abfallwirtschaft',
+'Beneficiarios directos':'Direkt Begünstigte','Hectáreas a recuperar':'Zu sanierende Hektar',
+'Situación actual de la inversión':'Aktueller Stand der Investition',
+'Formato 12B — Ejecución de la inversión':'Format 12B — Ausführung der Investition',
+'Fuente: Formato 12-B — Seguimiento de la ejecución · MEF (Banco de Inversiones) · clic fuera para cerrar':'Quelle: Format 12-B — Ausführungsmonitoring · MEF (Investitionsbank) · zum Schließen außerhalb klicken',
+'Copiar':'Kopieren','✓ ¡Copiado!':'✓ Kopiert!','Cerrar':'Schließen',
+'Ver':'Anzeigen','Ver ▸':'Anzeigen ▸','ver detalle':'Details anzeigen',
+'SITUACIÓN':'SACHSTAND','P. EN MARCHA':'INBETRIEBNAHME','VEHÍCULOS':'FAHRZEUGE','BENEFICIARIOS':'BEGÜNSTIGTE',
+'RRSS':'ABFALL','OBRA INFRA.':'INFRASTRUKTUR','Obra Infra.':'Infrastruktur',
+'Situación':'Sachstand','P. en Marcha':'Inbetriebnahme',
+'En Meta':'Im Ziel','En Riesgo':'Gefährdet','Crítico':'Kritisch','s/d':'k. A.',
+'Todos los derechos reservados. Prohibida la reproducción sin autorización.':'Alle Rechte vorbehalten. Vervielfältigung ohne Genehmigung untersagt.',
+'Contacto':'Kontakt',
+'Ejecutado acumulado · SIAF 2013-2026 ▾':'Kumulierte Ausführung · SIAF 2013-2026 ▾',
+'Beneficiarios directos ▾':'Direkt Begünstigte ▾',
+'Hectáreas a recuperar ▾':'Zu sanierende Hektar ▾',
+'Vehículos de limpieza pública ▾':'Stadtreinigungsfahrzeuge ▾',
+'Inversiones con obras de infraestructura ▾':'Investitionen mit Infrastrukturbauten ▾',
+'Mapa nacional de inversiones':'Nationale Investitionskarte',
+'🔎 Nombre':'🔎 Name',
+'Proyectos en Cartera':'Projekte im Portfolio',
+'Total acumulado · Cartera completa':'Kumuliert gesamt · Gesamtportfolio',
+'📍 Perú — UE003 GICA':'📍 Peru — UE003 GICA',
+'PIM Acumulado':'Kumuliertes PIM',
+'Presupuesto Institucional Modificado · Perú — UE003 GICA':'Geändertes institutionelles Budget (PIM) · Peru — UE003 GICA',
+'Devengado Acumulado':'Kumulierte Ist-Ausgaben','Girado Acumulado':'Kumulierte Auszahlungen',
+'Distribución Geográfica':'Geografische Verteilung',
+'Selecciona un departamento':'Departement auswählen',
+'Nacional':'National','Costa':'Küste','Sierra':'Anden','Selva':'Regenwald',
+'Millones de soles':'Millionen Soles','Millones S/':'Mio. S/',
+'Pres. Institucional de Apertura':'Institutionelles Eröffnungsbudget (PIA)',
+'Distribución por Macrorregión':'Verteilung nach Makroregion',
+'PIM vs Devengado por Convenio':'PIM vs. Ist-Ausgaben nach Abkommen',
+'Presupuesto de Inversión':'Investitionsbudget',
+'PROGRAMADO EN EL PMI':'IM PMI EINGEPLANT','NO PROGRAMADO EN EL PMI':'NICHT IM PMI EINGEPLANT','No programado en el PMI':'Nicht im PMI eingeplant',
+'Ejecución por Actividad':'Ausführung nach Tätigkeit',
+'● ACTIVO':'● AKTIV','○ CERRADO':'○ GESCHLOSSEN',
+'Vista de la':'Ansicht der','Inversión':'Investition',
+'Vehículos para limpieza':'Zu liefernde Fahrzeuge','pública a entregar':'für die Stadtreinigung',
+'Obra de infraestructura de':'Infrastrukturbau für','manejo de residuos sólidos':'Abfallwirtschaft',
+'EQUIPAMIENTO':'AUSSTATTUNG','VEHICULOS':'FAHRZEUGE','INTANGIBLES':'IMMATERIELLE GÜTER','INFRAESTRUCTURA':'INFRASTRUKTUR',
+'Equipamiento':'Ausstattung','Vehiculos':'Fahrzeuge','Intangibles':'Immaterielle Güter','Infraestructura':'Infrastruktur',
+'Este proyecto es ejecutado por':'Dieses Projekt wird ausgeführt von',
+'múltiples Unidades Ejecutoras':'mehreren Durchführungseinheiten',
+'. El':'. Die Werte','y el':'und','mostrados provienen del':'stammen aus dem',
+'y consolidan la ejecución de todas las UEIs. Las barras de actividad muestran únicamente la ejecución de':'und konsolidieren die Ausführung aller UEIs. Die Tätigkeitsbalken zeigen nur die Ausführung von',
+'registrada en MEF Transparencia Económica.':'gemäß MEF Transparencia Económica.',
+'El % de Avance Financiero proviene del SSI y refleja el avance consolidado de todas las UEIs.':'Der finanzielle Fortschritt (%) stammt aus dem SSI und spiegelt den konsolidierten Fortschritt aller UEIs wider.',
+'Ministerio del Ambiente (MINAM)':'Umweltministerium Perus (MINAM)',
+'Unidad Ejecutora 003 - Gestión Integral de la Calidad Ambiental':'Durchführungseinheit 003 – Integrales Umweltqualitätsmanagement',
+'Fuente: Transparencia Económica MEF':'Quelle: Transparencia Económica MEF',
+'Sistema BI UE003':'BI-System UE003',
+'Ver en español':'Auf Spanisch anzeigen',
+'Ej: 2058430':'z. B. 2058430','Ej: Piura, Tarapoto…':'z. B. Piura, Tarapoto…',
+'Clic: ver detalle por inversión':'Klick: Details je Investition',
+'Clic: ver las inversiones que recuperan hectáreas':'Klick: Investitionen zur Flächensanierung anzeigen',
+'Clic: ver las inversiones con vehículos':'Klick: Investitionen mit Fahrzeugen anzeigen',
+'Quitar filtro — mostrar todas':'Filter entfernen — alle anzeigen',
+'Clic para ver solo estas en el mapa':'Klick: nur diese auf der Karte anzeigen',
+'Zoom in':'Vergrößern','Zoom out':'Verkleinern',
+'Volver a la vista anterior':'Zur vorherigen Ansicht zurück',
+'Descargar la ficha completa en Excel':'Vollständiges Datenblatt als Excel herunterladen',
+'Copiar CUI y nombre':'CUI und Namen kopieren',
+'Clic: situación actual de la inversión (Formato 12B — MEF)':'Klick: aktueller Stand der Investition (Format 12B — MEF)',
+'Clic para ampliar':'Klick zum Vergrößern',
+'Este mes tiene varias fotos — clic para verlas':'Dieser Monat hat mehrere Fotos — Klick zum Ansehen',
+'Clic para ver beneficiarios y ubicación':'Klick: Begünstigte und Standort anzeigen',
+'Clic para ver el detalle de vehículos':'Klick: Fahrzeugdetails anzeigen',
+'Clic para ver el detalle de obras':'Klick: Baudetails anzeigen',
+'Copiar el texto':'Text kopieren',
+'Mensual':'Monatlich','Acumulado':'Kumuliert',
+'Oriente':'Ost','Sur':'Süd','Centro':'Zentrum','Norte':'Nord',
+'proyectos con ejecución':'Projekte mit Ausführung','Proyectos con ejecución':'Projekte mit Ausführung',
+'Componente / Acción':'Komponente / Maßnahme',
+'Tipo de factor de producción':'Art des Produktionsfaktors',
+'Unidad de producción / Meta':'Produktionseinheit / Ziel',
+'Costo (S/)':'Kosten (S/)',
+'FICHA DE INVERSIÓN PÚBLICA':'DATENBLATT ÖFFENTLICHE INVESTITION',
+'Tipo':'Typ','Convenio':'Abkommen','Departamento':'Departement','Estado':'Status',
+'Vehículos de limpieza pública':'Stadtreinigungsfahrzeuge',
+'REC/RRSS':'REC/ABFALL',
+'← Todos los departamentos':'← Alle Departements',
+'Rec. Áreas':'Flächensanierung','Limp. Pública':'Stadtreinigung','Infr. disposición final':'Endlagerungs-Infrastruktur',
+'Ene':'Jan','Feb':'Feb','Mar':'Mär','Abr':'Apr','May':'Mai','Jun':'Jun','Jul':'Jul','Ago':'Aug','Sep':'Sep','Oct':'Okt','Nov':'Nov','Dic':'Dez',
+'Enero':'Januar','Febrero':'Februar','Marzo':'März','Abril':'April','Mayo':'Mai','Junio':'Juni','Julio':'Juli','Agosto':'August','Septiembre':'September','Octubre':'Oktober','Noviembre':'November','Diciembre':'Dezember',
+/* — paneles nuevos (Resumen Ejecutivo / convenios / calendario / seguimiento / costos) — */
+'Seguimiento':'Monitoring','SEGUIMIENTO':'MONITORING','SEGUIMIENTO DE LA INVERSIÓN':'MONITORING DER INVESTITION',
+'Resumen Ejecutivo':'Managementübersicht','Cartera de Proyectos':'Projektportfolio',
+'Cartera por Convenio':'Portfolio nach Abkommen','CARTERA POR CONVENIO':'PORTFOLIO NACH ABKOMMEN',
+'clic = ver proyectos':'Klick = Projekte anzeigen',
+'Corte por fecha':'Stichtagsauswahl','datos diarios MEF':'tägliche MEF-Daten',
+'Último dato':'Letzter Stand','✕ Quitar':'✕ Entfernen','✕ quitar corte':'✕ Stichtag entfernen',
+'📚 Estudios de Pre-inversión':'📚 Vorinvestitionsstudien',
+'Avance':'Fortschritt','Inversiones':'Investitionen','Gestión':'Verwaltung',
+'Devengado / PIM':'Ist-Ausgaben / PIM',
+'Sin proyectos con los filtros aplicados':'Keine Projekte mit den gewählten Filtern',
+'Los cortes diarios estarán disponibles tras la próxima actualización.':'Tagesstichtage sind nach der nächsten Aktualisierung verfügbar.',
+'Los paneles de cartera anual estarán disponibles tras la próxima actualización de datos.':'Die Jahresportfolio-Panels sind nach der nächsten Datenaktualisierung verfügbar.',
+'Problemas o restricciones identificadas para la ejecución':'Erkannte Probleme oder Einschränkungen bei der Ausführung',
+'Próximos pasos o acciones para implementar':'Nächste Schritte oder umzusetzende Maßnahmen',
+'Avance Físico':'Physischer Fortschritt',
+'Resumen de Valorizaciones':'Übersicht der Leistungsabrechnungen',
+'Resumen de Valorizaciones — Obra Principal':'Übersicht der Leistungsabrechnungen — Hauptbauwerk',
+'Cronograma actualizado':'Aktualisierter Zeitplan','Cronograma':'Zeitplan',
+'Modificaciones contractuales':'Vertragsänderungen','Modif. Contractuales':'Vertragsänderungen',
+'Ampliación de Plazo':'Fristverlängerung','Ampliación de plazo':'Fristverlängerung',
+'Periodo':'Zeitraum','(año-mes)':'(Jahr-Monat)',
+'Programado Acumulado':'Soll kumuliert','Real Acumulado':'Ist kumuliert',
+'Programado':'Soll','Real':'Ist',
+'Sin información registrada en el F12B.':'Keine Angaben im F12B erfasst.',
+'Sin registros en el F12B para esta inversión.':'Keine F12B-Einträge für diese Investition.',
+'Sin valorizaciones registradas para esta inversión en el F12B.':'Keine Leistungsabrechnungen für diese Investition im F12B.',
+'Esta inversión no tiene obras registradas en Ejecución Física del F12B':'Für diese Investition sind keine Bauwerke in der physischen Ausführung des F12B erfasst',
+'📋 Situación':'📋 Sachstand','📏 Avance Físico':'📏 Physischer Fortschritt','🗓️ Cronograma':'🗓️ Zeitplan','📝 Modif. Contractuales':'📝 Vertragsänderungen','⏳ Ampliación de Plazo':'⏳ Fristverlängerung',
+'Haz clic en un departamento':'Klick auf ein Departement',
+'Consulta Amigable MEF · incluye inversiones con PIM 0 y pre-inversión · elige una fecha en el calendario para ver un corte':'Consulta Amigable MEF · inkl. Investitionen mit PIM 0 und Vorinvestition · Datum im Kalender wählen für einen Stichtag',
+'L':'Mo','M':'Di','X':'Mi','J':'Do','V':'Fr','S':'Sa','D':'So'
+};
+var RXDE=[
+[/^Ejecución Mensual (\d{4}) · (.+)$/,'Monatliche Ausführung $1 · $2'],
+[/^Devengado Mensual (\d{4}) · (.+)$/,'Monatliche Ist-Ausgaben $1 · $2'],
+[/^Ejecución Histórica · (.+)$/,'Historische Ausführung · $1'],
+[/^([\d\.,]+)% avance$/,'$1% Fortschritt'],
+[/^(\d+) proyectos? · S\/ (.+) devengado · ([\d\.,]+)% avance$/,'$1 Projekte · S/ $2 Ist-Ausgaben · $3% Fortschritt'],
+[/^([\d\.,]+)\s*N[ÚU]MERO DE CAPACITACIONES$/i,'$1 Schulungen'],
+[/^([\d\.,]+)\s*N[ÚU]MERO DE SOFTWARE$/i,'$1 Software'],
+[/^([\d\.,]+)\s*N[ÚU]MERO DE MOBILIARIO$/i,'$1 Mobiliar'],
+[/^([\d\.,]+)\s*N[ÚU]MERO DE PROCESOS$/i,'$1 Prozesse'],
+[/^([\d\.,]+)\s*N[ÚU]MERO DE PLANES$/i,'$1 Pläne'],
+[/^([\d\.,]+)\s*N[ÚU]MERO DE TALLERES$/i,'$1 Workshops'],
+[/^N[ÚU]MERO DE EQUIPAMIENTO \/ ([\d\.,]+)$/i,'Ausstattung / $1'],
+[/^N[ÚU]MERO DE VEH[ÍI]CULOS \/ ([\d\.,]+)$/i,'Fahrzeuge / $1'],
+[/^N[ÚU]MERO DE ESTRUCTURAS F[ÍI]SICAS \/ ([\d\.,]+)$/i,'Bauliche Strukturen / $1'],
+[/^N[ÚU]MERO DE ESPACIOS F[ÍI]SICOS \/ ([\d\.,]+)$/i,'Physische Räume / $1'],
+[/^Generado: (.+?)\s+·\s+Fuente: SIAF \/ SSI-Invierte\.pe \/ Transparencia Económica — MEF\s+·\s+gica003\.pe$/,'Erstellt: $1 · Quelle: SIAF / SSI-Invierte.pe / Transparencia Económica — MEF · gica003.pe'],
+[/^CUI (\d+) · Formato 12B — Ejecución de la inversión$/,'CUI $1 · Format 12B — Ausführung der Investition'],
+[/^Avance: ([\d\.]+)% de Certif\.$/,'Fortschritt: $1% der Zertifizierung'],
+[/^Avance: ([\d\.]+)% del PIM$/,'Fortschritt: $1% des PIM'],
+[/^UE 003 — Gestión Integral de la Calidad Ambiental · Ministerio del Ambiente · Corte: (.+)$/,'UE 003 — Integrales Umweltqualitätsmanagement · Umweltministerium Perus · Stichtag: $1'],
+[/^Ministerio del Ambiente \(MINAM\)[\s |]+Unidad Ejecutora 003 [–-] Gestión Integral de la Calidad Ambiental[\s |]+Fuente: Transparencia Económica MEF[\s |]+Sistema BI UE003[\s |]+© (\d{4})$/,'Umweltministerium Perus (MINAM) | Durchführungseinheit 003 – Integrales Umweltqualitätsmanagement | Quelle: MEF Transparencia Económica | BI-System UE003 | © $1'],
+[/Dashboard Ejecutivo UE003 MINAM([\s ]+—[\s ]+)Todos los derechos reservados\. Prohibida la reproducción sin autorización\./,'Executive Dashboard UE003 MINAM$1Alle Rechte vorbehalten. Vervielfältigung ohne Genehmigung untersagt.'],
+[/^\((\d+) REC · (\d+) RRSS\)$/,'($1 Sanierung · $2 Abfall)'],
+[/^Estado de la cartera — (\d[\d,\.]*) inversiones$/i,'Portfoliostatus — $1 Investitionen'],
+[/^PIM (\d{4}) · (\d+)\s*inversiones con ejecución ▾$/i,'PIM $1 · $2 Investitionen mit Ausführung ▾'],
+[/^Ejecución presupuestal (\d{4})$/i,'Haushaltsvollzug $1'],
+[/^Ejecutado total · ([\d\.]+)% del PIM$/,'Gesamtausführung · $1% des PIM'],
+[/^Pagado efectivo · ([\d\.]+)% del devengado$/,'Tatsächlich gezahlt · $1% der Ist-Ausgaben'],
+[/^Cobertura Nacional · (\d+) departamentos intervenidos$/,'Landesweite Abdeckung · $1 Departements'],
+[/^Devengado Mensual (\d{4})$/,'Monatliche Ist-Ausgaben $1'],
+[/^Tendencia Histórica de Ejecución (\d{4})[–-](\d{4})$/,'Historischer Ausführungstrend $1–$2'],
+[/^Variación vs (\d{4}): (.+)$/,'Veränderung ggü. $1: $2'],
+[/^Avance: ([\d\.]+)% del devengado$/,'Fortschritt: $1% der Ist-Ausgaben'],
+[/^N° Proyectos (\d{4})$/,'Anzahl Projekte $1'],
+[/^Proyectos con ejecución en (\d{4})$/,'Projekte mit Ausführung in $1'],
+[/^Ejecución Mensual vs Acumulada (\d{4})$/,'Monatliche vs. kumulierte Ausführung $1'],
+[/^PIM – Devengado – Girado \((\d{4})[–-](\d{4})\)$/,'PIM – Ist-Ausgaben – Auszahlung ($1–$2)'],
+[/^(\d+)\+ proy\.$/,'$1+ Proj.'],[/^(\d+) proy\.$/,'$1 Proj.'],
+[/^🌿 Inversiones con hectáreas a recuperar · (\d{4}) \((\d+)\)$/i,'🌿 Investitionen mit Flächensanierung · $1 ($2)'],
+[/^🚛 Vehículos de limpieza pública · (\d{4}) \((\d+) inversiones\)$/i,'🚛 Stadtreinigungsfahrzeuge · $1 ($2 Investitionen)'],
+[/^([\d\.,]+)\s*N[ÚU]MERO DE EQUIPAMIENTO$/i,'$1 Ausstattungseinheiten'],
+[/^(.+) — Estado situacional actualizado$/,'$1 — Sachstand aktualisiert'],
+[/^Presupuesto certificado · (.+)$/,'Zertifiziertes Budget · $1'],
+[/^Ejecutado total · ([\d\.]+)% de la Certificación$/,'Gesamtausführung · $1% der Zertifizierung'],
+[/^Devengado acumulado: S\/ ([\d\.,]+)M$/,'Kumulierte Ist-Ausgaben: S/ $1M'],
+[/^Certificación (\d{4}(?:–\d{4})?)$/,'Zertifizierung $1'],
+[/^Devengado (\d{4}(?:–\d{4})?)$/,'Ist-Ausgaben $1'],
+[/^Girado (\d{4}(?:–\d{4})?)$/,'Auszahlung $1'],
+[/^Presupuesto certificado (\d{4})$/,'Zertifiziertes Budget $1'],
+[/^Avance: ([\d\.,]+)% de la Certificación$/,'Fortschritt: $1% der Zertifizierung'],
+[/^Certificación – Devengado – Girado \((\d{4}(?:–\d{4})?)\)$/,'Zertifizierung – Ist-Ausgaben – Auszahlung ($1)'],
+[/^Año (\d{4})$/,'Jahr $1'],
+[/^([\d\.,]+)\s*N[ÚU]MERO DE ESTRUCTURAS F[ÍI]SICAS$/i,'$1 bauliche Strukturen'],
+[/^([\d\.,]+)\s*ESTUDIOS$/i,'$1 Studien'],
+[/^([\d\.,]+)\s*MODULOS? DE MOBILIARIO$/i,'$1 Mobiliarmodule'],
+[/^([\d\.,]+)\s*KIT DE MOBILIARIO$/i,'$1 Mobiliar-Kits'],
+[/^([\d\.,]+)\s*HA$/i,'$1 Hektar'],
+[/^M2 ?\/ ?([\d\.,]+)$/i,'Fläche $1 m²'],
+[/^M3 ?\/ ?([\d\.,]+)$/i,'Volumen $1 m³'],
+[/^KM ?\/ ?([\d\.,]+)$/i,'Länge $1 km'],
+[/^KIT DE EQUIPAMIENTO ?\/ ?([\d\.,]+)$/i,'Ausstattungs-Kit $1'],
+[/^([\d\.,]+)\s*N[ÚU]MERO DE EQUIPOS$/i,'$1 Geräte'],
+[/^([\d\.,]+)\s*N[ÚU]MERO DE VEH[ÍI]CULOS$/i,'$1 Fahrzeuge'],
+[/^([\d\.,]+)\s*KIT DE EQUIPAMIENTO$/i,'$1 Ausstattungs-Kits'],
+[/^([\d\.,]+)\s*KIT DE HERRAMIENTAS$/i,'$1 Werkzeug-Kits'],
+[/^([\d\.,]+)\s*N° DE DOCUMENTOS$/i,'$1 Dokumente'],
+[/^([\d\.,]+)\s*N° DE INFORMES$/i,'$1 Berichte'],
+[/^([\d\.,]+)\s*AMBIENTES$/i,'$1 Räume'],
+[/^([\d\.,]+)\s*ESPACIOS F[ÍI]SICOS$/i,'$1 physische Räume'],
+[/^([\d\.,]+)\s*ESTRUCTURAS F[ÍI]SICAS$/i,'$1 bauliche Strukturen'],
+[/^(\d+)\s+acciones$/,'$1 Maßnahmen'],[/^(\d+)\s+accion(es)?$/i,'$1 Maßnahmen'],[/^1 acci[oó]n$/i,'1 Maßnahme'],
+[/^ESTADO DE LA CARTERA — (\d[\d,\.]*) INVERSIONES$/,'PORTFOLIOSTATUS — $1 INVESTITIONEN'],
+[/^PIM (\d{4}) · (\d+)\s*INVERSIONES CON EJECUCIÓN ▾$/,'PIM $1 · $2 INVESTITIONEN MIT AUSFÜHRUNG ▾'],
+[/^CERTIFICACIÓN (\d{4})$/,'ZERTIFIZIERUNG $1'],[/^DEVENGADO (\d{4})$/,'IST-AUSGABEN $1'],[/^GIRADO (\d{4})$/,'AUSZAHLUNG $1'],
+[/^Compromiso (\d{4})$/,'Verpflichtung $1'],
+[/^EJECUCIÓN FINANCIERA — AÑO (\d{4})$/,'FINANZIELLE AUSFÜHRUNG — JAHR $1'],
+[/^Dev\. Acumulado$/,'Kum. Ist-Ausgaben'],[/^Dev\. acumulado$/,'Kum. Ist-Ausgaben'],
+[/^(\d[\d,\.]*)\s*ha$/,'$1 ha'],
+[/^Corte: (.+)$/,'Stichtag: $1'],
+[/^📅 Corte: (.+)$/,'📅 Stichtag: $1'],
+[/^Resumen Ejecutivo — (.+)$/,'Managementübersicht — $1'],
+[/^Cartera de Proyectos — (.+)$/,'Projektportfolio — $1'],
+[/^([\d\.,]+) personas$/,'$1 Personen'],
+[/Incluye (\d+) proyectos? de Gestión$/,'Inkl. $1 Verwaltungsvorhaben'],
+[/^Obra (\d+)$/,'Bauwerk $1'],
+[/^Ver la cartera al (.+)$/,'Portfolio zum Stichtag $1 anzeigen'],
+[/^Todas las que registran PIA o PIM en (.+)$/,'Alle mit PIA oder PIM in $1'],
+[/^(\d+) inversiones$/,'$1 Investitionen'],
+[/^Formato 12-B · MEF · capturado (.+)$/,'Format 12-B · MEF · erfasst am $1'],
+[/^Sin PIM (\d{4})$/,'Kein PIM $1'],
+[/^⚠ Sin PIM (\d{4})$/,'⚠ Kein PIM $1'],
+[/^(\d{4}) · clic = ver proyectos$/,'$1 · Klick = Projekte anzeigen'],
+[/^desde (.+)$/,'seit $1'],
+[/^(\d+) inv\.$/,'$1 Inv.'],
+[/^(\d+) dptos?: (.+)$/,'$1 Dep.: $2'],[/^(\d+) dptos?:$/,'$1 Dep.:'],
+[/^Enero (\d{4})$/,'Januar $1'],[/^Febrero (\d{4})$/,'Februar $1'],[/^Marzo (\d{4})$/,'März $1'],[/^Abril (\d{4})$/,'April $1'],[/^Mayo (\d{4})$/,'Mai $1'],[/^Junio (\d{4})$/,'Juni $1'],[/^Julio (\d{4})$/,'Juli $1'],[/^Agosto (\d{4})$/,'August $1'],[/^Septiembre (\d{4})$/,'September $1'],[/^Octubre (\d{4})$/,'Oktober $1'],[/^Noviembre (\d{4})$/,'November $1'],[/^Diciembre (\d{4})$/,'Dezember $1'],
+[/^(\d+) proyectos?$/,'$1 Projekte']
+];
 function trStr(s){
-if(D.hasOwnProperty(s))return D[s];
-for(var i=0;i<RX.length;i++){var m=RX[i][0].exec(s);if(m)return s.replace(RX[i][0],RX[i][1]);}
-if(window._trNombre&&window._lang==='ja'){var tn=window._trNombre(s);if(tn!=null)return tn;}
+var DD=(window._lang==='de')?DDE:D,RR=(window._lang==='de')?RXDE:RX;
+if(DD.hasOwnProperty(s))return DD[s];
+for(var i=0;i<RR.length;i++){var m=RR[i][0].exec(s);if(m)return s.replace(RR[i][0],RR[i][1]);}
+if(window._lang==='ja'){
+if(window._trNombre){var tn=window._trNombre(s);if(tn!=null)return tn;}
 if(window._trSSI){var t=window._trSSI(s);if(t!=null)return t;}
+}
 return null;
 }
-window._trTxt=function(s){if(window._lang!=='ja')return s;var t=trStr(String(s).trim());return t!=null?t:s;};
+window._trTxt=function(s){if((window._lang||'es')==='es')return s;var t=trStr(String(s).trim());return t!=null?t:s;};
 window._trCfg=function(cfg){
-if(window._lang!=='ja')return cfg;
+if((window._lang||'es')==='es')return cfg;
 var f=function(o){
 if(typeof o==='string'){var t=trStr(o.trim());return t!=null?t:o;}
 if(Array.isArray(o))return o.map(f);
@@ -2727,9 +3080,11 @@ if(!s)return;
 var p=n.parentNode;
 if(p&&(p.nodeName==='SCRIPT'||p.nodeName==='STYLE'))return;
 if(p&&p.closest&&p.closest('#lang-sw'))return;
-if(window._lang==='ja'){
-var t=trStr(s);
-if(t!=null){var nv=raw.replace(s,t);if(nv!==raw){if(!orig.has(n))orig.set(n,raw);n.nodeValue=nv;}}
+if(window._lang!=='es'){
+var src=orig.has(n)?orig.get(n):raw,s2=src.trim();
+var t=trStr(s2);
+if(t!=null){var nv=src.replace(s2,t);if(!orig.has(n))orig.set(n,src);if(nv!==n.nodeValue)n.nodeValue=nv;}
+else if(orig.has(n)){n.nodeValue=orig.get(n);orig.delete(n);}
 }else if(orig.has(n)){n.nodeValue=orig.get(n);orig.delete(n);}
 }
 function trAttrs(root){
@@ -2738,9 +3093,10 @@ if(!root.querySelectorAll)return;
 root.querySelectorAll('['+at+']').forEach(function(el){
 if(el.closest&&el.closest('#lang-sw'))return;
 var key='_es_'+at;
-if(window._lang==='ja'){
-var v=el.getAttribute(at)||'';var t=trStr(v.trim());
-if(t!=null){if(!el.dataset[key])el.dataset[key]=v;el.setAttribute(at,t);}
+if(window._lang!=='es'){
+var cur=el.getAttribute(at)||'';var src=el.dataset[key]||cur;var t=trStr(src.trim());
+if(t!=null){if(!el.dataset[key])el.dataset[key]=src;if(t!==cur)el.setAttribute(at,t);}
+else if(el.dataset[key]){el.setAttribute(at,el.dataset[key]);delete el.dataset[key];}
 }else if(el.dataset[key]){el.setAttribute(at,el.dataset[key]);delete el.dataset[key];}
 });
 });
@@ -2761,7 +3117,7 @@ Array.prototype.forEach.call(s.options,function(o){if(!o.hasAttribute('value'))o
 });
 }
 var mo=new MutationObserver(function(muts){
-if(window._lang!=='ja')return;
+if(window._lang==='es')return;
 muts.forEach(function(m){
 if(m.type==='characterData'){trNode(m.target);return;}
 if(m.addedNodes)Array.prototype.forEach.call(m.addedNodes,function(nd){walk(nd);});
@@ -2772,8 +3128,10 @@ if(window._lang===l)return;
 fijarValores();
 window._lang=l;
 try{localStorage.setItem('gica_lang',l);}catch(_){}
-var be=document.getElementById('lang-es'),bj=document.getElementById('lang-ja');
-if(be&&bj){be.classList.toggle('active',l==='es');bj.classList.toggle('active',l==='ja');}
+var be=document.getElementById('lang-es'),bj=document.getElementById('lang-ja'),bd=document.getElementById('lang-de');
+if(be)be.classList.toggle('active',l==='es');
+if(bj)bj.classList.toggle('active',l==='ja');
+if(bd)bd.classList.toggle('active',l==='de');
 walk(document.body);
 /* recrear los gráficos de la página activa con etiquetas del idioma */
 try{
@@ -2787,7 +3145,7 @@ function arranque(){
 fijarValores();
 mo.observe(document.body,{childList:true,subtree:true,characterData:true});
 var g=null;try{g=localStorage.getItem('gica_lang');}catch(_){}
-if(g==='ja')window._setLang('ja');
+if(g==='ja'||g==='de')window._setLang(g);
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',arranque);else arranque();
 })();
@@ -3448,7 +3806,8 @@ h='<div style="text-align:center;padding:30px 10px;color:#90A4AE;font-size:12px;
 document.getElementById('seg-body').innerHTML=h;
 };
 
-</script></body>
+</script>
+</body>
 </html>
 </body>
 <script>
