@@ -4182,9 +4182,19 @@ var av=pim>0?(dev/pim*100):0;
 var fM=function(x){return 'S/ '+(x/1e6).toLocaleString('es-PE',{minimumFractionDigits:1,maximumFractionDigits:1})+' M';};
 var fB=function(x){return (x/1e6).toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2})+' M';};
 var logo=(document.querySelector('.hdr img')||{}).src||'';
+/* iconos SVG propios (idénticos en toda máquina, calcados del PPT) */
+var _teeth='';for(var _a=0;_a<360;_a+=45)_teeth+='<rect x="27" y="12" width="6" height="9" rx="2" transform="rotate('+_a+' 30 32)"/>';
+var IC={
+inv:'<svg width="56" height="56" viewBox="0 0 64 64"><rect x="9" y="34" width="10" height="24" rx="2" fill="#1668C7"/><rect x="23" y="24" width="10" height="34" rx="2" fill="#00A5AD"/><rect x="37" y="41" width="10" height="17" rx="2" fill="#E23A2E"/><path d="M11 22 L29 13 L42 19" stroke="#58B32B" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M42 19 l-6.5 -0.5 M42 19 l-1.5 -5.5" stroke="#58B32B" stroke-width="3.5" fill="none" stroke-linecap="round"/><circle cx="53" cy="13" r="9" fill="#F6B40E" stroke="#D99A00" stroke-width="1.5"/><text x="53" y="18" font-size="13" font-weight="900" text-anchor="middle" fill="#8A5E00">$</text></svg>',
+pig:'<svg width="56" height="56" viewBox="0 0 64 64"><circle cx="46" cy="10" r="7" fill="#F6B40E" stroke="#D99A00" stroke-width="1.5"/><text x="46" y="14.5" font-size="10" font-weight="900" text-anchor="middle" fill="#8A5E00">$</text><ellipse cx="30" cy="39" rx="22" ry="17" fill="#F48FB1"/><path d="M20 24 l-3 -8 8 4z" fill="#EC6FA0"/><rect x="24" y="28" width="12" height="3.5" rx="1.75" fill="#AD3E6E"/><ellipse cx="50" cy="41" rx="5.5" ry="6.5" fill="#EC6FA0"/><circle cx="48.5" cy="39.5" r="1.3" fill="#7A2A50"/><circle cx="52" cy="39.5" r="1.3" fill="#7A2A50"/><circle cx="39" cy="35" r="2" fill="#5D2140"/><rect x="15" y="53" width="5.5" height="7" rx="2.5" fill="#EC6FA0"/><rect x="38" y="53" width="5.5" height="7" rx="2.5" fill="#EC6FA0"/></svg>',
+bag:'<svg width="56" height="56" viewBox="0 0 64 64"><rect x="40" y="30" width="7" height="27" rx="1.5" fill="#58B32B"/><rect x="50" y="21" width="7" height="36" rx="1.5" fill="#00A5AD"/><path d="M17 20 h12 l5 9 c9 15 -3 29 -11 29 s-20 -14 -11 -29z" fill="#F6B40E" stroke="#D99A00" stroke-width="1.5"/><path d="M17 20 c2.5 -6 9.5 -6 12 0" fill="none" stroke="#8A5E00" stroke-width="2.5" stroke-linecap="round"/><text x="23" y="48" font-size="17" font-weight="900" text-anchor="middle" fill="#8A5E00">$</text></svg>',
+gear:'<svg width="56" height="56" viewBox="0 0 64 64"><g fill="#1668C7">'+_teeth+'<circle cx="30" cy="32" r="15"/></g><circle cx="30" cy="32" r="7" fill="#fff"/><circle cx="48" cy="47" r="11" fill="#58B32B"/><path d="M42.5 47 l4 4.5 8 -9" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+gente:'<svg width="56" height="56" viewBox="0 0 64 64"><circle cx="18" cy="17" r="5.5" fill="#1668C7"/><path d="M10 31 a8 8 0 0 1 16 0z" fill="#1668C7"/><circle cx="32" cy="12" r="6.2" fill="#58B32B"/><path d="M23 29 a9.2 9.2 0 0 1 18.5 0z" fill="#58B32B"/><circle cx="46" cy="17" r="5.5" fill="#00A5AD"/><path d="M38 31 a8 8 0 0 1 16 0z" fill="#00A5AD"/><path d="M8 43 q11 -7 24 -3 l16 4 q6 2 4.5 6 l-1.5 3 q-15 6 -28 2 l-15 -5 q-3 -4 0 -7z" fill="#F0B27A"/><path d="M8 43 q-4 3 0 7" fill="none" stroke="#DA9A5F" stroke-width="2"/></svg>'
+};
+
 /* KPIs superiores (estilo PPT) */
 var kpi=function(bg,ico,val,valCol,lbl){return '<div style="flex:1;background:'+bg+';border-radius:16px;padding:22px 18px;text-align:center">'
-+'<div style="display:flex;align-items:center;justify-content:center;gap:12px"><span style="font-size:40px;line-height:1">'+ico+'</span>'
++'<div style="display:flex;align-items:center;justify-content:center;gap:12px"><span style="display:inline-flex;line-height:1">'+ico+'</span>'
 +'<span style="font-size:42px;font-weight:900;color:'+valCol+';letter-spacing:-.5px;white-space:nowrap">'+val+'</span></div>'
 +'<div style="font-size:21px;font-weight:800;color:#1C1917;margin-top:6px">'+lbl+'</div></div>';};
 var H='<div style="padding:44px 56px 0">'
@@ -4193,11 +4203,11 @@ var H='<div style="padding:44px 56px 0">'
 +'<div style="flex:1;font-size:58px;font-weight:900;color:#1668C7;letter-spacing:-1px;line-height:1.1">Cartera de Inversiones Públicas '+anio+' UEI GICA003</div>'
 +'</div>'
 +'<div style="display:flex;gap:22px;margin-bottom:36px">'
-+kpi('#E8F0FA','📊',n,'#1668C7','Inversiones Públicas '+anio)
-+kpi('#EDEFF1','🐷',fM(pim),'#1C1917',(pre?'* ':'')+'PIM '+anio)
-+kpi('#EAF6E4','💰',fM(dev),'#58B32B','Devengado '+anio)
-+kpi('#DFF2F0','⚙️',av.toFixed(1)+' %','#00A5AD','Avance de ejecución')
-+kpi('#EAF6E4','👥',fB(tot.benef),'#58B32B','Beneficiarios directos')
++kpi('#E8F0FA',IC.inv,n,'#1668C7','Inversiones Públicas '+anio)
++kpi('#EDEFF1',IC.pig,fM(pim),'#1C1917',(pre?'* ':'')+'PIM '+anio)
++kpi('#EAF6E4',IC.bag,fM(dev),'#58B32B','Devengado '+anio)
++kpi('#DFF2F0',IC.gear,av.toFixed(1)+' %','#00A5AD','Avance de ejecución')
++kpi('#EAF6E4',IC.gente,fB(tot.benef),'#58B32B','Beneficiarios directos')
 +'</div>';
 /* tarjetas por programa */
 var ORDER=['JICA 1','JICA 2','KFW','Reactiva Perú 1','BID 1','BID 2','Sin convenio'];
