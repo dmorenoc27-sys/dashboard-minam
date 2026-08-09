@@ -3341,8 +3341,16 @@ var bloque=function(tit,txt,vacio){
 return '<div style="background:#fff;border:1.5px solid #E0E0E0;border-radius:11px;overflow:hidden;margin-bottom:10px">'
 +'<div style="background:#144D14;color:#fff;font-size:11px;font-weight:900;letter-spacing:.5px;padding:7px 13px;text-transform:uppercase">'+tit+'</div>'
 +'<div style="padding:11px 14px;font-size:11.5px;line-height:1.75;color:#263238;white-space:pre-wrap">'+(txt||('<span style="color:#B0BEC5;font-weight:700">'+(vacio||'Sin información registrada en el F12B.')+'</span>'))+'</div></div>';};
+var _tVacia=function(t){
+var hs={};(t.hdr||[]).forEach(function(i){hs[i]=1;});
+var datos=t.filas.filter(function(f,i){return !hs[i];});
+if(!datos.length)return true;
+var tot=0,non=0,dig=false;
+datos.forEach(function(f){f.forEach(function(c){tot++;var s=String(c||'').trim();if(s)non++;if(/\d/.test(s))dig=true;});});
+return tot===0||non/tot<0.35||!dig;
+};
 var tablaHTML=function(t){
-if(!t||!t.filas||!t.filas.length)return '';
+if(!t||!t.filas||!t.filas.length||_tVacia(t))return '';
 var hdrIdx={};(t.hdr||[]).forEach(function(i){hdrIdx[i]=1;});
 var out='<div style="overflow-x:auto;margin-bottom:10px"><table style="border-collapse:collapse;width:100%;font-size:10.5px;background:#fff;border-radius:9px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.08)">';
 t.filas.forEach(function(f,i){
@@ -3403,10 +3411,12 @@ h+=selObras;
 var mapa={3:['CRON'],4:['MODI','MODIF'],5:['AMPL']};
 var tits={3:'Cronograma actualizado',4:'Modificaciones contractuales',5:'Ampliación de plazo'};
 var s3=buscaSec(obraSel,mapa[window._segMod]);
-if(s3&&s3.tablas.length){
+var _tbs=s3?s3.tablas.map(tablaHTML).filter(Boolean):[];
+var _tbsU=[];_tbs.forEach(function(x){if(_tbsU.indexOf(x)<0)_tbsU.push(x);});
+if(_tbsU.length){
 h+='<div style="background:#fff;border:1.5px solid #E0E0E0;border-radius:11px;overflow:hidden;padding-bottom:2px">'
 +'<div style="background:#144D14;color:#fff;font-size:11px;font-weight:900;letter-spacing:.5px;padding:7px 13px;text-transform:uppercase;margin-bottom:10px">'+(s3.titulo||tits[window._segMod])+'</div>'
-+'<div style="padding:0 10px">'+s3.tablas.map(tablaHTML).join('')+'</div></div>';
++'<div style="padding:0 10px">'+_tbsU.join('')+'</div></div>';
 }else{h+=bloque(tits[window._segMod],null,'Sin registros en el F12B para esta inversión.');}
 }
 if(!obras.length&&window._segMod>1){
@@ -4528,7 +4538,21 @@ _mrg(r2);var c=c2(r2,COLI);
 c.value=msj||'Sin registros en el F12B para esta inversión.';
 c.font={italic:true,size:9,color:{argb:'FF90A4AE'}};_bd2(c);r2++;
 };
+var _tbPrev=null;
+var _tbVacia=function(tb){
+var hs={};(tb.hdr||[]).forEach(function(i){hs[i]=1;});
+var datos=tb.filas.filter(function(f,i){return !hs[i];});
+if(!datos.length)return true;
+var tot=0,non=0,dig=false;
+datos.forEach(function(f){f.forEach(function(c){tot++;var s=String(c||'').trim();if(s)non++;if(/\d/.test(s))dig=true;});});
+/* plantillas/formularios ocultos del MEF: sin datos o sin un solo dígito */
+return tot===0||non/tot<0.35||!dig;
+};
 var tablaGen=function(num,tb){
+if(_tbVacia(tb))return;
+var _fp=JSON.stringify(tb.filas);
+if(_fp===_tbPrev)return;   /* tabla duplicada consecutiva */
+_tbPrev=_fp;
 var P=MODPAL[num];
 var nCols=Math.min(COLF-COLI+1,Math.max.apply(null,tb.filas.map(function(f){return f.length;})));
 var hdrSet={};(tb.hdr||[]).forEach(function(i){hdrSet[i]=1;});
@@ -4623,8 +4647,11 @@ if(!obras2.length){notaVacia('Inversión sin obras registradas en Ejecución Fí
 obras2.forEach(function(o,oi){
 if(obras2.length>1)subBanda(mod[0],'OBRA '+(oi+1)+' (registro '+o.nro+')');
 var sec=buscaSec2(o,mod[2]);
-if(sec&&sec.tablas.length){sec.tablas.forEach(function(tb){tablaGen(mod[0],tb);});}
-else{notaVacia();r2++;}
+if(sec&&sec.tablas.length){
+var _r0=r2;_tbPrev=null;
+sec.tablas.forEach(function(tb){tablaGen(mod[0],tb);});
+if(r2===_r0){notaVacia();r2++;}
+}else{notaVacia();r2++;}
 });
 });
 
