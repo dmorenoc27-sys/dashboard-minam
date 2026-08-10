@@ -2702,6 +2702,8 @@ var RX=[
 [/^(\d[\d,\.]*)\s*ha$/,'$1 ha'],
 [/^Corte: (.+)$/,'基準日: $1'],
 [/^📅 Al (.+)$/,'📅 基準日: $1'],
+[/^(\d+) Proyectos · (\d+) IOARR · (\d+) Programas · (\d+) Pre-inversión$/,'プロジェクト$1 · IOARR $2 · プログラム$3 · 事前投資$4'],
+[/^(\d+) Proyectos · (\d+) IOARR · (\d+) Programas$/,'プロジェクト$1 · IOARR $2 · プログラム$3'],
 [/^(\d+) proyectos?$/,'プロジェクト$1件']
 ];
 /* ═══ DEUTSCH (de) — Wörterbuch + Regeln · ARKA 09-08-2026 ═══
@@ -3038,6 +3040,8 @@ var RXDE=[
 [/^Corte: (.+)$/,'Stichtag: $1'],
 [/^📅 Corte: (.+)$/,'📅 Stichtag: $1'],
 [/^📅 Al (.+)$/,'📅 Stand: $1'],
+[/^(\d+) Proyectos · (\d+) IOARR · (\d+) Programas · (\d+) Pre-inversión$/,'$1 Projekte · $2 IOARR · $3 Programme · $4 Vorinvestition'],
+[/^(\d+) Proyectos · (\d+) IOARR · (\d+) Programas$/,'$1 Projekte · $2 IOARR · $3 Programme'],
 [/^Resumen Ejecutivo — (.+)$/,'Managementübersicht — $1'],
 [/^Cartera de Proyectos — (.+)$/,'Projektportfolio — $1'],
 [/^([\d\.,]+) personas$/,'$1 Personen'],
@@ -3832,17 +3836,25 @@ var tot={n:0,pia:0,pim:0,dev:0,benef:0};
 rows.forEach(function(r){tot.n++;tot.pia+=r.pia;tot.pim+=r.pim;tot.dev+=r.dev;
 if(r.p)tot.benef+=(typeof benefiData!=='undefined'?(benefiData[r.cui]||0):0);});
 var avTot=tot.pim>0?(tot.dev/tot.pim*100):0;
+var nTip={P:0,I:0,G:0};
+rows.forEach(function(r){if(r.conv==='__PRE__')return;
+var t=r.p?r.p.Tipo_Inversion:'';
+var esGest=(typeof cuiShortName!=='undefined'&&/^Gesti/.test(cuiShortName[r.cui]||''));
+if(esGest||t==='PROGRAMA')nTip.G++;else if(t==='IOARR')nTip.I++;else nTip.P++;});
+var nPre=(G['__PRE__']||{}).n||0;
+var desg=nTip.P+' Proyectos · '+nTip.I+' IOARR · '+nTip.G+' Programas'+(nPre?' · '+nPre+' Pre-inversión':'');
 var _dNm=function(d){var M={'HUANUCO':'Huánuco','SAN MARTIN':'San Martín','MADRE DE DIOS':'Madre de Dios','LA LIBERTAD':'La Libertad','MULTIDEPARTAMENTAL':'Multidep.','ANCASH':'Áncash','APURIMAC':'Apurímac','JUNIN':'Junín'};
 return M[d]||(d.charAt(0)+d.slice(1).toLowerCase());};
-window._lamData={anio:anio,fsel:usingDia?fsel:null,fcorte:fcorte,G:G,tot:tot,dNm:_dNm};
+window._lamData={anio:anio,fsel:usingDia?fsel:null,fcorte:fcorte,G:G,tot:tot,tip:nTip,dNm:_dNm};
 /* ── PANEL IZQUIERDO: Resumen Ejecutivo ── */
 /* Colores del PPT institucional (pedido de David 09-08-2026): P1 azul, P2 teal, KfW verde, Reactivación rojo */
 var PPTCOL={'JICA 1':'#1668C7','JICA 2':'#00A5AD','KFW':'#58B32B','Reactiva Perú 1':'#E23A2E'};
-var kpi=function(lbl,val,tt,col,ico,bg,br){return '<div title="'+(tt||'')+'" style="flex:1 1 132px;min-width:132px;background:#fff;border:1.5px solid #E0E0E0;border-radius:10px;padding:6px 10px;display:flex;align-items:center;gap:8px">'
+var kpi=function(lbl,val,tt,col,ico,bg,br,sub){return '<div title="'+(tt||'')+'" style="flex:1 1 132px;min-width:132px;background:#fff;border:1.5px solid #E0E0E0;border-radius:10px;padding:6px 10px;display:flex;align-items:center;gap:8px">'
 +'<span style="flex:none;width:32px;height:32px;border-radius:50%;background:'+(bg||'#F1F8E9')+';border:1.5px solid '+(br||'#C5E1A5')+';display:flex;align-items:center;justify-content:center;font-size:16px;line-height:1">'+(ico||'')+'</span>'
 +'<span style="min-width:0;text-align:left">'
 +'<span style="display:block;font-size:12.5px;font-weight:900;color:'+(col||'#1C1917')+';white-space:nowrap">'+val+'</span>'
 +'<span style="display:block;font-size:8.5px;font-weight:700;color:#90A4AE;text-transform:uppercase;letter-spacing:.4px">'+lbl+'</span>'
++(sub?'<span style="display:block;font-size:8px;font-weight:700;color:#B0BEC5;margin-top:1px">'+sub+'</span>':'')
 +'</span></div>';};
 var L='';
 var _fFmt=function(f){var pt=f.split('-');return pt[2]+'/'+pt[1]+'/'+pt[0];};
@@ -3854,7 +3866,7 @@ L+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;font-s
 +'<span id="btn-img-pan" onclick="if(window._descargarPanelImg)_descargarPanelImg(this)" title="Descargar este panel como imagen (estilo PPT)" style="margin-left:auto;cursor:pointer;background:#0B3D0B;color:#fff;font-size:9.5px;font-weight:800;border-radius:9px;padding:3px 11px;letter-spacing:.3px;box-shadow:0 1px 4px rgba(16,80,0,.3);white-space:nowrap">⬇ Imagen (PPT)</span>'
 +'</div>';
 L+='<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">'
-+kpi('Inversiones',tot.n,'Todas las que registran PIA o PIM en '+anio,'#1C1917','🗂️','#EEF4FF','#90CAF9')
++kpi('Inversiones',tot.n,'Todas las que registran PIA o PIM en '+anio,'#1C1917','🗂️','#EEF4FF','#90CAF9',desg)
 +kpi('PIM '+anio,fmtM(tot.pim),fmtS(tot.pim),'#1C1917','💰','#FFF8E1','#FFD54F')
 +kpi('Devengado',fmtM(tot.dev),fmtS(tot.dev),'#105000','📈','#F0FBF0','#A5D6A7')
 +kpi('Avance',avTot.toFixed(1)+' %','Devengado / PIM',avTot>=50?'#105000':'#E65100','🎯','#FBE9E7','#FFAB91')
@@ -4198,10 +4210,12 @@ gente:'<svg width="56" height="56" viewBox="0 0 64 64"><circle cx="18" cy="17" r
 };
 
 /* KPIs superiores (estilo PPT) */
-var kpi=function(bg,ico,val,valCol,lbl){return '<div style="flex:1;background:'+bg+';border-radius:16px;padding:22px 18px;text-align:center">'
+var kpi=function(bg,ico,val,valCol,lbl,sub){return '<div style="flex:1;background:'+bg+';border-radius:16px;padding:22px 18px 18px;text-align:center">'
 +'<div style="display:flex;align-items:center;justify-content:center;gap:12px"><span style="display:inline-flex;line-height:1">'+ico+'</span>'
 +'<span style="font-size:42px;font-weight:900;color:'+valCol+';letter-spacing:-.5px;white-space:nowrap">'+val+'</span></div>'
-+'<div style="font-size:21px;font-weight:800;color:#1C1917;margin-top:6px">'+lbl+'</div></div>';};
++'<div style="font-size:21px;font-weight:800;color:#1C1917;margin-top:6px">'+lbl+'</div>'
++(sub?'<div style="font-size:15px;font-weight:700;color:#78909C;margin-top:3px;white-space:nowrap">'+sub+'</div>':'')
++'</div>';};
 var fAl=D.fcorte?('Al '+D.fcorte.slice(8,10)+'.'+D.fcorte.slice(5,7)+'.'+D.fcorte.slice(2,4)):'';
 var H='<div style="padding:40px 56px 0">'
 +'<div style="display:flex;align-items:flex-start;gap:30px;margin-bottom:34px">'
@@ -4212,7 +4226,7 @@ var H='<div style="padding:40px 56px 0">'
 +'</div>'
 +'</div>'
 +'<div style="display:flex;gap:22px;margin-bottom:36px">'
-+kpi('#E8F0FA',IC.inv,n,'#1668C7','Inversiones Públicas '+anio)
++kpi('#E8F0FA',IC.inv,n,'#1668C7','Inversiones Públicas '+anio,(D.tip?D.tip.P+' Proyectos · '+D.tip.I+' IOARR · '+D.tip.G+' Programas':''))
 +kpi('#EDEFF1',IC.pig,fM(pim),'#1C1917',(pre?'* ':'')+'PIM '+anio)
 +kpi('#EAF6E4',IC.bag,fM(dev),'#58B32B','Devengado '+anio)
 +kpi('#DFF2F0',IC.gear,av.toFixed(1)+' %','#00A5AD','Avance de ejecución')
