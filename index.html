@@ -2704,6 +2704,7 @@ var RX=[
 [/^📅 Al (.+)$/,'📅 基準日: $1'],
 [/^(\d+) Proyectos · (\d+) IOARR · (\d+) Programas · (\d+) Pre-inversión$/,'プロジェクト$1 · IOARR $2 · プログラム$3 · 事前投資$4'],
 [/^(\d+) Proyectos · (\d+) IOARR · (\d+) Programas$/,'プロジェクト$1 · IOARR $2 · プログラム$3'],
+[/^(\d+) Proyectos$/,'プロジェクト$1'],[/^(\d+) Programas$/,'プログラム$1'],[/^(\d+) Pre-inversión$/,'事前投資$1'],
 [/^(\d+) proyectos?$/,'プロジェクト$1件']
 ];
 /* ═══ DEUTSCH (de) — Wörterbuch + Regeln · ARKA 09-08-2026 ═══
@@ -3042,6 +3043,7 @@ var RXDE=[
 [/^📅 Al (.+)$/,'📅 Stand: $1'],
 [/^(\d+) Proyectos · (\d+) IOARR · (\d+) Programas · (\d+) Pre-inversión$/,'$1 Projekte · $2 IOARR · $3 Programme · $4 Vorinvestition'],
 [/^(\d+) Proyectos · (\d+) IOARR · (\d+) Programas$/,'$1 Projekte · $2 IOARR · $3 Programme'],
+[/^(\d+) Proyectos$/,'$1 Projekte'],[/^(\d+) Programas$/,'$1 Programme'],[/^(\d+) Pre-inversión$/,'$1 Vorinvestition'],
 [/^Resumen Ejecutivo — (.+)$/,'Managementübersicht — $1'],
 [/^Cartera de Proyectos — (.+)$/,'Projektportfolio — $1'],
 [/^([\d\.,]+) personas$/,'$1 Personen'],
@@ -3866,7 +3868,14 @@ L+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;font-s
 +'<span id="btn-img-pan" onclick="if(window._descargarPanelImg)_descargarPanelImg(this)" title="Descargar este panel como imagen (estilo PPT)" style="margin-left:auto;cursor:pointer;background:#0B3D0B;color:#fff;font-size:9.5px;font-weight:800;border-radius:9px;padding:3px 11px;letter-spacing:.3px;box-shadow:0 1px 4px rgba(16,80,0,.3);white-space:nowrap">⬇ Imagen (PPT)</span>'
 +'</div>';
 L+='<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">'
-+kpi('Inversiones',tot.n,'Todas las que registran PIA o PIM en '+anio,'#1C1917','🗂️','#EEF4FF','#90CAF9',desg)
++'<div title="Todas las que registran PIA o PIM en '+anio+'" style="flex:1.6 1 195px;min-width:195px;background:#fff;border:1.5px solid #E0E0E0;border-radius:10px;padding:6px 10px;display:flex;align-items:center;gap:9px">'
++'<span style="flex:none;width:32px;height:32px;border-radius:50%;background:#EEF4FF;border:1.5px solid #90CAF9;display:flex;align-items:center;justify-content:center;font-size:16px;line-height:1">🗂️</span>'
++'<span style="min-width:0;text-align:left">'
++'<span style="display:flex;align-items:baseline;gap:7px;white-space:nowrap"><span style="font-size:13.5px;font-weight:900;color:#1C1917">'+tot.n+'</span><span style="font-size:8.5px;font-weight:700;color:#90A4AE;text-transform:uppercase;letter-spacing:.4px">Inversiones</span></span>'
++'<span style="display:grid;grid-template-columns:auto auto;gap:1px 12px;font-size:8.5px;font-weight:700;color:#78909C;margin-top:2px;white-space:nowrap">'
++'<span>'+nTip.P+' Proyectos</span><span>'+nTip.I+' IOARR</span>'
++'<span>'+nTip.G+' Programas</span>'+(nPre?'<span>'+nPre+' Pre-inversión</span>':'<span></span>')
++'</span></span></div>'
 +kpi('PIM '+anio,fmtM(tot.pim),fmtS(tot.pim),'#1C1917','💰','#FFF8E1','#FFD54F')
 +kpi('Devengado',fmtM(tot.dev),fmtS(tot.dev),'#105000','📈','#F0FBF0','#A5D6A7')
 +kpi('Avance',avTot.toFixed(1)+' %','Devengado / PIM',avTot>=50?'#105000':'#E65100','🎯','#FBE9E7','#FFAB91')
