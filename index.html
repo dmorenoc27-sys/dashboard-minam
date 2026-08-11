@@ -4189,16 +4189,8 @@ var dt=d.det||null;
 if(!dt||!dt.filas||!dt.filas.length){
 h+=bloque('Detalle de avance',null,'Sin captura del detalle de avance para esta inversión. Ejecutar Capturar_Seguimiento.bat para actualizar el F12B.');
 }else{
-var g6=dt.g||{};
-var kpi=function(lbl,val,ic){
-return '<div style="flex:1;min-width:150px;background:#fff;border:1.5px solid #C8E6C9;border-radius:11px;padding:9px 13px;display:flex;align-items:center;gap:10px;box-shadow:0 1px 4px rgba(16,24,40,.06)">'
-+'<span style="font-size:19px">'+ic+'</span><div>'
-+'<div style="font-size:9px;font-weight:800;color:#607D6B;letter-spacing:.4px;text-transform:uppercase">'+lbl+'</div>'
-+'<div style="font-size:16px;font-weight:900;color:#105000">'+(val||'—')+'</div></div></div>';};
-h+='<div style="display:flex;gap:9px;flex-wrap:wrap;margin-bottom:11px">'
-+kpi('Avance de la ejecución',g6.ejec,'📈')
-+kpi('Avance físico de la inversión',g6.fis,'📏')
-+kpi('Fecha de declaración',g6.fdec,'📅')+'</div>';
+/* 11-08-2026: sin tarjetas KPI de cabecera — la captura del MEF trae
+   esos campos cruzados y David pidió quitarlos del módulo y del Excel */
 var hayCom=dt.filas.some(function(f){return (f[5]||'').trim();});
 var pnum=function(sv){var x=parseFloat(String(sv).replace(/,/g,'').replace('%',''));return isNaN(x)?0:x;};
 h+='<div style="background:#fff;border:1.5px solid #E0E0E0;border-radius:11px;overflow:hidden">'
@@ -5619,7 +5611,7 @@ t2.font={italic:true,size:8,color:{argb:'FF90A4AE'}};t2.alignment={horizontal:'c
 var DET=SGD&&SGD.det&&SGD.det.filas&&SGD.det.filas.length?SGD.det:null;
 if(DET){
 var ws3=wb.addWorksheet('Detalle de avance',{views:[{showGridLines:false}]});
-ws3.columns=[{width:2.5},{width:6},{width:52},{width:18},{width:12},{width:18},{width:26},{width:3},{width:38},{width:17},{width:9},{width:2.5}];
+ws3.columns=[{width:2.5},{width:6},{width:52},{width:18},{width:12},{width:18},{width:3},{width:3},{width:38},{width:17},{width:9},{width:2.5}];
 var r3=2,CI3=2,CF3=7;
 var c3=function(fila,col){return ws3.getRow(fila).getCell(col);};
 var _m3=function(fila){ws3.mergeCells(fila,CI3,fila,CF3);};
@@ -5634,19 +5626,6 @@ t3.value='CUI '+cui+' · '+String(_nomFicha);
 t3.font={bold:true,size:9.5,color:{argb:C.blanco}};t3.alignment={horizontal:'center',vertical:'middle',wrapText:true};
 t3.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF2E7D32'}};
 ws3.getRow(r3).height=Math.min(80,15*Math.ceil((String(_nomFicha).length+12)/125)+8);r3+=2;
-/* KPIs de cabecera */
-var g3=DET.g||{};
-[['% AVANCE DE LA EJECUCIÓN DE LA INVERSIÓN',g3.ejec],['% AVANCE FÍSICO DE LA INVERSIÓN',g3.fis],['FECHA DE DECLARACIÓN',g3.fdec]].forEach(function(kv){
-var cl=c3(r3,CI3);ws3.mergeCells(r3,CI3,r3,CI3+2);
-cl.value=kv[0];cl.font={bold:true,size:9,color:{argb:'FF105000'}};
-cl.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFE8F5E9'}};cl.alignment={vertical:'middle'};_b3(cl);
-var cv=c3(r3,CI3+3);ws3.mergeCells(r3,CI3+3,r3,CF3);
-var nv=_n3(kv[1]);
-if(nv!=null&&/%/.test(String(kv[1]||''))){cv.value=nv/100;cv.numFmt='0.00%';}
-else cv.value=kv[1]||'—';
-cv.font={bold:true,size:10,color:{argb:'FF0B3D0B'}};cv.alignment={horizontal:'right',vertical:'middle'};_b3(cv);
-ws3.getRow(r3).height=17;r3++;});
-r3++;
 /* ── Tabla derecha: EJECUCIÓN POR ACTIVIDAD (pedido 11-08-2026) ──
    Mismos datos del panel de la ficha (finUpdate): comparación lado a lado
    con el Detalle de avance del F12B. */
@@ -5746,21 +5725,21 @@ ws3.getRow(rr).height=28;
 }}
 }}
 /* tabla */
-['Nº','Producto / componente','Costo total actualizado (S/)','Avance (%)','Avance costo (S/)','Comentario'].forEach(function(hd,hi){
+['Nº','Producto / componente','Costo total actualizado (S/)','Avance (%)','Avance costo (S/)'].forEach(function(hd,hi){
 var ch=c3(r3,CI3+hi);ch.value=hd;ch.font={bold:true,size:9,color:{argb:C.blanco}};
 ch.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF1B5E20'}};
 ch.alignment={horizontal:'center',vertical:'middle',wrapText:true};_b3(ch);});
 ws3.getRow(r3).height=24;r3++;
 DET.filas.forEach(function(f,fi){
 var zebra=fi%2?'FFFFFFFF':'FFF3FBF3';
-var vals=[f[0],f[1],f[2],f[3],f[4],f[5]||''];
+var vals=[f[0],f[1],f[2],f[3],f[4]];
 vals.forEach(function(v,vi){
 var c=c3(r3,CI3+vi);
 var n=_n3(v);
 if(vi===0){c.value=n!=null?n:String(v);c.alignment={horizontal:'center',vertical:'middle'};c.font={bold:true,size:9,color:{argb:'FF607D6B'}};}
 else if(vi===3&&n!=null){c.value=n/100;c.numFmt='0.00%';c.alignment={horizontal:'right',vertical:'middle'};c.font={bold:true,size:9,color:{argb:n>0?'FF105000':'FF90A4AE'}};}
 else if((vi===2||vi===4)&&n!=null){c.value=n;c.numFmt='#,##0';c.alignment={horizontal:'right',vertical:'middle'};c.font={size:9,color:{argb:'FF263238'}};}
-else{c.value=String(v);c.alignment={vertical:'middle',wrapText:vi===1||vi===5};c.font={size:9,color:{argb:'FF263238'},bold:vi===1};}
+else{c.value=String(v);c.alignment={vertical:'middle',wrapText:vi===1};c.font={size:9,color:{argb:'FF263238'},bold:vi===1};}
 c.fill={type:'pattern',pattern:'solid',fgColor:{argb:zebra}};_b3(c);});
 ws3.getRow(r3).height=Math.min(45,Math.max(15,12*Math.ceil(String(f[1]||'').length/50)));
 r3++;});
@@ -5773,7 +5752,7 @@ var c=c3(r3,CI3+kv[0]);var n=_n3(kv[1]);
 if(n!=null){c.value=n;c.numFmt='#,##0';}else c.value=kv[1]||'';
 c.font={bold:true,size:9.5,color:{argb:C.blanco}};c.alignment={horizontal:'right',vertical:'middle'};
 c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF0B3D0B'}};_b3(c);});
-[3,5].forEach(function(k){var c=c3(r3,CI3+k);c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF0B3D0B'}};_b3(c);});
+[3].forEach(function(k){var c=c3(r3,CI3+k);c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF0B3D0B'}};_b3(c);});
 ws3.getRow(r3).height=18;r3++;}
 r3++;
 /* el pie va debajo de la columna que termine más abajo (izq o der) */
