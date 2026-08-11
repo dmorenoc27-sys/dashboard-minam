@@ -2952,7 +2952,13 @@ var DDE={
 'Sin registros en el F12B para esta inversión.':'Keine F12B-Einträge für diese Investition.',
 'Sin valorizaciones registradas para esta inversión en el F12B.':'Keine Leistungsabrechnungen für diese Investition im F12B.',
 'Esta inversión no tiene obras registradas en Ejecución Física del F12B':'Für diese Investition sind keine Bauwerke in der physischen Ausführung des F12B erfasst',
-'📋 Situación':'📋 Sachstand','📏 Avance Físico':'📏 Physischer Fortschritt','🗓️ Cronograma':'🗓️ Zeitplan','📝 Modif. Contractuales':'📝 Vertragsänderungen','⏳ Ampliación de Plazo':'⏳ Fristverlängerung',
+'📋 Situación':'📋 Sachstand','📏 Avance Físico':'📏 Physischer Fortschritt','🗓️ Cronograma':'🗓️ Zeitplan','📝 Modif. Contractuales':'📝 Vertragsänderungen','⏳ Ampliación de Plazo':'⏳ Fristverlängerung','📊 Detalle de avance':'📊 Fortschrittsdetail',
+'Detalle de avance':'Fortschrittsdetail',
+'Avance de la ejecución':'Fortschritt der Ausführung','Avance físico de la inversión':'Physischer Fortschritt der Investition','Fecha de declaración':'Erklärungsdatum',
+'Información del avance de la inversión — por producto / componente':'Fortschrittsinformation der Investition — nach Produkt / Komponente',
+'Producto / componente':'Produkt / Komponente','Costo total actualizado (S/)':'Aktualisierte Gesamtkosten (S/)','Avance (%)':'Fortschritt (%)','Avance costo (S/)':'Fortschritt Kosten (S/)','Comentario':'Kommentar','Total':'Gesamt',
+'Sin captura del detalle de avance para esta inversión. Ejecutar Capturar_Seguimiento.bat para actualizar el F12B.':'Kein Fortschrittsdetail für diese Investition erfasst. Capturar_Seguimiento.bat ausführen, um das F12B zu aktualisieren.',
+'Fuente: Formato 12-B — Información del Avance de la Inversión · MEF (Banco de Inversiones)':'Quelle: Formular 12-B — Fortschrittsinformation der Investition · MEF (Investitionsbank)',
 'Haz clic en un departamento':'Klick auf ein Departement',
 '⬇ Imagen (PPT)':'⬇ Bild (PPT)','⏳ Generando…':'⏳ Wird erstellt…','Sin conexión':'Keine Verbindung',
 'Descargar este panel como imagen (estilo PPT)':'Dieses Panel als Bild herunterladen (PPT-Stil)',
@@ -4067,7 +4073,7 @@ if(ev)ev.stopPropagation();
 var SG=((window._datosActualizados||{}).seguimientoUpdate||{}).datos||{};
 var d=SG[cui];
 var situFall=((window._datosActualizados||{}).situacionUpdate||{})[cui]||null;
-var tieneAlgo=d&&((d.sit&&(d.sit.situ||d.sit.prob||d.sit.acc))||(d.obras&&d.obras.length));
+var tieneAlgo=d&&((d.sit&&(d.sit.situ||d.sit.prob||d.sit.acc))||(d.obras&&d.obras.length)||(d.det&&d.det.filas));
 if(!tieneAlgo&&!situFall){if(window._situDetalle)_situDetalle(cui,ev);return;}
 if(!d)d={sit:{situ:situFall},obras:[],f:null};
 window._segMod=1;window._segObra=0;window._segCui=cui;window._segDato=d;
@@ -4097,7 +4103,7 @@ _segPinta();
 };
 window._segPinta=function(){
 var d=window._segDato,cui=window._segCui;
-var MODS=[[1,'📋','Situación'],[2,'📏','Avance Físico'],[3,'🗓️','Cronograma'],[4,'📝','Modif. Contractuales'],[5,'⏳','Ampliación de Plazo']];
+var MODS=[[1,'📋','Situación'],[2,'📏','Avance Físico'],[3,'🗓️','Cronograma'],[4,'📝','Modif. Contractuales'],[5,'⏳','Ampliación de Plazo'],[6,'📊','Detalle de avance']];
 var nav=document.getElementById('seg-nav');
 nav.innerHTML=MODS.map(function(m){
 var act=window._segMod===m[0];
@@ -4175,6 +4181,57 @@ h+='<tr style="background:'+(i%2?'#F7FBF7':'#fff')+'">'
 +'</tr>';});
 h+='</table></div></div>';
 }else{h+=bloque('Resumen de Valorizaciones',null,'Sin valorizaciones registradas para esta inversión en el F12B.');}
+}else if(window._segMod===6){
+/* MÓDULO 6 — DETALLE DE AVANCE (11-08-2026, pedido de David).
+   Datos: seguimientoUpdate.datos[cui].det (RepEstimac del F12B), con
+   diseño propio del dashboard: KPIs arriba + tabla con barras de avance. */
+var dt=d.det||null;
+if(!dt||!dt.filas||!dt.filas.length){
+h+=bloque('Detalle de avance',null,'Sin captura del detalle de avance para esta inversión. Ejecutar Capturar_Seguimiento.bat para actualizar el F12B.');
+}else{
+var g6=dt.g||{};
+var kpi=function(lbl,val,ic){
+return '<div style="flex:1;min-width:150px;background:#fff;border:1.5px solid #C8E6C9;border-radius:11px;padding:9px 13px;display:flex;align-items:center;gap:10px;box-shadow:0 1px 4px rgba(16,24,40,.06)">'
++'<span style="font-size:19px">'+ic+'</span><div>'
++'<div style="font-size:9px;font-weight:800;color:#607D6B;letter-spacing:.4px;text-transform:uppercase">'+lbl+'</div>'
++'<div style="font-size:16px;font-weight:900;color:#105000">'+(val||'—')+'</div></div></div>';};
+h+='<div style="display:flex;gap:9px;flex-wrap:wrap;margin-bottom:11px">'
++kpi('Avance de la ejecución',g6.ejec,'📈')
++kpi('Avance físico de la inversión',g6.fis,'📏')
++kpi('Fecha de declaración',g6.fdec,'📅')+'</div>';
+var hayCom=dt.filas.some(function(f){return (f[5]||'').trim();});
+var pnum=function(sv){var x=parseFloat(String(sv).replace(/,/g,'').replace('%',''));return isNaN(x)?0:x;};
+h+='<div style="background:#fff;border:1.5px solid #E0E0E0;border-radius:11px;overflow:hidden">'
++'<div style="background:#144D14;color:#fff;font-size:11px;font-weight:900;letter-spacing:.5px;padding:7px 13px;text-transform:uppercase">Información del avance de la inversión — por producto / componente</div>'
++'<div style="overflow-x:auto"><table style="border-collapse:collapse;width:100%;font-size:10.5px">'
++'<tr><th style="background:#1B5E20;color:#fff;padding:6px 9px;border:1px solid #2E7D32">Nº</th>'
++'<th style="background:#1B5E20;color:#fff;padding:6px 9px;border:1px solid #2E7D32;text-align:left">Producto / componente</th>'
++'<th style="background:#1B5E20;color:#fff;padding:6px 9px;border:1px solid #2E7D32">Costo total actualizado (S/)</th>'
++'<th style="background:#1B5E20;color:#fff;padding:6px 9px;border:1px solid #2E7D32;min-width:150px">Avance (%)</th>'
++'<th style="background:#1B5E20;color:#fff;padding:6px 9px;border:1px solid #2E7D32">Avance costo (S/)</th>'
++(hayCom?'<th style="background:#1B5E20;color:#fff;padding:6px 9px;border:1px solid #2E7D32">Comentario</th>':'')+'</tr>';
+dt.filas.forEach(function(f,i){
+var pc=pnum(f[3]);
+var bcol=pc>=100?'#105000':(pc>0?'#2E7D32':'#CFD8DC');
+h+='<tr style="background:'+(i%2?'#F7FBF7':'#fff')+'">'
++'<td style="padding:6px 9px;border:1px solid #ECEFF1;text-align:center;font-weight:800;color:#607D6B">'+f[0]+'</td>'
++'<td style="padding:6px 9px;border:1px solid #ECEFF1;color:#263238;font-weight:600">'+f[1]+'</td>'
++'<td style="padding:6px 9px;border:1px solid #ECEFF1;text-align:right;font-weight:700;white-space:nowrap">'+f[2]+'</td>'
++'<td style="padding:6px 9px;border:1px solid #ECEFF1;white-space:nowrap"><div style="display:flex;align-items:center;gap:7px">'
++'<div style="flex:1;height:8px;background:#ECEFF1;border-radius:4px;overflow:hidden;min-width:70px"><div style="width:'+Math.min(100,pc)+'%;height:100%;background:'+bcol+';border-radius:4px"></div></div>'
++'<span style="font-weight:900;color:'+(pc>0?'#105000':'#90A4AE')+';min-width:46px;text-align:right">'+(f[3]||'—')+'</span></div></td>'
++'<td style="padding:6px 9px;border:1px solid #ECEFF1;text-align:right;font-weight:700;white-space:nowrap">'+f[4]+'</td>'
++(hayCom?'<td style="padding:6px 9px;border:1px solid #ECEFF1;color:#455A64">'+(f[5]||'')+'</td>':'')
++'</tr>';});
+if(dt.tot&&dt.tot.length){
+h+='<tr><td colspan="2" style="background:#0B3D0B;color:#fff;padding:7px 9px;border:1px solid #144D14;font-weight:900;text-align:right">Total</td>'
++'<td style="background:#0B3D0B;color:#fff;padding:7px 9px;border:1px solid #144D14;font-weight:900;text-align:right;white-space:nowrap">'+(dt.tot[0]||'')+'</td>'
++'<td style="background:#0B3D0B;border:1px solid #144D14"></td>'
++'<td style="background:#0B3D0B;color:#fff;padding:7px 9px;border:1px solid #144D14;font-weight:900;text-align:right;white-space:nowrap">'+(dt.tot[1]||'')+'</td>'
++(hayCom?'<td style="background:#0B3D0B;border:1px solid #144D14"></td>':'')+'</tr>';}
+h+='</table></div>'
++'<div style="padding:6px 12px;font-size:9px;color:#90A4AE;font-weight:600">Fuente: Formato 12-B — Información del Avance de la Inversión · MEF (Banco de Inversiones)</div></div>';
+}
 }else{
 h+=selObras;
 var mapa={3:['CRON'],4:['MODI','MODIF'],5:['AMPL']};
@@ -4188,7 +4245,7 @@ h+='<div style="background:#fff;border:1.5px solid #E0E0E0;border-radius:11px;ov
 +'<div style="padding:0 10px">'+_tbsU.join('')+'</div></div>';
 }else{h+=bloque(tits[window._segMod],null,'Sin registros en el F12B para esta inversión.');}
 }
-if(!obras.length&&window._segMod>1){
+if(!obras.length&&window._segMod>1&&window._segMod!==6){
 h='<div style="text-align:center;padding:30px 10px;color:#90A4AE;font-size:12px;font-weight:700">Esta inversión no tiene obras registradas en Ejecución Física del F12B'+(window._segMod===2?'':'')+'.<br><span style="font-size:10px">Los módulos 2-5 aplican a inversiones con obra en ejecución.</span></div>';}
 document.getElementById('seg-body').innerHTML=h;
 };
@@ -5554,6 +5611,123 @@ if(r2===_r0){notaVacia();r2++;}
 _mrg(r2);t2=c2(r2,COLI);
 t2.value='Generado: '+fGen+(SGD.f?' · Capturado del F12B: '+SGD.f.split('-').reverse().join('/'):'')+' · Fuente: MEF — Invierte.pe Formato 12-B · gica003.pe · © 2024-2026 ARKA PROYECTOS';
 t2.font={italic:true,size:8,color:{argb:'FF90A4AE'}};t2.alignment={horizontal:'center'};
+}
+
+/* ═══ HOJA 3: DETALLE DE AVANCE (11-08-2026, pedido de David) ═══
+   Información del Avance de la Inversión (RepEstimac del F12B):
+   productos/componentes con costo actualizado, % de avance y costo. */
+var DET=SGD&&SGD.det&&SGD.det.filas&&SGD.det.filas.length?SGD.det:null;
+if(DET){
+var ws3=wb.addWorksheet('Detalle de avance',{views:[{showGridLines:false}]});
+ws3.columns=[{width:2.5},{width:6},{width:52},{width:18},{width:12},{width:18},{width:26},{width:3},{width:38},{width:17},{width:9},{width:2.5}];
+var r3=2,CI3=2,CF3=7;
+var c3=function(fila,col){return ws3.getRow(fila).getCell(col);};
+var _m3=function(fila){ws3.mergeCells(fila,CI3,fila,CF3);};
+var _b3=function(c){c.border={top:{style:'thin',color:{argb:'FFB8CCB8'}},left:{style:'thin',color:{argb:'FFB8CCB8'}},bottom:{style:'thin',color:{argb:'FFB8CCB8'}},right:{style:'thin',color:{argb:'FFB8CCB8'}}};};
+var _n3=function(sv){var x=parseFloat(String(sv).replace(/,/g,'').replace('%',''));return isNaN(x)?null:x;};
+ws3.mergeCells(r3,CI3,r3,11);var t3=c3(r3,CI3);
+t3.value='DETALLE DE AVANCE DE LA INVERSIÓN — FORMATO 12-B';
+t3.font={bold:true,size:14,color:{argb:C.blanco}};t3.alignment={horizontal:'center',vertical:'middle'};
+t3.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF0B3D0B'}};ws3.getRow(r3).height=25;r3++;
+ws3.mergeCells(r3,CI3,r3,11);t3=c3(r3,CI3);
+t3.value='CUI '+cui+' · '+String(_nomFicha);
+t3.font={bold:true,size:9.5,color:{argb:C.blanco}};t3.alignment={horizontal:'center',vertical:'middle',wrapText:true};
+t3.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF2E7D32'}};
+ws3.getRow(r3).height=Math.min(80,15*Math.ceil((String(_nomFicha).length+12)/125)+8);r3+=2;
+/* KPIs de cabecera */
+var g3=DET.g||{};
+[['% AVANCE DE LA EJECUCIÓN DE LA INVERSIÓN',g3.ejec],['% AVANCE FÍSICO DE LA INVERSIÓN',g3.fis],['FECHA DE DECLARACIÓN',g3.fdec]].forEach(function(kv){
+var cl=c3(r3,CI3);ws3.mergeCells(r3,CI3,r3,CI3+2);
+cl.value=kv[0];cl.font={bold:true,size:9,color:{argb:'FF105000'}};
+cl.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFE8F5E9'}};cl.alignment={vertical:'middle'};_b3(cl);
+var cv=c3(r3,CI3+3);ws3.mergeCells(r3,CI3+3,r3,CF3);
+var nv=_n3(kv[1]);
+if(nv!=null&&/%/.test(String(kv[1]||''))){cv.value=nv/100;cv.numFmt='0.00%';}
+else cv.value=kv[1]||'—';
+cv.font={bold:true,size:10,color:{argb:'FF0B3D0B'}};cv.alignment={horizontal:'right',vertical:'middle'};_b3(cv);
+ws3.getRow(r3).height=17;r3++;});
+r3++;
+/* ── Tabla derecha: EJECUCIÓN POR ACTIVIDAD (pedido 11-08-2026) ──
+   Mismos datos del panel de la ficha (finUpdate): comparación lado a lado
+   con el Detalle de avance del F12B. */
+var fuAct=((window._datosActualizados||{}).finUpdate||{})[cui]||(p&&p.fin)||null; /* mismo origen que el panel (p.fin lleva Obra/Gestion/...) */
+if(fuAct){
+var ACTS=[
+ ['Obra','Construcción / Instalación de Obras','FF1B6B3A','FFE8F5E9'],
+ ['Supervision','Supervisión y Liquidación de Obras','FF1565C0','FFE3F2FD'],
+ ['Expediente','Fortalecimiento / Exp. Técnico','FFE65100','FFFFF3E0'],
+ ['Gestion','Gestión y Administración','FF6A1B9A','FFF3E5F5'],
+ ['Adquisicion','Adquisición de Bienes/Terrenos','FF00695C','FFE0F2F1']
+].filter(function(x){return (fuAct[x[0]]||0)>0;})
+ .sort(function(x,y){return (fuAct[y[0]]||0)-(fuAct[x[0]]||0);});
+var devTot3=ACTS.reduce(function(sm,x){return sm+(fuAct[x[0]]||0);},0);
+if(ACTS.length&&devTot3>0){
+var CI4=9,rr=5;                      /* col I, arranca a la altura de los KPIs */
+ws3.mergeCells(rr,CI4,rr,CI4+2);
+var cb=c3(rr,CI4);cb.value='EJECUCIÓN POR ACTIVIDAD — POR ACCIÓN DE INVERSIÓN';
+cb.font={bold:true,size:9.5,color:{argb:C.blanco}};cb.alignment={horizontal:'center',vertical:'middle'};
+cb.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF0B3D0B'}};_b3(cb);ws3.getRow(rr).height=18;rr++;
+['Actividad','Devengado acum. (S/)','%'].forEach(function(hd,hi){
+var ch=c3(rr,CI4+hi);ch.value=hd;ch.font={bold:true,size:9,color:{argb:C.blanco}};
+ch.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF1B5E20'}};
+ch.alignment={horizontal:'center',vertical:'middle',wrapText:true};_b3(ch);});
+ws3.getRow(rr).height=17;rr++;
+ACTS.forEach(function(x){
+var v=fuAct[x[0]]||0;
+var cl=c3(rr,CI4);cl.value=x[1];cl.font={bold:true,size:9,color:{argb:x[2]}};
+cl.fill={type:'pattern',pattern:'solid',fgColor:{argb:x[3]}};cl.alignment={vertical:'middle',wrapText:true};_b3(cl);
+var cv=c3(rr,CI4+1);cv.value=v;cv.numFmt='#,##0.00';
+cv.font={bold:true,size:9,color:{argb:'FF263238'}};cv.alignment={horizontal:'right',vertical:'middle'};
+cv.fill={type:'pattern',pattern:'solid',fgColor:{argb:x[3]}};_b3(cv);
+var cp=c3(rr,CI4+2);cp.value=v/devTot3;cp.numFmt='0.0%';
+cp.font={bold:true,size:9,color:{argb:x[2]}};cp.alignment={horizontal:'right',vertical:'middle'};
+cp.fill={type:'pattern',pattern:'solid',fgColor:{argb:x[3]}};_b3(cp);
+ws3.getRow(rr).height=Math.max(ws3.getRow(rr).height||15,17);rr++;});
+var ct3=c3(rr,CI4);ct3.value='TOTAL DEV. ACUMULADO UE003';
+ct3.font={bold:true,size:9,color:{argb:C.blanco}};ct3.alignment={vertical:'middle'};
+ct3.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF0B3D0B'}};_b3(ct3);
+var cs3=c3(rr,CI4+1);cs3.value=devTot3;cs3.numFmt='#,##0.00';
+cs3.font={bold:true,size:9.5,color:{argb:C.blanco}};cs3.alignment={horizontal:'right',vertical:'middle'};
+cs3.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF0B3D0B'}};_b3(cs3);
+var cz3=c3(rr,CI4+2);cz3.value=1;cz3.numFmt='0%';
+cz3.font={bold:true,size:9,color:{argb:C.blanco}};cz3.alignment={horizontal:'right',vertical:'middle'};
+cz3.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF0B3D0B'}};_b3(cz3);
+ws3.getRow(rr).height=18;
+}}
+/* tabla */
+['Nº','Producto / componente','Costo total actualizado (S/)','Avance (%)','Avance costo (S/)','Comentario'].forEach(function(hd,hi){
+var ch=c3(r3,CI3+hi);ch.value=hd;ch.font={bold:true,size:9,color:{argb:C.blanco}};
+ch.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF1B5E20'}};
+ch.alignment={horizontal:'center',vertical:'middle',wrapText:true};_b3(ch);});
+ws3.getRow(r3).height=24;r3++;
+DET.filas.forEach(function(f,fi){
+var zebra=fi%2?'FFFFFFFF':'FFF3FBF3';
+var vals=[f[0],f[1],f[2],f[3],f[4],f[5]||''];
+vals.forEach(function(v,vi){
+var c=c3(r3,CI3+vi);
+var n=_n3(v);
+if(vi===0){c.value=n!=null?n:String(v);c.alignment={horizontal:'center',vertical:'middle'};c.font={bold:true,size:9,color:{argb:'FF607D6B'}};}
+else if(vi===3&&n!=null){c.value=n/100;c.numFmt='0.00%';c.alignment={horizontal:'right',vertical:'middle'};c.font={bold:true,size:9,color:{argb:n>0?'FF105000':'FF90A4AE'}};}
+else if((vi===2||vi===4)&&n!=null){c.value=n;c.numFmt='#,##0';c.alignment={horizontal:'right',vertical:'middle'};c.font={size:9,color:{argb:'FF263238'}};}
+else{c.value=String(v);c.alignment={vertical:'middle',wrapText:vi===1||vi===5};c.font={size:9,color:{argb:'FF263238'},bold:vi===1};}
+c.fill={type:'pattern',pattern:'solid',fgColor:{argb:zebra}};_b3(c);});
+ws3.getRow(r3).height=Math.min(45,Math.max(15,12*Math.ceil(String(f[1]||'').length/50)));
+r3++;});
+if(DET.tot&&DET.tot.length){
+ws3.mergeCells(r3,CI3,r3,CI3+1);
+var ct=c3(r3,CI3);ct.value='Total';ct.font={bold:true,size:9.5,color:{argb:C.blanco}};ct.alignment={horizontal:'right',vertical:'middle'};
+ct.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF0B3D0B'}};_b3(ct);
+[[2,DET.tot[0]],[4,DET.tot[1]]].forEach(function(kv){
+var c=c3(r3,CI3+kv[0]);var n=_n3(kv[1]);
+if(n!=null){c.value=n;c.numFmt='#,##0';}else c.value=kv[1]||'';
+c.font={bold:true,size:9.5,color:{argb:C.blanco}};c.alignment={horizontal:'right',vertical:'middle'};
+c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF0B3D0B'}};_b3(c);});
+[3,5].forEach(function(k){var c=c3(r3,CI3+k);c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF0B3D0B'}};_b3(c);});
+ws3.getRow(r3).height=18;r3++;}
+r3++;
+ws3.mergeCells(r3,CI3,r3,11);t3=c3(r3,CI3);
+t3.value='Generado: '+fGen+(SGD.f?' · Capturado del F12B: '+SGD.f.split('-').reverse().join('/'):'')+' · Fuente: MEF — Formato 12-B, Información del Avance de la Inversión · gica003.pe · © 2024-2026 ARKA PROYECTOS';
+t3.font={italic:true,size:8,color:{argb:'FF90A4AE'}};t3.alignment={horizontal:'center'};
 }
 
 wb.xlsx.writeBuffer().then(function(buf){
