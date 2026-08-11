@@ -5692,7 +5692,58 @@ cs3.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF0B3D0B'}};_b3(cs3);
 var cz3=c3(rr,CI4+2);cz3.value=1;cz3.numFmt='0%';
 cz3.font={bold:true,size:9,color:{argb:C.blanco}};cz3.alignment={horizontal:'right',vertical:'middle'};
 cz3.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF0B3D0B'}};_b3(cz3);
-ws3.getRow(rr).height=18;
+ws3.getRow(rr).height=18;rr+=2;
+/* ── Debajo: DEVENGADO POR UNIDAD EJECUTORA (pedido 11-08-2026) ──
+   Solo si el proyecto es Multi-UEI (alguna UE ≠ GICA con devengado > 0).
+   Fuente uepData/uepUpdate (SSI-SOSEM): {sec:[dev,nombre]}. GICA = sec 1492. */
+var _uep3=(typeof uepData!=='undefined'&&uepData[cui])?uepData[cui]:null;
+var _dTot3=(typeof devAcumData!=='undefined'&&devAcumData[cui]!=null)?devAcumData[cui]:null;
+if(_uep3){
+var _SEC_G='1492';
+var _uHay=Object.keys(_uep3).filter(function(k){return (_uep3[k][0]||0)>0;});
+var _esMulti=_uHay.some(function(k){return k!==_SEC_G;});
+if(_esMulti){
+_uHay.sort(function(a,b){return a===_SEC_G?-1:(b===_SEC_G?1:(_uep3[b][0]||0)-(_uep3[a][0]||0));});
+var _sumU=_uHay.reduce(function(sm,k){return sm+(_uep3[k][0]||0);},0);
+var _totP=_dTot3!=null?_dTot3:_sumU;
+ws3.mergeCells(rr,CI4,rr,CI4+2);
+var cu=c3(rr,CI4);cu.value='DEVENGADO POR UNIDAD EJECUTORA — PROYECTO MULTI-UEI';
+cu.font={bold:true,size:9.5,color:{argb:C.blanco}};cu.alignment={horizontal:'center',vertical:'middle'};
+cu.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFBF5B00'}};_b3(cu);ws3.getRow(rr).height=18;rr++;
+['Unidad Ejecutora','Devengado acum. (S/)','%'].forEach(function(hd,hi){
+var ch=c3(rr,CI4+hi);ch.value=hd;ch.font={bold:true,size:9,color:{argb:C.blanco}};
+ch.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFE65100'}};
+ch.alignment={horizontal:'center',vertical:'middle',wrapText:true};_b3(ch);});
+ws3.getRow(rr).height=17;rr++;
+_uHay.forEach(function(k){
+var esG=k===_SEC_G,v=_uep3[k][0]||0;
+var nom=(_uep3[k][1]||('UE '+k))+(esG?' (UE003/GICA)':'');
+var bg=esG?'FFE8F5E9':'FFFFF8E1';
+var cl=c3(rr,CI4);cl.value=nom;cl.font={bold:esG,size:8.5,color:{argb:esG?'FF105000':'FF4E342E'}};
+cl.fill={type:'pattern',pattern:'solid',fgColor:{argb:bg}};cl.alignment={vertical:'middle',wrapText:true};_b3(cl);
+var cv=c3(rr,CI4+1);cv.value=v;cv.numFmt='#,##0.00';
+cv.font={bold:esG,size:9,color:{argb:esG?'FF105000':'FF263238'}};cv.alignment={horizontal:'right',vertical:'middle'};
+cv.fill={type:'pattern',pattern:'solid',fgColor:{argb:bg}};_b3(cv);
+var cp=c3(rr,CI4+2);if(_totP>0){cp.value=v/_totP;cp.numFmt='0.0%';}
+cp.font={bold:esG,size:9,color:{argb:esG?'FF105000':'FF4E342E'}};cp.alignment={horizontal:'right',vertical:'middle'};
+cp.fill={type:'pattern',pattern:'solid',fgColor:{argb:bg}};_b3(cp);
+ws3.getRow(rr).height=Math.max(15,12*Math.ceil(nom.length/40));rr++;});
+var ctp=c3(rr,CI4);ctp.value='DEV. TOTAL DEL PROYECTO (SSI-SOSEM, TODAS LAS UEIs)';
+ctp.font={bold:true,size:8.5,color:{argb:C.blanco}};ctp.alignment={vertical:'middle',wrapText:true};
+ctp.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF0D47A1'}};_b3(ctp);
+var csp=c3(rr,CI4+1);csp.value=_totP;csp.numFmt='#,##0.00';
+csp.font={bold:true,size:9.5,color:{argb:C.blanco}};csp.alignment={horizontal:'right',vertical:'middle'};
+csp.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF0D47A1'}};_b3(csp);
+var czp=c3(rr,CI4+2);czp.value=1;czp.numFmt='0%';
+czp.font={bold:true,size:9,color:{argb:C.blanco}};czp.alignment={horizontal:'right',vertical:'middle'};
+czp.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF0D47A1'}};_b3(czp);
+ws3.getRow(rr).height=20;rr++;
+ws3.mergeCells(rr,CI4,rr,CI4+2);
+var cnb=c3(rr,CI4);
+cnb.value='Las barras de actividad (arriba) muestran solo la ejecución de UE003/GICA registrada en MEF Transparencia. El total del proyecto consolida todas las UEIs (SSI-SOSEM).';
+cnb.font={italic:true,size:7.5,color:{argb:'FF8D6E63'}};cnb.alignment={wrapText:true,vertical:'top'};
+ws3.getRow(rr).height=28;
+}}
 }}
 /* tabla */
 ['Nº','Producto / componente','Costo total actualizado (S/)','Avance (%)','Avance costo (S/)','Comentario'].forEach(function(hd,hi){
@@ -5725,6 +5776,8 @@ c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF0B3D0B'}};_b3(c);});
 [3,5].forEach(function(k){var c=c3(r3,CI3+k);c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF0B3D0B'}};_b3(c);});
 ws3.getRow(r3).height=18;r3++;}
 r3++;
+/* el pie va debajo de la columna que termine más abajo (izq o der) */
+if(typeof rr!=='undefined')r3=Math.max(r3,rr+2);
 ws3.mergeCells(r3,CI3,r3,11);t3=c3(r3,CI3);
 t3.value='Generado: '+fGen+(SGD.f?' · Capturado del F12B: '+SGD.f.split('-').reverse().join('/'):'')+' · Fuente: MEF — Formato 12-B, Información del Avance de la Inversión · gica003.pe · © 2024-2026 ARKA PROYECTOS';
 t3.font={italic:true,size:8,color:{argb:'FF90A4AE'}};t3.alignment={horizontal:'center'};
