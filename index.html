@@ -5636,10 +5636,75 @@ t3.value='CUI '+cui+' · '+String(_nomFicha);
 t3.font={bold:true,size:9.5,color:{argb:C.blanco}};t3.alignment={horizontal:'center',vertical:'middle',wrapText:true};
 t3.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF2E7D32'}};
 ws3.getRow(r3).height=Math.min(80,15*Math.ceil((String(_nomFicha).length+12)/125)+8);r3+=2;
-/* ── Tabla derecha: EJECUCIÓN POR ACTIVIDAD (pedido 11-08-2026) ──
-   Mismos datos del panel de la ficha (finUpdate): comparación lado a lado
-   con el Detalle de avance del F12B. */
-var fuAct=((window._datosActualizados||{}).finUpdate||{})[cui]||(p&&p.fin)||null; /* mismo origen que el panel (p.fin lleva Obra/Gestion/...) */
+/* ── Tabla derecha: EJECUCIÓN POR ACTIVIDAD — POR AÑO (13-08-2026) ──
+   Fuente finAnualUpdate (Consulta Amigable — Transparencia MEF, hoja
+   Detalle de Base_MEF): {cui:{cod:[nombre,categoria,{año:dev}]}}. La MISMA
+   fuente de finUpdate, ahora con columnas por año (pedido de David: nada
+   del SSI/F12B aquí). Fallback: tabla simple acumulada si aún no hay dato. */
+var CI4=9,rr=5;
+var CATCOL={Obra:['FF1B6B3A','FFE8F5E9'],Supervision:['FF1565C0','FFE3F2FD'],Expediente:['FFE65100','FFFFF3E0'],Gestion:['FF6A1B9A','FFF3E5F5'],Adquisicion:['FF00695C','FFE0F2F1']};
+var CATLBL={Obra:'Construcción / Instalación de Obras',Supervision:'Supervisión y Liquidación de Obras',Expediente:'Fortalecimiento / Exp. Técnico',Gestion:'Gestión y Administración',Adquisicion:'Adquisición de Bienes/Terrenos'};
+var FA=((window._datosActualizados||{}).finAnualUpdate||{})[cui]||null;
+if(FA&&Object.keys(FA).length){
+var codsA=Object.keys(FA);
+var anhosA={};codsA.forEach(function(cd){Object.keys(FA[cd][2]).forEach(function(a){anhosA[a]=1;});});
+var anhosLA=Object.keys(anhosA).sort();
+var totA=function(cd){var o=FA[cd][2];return Object.keys(o).reduce(function(sm,a){return sm+o[a];},0);};
+codsA.sort(function(x,y){return totA(y)-totA(x);});
+var granTot=codsA.reduce(function(sm,cd){return sm+totA(cd);},0)||1;
+var nColsA=1+anhosLA.length+2;   /* actividad + años + Total + % */
+ws3.getColumn(CI4).width=Math.max(ws3.getColumn(CI4).width||0,38);
+for(var ci=0;ci<anhosLA.length+1;ci++){var col=ws3.getColumn(CI4+1+ci);if(!col.width||col.width<14)col.width=14;}
+ws3.getColumn(CI4+1+anhosLA.length+1).width=8;
+ws3.mergeCells(rr,CI4,rr,CI4+nColsA-1);
+var cb=c3(rr,CI4);cb.value='EJECUCIÓN POR ACTIVIDAD — POR ACCIÓN DE INVERSIÓN Y AÑO (S/)';
+cb.font={bold:true,size:9.5,color:{argb:C.blanco}};cb.alignment={horizontal:'center',vertical:'middle'};
+cb.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF0B3D0B'}};_b3(cb);ws3.getRow(rr).height=18;rr++;
+(['Actividad'].concat(anhosLA).concat(['Total','%'])).forEach(function(hd,hi){
+var ch=c3(rr,CI4+hi);ch.value=hd;ch.font={bold:true,size:9,color:{argb:C.blanco}};
+ch.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF1B5E20'}};
+ch.alignment={horizontal:'center',vertical:'middle'};_b3(ch);});
+ws3.getRow(rr).height=17;rr++;
+var sumA={};
+codsA.forEach(function(cd){
+var nom=FA[cd][0]||CATLBL[FA[cd][1]]||cd;
+var cc=CATCOL[FA[cd][1]]||['FF37474F','FFECEFF1'];
+var cl=c3(rr,CI4);cl.value=nom;
+cl.font={bold:true,size:8.5,color:{argb:cc[0]}};cl.alignment={vertical:'middle',wrapText:true};
+cl.fill={type:'pattern',pattern:'solid',fgColor:{argb:cc[1]}};_b3(cl);
+anhosLA.forEach(function(a,ai){
+var v=FA[cd][2][a]||0;sumA[a]=(sumA[a]||0)+v;
+var cv=c3(rr,CI4+1+ai);cv.value=v;cv.numFmt='#,##0.00';
+cv.font={size:8.5,color:{argb:v?'FF263238':'FFB0BEC5'},bold:!!v};
+cv.alignment={horizontal:'right',vertical:'middle'};
+cv.fill={type:'pattern',pattern:'solid',fgColor:{argb:cc[1]}};_b3(cv);});
+var ct=c3(rr,CI4+1+anhosLA.length);ct.value=totA(cd);ct.numFmt='#,##0.00';
+ct.font={bold:true,size:8.5,color:{argb:cc[0]}};ct.alignment={horizontal:'right',vertical:'middle'};
+ct.fill={type:'pattern',pattern:'solid',fgColor:{argb:cc[1]}};_b3(ct);
+var cp=c3(rr,CI4+2+anhosLA.length);cp.value=totA(cd)/granTot;cp.numFmt='0.0%';
+cp.font={bold:true,size:8.5,color:{argb:cc[0]}};cp.alignment={horizontal:'right',vertical:'middle'};
+cp.fill={type:'pattern',pattern:'solid',fgColor:{argb:cc[1]}};_b3(cp);
+ws3.getRow(rr).height=Math.max(16,11*Math.ceil(nom.length/34));rr++;});
+var cte=c3(rr,CI4);cte.value='TOTAL DEV. ACUMULADO UE003';
+cte.font={bold:true,size:9,color:{argb:C.blanco}};cte.alignment={vertical:'middle'};
+cte.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF0B3D0B'}};_b3(cte);
+anhosLA.forEach(function(a,ai){
+var cv=c3(rr,CI4+1+ai);cv.value=sumA[a]||0;cv.numFmt='#,##0.00';
+cv.font={bold:true,size:8.5,color:{argb:C.blanco}};cv.alignment={horizontal:'right',vertical:'middle'};
+cv.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF0B3D0B'}};_b3(cv);});
+var cg=c3(rr,CI4+1+anhosLA.length);cg.value=granTot;cg.numFmt='#,##0.00';
+cg.font={bold:true,size:9,color:{argb:C.blanco}};cg.alignment={horizontal:'right',vertical:'middle'};
+cg.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF0B3D0B'}};_b3(cg);
+var cz=c3(rr,CI4+2+anhosLA.length);cz.value=1;cz.numFmt='0%';
+cz.font={bold:true,size:9,color:{argb:C.blanco}};cz.alignment={horizontal:'right',vertical:'middle'};
+cz.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF0B3D0B'}};_b3(cz);
+ws3.getRow(rr).height=18;rr++;
+ws3.mergeCells(rr,CI4,rr,CI4+nColsA-1);
+var cnA=c3(rr,CI4);cnA.value='Fuente: Consulta Amigable — Transparencia Económica MEF · devengado por acción de inversión y año.';
+cnA.font={italic:true,size:7.5,color:{argb:'FF90A4AE'}};rr+=2;
+}else{
+/* fallback: tabla simple acumulada (sin dato anual todavía) */
+var fuAct=((window._datosActualizados||{}).finUpdate||{})[cui]||(p&&p.fin)||null;
 if(fuAct){
 var ACTS=[
  ['Obra','Construcción / Instalación de Obras','FF1B6B3A','FFE8F5E9'],
@@ -5651,7 +5716,6 @@ var ACTS=[
  .sort(function(x,y){return (fuAct[y[0]]||0)-(fuAct[x[0]]||0);});
 var devTot3=ACTS.reduce(function(sm,x){return sm+(fuAct[x[0]]||0);},0);
 if(ACTS.length&&devTot3>0){
-var CI4=9,rr=5;                      /* col I, arranca a la altura de los KPIs */
 ws3.mergeCells(rr,CI4,rr,CI4+2);
 var cb=c3(rr,CI4);cb.value='EJECUCIÓN POR ACTIVIDAD — POR ACCIÓN DE INVERSIÓN';
 cb.font={bold:true,size:9.5,color:{argb:C.blanco}};cb.alignment={horizontal:'center',vertical:'middle'};
@@ -5682,6 +5746,8 @@ var cz3=c3(rr,CI4+2);cz3.value=1;cz3.numFmt='0%';
 cz3.font={bold:true,size:9,color:{argb:C.blanco}};cz3.alignment={horizontal:'right',vertical:'middle'};
 cz3.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF0B3D0B'}};_b3(cz3);
 ws3.getRow(rr).height=18;rr+=2;
+}}}
+
 /* ── Debajo: DEVENGADO POR UNIDAD EJECUTORA (pedido 11-08-2026) ──
    Solo si el proyecto es Multi-UEI (alguna UE ≠ GICA con devengado > 0).
    Fuente uepData/uepUpdate (SSI-SOSEM): {sec:[dev,nombre]}. GICA = sec 1492. */
@@ -5732,7 +5798,6 @@ var cnb=c3(rr,CI4);
 cnb.value='Las barras de actividad (arriba) muestran solo la ejecución de UE003/GICA registrada en MEF Transparencia. El total del proyecto consolida todas las UEIs (SSI-SOSEM).';
 cnb.font={italic:true,size:7.5,color:{argb:'FF8D6E63'}};cnb.alignment={wrapText:true,vertical:'top'};
 ws3.getRow(rr).height=28;
-}}
 }}
 /* tabla */
 ['Nº','Producto / componente','Costo total actualizado (S/)','Avance (%)','Avance costo (S/)'].forEach(function(hd,hi){
