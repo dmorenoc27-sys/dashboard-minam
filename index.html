@@ -4118,35 +4118,40 @@ var v=FTE[fu][an]||0;
 if(an<cy)fteHasta[fu]=(fteHasta[fu]||0)+v;
 else if(an===cy){fteAnio[fu]=(fteAnio[fu]||0)+v;devCy+=v;}
 });});
-body='<div style="display:flex;gap:11px;flex-wrap:wrap;margin-bottom:15px">'
-+kpi('Costo actualizado','S/ '+pmi.ca,null,'#0B3D0B')
-+kpi('Devengado acumulado','S/ '+pmi.dev,pmi.devAl?('al '+pmi.devAl):null,'#0D47A1')
-+(FTE?kpi('Devengado '+cy,'S/ '+fmt2(devCy),'SSI · al día','#E65100'):'')
-+kpi('PIM '+cy,'S/ '+pmi.pim,'año vigente','#105000')
-+'</div>';
-/* ── Devengado por FUENTE DE FINANCIAMIENTO (19-08-2026, pedido de David):
-   dos paneles — acumulado hasta el año previo y el del año vigente — con
-   céntimos exactos del SSI (traeDevengSSI tipo FTE, sección V). ── */
-if(FTE){
-var panelFte=function(tit,obj,col){
+/* ── 19-08-2026 (rediseño pedido por David): el desglose por fuente va
+   DENTRO de las tarjetas de devengado, con siglas (RO/ROOC/DyT/RD) y sin
+   bloques oscuros — más liviano y elegante. ── */
+var ABR={'RECURSOS ORDINARIOS':['RO','#1565C0','#E3F2FD'],
+'RECURSOS POR OPERACIONES OFICIALES DE CREDITO':['ROOC','#00897B','#E0F2F1'],
+'DONACIONES Y TRANSFERENCIAS':['DyT','#8E24AA','#F3E5F5'],
+'RECURSOS DETERMINADOS':['RD','#E65100','#FFF3E0'],
+'RECURSOS DIRECTAMENTE RECAUDADOS':['RDR','#6D4C41','#EFEBE9']};
+var abrFte=function(f){var k=String(f||'').toUpperCase().trim();
+if(ABR[k])return ABR[k];
+var ini=k.split(/\s+/).filter(function(w){return w.length>2;}).map(function(w){return w[0];}).join('');
+return [ini||k.slice(0,4),'#455A64','#ECEFF1'];};
+var desgloseFte=function(obj){
 var fus=Object.keys(obj).filter(function(f){return obj[f]>0;}).sort(function(a,b){return obj[b]-obj[a];});
-var tot=fus.reduce(function(sm,f){return sm+obj[f];},0);
-var h2='<div style="flex:1;min-width:290px;background:#fff;border:1.5px solid #E0E0E0;border-radius:13px;overflow:hidden">'
-+'<div style="background:'+col+';color:#fff;font-size:10px;font-weight:900;letter-spacing:.4px;padding:8px 13px;text-transform:uppercase">'+tit+'</div>';
-if(!fus.length){h2+='<div style="padding:16px;color:#B0BEC5;font-size:11px;font-weight:700;text-align:center">Sin devengado en el periodo.</div></div>';return h2;}
-fus.forEach(function(f,i){
-h2+='<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 13px;background:'+(i%2?'#fff':'#F7FBF7')+';border-bottom:1px solid #ECEFF1">'
-+'<span style="font-size:10px;font-weight:700;color:#455A64;line-height:1.3">'+f+'</span>'
-+'<span style="font-size:11.5px;font-weight:900;color:#263238;white-space:nowrap">S/ '+fmt2(obj[f])+'</span></div>';});
-h2+='<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 13px;background:#0B3D0B">'
-+'<span style="font-size:10px;font-weight:900;color:#fff;letter-spacing:.3px">TOTAL</span>'
-+'<span style="font-size:12px;font-weight:900;color:#fff;white-space:nowrap">S/ '+fmt2(tot)+'</span></div></div>';
-return h2;};
-body+='<div style="display:flex;gap:11px;flex-wrap:wrap;margin-bottom:15px">'
-+panelFte('Devengado hasta '+(parseInt(cy,10)-1)+' — por fuente de financiamiento',fteHasta,'#0D47A1')
-+panelFte('Devengado '+cy+' — por fuente de financiamiento',fteAnio,'#E65100')
+if(!fus.length)return '';
+return '<div style="margin-top:9px;padding-top:8px;border-top:1px dashed #DDE5DD">'
++fus.map(function(f){var A=abrFte(f);
+return '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:2.5px 0">'
++'<span title="'+f+'" style="background:'+A[2]+';color:'+A[1]+';font-size:9px;font-weight:900;border-radius:8px;padding:2px 8px;letter-spacing:.3px;cursor:default">'+A[0]+'</span>'
++'<span style="font-size:11px;font-weight:800;color:#37474F;white-space:nowrap">S/ '+fmt2(obj[f])+'</span></div>';}).join('')
++'</div>';};
+var kpi2=function(lbl,val,sub,col,extra,grow){
+return '<div style="flex:'+(grow||1)+';min-width:'+(extra?'235':'165')+'px;background:#fff;border:1.5px solid #C8E6C9;border-radius:13px;padding:13px 16px;box-shadow:0 1px 5px rgba(16,24,40,.07)">'
++'<div style="font-size:9.5px;font-weight:800;color:#607D6B;letter-spacing:.5px;text-transform:uppercase">'+lbl+'</div>'
++'<div style="font-size:18px;font-weight:900;color:'+(col||'#0B3D0B')+';margin-top:4px;white-space:nowrap">'+val+'</div>'
++(sub?'<div style="font-size:9px;font-weight:700;color:#90A4AE;margin-top:2px">'+sub+'</div>':'')
++(extra||'')
++'</div>';};
+body='<div style="display:flex;gap:11px;flex-wrap:wrap;margin-bottom:15px;align-items:stretch">'
++kpi2('Costo actualizado','S/ '+pmi.ca,null,'#0B3D0B',null,1)
++kpi2('Devengado acumulado','S/ '+pmi.dev,pmi.devAl?('al '+pmi.devAl):null,'#0D47A1',FTE?desgloseFte(fteHasta):null,1.25)
++(FTE?kpi2('Devengado '+cy,'S/ '+fmt2(devCy),'SSI · año en curso','#E65100',desgloseFte(fteAnio),1.25):'')
++kpi2('PIM '+cy,'S/ '+pmi.pim,'año vigente','#105000',null,1)
 +'</div>';
-}
 var progs=(pmi.prog||[]).map(pnum);
 var anios=pmi.anios||progs.map(function(_,i){return String(2026+i);});
 var mx=Math.max.apply(null,progs.concat([1]));
