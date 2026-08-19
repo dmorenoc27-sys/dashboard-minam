@@ -4169,7 +4169,7 @@ return kpi2('Costo actualizado',costoTot>0?('S/ '+fmt2(costoTot)):('S/ '+pmi.ca)
 /* 19-08: devengado acumulado con céntimos del SSI (suma por fuente hasta
    el año previo — cuadra al céntimo con su propio desglose) */
 var devHastaTot=Object.keys(fteHasta).reduce(function(sm,f){return sm+fteHasta[f];},0);
-return kpi2('Devengado acumulado',devHastaTot>0?('S/ '+fmt2(devHastaTot)):('S/ '+pmi.dev),pmi.devAl?('al '+pmi.devAl):('al 31 dic. '+(parseInt(cy,10)-1)),'#0D47A1',FTE?desgloseFte(fteHasta):null,1.25);
+return kpi2('Devengado '+(parseInt(cy,10)-1),devHastaTot>0?('S/ '+fmt2(devHastaTot)):('S/ '+pmi.dev),pmi.devAl?('al '+pmi.devAl):('al 31 dic. '+(parseInt(cy,10)-1)),'#0D47A1',FTE?desgloseFte(fteHasta):null,1.25); /* 19-08: 'Devengado 2025' en vez de 'acumulado' (pedido de David; el año es dinámico) */
 })()
 +(FTE?kpi2('Devengado '+cy,'S/ '+fmt2(devCy),'SSI · año en curso','#E65100',desgloseFte(fteAnio),1.25):'')
 +kpi2('PIM '+cy,'S/ '+pmi.pim,'año vigente','#105000',(FTEP&&Object.keys(ftePim).length)?desgloseFte(ftePim):null,(FTEP&&Object.keys(ftePim).length)?1.25:1)
