@@ -2120,17 +2120,22 @@ ${donut(avF,SC.bg,'Av. Financiero','#F0FBF0','#A5D6A7')}
 <div style="border-right:1px solid #E8F5E9;display:flex;flex-direction:column;justify-content:center;padding:6px 10px;gap:4px;background:linear-gradient(180deg,#F4FBF4 0%,#FAFFFE 100%)">
 ${(function(){
 const fa=(typeof finAno!=='undefined'&&finAno[cui])||null;
-const faDev=fa?fa.Dev:dev; const faCert=fa?fa.Cert:cert; const faAno=fa?fa.ano:'2026';
-/* FIX 2026-07-06: el PIM del año viene en finAnoUpdate (Consulta Amigable).
-   Antes se mostraba fin.PIM = acumulado multi-año etiquetado como PIM del año. */
-const faPim=(fa&&fa.PIM)||null;
+/* 19-08-2026 (pedido de David): PIM/Cert/Dev del año con CÉNTIMOS EXACTOS del
+   SSI (traeDevengSSI tipo ANIO → clave `ejec` de la captura diaria);
+   si aún no hay captura, cae a finAno (Consulta Amigable) como antes. */
+const _sgE=(((window._datosActualizados||{}).seguimientoUpdate||{}).datos||{})[cui];
+const ej=(_sgE&&_sgE.ejec)||null;
+const faDev=(ej&&ej.dev!=null)?ej.dev:(fa?fa.Dev:dev);
+const faCert=(ej&&ej.cert!=null)?ej.cert:(fa?fa.Cert:cert);
+const faAno=(ej&&ej.anio)||(fa?fa.ano:'2026');
+const faPim=(ej&&ej.pim)||((fa&&fa.PIM)||null);
 const tarjeta=function(lbl,val,dot,bg,br,txt){
 return `<div style="background:${bg};border:1.5px solid ${br};border-left:5px solid ${dot};border-radius:10px;padding:4px 10px;box-shadow:0 1px 4px rgba(16,24,40,.09)">
 <div style="display:flex;align-items:center;gap:4px;margin-bottom:2px">
 <svg viewBox="0 0 12 12" width="9" height="9"><circle cx="6" cy="6" r="6" fill="${dot}" opacity=".2"/><circle cx="6" cy="6" r="3.5" fill="${dot}"/></svg>
 <div style="font-size:9.5px;color:${dot};font-weight:800;text-transform:uppercase;letter-spacing:.6px">${lbl}</div>
 </div>
-<div style="font-size:${val>=1e7?'14px':val>=1e6?'15.5px':'17px'};font-weight:900;color:${txt};letter-spacing:-0.4px;line-height:1.05">${_fmtSol(val||0)}</div>
+<div style="font-size:${val>=1e7?'13px':val>=1e6?'14px':'16px'};font-weight:900;color:${txt};letter-spacing:-0.4px;line-height:1.05">${'S/ '+Number(val||0).toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2})}</div>
 </div>`;};
 /* FIX 2026-07-06: nota compacta PRIMERO (arriba del grupo PIM/Cert/Dev del año).
    Muestra solo "⚠ Sin PIM <año>"; al hacer clic la caja gira y se lee el detalle. */
@@ -4118,6 +4123,12 @@ var v=FTE[fu][an]||0;
 if(an<cy)fteHasta[fu]=(fteHasta[fu]||0)+v;
 else if(an===cy){fteAnio[fu]=(fteAnio[fu]||0)+v;devCy+=v;}
 });});
+var FTEP=d.fteP||null;                     /* {fuente:{año:pim}} — 20-08 */
+var ftePim={};
+if(FTEP)Object.keys(FTEP).forEach(function(fu){
+var v=(FTEP[fu]||{})[cy]||0;
+if(v)ftePim[fu]=(ftePim[fu]||0)+v;
+});
 /* ── 19-08-2026 (rediseño pedido por David): el desglose por fuente va
    DENTRO de las tarjetas de devengado, con siglas (RO/ROOC/DyT/RD) y sin
    bloques oscuros — más liviano y elegante. ── */
@@ -4147,10 +4158,21 @@ return '<div style="flex:'+(grow||1)+';min-width:'+(extra?'235':'165')+'px;backg
 +(extra||'')
 +'</div>';};
 body='<div style="display:flex;gap:11px;flex-wrap:wrap;margin-bottom:15px;align-items:stretch">'
-+kpi2('Costo actualizado','S/ '+pmi.ca,null,'#0B3D0B',null,1)
-+kpi2('Devengado acumulado','S/ '+pmi.dev,pmi.devAl?('al '+pmi.devAl):null,'#0D47A1',FTE?desgloseFte(fteHasta):null,1.25)
++(function(){
+/* 19-08: costo actualizado con céntimos — misma fuente que el panel
+   "Presupuesto de Inversión" de la ficha (costosUpdate = SSI: a+b+c+d) */
+var CST=((window._datosActualizados||{}).costosUpdate||{})[cui]||null;
+var costoTot=CST?((CST[1]||0)+(CST[2]||0)+(CST[3]||0)+(CST[4]||0)):0;
+return kpi2('Costo actualizado',costoTot>0?('S/ '+fmt2(costoTot)):('S/ '+pmi.ca),null,'#0B3D0B',null,1);
+})()
++(function(){
+/* 19-08: devengado acumulado con céntimos del SSI (suma por fuente hasta
+   el año previo — cuadra al céntimo con su propio desglose) */
+var devHastaTot=Object.keys(fteHasta).reduce(function(sm,f){return sm+fteHasta[f];},0);
+return kpi2('Devengado acumulado',devHastaTot>0?('S/ '+fmt2(devHastaTot)):('S/ '+pmi.dev),pmi.devAl?('al '+pmi.devAl):('al 31 dic. '+(parseInt(cy,10)-1)),'#0D47A1',FTE?desgloseFte(fteHasta):null,1.25);
+})()
 +(FTE?kpi2('Devengado '+cy,'S/ '+fmt2(devCy),'SSI · año en curso','#E65100',desgloseFte(fteAnio),1.25):'')
-+kpi2('PIM '+cy,'S/ '+pmi.pim,'año vigente','#105000',null,1)
++kpi2('PIM '+cy,'S/ '+pmi.pim,'año vigente','#105000',(FTEP&&Object.keys(ftePim).length)?desgloseFte(ftePim):null,(FTEP&&Object.keys(ftePim).length)?1.25:1)
 +'</div>';
 var progs=(pmi.prog||[]).map(pnum);
 var anios=pmi.anios||progs.map(function(_,i){return String(2026+i);});
@@ -4186,7 +4208,10 @@ lb.innerHTML='<div class="sel-txt" onclick="event.stopPropagation()" style="curs
 +'<span onclick="document.getElementById(\'pmi-detalle\').style.display=\'none\'" style="cursor:pointer;color:#fff;font-size:19px;font-weight:900;line-height:1;padding:2px 6px">✕</span>'
 +'</div>'
 +'<div style="flex:1;overflow-y:auto;padding:15px 17px 8px">'+body
-+'<div style="padding:8px 2px 12px;font-size:9px;color:#90A4AE;font-weight:600">Fuente: SSI — Programación Multianual de Inversiones y Ejecución Financiera por Fuente (sección V) · MEF · clic fuera para cerrar</div>'
++'<div style="display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:8px 2px 12px">'
++'<span style="font-size:9px;color:#90A4AE;font-weight:600">Fuente: SSI — Programación Multianual de Inversiones y Ejecución Financiera por Fuente (sección V) · MEF · clic fuera para cerrar</span>'
++(d.f?'<span style="font-size:10px;color:#607D6B;font-weight:800;white-space:nowrap">Al '+d.f.split('-').reverse().join('/')+'</span>':'')
++'</div>'
 +'</div></div>';
 lb.style.display='flex';
 }catch(_e){if(window.console)console.warn('pmi:',_e);}
