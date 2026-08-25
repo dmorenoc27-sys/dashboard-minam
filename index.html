@@ -3085,6 +3085,7 @@ var RXDE=[
 [/^Cartera de Proyectos — (.+)$/,'Projektportfolio — $1'],
 [/^([\d\.,]+) personas$/,'$1 Personen'],
 [/Incluye (\d+) proyectos? de Gestión$/,'Inkl. $1 Verwaltungsvorhaben'],
+[/Incluye un Programa de Inversión \(Gestión\)$/,'Inkl. ein Investitionsprogramm (Verwaltung)'],[/Incluye (\d+) Programas de Inversión \(Gestión\)$/,'Inkl. $1 Investitionsprogramme (Verwaltung)'],
 [/^Obra (\d+)$/,'Bauwerk $1'],
 [/^Ver la cartera al (.+)$/,'Portfolio zum Stichtag $1 anzeigen'],
 [/^Todas las que registran PIA o PIM en (.+)$/,'Alle mit PIA oder PIM in $1'],
@@ -3940,7 +3941,7 @@ L+='<div style="background:#fff;border:1.5px solid '+col+'40;border-top:4px soli
 var gest=g.cuis.filter(function(c){var n=(typeof cuiShortName!=='undefined'&&cuiShortName[c])||'';return n.indexOf('Gestión')===0;});
 if(!gest.length)return '';
 var nm=gest.map(function(c){return (cuiShortName[c]||c)+' (CUI '+c+')';}).join(' · ');
-return '<div style="margin-top:6px"><span title="'+nm+'" style="display:inline-flex;align-items:center;gap:5px;background:#ECEFF1;border:1px solid #B0BEC5;color:#37474F;font-size:9.5px;font-weight:800;border-radius:9px;padding:2px 8px;cursor:default">⚙️ Incluye '+gest.length+' proyecto'+(gest.length>1?'s':'')+' de Gestión</span></div>';
+return '<div style="margin-top:6px"><span title="'+nm+'" style="display:inline-flex;align-items:center;gap:5px;background:#ECEFF1;border:1px solid #B0BEC5;color:#37474F;font-size:9.5px;font-weight:800;border-radius:9px;padding:2px 8px;cursor:default">⚙️ Incluye '+(gest.length>1?gest.length+' Programas':'un Programa')+' de Inversión (Gestión)</span></div>';
 })()
 +(deps.length?'<div style="margin-top:6px;padding-top:6px;border-top:1px dashed '+col+'33;font-size:9.5px;color:#607D8B;font-weight:600"><span style="font-weight:800;color:'+col+'">'+deps.length+' dpto'+(deps.length===1?'':'s')+':</span> '+deps.map(_dNm).join(' · ')+'</div>':'')
 +'</div>';
@@ -4759,7 +4760,7 @@ H+='<div style="flex:1;background:#fff;border:1.5px solid #E3E7EA;border-radius:
 +(function(){
 var gest=(g.cuis||[]).filter(function(c){var nm=(typeof cuiShortName!=='undefined'&&cuiShortName[c])||'';return nm.indexOf('Gestión')===0;});
 if(!gest.length)return '';
-return '<div style="margin-top:14px;text-align:center"><span style="display:inline-flex;align-items:center;gap:8px;background:#ECEFF1;border:1.5px solid #B0BEC5;color:#37474F;font-size:19px;font-weight:800;border-radius:16px;padding:6px 16px">⚙️ Incluye '+gest.length+' proyecto'+(gest.length>1?'s':'')+' de Gestión</span></div>';
+return '<div style="margin-top:14px;text-align:center"><span style="display:inline-flex;align-items:center;gap:8px;background:#ECEFF1;border:1.5px solid #B0BEC5;color:#37474F;font-size:19px;font-weight:800;border-radius:16px;padding:6px 16px">⚙️ Incluye '+(gest.length>1?gest.length+' Programas':'un Programa')+' de Inversión (Gestión)</span></div>';
 })()
 +'<div style="margin-top:auto;padding-top:16px;text-align:center">'
 +'<div style="font-size:21px;font-weight:800;color:'+col+';margin-bottom:8px">Departamentos de intervención</div>'
