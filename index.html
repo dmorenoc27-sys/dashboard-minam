@@ -1611,12 +1611,21 @@ const avPct=totalCert>0?(totalDev/totalCert*100).toFixed(1):0;
 const avColor=avPct>=50?'#105000':avPct>=35?'#E65100':'#C62828';
 const _dNm={'HUANUCO':'Huánuco','SAN MARTIN':'San Martín','MADRE DE DIOS':'Madre de Dios','LA LIBERTAD':'La Libertad','MULTIDEPARTAMENTAL':'Multi-departamental'};
 const _dLabel=_dNm[dept]||(dept.charAt(0)+dept.slice(1).toLowerCase());
-if(title) title.textContent=dept;
+if(title){
+if(window._repDepTiene&&_repDepTiene(dept)){
+title.innerHTML='<span style="display:inline-flex;align-items:center;gap:12px;flex-wrap:wrap">'+dept
++'<span onclick="_abrirReporteDep(\''+dept+'\')" title="Reporte del departamento — se actualiza a diario" '
++'style="display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,#0B3D0B,#2E7D32);color:#fff;font-size:12.5px;font-weight:800;border-radius:12px;padding:7px 16px;cursor:pointer;box-shadow:0 3px 10px rgba(16,80,0,.35);letter-spacing:.3px;white-space:nowrap" '
++'onmouseover="this.style.transform=\'scale(1.05)\';this.style.boxShadow=\'0 5px 16px rgba(16,80,0,.5)\'" '
++'onmouseout="this.style.transform=\'\';this.style.boxShadow=\'0 3px 10px rgba(16,80,0,.35)\'">'
++'<span style="font-size:15px">🗺️</span>Ver Reporte Departamental</span></span>';
+}else title.textContent=dept;
+}
 if(back) back.style.display='inline-flex';
 if(deptSum) deptSum.innerHTML='<span style="color:#2191F1;font-weight:700">Certif. S/ '+totalCert.toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2})+'</span>'
 +' &nbsp;·&nbsp; <span style="color:#105000;font-weight:700">Dev. S/ '+totalDev.toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2})+'</span>'
 +' &nbsp;·&nbsp; <span style="color:'+avColor+';font-weight:700">'+avPct+'% avance</span>'
-+(window._repDepTiene&&_repDepTiene(dept)?' &nbsp;·&nbsp; <span onclick="_abrirReporteDep(\''+dept+'\')" title="Reporte del departamento — se actualiza a diario" style="display:inline-flex;align-items:center;gap:5px;background:#0B3D0B;color:#fff;font-size:10px;font-weight:800;border-radius:11px;padding:3px 11px;cursor:pointer;box-shadow:0 1px 4px rgba(16,80,0,.3);letter-spacing:.3px">📄 Ver reporte</span>':'');
+;
 if(sub) sub.textContent=_dLabel+' · '+dProjs.length+' proyecto'+(dProjs.length!==1?'s':'');
 const compColor={Obra:'#105000',Gestion:'#2191F1',Expediente:'#E65100',Supervision:'#6A1B9A',Adquisicion:'#00838F'};
 const compLabel={Obra:'Obras',Gestion:'Gestión',Expediente:'Exp. Técnico',Supervision:'Supervisión',Adquisicion:'Adquisición'};
@@ -2959,7 +2968,7 @@ var DDE={
 'Sin valorizaciones registradas para esta inversión en el F12B.':'Keine Leistungsabrechnungen für diese Investition im F12B.',
 'Esta inversión no tiene obras registradas en Ejecución Física del F12B':'Für diese Investition sind keine Bauwerke in der physischen Ausführung des F12B erfasst',
 '📋 Situación':'📋 Sachstand','📏 Avance Físico':'📏 Physischer Fortschritt','🗓️ Cronograma':'🗓️ Zeitplan','📝 Modif. Contractuales':'📝 Vertragsänderungen','⏳ Ampliación de Plazo':'⏳ Fristverlängerung','📊 Detalle de avance':'📊 Fortschrittsdetail',
-'Ver reporte':'Bericht ansehen','⬇ Descargar reporte':'⬇ Bericht herunterladen',
+'Ver reporte':'Bericht ansehen','Ver Reporte Departamental':'Departementsbericht ansehen','⬇ Descargar reporte':'⬇ Bericht herunterladen',
 'Cartera de inversiones UE003 · Al ':'Investitionsportfolio UE003 · Stand ',
 'PROGRAMACIÓN MULTIANUAL DE INVERSIONES — PMI':'MEHRJÄHRIGE INVESTITIONSPROGRAMMIERUNG — PMI',
 'Programación del monto de inversión (S/)':'Programmierung des Investitionsbetrags (S/)',
