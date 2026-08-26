@@ -5648,6 +5648,14 @@ s.onload = function() {
     });
     var _cu = d.costoUpdate || {};
     Object.keys(_cu).forEach(function(k){ if (_cu[k] != null) costoData[k] = _cu[k]; });
+    /* 26-08: ESTADO DE LA INVERSION (SSI, ACTIVO/CERRADO) — dinamico: el dato
+       fresco de la corrida diaria pisa el incrustado (ssiData.est). */
+    var _ei = d.estadoInvUpdate || {};
+    if (typeof ssiData !== 'undefined') {
+      Object.keys(_ei).forEach(function(k){
+        if (_ei[k]) { ssiData[k] = ssiData[k] || {}; ssiData[k].est = String(_ei[k]).toUpperCase(); }
+      });
+    }
   } catch(e) {}
 };
 document.head.appendChild(s);
@@ -5706,7 +5714,7 @@ return [tt(dep),tt(prov),tt(dist)];};
 var wb=new ExcelJS.Workbook();
 wb.creator='Dashboard Ejecutivo UE003 MINAM';
 var ws=wb.addWorksheet('Cartera por Convenio',{views:[{showGridLines:false,state:'frozen',ySplit:8}]});
-var ncols=7+anios.length+1;
+var ncols=8+anios.length+1;
 var imgId=wb.addImage({base64:_LOGO_B64,extension:'png'});
 ws.addImage(imgId,{tl:{col:0,row:0},ext:{width:620,height:58}});
 ws.mergeCells(4,1,4,ncols);
@@ -5718,7 +5726,7 @@ c.font={name:'Arial',size:10,color:{argb:C.gris}};
 ws.mergeCells(6,1,6,ncols);
 c=ws.getCell(6,1);c.value=(corte?'Corte: '+corte+' · ':'')+'Fuente: Transparencia Económica MEF (Consulta Amigable) · Montos en soles (S/)';
 c.font={name:'Arial',size:10,bold:true,color:{argb:'FF37474F'}};
-var heads=['N°','Convenio','CUI','Inversión (nombre corto)','Departamento','Provincia','Distrito'];
+var heads=['N°','Convenio','CUI','Inversión (nombre corto)','Estado','Departamento','Provincia','Distrito'];
 anios.forEach(function(y){heads.push('Dev. '+y);});
 heads.push('TOTAL DEVENGADO');
 var hr=ws.getRow(8);
@@ -5737,8 +5745,8 @@ var cc=row.getCell(i+1);cc.value=v;
 cc.font={name:'Arial',size:9,bold:!!opts.bold,color:{argb:opts.color||'FF1C2B21'}};
 bordes(cc);
 if(opts.fill)cc.fill={type:'pattern',pattern:'solid',fgColor:{argb:opts.fill}};
-if(i+1>=8){cc.numFmt=NUM;cc.alignment={horizontal:'right'};}
-else if(i===0||i===2)cc.alignment={horizontal:'center'};});
+if(i+1>=9){cc.numFmt=NUM;cc.alignment={horizontal:'right'};}
+else if(i===0||i===2||i===4)cc.alignment={horizontal:'center'};});
 r++;};
 var L=function(ci){var s2='';while(ci>0){var m=(ci-1)%26;s2=String.fromCharCode(65+m)+s2;ci=(ci-m-1)/26;}return s2;};
 ORDER.forEach(function(cv){
@@ -5748,22 +5756,26 @@ rows.forEach(function(p,ix){
 n++;
 var u=ubic(p);
 var nomC=(typeof cuiShortName!=='undefined'&&cuiShortName[p.CUI])||(p.Proyecto||'').slice(0,55);
-var vals=[n,cv,p.CUI,nomC,u[0],u[1],u[2]];
+var cerr=(typeof ssiData!=='undefined'&&ssiData[p.CUI]&&ssiData[p.CUI].est==='CERRADO');
+var vals=[n,cv,p.CUI,nomC,cerr?'Cerrada':'Activa',u[0],u[1],u[2]];
 anios.forEach(function(y){vals.push(devDe(p.CUI,y));});
-vals.push({formula:'SUM('+L(8)+r+':'+L(7+anios.length)+r+')'});
-fila(vals,{fill:ix%2?'FFF1F8F1':null});});
-var vals=['','SUBTOTAL '+cv.toUpperCase(),'','','','',''];
-for(var k=0;k<=anios.length;k++){var col=8+k;vals.push({formula:'SUM('+L(col)+first+':'+L(col)+(r-1)+')'});}
+vals.push({formula:'SUM('+L(9)+r+':'+L(8+anios.length)+r+')'});
+fila(vals,{fill:ix%2?'FFF1F8F1':null});
+var eC=ws.getRow(r-1).getCell(5);
+eC.fill={type:'pattern',pattern:'solid',fgColor:{argb:cerr?'FF2E7D32':'FF1565C0'}};
+eC.font={name:'Arial',size:8.5,bold:true,color:{argb:'FFFFFFFF'}};});
+var vals=['','SUBTOTAL '+cv.toUpperCase(),'','','','','',''];
+for(var k=0;k<=anios.length;k++){var col=9+k;vals.push({formula:'SUM('+L(col)+first+':'+L(col)+(r-1)+')'});}
 subRows.push(r);
 fila(vals,{bold:true,fill:'FFE8F0E8',color:C.verde});});
 /* Estudios de Pre-inversión (genérico) */
 var preRow=r;
-var vals=[n+1,'Estudios de Pre-inversión','2001621','Estudios de Pre-inversión (genérico)','—','—','—'];
+var vals=[n+1,'Estudios de Pre-inversión','2001621','Estudios de Pre-inversión (genérico)','—','—','—','—'];
 anios.forEach(function(y){vals.push((_DEVHIST[y]&&_DEVHIST[y]['2001621'])||null);});
-vals.push({formula:'SUM('+L(8)+r+':'+L(7+anios.length)+r+')'});
+vals.push({formula:'SUM('+L(9)+r+':'+L(8+anios.length)+r+')'});
 fila(vals,{});
-var tot=['','TOTAL GENERAL UE003','','','','',''];
-for(var k2=0;k2<=anios.length;k2++){var col2=8+k2;
+var tot=['','TOTAL GENERAL UE003','','','','','',''];
+for(var k2=0;k2<=anios.length;k2++){var col2=9+k2;
 tot.push({formula:subRows.map(function(sr){return L(col2)+sr;}).concat([L(col2)+preRow]).join('+')});}
 var totRowIx=r;
 fila(tot,{bold:true,color:'FFFFFFFF',fill:'FF2E7D32'});
@@ -5774,7 +5786,7 @@ cc.font={name:'Arial',size:8,color:{argb:'FFFFFFFF'}};r++;};
 pie('Elaborado por: ARKA PROYECTOS DEL PERÚ / Corporación DMC · dmoreno.c@hotmail.com · 966 614 682');
 pie('Dashboard Ejecutivo UE003 MINAM (gica003.pe) · Sistema BI UE003 · © 2024-2026 — Todos los derechos reservados. Prohibida la reproducción sin autorización.');
 pie('Nota: devengado anual del Navegador de Transparencia Económica (UE 1492). Histórico 2013-2025 al 26/08/2026; el año en curso se actualiza con la corrida diaria.');
-var widths=[5,16,10,34,15,15,16];
+var widths=[5,16,10,34,10,15,15,16];
 anios.forEach(function(){widths.push(13);});widths.push(16);
 widths.forEach(function(w,i){ws.getColumn(i+1).width=w;});
 var f=new Date(),p2=function(x){return String(x).padStart(2,'0');};
