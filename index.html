@@ -4134,6 +4134,7 @@ if(PERFC[c])return PERFC[c];
 if(CS[c]){var x=CS[c];var t=(x[1]||0)+(x[2]||0)+(x[3]||0)+(x[4]||0);if(t>0)return t;}
 return (p.fin&&p.fin.PIM)||0;};
 var avf=function(c){return (typeof _avFisicoData!=='undefined'&&_avFisicoData[c]!=null)?_avFisicoData[c]:null;};
+var tcase=function(x){return String(x||'').toLowerCase().replace(/[a-záéíóúñü]+/g,function(w,off){return (off>0&&/^(de|del|la|el|los|las|y)$/.test(w))?w:w.charAt(0).toUpperCase()+w.slice(1);});};
 var fase=function(p){var st=((SGd[p.CUI]||{}).sit||{});var tx=((st.situ||'')+' '+(st.acc||'')).toUpperCase();if(/EXPEDIENTE\s*T/.test(tx)&&!/EJECUCI[OÓ]N\s*DE\s*(LA\s*)?OBRA|AVANCE\s*DE\s*OBRA/.test(tx))return 'Expediente Técnico';var f=p.fin||{};if((f.Obra||0)>0)return 'Obra';if((f.Expediente||0)>0)return 'Expediente Técnico';if((f.Gestion||0)>0)return 'Gestión';return '';};
 var compPrin=function(c,p){
 try{
@@ -4190,14 +4191,15 @@ var h='<div style="background:#fff;border:1.5px solid #E3EAE3;border-radius:11px
 +'<span style="width:10px;height:10px;border-radius:50%;background:'+kcol[0]+';margin-top:4px;flex-shrink:0"></span>'
 +'<div style="flex:1;min-width:0">'
 +'<div style="font-size:12px;font-weight:900;color:#1C2B21;line-height:1.25">'+nomC+' <span style="color:#90A4AE;font-weight:700">· CUI '+c+'</span></div>'
-+'<div style="font-size:9px;font-weight:700;color:#8CA08C;margin-top:2px">'+(prov?'Prov. '+(prov.charAt(0)+prov.slice(1).toLowerCase())+' · ':'')+sub2+'</div>'
-+'</div></div>'
++'<div style="font-size:9px;font-weight:700;color:#8CA08C;margin-top:2px">'+(prov?'Prov. '+tcase(prov)+' · ':'')+sub2+'</div>'
++'</div>'
++(pmiAnios(c)?'<span style="align-self:flex-end;font-size:9.5px;font-weight:700;color:#455A64;white-space:nowrap">Prog. PMI: <b>'+pmiAnios(c)+'</b></span>':'')
++'</div>'
 +'<div style="margin:7px 0 6px;background:'+kcol[1]+';border-radius:7px;padding:4px 11px"><span style="color:'+kcol[0]+';font-size:10px;font-weight:900;letter-spacing:.2px">'+chip+'</span></div>'
 +'<div style="display:flex;justify-content:space-between;align-items:baseline">'
 +'<span style="font-size:17px;font-weight:900;color:'+kcol[0]+'">'+fM(co)+'</span>'
 +(bn>0?'<span style="font-size:10.5px;font-weight:900;color:#263238">'+bn.toLocaleString('es-PE')+' <span style="font-size:8px;font-weight:700;color:#90A4AE">benef.</span></span>':'<span></span>')
 +'</div>'
-+(pmiAnios(c)?'<div style="font-size:9px;font-weight:700;color:#455A64;margin-top:3px">Prog. PMI: <b>'+pmiAnios(c)+'</b></div>':'')
 +(esViable
 ? '<div style="font-size:9px;font-style:italic;font-weight:700;color:#607D6B;margin-top:6px">Perfil viable · pendiente de ejecución</div>'
 : '<div style="display:flex;justify-content:space-between;font-size:8.5px;font-weight:800;color:#78909C;margin-top:6px"><span>Avance físico</span><span style="color:'+kcol[0]+'">'+(av!=null?Math.round(av)+'%':'s/d')+'</span></div>'
@@ -5690,7 +5692,7 @@ var cv=ORDER.indexOf(p.Convenio)>=0?p.Convenio:'SIN CARTERA';
 (G[cv]=G[cv]||[]).push(p);});
 Object.keys(G).forEach(function(k){G[k].sort(function(a,b){return a.CUI<b.CUI?-1:1;});});
 var geo=window._geoUbicacion||{};
-var tt=function(x){return String(x||'').toLowerCase().replace(/(^|\s)([a-záéíóúñü])/g,function(m,a,b){return a+b.toUpperCase();});};
+var tt=function(x){return String(x||'').toLowerCase().replace(/[a-záéíóúñü]+/g,function(w,off){return (off>0&&/^(de|del|la|el|los|las|y)$/.test(w))?w:w.charAt(0).toUpperCase()+w.slice(1);});};
 var ubic=function(p){
 var g=(geo[p.CUI]||[[]])[0]||[];
 var dep=g[2]||p.Departamento||'',prov=g[3]||'',dist=g[4]||'';
