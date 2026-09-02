@@ -5872,113 +5872,121 @@ var px=new PptxGenJS();
 px.defineLayout({name:'W',width:13.33,height:7.5});
 px.layout='W';
 var sl=px.addSlide();
-sl.background={color:'FFFFFF'};
+sl.background={color:'F4F6FA'};
 var T=function(txt,o){o.isTextBox=true;if(o.margin==null)o.margin=0;sl.addText(txt,o);};
+var sh=function(){return {type:'outer',color:'8A97A8',blur:7,offset:2,angle:90,opacity:0.32};};
+var cardBg=function(x,y,w,h){sl.addShape('roundRect',{x:x,y:y,w:w,h:h,rectRadius:0.1,fill:{color:'FFFFFF'},line:{color:'DCE2EA',width:0.75},shadow:sh()});};
 
-/* ── HEADER ── */
-sl.addShape('rect',{x:0,y:0,w:1.05,h:1.42,fill:{color:NAVY}});
-T('🏛️',{x:0,y:0.28,w:1.05,h:0.8,fontSize:36,align:'center',color:'FFFFFF'});
-var nomFs=nomC.length>16?22:30;
+/* ── HERO (encabezado en tarjeta) ── */
+cardBg(0.25,0.16,12.83,1.42);
+sl.addShape('roundRect',{x:0.25,y:0.16,w:1.06,h:1.42,rectRadius:0.1,fill:{color:NAVY}});
+sl.addShape('rect',{x:1.11,y:0.16,w:0.2,h:1.42,fill:{color:NAVY}});
+T('🏛️',{x:0.25,y:0.42,w:1.06,h:0.8,fontSize:34,align:'center',color:'FFFFFF'});
+var nomFs=nomC.length>16?21:28;
 T([{text:pref+' ',options:{color:NAVY,bold:true}},{text:nomC||REG,options:{color:RED,bold:true}}],
-{x:1.15,y:0.06,w:3.7,h:0.62,fontSize:nomFs,fontFace:'Arial',align:'left',valign:'middle'});
+{x:1.5,y:0.22,w:3.5,h:0.56,fontSize:nomFs,fontFace:'Arial',align:'left',valign:'middle'});
 T(((prov?prov.toUpperCase():'')+(prov&&dep?' - ':'')+(dep?dep.toUpperCase():''))||REG,
-{x:1.18,y:0.66,w:3.6,h:0.26,fontSize:12,bold:true,color:NAVY,fontFace:'Arial'});
-sl.addShape('rect',{x:1.18,y:0.98,w:1.05,h:0.34,fill:{color:NAVY}});
-T('CUI N°',{x:1.18,y:0.98,w:1.05,h:0.34,fontSize:12,bold:true,color:'FFFFFF',align:'center',valign:'middle',fontFace:'Arial'});
-sl.addShape('rect',{x:2.23,y:0.98,w:1.45,h:0.34,fill:{color:'FFFFFF'},line:{color:NAVY,width:1.5}});
-T(String(cui),{x:2.23,y:0.98,w:1.45,h:0.34,fontSize:13,bold:true,color:INK,align:'center',valign:'middle',fontFace:'Arial'});
-T('NOMBRE COMPLETO DEL PROYECTO:',{x:4.95,y:0.08,w:3.9,h:0.22,fontSize:10,bold:true,color:NAVY,align:'center',fontFace:'Arial'});
+{x:1.53,y:0.76,w:3.4,h:0.24,fontSize:11,bold:true,color:'5B6B7E',fontFace:'Arial',charSpacing:1});
+sl.addShape('roundRect',{x:1.53,y:1.06,w:0.95,h:0.32,rectRadius:0.05,fill:{color:NAVY}});
+T('CUI N°',{x:1.53,y:1.06,w:0.95,h:0.32,fontSize:11,bold:true,color:'FFFFFF',align:'center',valign:'middle',fontFace:'Arial'});
+sl.addShape('roundRect',{x:2.48,y:1.06,w:1.35,h:0.32,rectRadius:0.05,fill:{color:'F1F4F8'},line:{color:NAVY,width:1}});
+T(String(cui),{x:2.48,y:1.06,w:1.35,h:0.32,fontSize:12.5,bold:true,color:INK,align:'center',valign:'middle',fontFace:'Arial'});
+sl.addShape('line',{x:5.12,y:0.34,w:0,h:1.06,line:{color:'E2E7EE',width:1}});
+T('NOMBRE COMPLETO DEL PROYECTO',{x:5.3,y:0.24,w:3.75,h:0.2,fontSize:9,bold:true,color:NAVY,align:'left',fontFace:'Arial',charSpacing:1});
 var nomTxt='“'+nomL+'” con código único de inversión N° '+cui;
-T(nomTxt,{x:4.95,y:0.32,w:3.9,h:1.05,fontSize:nomTxt.length>330?7.5:8.5,color:INK,align:'justify',valign:'top',fontFace:'Arial'});
-T('ESTADO ACTUAL',{x:9.0,y:0.08,w:1.95,h:0.22,fontSize:11,bold:true,color:NAVY,fontFace:'Arial'});
-sl.addShape('roundRect',{x:9.0,y:0.33,w:1.95,h:0.32,rectRadius:0.06,fill:{color:est[1]}});
-T(est[0]+'  ✔',{x:9.0,y:0.33,w:1.95,h:0.32,fontSize:est[0].length>14?9:11,bold:true,color:'FFFFFF',align:'center',valign:'middle',fontFace:'Arial'});
-T('AVANCE FÍSICO',{x:9.0,y:0.74,w:1.95,h:0.22,fontSize:11,bold:true,color:NAVY,fontFace:'Arial'});
-T(avF!=null?(Math.round(avF*10)/10)+'%':REG,{x:9.0,y:0.94,w:1.95,h:0.42,fontSize:avF!=null?24:10,bold:true,color:GREEN,fontFace:'Arial'});
+T(nomTxt,{x:5.3,y:0.46,w:3.75,h:1.02,fontSize:nomTxt.length>330?7.5:8.5,color:'44505E',align:'justify',valign:'top',fontFace:'Arial',lineSpacingMultiple:1.05});
+sl.addShape('line',{x:9.22,y:0.34,w:0,h:1.06,line:{color:'E2E7EE',width:1}});
+T('ESTADO ACTUAL',{x:9.4,y:0.24,w:1.85,h:0.2,fontSize:9,bold:true,color:NAVY,fontFace:'Arial',charSpacing:1});
+sl.addShape('roundRect',{x:9.4,y:0.46,w:1.85,h:0.34,rectRadius:0.06,fill:{color:est[1]},shadow:sh()});
+T(est[0]+'  ✔',{x:9.4,y:0.46,w:1.85,h:0.34,fontSize:est[0].length>14?8.5:10.5,bold:true,color:'FFFFFF',align:'center',valign:'middle',fontFace:'Arial'});
+T('AVANCE FÍSICO',{x:9.4,y:0.90,w:1.85,h:0.2,fontSize:9,bold:true,color:NAVY,fontFace:'Arial',charSpacing:1});
+T(avF!=null?(Math.round(avF*10)/10)+'%':REG,{x:9.4,y:1.08,w:1.85,h:0.36,fontSize:avF!=null?22:9,bold:true,color:GREEN,fontFace:'Arial'});
 if(pctPim!=null){
 sl.addChart('doughnut',[{name:'PIM',labels:['Ejecutado','Pendiente'],values:[pctPim,100-pctPim]}],
-{x:11.05,y:0.02,w:1.55,h:1.42,holeSize:62,showLegend:false,showTitle:false,showValue:false,showPercent:false,chartColors:[GREEN,'D6DBE0']});
-T(pctPim+'%',{x:11.05,y:0.5,w:1.55,h:0.3,fontSize:15,bold:true,color:INK,align:'center'});
-T('EJECUTADO',{x:11.05,y:0.78,w:1.55,h:0.2,fontSize:7,bold:true,color:INK,align:'center'});
-T('DEL PIM '+anioAct,{x:11.6,y:1.32,w:1.7,h:0.2,fontSize:8,bold:true,color:INK,align:'right'});
+{x:11.42,y:0.20,w:1.42,h:1.34,holeSize:64,showLegend:false,showTitle:false,showValue:false,showPercent:false,chartColors:[GREEN,'E1E6EC']});
+T(pctPim+'%',{x:11.62,y:0.60,w:1.02,h:0.26,fontSize:13,bold:true,color:INK,align:'center'});
+T('DEL PIM '+anioAct,{x:11.62,y:0.85,w:1.02,h:0.16,fontSize:5,bold:true,color:'5B6B7E',align:'center'});
 }else{
-T('PIM '+anioAct+'\n'+REG,{x:11.05,y:0.35,w:2.1,h:0.8,fontSize:9,bold:true,color:GRAY,align:'center'});
+T('PIM '+anioAct+'\n'+REG,{x:11.42,y:0.55,w:1.6,h:0.7,fontSize:8.5,bold:true,color:GRAY,align:'center'});
 }
 
-/* ── 4 TARJETAS ── */
-var cardY=1.58,cardH=1.05,cardW=3.03,gap=0.12,x0=0.35;
+/* ── 4 TARJETAS KPI ── */
+var cardY=1.76,cardH=1.02,cardW=3.06,gap=0.16,x0=0.25;
 var card=function(ix,emoji,titulo,lineas){
 var cx=x0+ix*(cardW+gap);
-sl.addShape('roundRect',{x:cx,y:cardY,w:cardW,h:cardH,rectRadius:0.09,fill:{color:'FFFFFF'},line:{color:NAVY,width:1.75}});
-sl.addShape('ellipse',{x:cx+0.14,y:cardY+0.30,w:0.46,h:0.46,fill:{color:NAVY}});
-T(emoji,{x:cx+0.14,y:cardY+0.30,w:0.46,h:0.46,fontSize:16,align:'center',valign:'middle',color:'FFFFFF'});
-T(titulo,{x:cx+0.68,y:cardY+0.08,w:cardW-0.78,h:0.24,fontSize:9,bold:true,color:NAVY,fontFace:'Arial'});
-T(lineas,{x:cx+0.68,y:cardY+0.32,w:cardW-0.78,h:cardH-0.40,fontSize:10,color:INK,valign:'top',fontFace:'Arial',lineSpacingMultiple:1.04});
+cardBg(cx,cardY,cardW,cardH);
+sl.addShape('ellipse',{x:cx+0.16,y:cardY+0.27,w:0.48,h:0.48,fill:{color:NAVY},shadow:sh()});
+T(emoji,{x:cx+0.16,y:cardY+0.27,w:0.48,h:0.48,fontSize:16,align:'center',valign:'middle',color:'FFFFFF'});
+T(titulo,{x:cx+0.74,y:cardY+0.12,w:cardW-0.86,h:0.22,fontSize:8.5,bold:true,color:'5B6B7E',fontFace:'Arial',charSpacing:1});
+T(lineas,{x:cx+0.74,y:cardY+0.34,w:cardW-0.86,h:cardH-0.44,fontSize:10,color:INK,valign:'top',fontFace:'Arial',lineSpacingMultiple:1.05});
 };
 card(0,'💰','COSTO DE INVERSIÓN ACTUALIZADO',[
-{text:costo>0?'S/ '+f2(costo):REG,options:{bold:true,fontSize:12.5,color:INK,breakLine:true}},
-{text:'PIM '+anioAct+':  '+(pim>0?'S/ '+f2(pim):REG),options:{bold:true,fontSize:9.5,color:NAVY}}]);
+{text:costo>0?'S/ '+f2(costo):REG,options:{bold:true,fontSize:12,color:INK,breakLine:true}},
+{text:'PIM '+anioAct+':  '+(pim>0?'S/ '+f2(pim):REG),options:{bold:true,fontSize:9,color:NAVY}}]);
 card(1,'📈','DEVENGADO ACUMULADO',[
-{text:devAc>0?'S/ '+f2(devAc):REG,options:{bold:true,fontSize:12.5,color:INK,breakLine:true}},
-{text:avFin!=null?'('+(Math.round(avFin*10)/10)+'% del costo)':' ',options:{fontSize:9.5,color:NAVY,bold:true}}]);
-card(2,'👷','CONTRATISTA',[{text:REG,options:{fontSize:10,color:GRAY,bold:true}}]);
-card(3,'📋','SUPERVISIÓN',[{text:REG,options:{fontSize:10,color:GRAY,bold:true}}]);
+{text:devAc>0?'S/ '+f2(devAc):REG,options:{bold:true,fontSize:12,color:INK,breakLine:true}},
+{text:avFin!=null?'('+(Math.round(avFin*10)/10)+'% del costo)':' ',options:{fontSize:9,color:NAVY,bold:true}}]);
+card(2,'👷','CONTRATISTA',[{text:REG,options:{fontSize:9.5,color:GRAY,bold:true}}]);
+card(3,'📋','SUPERVISIÓN',[{text:REG,options:{fontSize:9.5,color:GRAY,bold:true}}]);
 
 /* ── FILA MEDIA ── */
-var midY=2.82,midH=2.42;
+var midY=2.98,midH=2.35;
+cardBg(0.25,midY,4.45,midH);
 if(fotoB64){
-sl.addImage({data:fotoB64,x:0.35,y:midY,w:4.35,h:midH-0.28,sizing:{type:'cover',w:4.35,h:midH-0.28}});
+sl.addImage({data:fotoB64,x:0.35,y:midY+0.1,w:4.25,h:midH-0.48,sizing:{type:'cover',w:4.25,h:midH-0.48}});
 }else{
-sl.addShape('roundRect',{x:0.35,y:midY,w:4.35,h:midH-0.28,rectRadius:0.08,fill:{color:'EEF1F4'},line:{color:'C9D2DB',width:1}});
-T('📷\n'+REG,{x:0.35,y:midY+0.6,w:4.35,h:0.9,fontSize:12,bold:true,color:GRAY,align:'center'});
+sl.addShape('roundRect',{x:0.35,y:midY+0.1,w:4.25,h:midH-0.48,rectRadius:0.06,fill:{color:'EFF2F6'}});
+T('📷\n'+REG,{x:0.35,y:midY+0.62,w:4.25,h:0.9,fontSize:11,bold:true,color:GRAY,align:'center'});
 }
-T('FOTOGRAFÍA DEL PROYECTO',{x:0.35,y:midY+midH-0.24,w:4.35,h:0.24,fontSize:11,bold:true,color:NAVY,align:'center',fontFace:'Arial'});
-sl.addShape('roundRect',{x:4.85,y:midY,w:4.55,h:midH,rectRadius:0.1,fill:{color:'FFFFFF'},line:{color:'B9C2CC',width:1.5}});
-T('LOGRO ACTUAL / SITUACIÓN',{x:5.05,y:midY+0.08,w:4.2,h:0.26,fontSize:12.5,bold:true,color:NAVY,fontFace:'Arial'});
-T(logro?[{text:'✔ ',options:{color:GREEN,bold:true}},{text:logro,options:{color:INK}}]:REG,
-{x:5.05,y:midY+0.38,w:4.18,h:midH-0.48,fontSize:logro.length>430?8.5:9.5,align:'justify',valign:'top',fontFace:'Arial',lineSpacingMultiple:1.08,color:logro?INK:GRAY});
-sl.addShape('roundRect',{x:9.55,y:midY,w:3.42,h:midH,rectRadius:0.1,fill:{color:'EAF1FB'},line:{color:'AFC6E8',width:1.25}});
-T('DATOS GENERALES',{x:9.75,y:midY+0.08,w:3.0,h:0.26,fontSize:12.5,bold:true,color:NAVY,fontFace:'Arial'});
+T('FOTOGRAFÍA DEL PROYECTO',{x:0.25,y:midY+midH-0.30,w:4.45,h:0.24,fontSize:10,bold:true,color:NAVY,align:'center',fontFace:'Arial',charSpacing:1});
+cardBg(4.86,midY,4.68,midH);
+T('LOGRO ACTUAL / SITUACIÓN',{x:5.08,y:midY+0.14,w:4.2,h:0.26,fontSize:12,bold:true,color:NAVY,fontFace:'Arial',charSpacing:0.5});
+var logFs=logro.length>430?8.5:(logro.length<220?10.5:9.5);
+T(logro?[{text:'✔ ',options:{color:GREEN,bold:true}},{text:logro,options:{color:'333F4D'}}]:REG,
+{x:5.08,y:midY+0.46,w:4.28,h:midH-0.6,fontSize:logFs,align:'justify',valign:'top',fontFace:'Arial',lineSpacingMultiple:1.14,color:logro?'333F4D':GRAY});
+sl.addShape('roundRect',{x:9.7,y:midY,w:3.38,h:midH,rectRadius:0.1,fill:{color:'EDF3FC'},line:{color:'C7D8F0',width:0.75},shadow:sh()});
+T('DATOS GENERALES',{x:9.92,y:midY+0.14,w:3.0,h:0.26,fontSize:12,bold:true,color:NAVY,fontFace:'Arial',charSpacing:0.5});
 var dg=[['📅','Inicio de ejecución',(fx&&fx.i)||REG],['⏱️','Plazo de ejecución',REG],
 ['🚩','Fecha de término',(fx&&fx.f)||REG],['✅','Estado situacional',situL1||est[0]]];
 dg.forEach(function(it,i){
-var yy=midY+0.42+i*0.5;
-T(it[0],{x:9.72,y:yy,w:0.35,h:0.45,fontSize:14,align:'center',valign:'top'});
-T([{text:it[1],options:{bold:true,color:NAVY,breakLine:true}},{text:String(it[2]).slice(0,60),options:{color:it[2]===REG?GRAY:INK}}],
-{x:10.12,y:yy,w:2.78,h:0.5,fontSize:9,fontFace:'Arial',valign:'top'});
+var yy=midY+0.5+i*0.46;
+T(it[0],{x:9.9,y:yy,w:0.34,h:0.42,fontSize:13,align:'center',valign:'top'});
+T([{text:it[1],options:{bold:true,color:NAVY,breakLine:true}},{text:String(it[2]).slice(0,58),options:{color:it[2]===REG?GRAY:'333F4D'}}],
+{x:10.3,y:yy,w:2.66,h:0.46,fontSize:8.5,fontFace:'Arial',valign:'top'});
 });
 
 /* ── FILA INFERIOR ── */
-var botY=5.42;
-T('CRONOGRAMA DE EJECUCIÓN',{x:0.35,y:botY,w:4.35,h:0.26,fontSize:12.5,bold:true,color:NAVY,fontFace:'Arial'});
-T([{text:((fx&&fx.i)||REG),options:{bold:true,breakLine:true}},{text:'INICIO DE EJECUCIÓN',options:{fontSize:7}}],
-{x:0.35,y:botY+0.32,w:1.7,h:0.4,fontSize:8.5,color:INK,fontFace:'Arial'});
-T([{text:((fx&&fx.f)||REG),options:{bold:true,breakLine:true}},{text:'FIN DE EJECUCIÓN',options:{fontSize:7}}],
-{x:3.0,y:botY+0.32,w:1.7,h:0.4,fontSize:8.5,color:INK,align:'right',fontFace:'Arial'});
-sl.addShape('ellipse',{x:0.40,y:botY+0.78,w:0.14,h:0.14,fill:{color:NAVY}});
-sl.addShape('ellipse',{x:4.51,y:botY+0.78,w:0.14,h:0.14,fill:{color:NAVY}});
-sl.addShape('roundRect',{x:0.40,y:botY+0.98,w:4.25,h:0.20,rectRadius:0.09,fill:{color:'D6DBE0'}});
+var botY=5.5,botH=1.62;
+cardBg(0.25,botY,4.45,botH);
+T('CRONOGRAMA DE EJECUCIÓN',{x:0.47,y:botY+0.1,w:4.0,h:0.24,fontSize:11.5,bold:true,color:NAVY,fontFace:'Arial',charSpacing:0.5});
+T([{text:((fx&&fx.i)||REG),options:{bold:true,breakLine:true}},{text:'INICIO DE EJECUCIÓN',options:{fontSize:6.5,color:'8A97A8'}}],
+{x:0.47,y:botY+0.4,w:1.7,h:0.36,fontSize:8.5,color:INK,fontFace:'Arial'});
+T([{text:((fx&&fx.f)||REG),options:{bold:true,breakLine:true}},{text:'FIN DE EJECUCIÓN',options:{fontSize:6.5,color:'8A97A8'}}],
+{x:2.75,y:botY+0.4,w:1.7,h:0.36,fontSize:8.5,color:INK,align:'right',fontFace:'Arial'});
+sl.addShape('roundRect',{x:0.5,y:botY+0.84,w:3.95,h:0.18,rectRadius:0.08,fill:{color:'E1E6EC'}});
 var pct=avF!=null?avF:0;
-if(pct>0)sl.addShape('roundRect',{x:0.40,y:botY+0.98,w:Math.max(0.2,4.25*pct/100),h:0.20,rectRadius:0.09,fill:{color:NAVY}});
-sl.addShape('ellipse',{x:0.95,y:botY+1.34,w:0.13,h:0.13,fill:{color:'B9C2CC'}});
-T([{text:'PENDIENTE',options:{breakLine:true}},{text:avF!=null?(Math.round((100-avF)*100)/100)+'%':REG,options:{bold:true,fontSize:11}}],
-{x:1.14,y:botY+1.26,w:1.4,h:0.5,fontSize:9,color:INK,fontFace:'Arial'});
-sl.addShape('ellipse',{x:2.85,y:botY+1.34,w:0.13,h:0.13,fill:{color:NAVY}});
-T([{text:'EJECUTADO',options:{breakLine:true}},{text:avF!=null?(Math.round(avF*100)/100)+'%':REG,options:{bold:true,fontSize:11}}],
-{x:3.04,y:botY+1.26,w:1.4,h:0.5,fontSize:9,color:INK,fontFace:'Arial'});
-sl.addShape('roundRect',{x:4.85,y:botY,w:4.55,h:1.86,rectRadius:0.1,fill:{color:'FFFFFF'},line:{color:'B9C2CC',width:1.5}});
-T('PRINCIPALES METAS',{x:5.05,y:botY+0.07,w:4.2,h:0.26,fontSize:12.5,bold:true,color:RED,fontFace:'Arial'});
-T(metas.length?metas.map(function(m,i){return {text:m.slice(0,58),options:{bullet:true,breakLine:i<metas.length-1,paraSpaceAfter:2}};}):REG,
-{x:5.1,y:botY+0.36,w:4.15,h:1.4,fontSize:metas.length>4?8:9,color:INK,valign:'top',fontFace:'Arial'});
+if(pct>0)sl.addShape('roundRect',{x:0.5,y:botY+0.84,w:Math.max(0.18,3.95*pct/100),h:0.18,rectRadius:0.08,fill:{color:NAVY}});
+sl.addShape('ellipse',{x:0.44,y:botY+0.80,w:0.13,h:0.13,fill:{color:NAVY}});
+sl.addShape('ellipse',{x:4.42,y:botY+0.80,w:0.13,h:0.13,fill:{color:pct>=100?NAVY:'B9C2CC'}});
+sl.addShape('ellipse',{x:0.95,y:botY+1.22,w:0.12,h:0.12,fill:{color:'B9C2CC'}});
+T([{text:'PENDIENTE  ',options:{color:'5B6B7E'}},{text:avF!=null?(Math.round((100-avF)*100)/100)+'%':REG,options:{bold:true,fontSize:10.5,color:INK}}],
+{x:1.13,y:botY+1.16,w:1.6,h:0.26,fontSize:8.5,fontFace:'Arial'});
+sl.addShape('ellipse',{x:2.85,y:botY+1.22,w:0.12,h:0.12,fill:{color:NAVY}});
+T([{text:'EJECUTADO  ',options:{color:'5B6B7E'}},{text:avF!=null?(Math.round(avF*100)/100)+'%':REG,options:{bold:true,fontSize:10.5,color:INK}}],
+{x:3.03,y:botY+1.16,w:1.6,h:0.26,fontSize:8.5,fontFace:'Arial'});
+cardBg(4.86,botY,4.68,botH);
+T('PRINCIPALES METAS',{x:5.08,y:botY+0.1,w:4.2,h:0.24,fontSize:11.5,bold:true,color:RED,fontFace:'Arial',charSpacing:0.5});
+T(metas.length?metas.map(function(m,i){return {text:m.slice(0,58),options:{bullet:{code:'2022',indent:10},breakLine:i<metas.length-1,paraSpaceAfter:2,color:'333F4D'}};}):REG,
+{x:5.14,y:botY+0.38,w:4.28,h:botH-0.48,fontSize:metas.length>4?8:(metas.length<4?9.5:8.5),color:'333F4D',valign:'top',fontFace:'Arial'});
 [0,1].forEach(function(i){
-var fx2=9.55+i*1.78;
-sl.addShape('roundRect',{x:fx2,y:botY,w:1.64,h:1.5,rectRadius:0.06,fill:{color:'EEF1F4'},line:{color:'C9D2DB',width:1}});
-T('📷',{x:fx2,y:botY+0.42,w:1.64,h:0.5,fontSize:18,align:'center',color:GRAY});
-sl.addShape('rect',{x:fx2,y:botY+1.5,w:1.64,h:0.26,fill:{color:NAVY}});
-T(REG,{x:fx2,y:botY+1.5,w:1.64,h:0.26,fontSize:7,bold:true,color:'FFFFFF',align:'center',valign:'middle'});
+var fx2=9.7+i*1.76;
+sl.addShape('roundRect',{x:fx2,y:botY,w:1.62,h:botH,rectRadius:0.08,fill:{color:'FFFFFF'},line:{color:'DCE2EA',width:0.75},shadow:sh()});
+sl.addShape('roundRect',{x:fx2+0.07,y:botY+0.07,w:1.48,h:botH-0.42,rectRadius:0.06,fill:{color:'EFF2F6'}});
+T('📷',{x:fx2,y:botY+0.42,w:1.62,h:0.5,fontSize:16,align:'center',color:GRAY});
+T(REG,{x:fx2,y:botY+botH-0.30,w:1.62,h:0.24,fontSize:6.5,bold:true,color:'5B6B7E',align:'center',valign:'middle'});
 });
 T('Fuente: Dashboard Ejecutivo UE003 (gica003.pe) · Formato 12-B / SSI / Consulta Amigable MEF · Corte: '+corte+' · Elaborado por ARKA PROYECTOS DEL PERÚ / Corporación DMC',
-{x:0.35,y:7.31,w:12.6,h:0.17,fontSize:6.5,color:GRAY,fontFace:'Arial'});
+{x:0.25,y:7.26,w:12.83,h:0.18,fontSize:6.5,color:'8A97A8',align:'center',fontFace:'Arial'});
 
 px.writeFile({fileName:'Ficha_'+cui+'_'+(nomC||'inversion').replace(/[^A-Za-z0-9ÁÉÍÓÚÑáéíóúñ ]/g,'').replace(/ +/g,'_')+'_'+hoy.getFullYear()+'-'+p2(hoy.getMonth()+1)+'-'+p2(hoy.getDate())+'.pptx'})
 .then(function(){fin_(true);}).catch(function(){fin_(false);});
