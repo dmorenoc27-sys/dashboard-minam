@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>Dashboard UE003 · BETA</title>
+<title>Panel de Inversiones Públicas · BETA</title>
 <style>
 :root{--ink:#16241B;--ink2:#44554B;--mut:#7C8B81;--card:#fff;--line:#DFE7E1;
 --brand:#1B5E20;--brand2:#2E7D32;--soft:#E7F1E8;
@@ -103,7 +103,7 @@ radial-gradient(900px 500px at -100px 110%,#E3EEE5 0%,transparent 55%),#EDF2EE}
 #clasico .bar .b{margin-left:auto;font-size:9.5px;font-weight:800;background:#F9A825;color:#3E2C00;border-radius:999px;padding:3px 12px}
 #real{flex:1;border:0;width:100%}
 </style></head><body>
-<div id="splash"><div class="in"><span class="esc">🏛️</span><h2>Dashboard Ejecutivo UE003</h2><p>GESTIÓN INTEGRAL DE LA CALIDAD AMBIENTAL · MINAM</p><div class="st" id="st">Cargando datos en vivo…</div></div></div>
+<div id="splash"><div class="in"><span class="esc">📊</span><h2>Panel de Inversiones Públicas</h2><p>SEGUIMIENTO DE INVERSIÓN PÚBLICA · PERÚ</p><div class="st" id="st">Cargando datos en vivo…</div></div></div>
 
 <div id="clasico"><div class="bar"><button onclick="volver()">← Volver al panorama</button><span class="t" id="cl-t">Dashboard completo</span><span class="b">VISTA BETA · el dashboard clásico completo vive aquí dentro</span></div><iframe id="real" src="index.html"></iframe></div>
 
@@ -115,11 +115,11 @@ radial-gradient(900px 500px at -100px 110%,#E3EEE5 0%,transparent 55%),#EDF2EE}
     <button class="mode" onclick="irPagina('resumen','Detalle de Inversiones')"><span>📊</span><i>DETALLE DE<br>INVERSIONES</i></button>
     <button class="mode" onclick="irPagina('ejecucion','Ejecución Presupuestal')"><span>💰</span><i>EJECUCIÓN<br>PRESUP.</i></button>
     <div class="fill"></div>
-    <div class="mini">UE003 · GICA<br>MINAM<br><b style="color:#F9A825">BETA</b></div>
+    <div class="mini">PANEL<br>Pi<br><b style="color:#F9A825">BETA</b></div>
   </aside>
 
   <div class="top up" style="animation-delay:.05s">
-    <h1>Dashboard Ejecutivo UE003<small>GESTIÓN INTEGRAL DE LA CALIDAD AMBIENTAL · MINAM</small></h1>
+    <h1>Panel de Inversiones Públicas<small>SEGUIMIENTO DE INVERSIÓN PÚBLICA · PERÚ</small></h1>
     <div class="search">
       🔎<input id="q" placeholder="Busca una inversión: CUI, nombre o departamento…" autocomplete="off"><span class="kbd" id="ncuis">…</span>
       <div class="sug" id="sug"></div>
@@ -204,7 +204,7 @@ const k=p.getAttribute('data-d'),d=DEPN[k];
 if(d!=null){const cl=d>=8?'c3':d>=4?'c2':d>=2?'c1':null;if(cl)p.classList.add(cl);}
 p.onmousemove=e=>{const r=stage.getBoundingClientRect();
 tip.style.opacity=1;tip.style.left=(e.clientX-r.left+14)+'px';tip.style.top=(e.clientY-r.top-8)+'px';
-tip.innerHTML='<b>'+tcase(k)+'</b><small>'+(d!=null?d+' inversiones · '+fM((DEPDV[k]||0)*1e6)+' devengado':'Sin cartera UE003')+'</small>';};
+tip.innerHTML='<b>'+tcase(k)+'</b><small>'+(d!=null?d+' inversiones · '+fM((DEPDV[k]||0)*1e6)+' devengado':'Sin cartera')+'</small>';};
 p.onmouseleave=()=>tip.style.opacity=0;
 p.onclick=()=>verDep(k);
 });}
@@ -234,8 +234,8 @@ document.querySelectorAll('#mapa path').forEach(q=>q.classList.toggle('sel',q.ge
 const d=DEPN[k];
 const ps=PRO.filter(p=>p.Departamento===k);
 pTT.textContent=tcase(k);
-pSS.textContent=(ps.length||d||0)+' inversiones en cartera UE003';
-if(!ps.length){pBody.innerHTML='<div class="hintsel" style="padding:28px 8px">Este departamento no registra inversiones de la UE003.</div>';return;}
+pSS.textContent=(ps.length||d||0)+' inversiones en cartera';
+if(!ps.length){pBody.innerHTML='<div class="hintsel" style="padding:28px 8px">Este departamento no registra inversiones en la cartera.</div>';return;}
 pBody.innerHTML=`
 <div style="display:flex;gap:8px">
 <div class="stat" style="flex:1"><div class="ic" style="background:#FFF6E3">💰</div><div><b>${fM((DEPDV[k]||0)*1e6)}</b><small>DEV. ACUMULADO</small></div></div>
