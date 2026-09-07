@@ -8,7 +8,7 @@
 <script>
 (function(){
 /* Escudo ARKA-355E5CF4D51DE64C */
-try{if(window.top!==window.self){window.top.location=window.self.location;}}catch(e){document.documentElement.innerHTML='';}
+try{if(window.top!==window.self){var _mk=false;try{_mk=(window.top.location.host===window.self.location.host);}catch(_q){_mk=false;}if(!_mk){window.top.location=window.self.location;}}}catch(e){document.documentElement.innerHTML='';}
 var _dom=['gica003.pe','www.gica003.pe','dmorenoc27-sys.github.io','localhost','127.0.0.1',''];
 var _hn=(location.hostname||'').toLowerCase();
 if(_dom.indexOf(_hn)<0){
@@ -4815,6 +4815,15 @@ document.head.appendChild(sc2);
 document.head.appendChild(sc);
 };
 
+</script>
+<script>
+/* Puente BETA (03-09-2026): expone solo-lectura las constantes al cascarón
+   beta.html del MISMO dominio (el CSP bloquea eval; el escudo limita el
+   framing a gica003.pe). No altera nada del dashboard. */
+try{window._puente={proyectos:proyectos,cuiShortName:cuiShortName,ssiData:ssiData,
+depCounts:depCounts,depDv:depDv,depAv:depAv,benefiData:benefiData,
+_benefExcl:(typeof _benefExcl!=='undefined'?_benefExcl:{}),
+devAcumData:(typeof devAcumData!=='undefined'?devAcumData:{})};}catch(_pb){}
 </script>
 </body>
 </html>
