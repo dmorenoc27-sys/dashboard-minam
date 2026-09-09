@@ -1,4 +1,4 @@
-# Dashboard UE003 GICA — gica003.pe
+# Dashboard UE003 — dmorenoc27-sys.github.io/panel-inversiones
 # Buscadores tradicionales: bienvenidos
 User-agent: Googlebot
 Allow: /
